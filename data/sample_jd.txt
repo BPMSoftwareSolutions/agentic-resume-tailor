@@ -1,0 +1,4 @@
+We are seeking a DevOps Software Engineer to improve CI/CD reliability and speed.
+Responsibilities include building pipelines (GitHub Actions), Infrastructure as Code (Terraform),
+observability (Dynatrace/Splunk), and secure handling of secrets. Experience with Python and cloud
+architectures (Azure or AWS) required. Bonus: microservices, testing culture, and mentoring.

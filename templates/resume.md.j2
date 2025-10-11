@@ -1,0 +1,21 @@
+# {{ name }}
+{{ title }}
+{{ location }} • {{ contact.email }} • {{ contact.phone }}
+
+## Summary
+{{ summary }}
+
+## Skills
+{% for s in skills %}- {{ s }}
+{% endfor %}
+
+## Experience
+{% for job in experience %}
+**{{ job.role }} — {{ job.employer }}** ({{ job.dates }})
+{% for b in job.selected_bullets %}- {{ b }}
+{% endfor %}
+{% endfor %}
+
+## Education
+{% for e in education %}- {{ e.school }} — {{ e.degree }} ({{ e.year }})
+{% endfor %}

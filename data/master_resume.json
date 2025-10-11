@@ -1,0 +1,123 @@
+{
+  "name": "Sidney Jones",
+  "title": "DevOps & Automation Engineer | Cloud Architecture",
+  "location": "Orchard Lake Village, MI",
+  "contact": {
+    "email": "sjones.presence@gmail.com",
+    "phone": "(248) 802-1847"
+  },
+  "summary": "Solution engineer with 20+ years across DevOps, CI/CD, cloud architecture, and secure data handling. Focused on delivery excellence, built-in quality, and practical AI-assisted automation.",
+  "skills": [
+    "CI/CD",
+    "Azure DevOps",
+    "Jenkins",
+    "GitHub Actions",
+    "Terraform",
+    "Kubernetes",
+    "Python",
+    "C#",
+    "Microservices",
+    "Observability",
+    "Dynatrace",
+    "Splunk",
+    "AI-assisted automation"
+  ],
+  "experience": [
+    {
+      "employer": "CGI / Daugherty (Edward Jones)",
+      "role": "Platform Team Delivery Lead / Application Architect",
+      "dates": "May 2022 \u2013 Aug 2024",
+      "bullets": [
+        {
+          "text": "Led microservices + micro-frontend transition for 'Online Access', improving deployment frequency 50% and enabling independent team releases.",
+          "tags": [
+            "DevOps",
+            "CI/CD",
+            "Microservices",
+            "Azure DevOps",
+            "Leadership"
+          ]
+        },
+        {
+          "text": "Built cross-team automation testing workshops (Web/API + Mobile) increasing built-in quality and reducing escaped defects.",
+          "tags": [
+            "Testing",
+            "Quality",
+            "Coaching"
+          ]
+        },
+        {
+          "text": "Introduced delivery excellence practices and dashboards for 13 teams; accelerated cycle time and visibility.",
+          "tags": [
+            "Metrics",
+            "Delivery",
+            "Jira"
+          ]
+        },
+        {
+          "text": "Hardened pipelines with linting (ESLint), SAST, and gating; standardized rollback playbooks.",
+          "tags": [
+            "Security",
+            "CI/CD",
+            "Quality"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Daugherty (Cox Communications)",
+      "role": "Backend Engineer / DevOps",
+      "dates": "2024",
+      "bullets": [
+        {
+          "text": "Managed API + Lambda deployments via Terraform modules and GitHub Actions; codified environment configs.",
+          "tags": [
+            "Terraform",
+            "GitHub Actions",
+            "AWS",
+            "API"
+          ]
+        },
+        {
+          "text": "Designed sensitive-data handling with KSM-backed AES encryption for bill rates; added audit logs and RBAC.",
+          "tags": [
+            "Security",
+            "Encryption",
+            "Compliance"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "DevOps Trainer / Principal Engineer (Community Platform)",
+      "dates": "2017 \u2013 2021",
+      "bullets": [
+        {
+          "text": "Delivered cloud/automation workshops and built CI/CD templates that cut setup time from days to hours.",
+          "tags": [
+            "Training",
+            "CI/CD",
+            "Azure",
+            "Templates"
+          ]
+        },
+        {
+          "text": "Architected unified BI platform on Azure; automated month-end ETL and reporting.",
+          "tags": [
+            "Azure",
+            "ETL",
+            "BI"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "University of Phoenix",
+      "degree": "Bachelor of Technology",
+      "year": "2002"
+    }
+  ]
+}
