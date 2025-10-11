@@ -1,7 +1,7 @@
 # Agentic Resume Tailor
 
 [![CI/CD Pipeline](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/actions/workflows/ci.yml/badge.svg)](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/actions/workflows/ci.yml)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 AI‑assisted tooling to customize your resume to a target job description (Phase 1).
