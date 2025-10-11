@@ -3,3 +3,7 @@ python-docx
 markdown
 numpy
 scikit-learn
+flask
+flask-cors
+pytest
+pytest-flask

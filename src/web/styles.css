@@ -1,0 +1,314 @@
+/* Resume Editor Styles */
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --success-color: #198754;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --light-bg: #f8f9fa;
+    --border-color: #dee2e6;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--light-bg);
+}
+
+/* Navigation */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Sidebar */
+.list-group-item {
+    border-left: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    border-left-color: var(--primary-color);
+}
+
+.list-group-item.active {
+    border-left-color: var(--primary-color);
+    background-color: #e7f1ff;
+    color: var(--primary-color);
+}
+
+.list-group-item i {
+    margin-right: 8px;
+}
+
+/* Content Sections */
+.content-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    background-color: white;
+    border-bottom: 2px solid var(--light-bg);
+    font-weight: 600;
+}
+
+/* Form Elements */
+.form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Experience/Education Cards */
+.experience-card,
+.education-card,
+.certification-card {
+    position: relative;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.experience-card .card-header,
+.education-card .card-header,
+.certification-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.experience-card .card-title,
+.education-card .card-title,
+.certification-card .card-title {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+/* Bullet Points */
+.bullet-item {
+    background-color: #f8f9fa;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+.bullet-item:hover {
+    background-color: #e9ecef;
+}
+
+.bullet-text {
+    margin-bottom: 0.5rem;
+}
+
+.bullet-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.tag-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    background-color: #e7f1ff;
+    color: var(--primary-color);
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+}
+
+.tag-badge .remove-tag {
+    margin-left: 0.25rem;
+    cursor: pointer;
+    color: var(--danger-color);
+}
+
+.tag-badge .remove-tag:hover {
+    color: #b02a37;
+}
+
+/* Buttons */
+.btn-action {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn-delete {
+    color: var(--danger-color);
+}
+
+.btn-delete:hover {
+    color: #b02a37;
+    background-color: #f8d7da;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.alert-dismissible .btn-close {
+    padding: 0.75rem;
+}
+
+/* Loading Spinner */
+#loadingSpinner {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Backup Modal */
+.backup-item {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.backup-item:hover {
+    background-color: var(--light-bg);
+}
+
+.backup-info {
+    flex: 1;
+}
+
+.backup-filename {
+    font-weight: 600;
+    color: #212529;
+}
+
+.backup-meta {
+    font-size: 0.875rem;
+    color: var(--secondary-color);
+}
+
+/* Technical Proficiencies */
+.tech-category {
+    margin-bottom: 1rem;
+}
+
+.tech-category-label {
+    font-weight: 600;
+    color: var(--primary-color);
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+}
+
+/* Expertise Items */
+.expertise-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.expertise-item input {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .list-group {
+        position: static !important;
+        margin-bottom: 2rem;
+    }
+    
+    .navbar .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .navbar .btn {
+        width: 100%;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+    
+    .card-header .btn-group {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus Styles for Accessibility */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .navbar,
+    .list-group,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+    
+    .content-section {
+        display: block !important;
+        page-break-inside: avoid;
+    }
+}
+
