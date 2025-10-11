@@ -16,13 +16,13 @@ Related to GitHub Issue #2
 """
 
 import json
-import os
 import shutil
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -321,6 +321,59 @@ def restore_backup():
         return jsonify({"error": f"Invalid JSON in backup file: {str(e)}"}), 400
     except Exception as e:
         return jsonify({"error": f"Failed to restore backup: {str(e)}"}), 500
+
+
+@app.route('/api/resume/docx', methods=['GET'])
+def generate_docx():
+    """
+    Generate and return the resume DOCX file for download.
+
+    This endpoint generates a DOCX file from the resume JSON
+    and returns it as a downloadable file.
+
+    Returns:
+        DOCX file download or error response
+    """
+    import subprocess
+    import traceback
+
+    # Paths
+    generate_script = BASE_DIR / 'src' / 'generate_hybrid_resume.py'
+    resume_json_path = DATA_DIR / 'master_resume.json'
+    output_html_path = DATA_DIR / 'resume.html'
+    docx_path = DATA_DIR / 'resume.docx'
+
+    # Generate HTML and DOCX from resume JSON
+    try:
+        print(f"Generating DOCX from {resume_json_path}")
+        print(f"Output HTML: {output_html_path}")
+        print(f"Expected DOCX: {docx_path}")
+
+        result = subprocess.run([
+            sys.executable,
+            str(generate_script),
+            '--input', str(resume_json_path),
+            '--output', str(output_html_path),
+            '--docx'
+        ], capture_output=True, text=True)
+
+        print(f"Return code: {result.returncode}")
+        print(f"STDOUT: {result.stdout}")
+        print(f"STDERR: {result.stderr}")
+
+        if result.returncode != 0:
+            return jsonify({'error': f'Failed to generate DOCX: {result.stderr or result.stdout}'}), 500
+
+        # The DOCX file should be created alongside the HTML file
+        if not docx_path.exists():
+            return jsonify({'error': f'DOCX file was not created at {docx_path}. Output: {result.stdout}'}), 500
+
+        return send_file(docx_path, as_attachment=True, download_name='resume.docx')
+
+    except Exception as e:
+        error_msg = f'Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}'
+        print(error_msg)
+        return jsonify({'error': error_msg}), 500
 
 
 if __name__ == '__main__':

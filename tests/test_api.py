@@ -62,7 +62,7 @@ def temp_data_dir(tmp_path):
         ],
         "education": [
             {
-                "school": "Test University",
+                "institution": "Test University",
                 "degree": "Test Degree",
                 "year": "2020"
             }

@@ -25,6 +25,32 @@ async function initializeApp() {
 
         // Setup event listeners
         setupEventListeners();
+        document.getElementById('generateDocxBtn').addEventListener('click', async () => {
+            try {
+                showAlert('Generating DOCX, please wait...', 'info');
+                const response = await fetch(`${API_BASE_URL}/resume/docx`);
+                if (!response.ok) {
+                    let errorMsg = 'Failed to generate DOCX';
+                    try {
+                        const errorData = await response.json();
+                        errorMsg = errorData.error || errorMsg;
+                    } catch {}
+                    throw new Error(errorMsg);
+                }
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'resume.docx';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+                showAlert('DOCX generated and downloaded!', 'success', 3000);
+            } catch (err) {
+                showAlert('Failed to generate DOCX: ' + err.message, 'danger');
+            }
+        });
 
         // Render initial view
         renderAllSections();
@@ -353,16 +379,18 @@ function renderExperience() {
         const match = exp.dates.match(/(\d{4})/);
         return match ? parseInt(match[1], 10) : 0;
     };
-    resumeData.experience
-        .slice() // copy to avoid mutating original
-        .sort((a, b) => parseStartYear(b) - parseStartYear(a))
-        .forEach((exp, index) => {
-            const expCard = createExperienceCard(exp, index);
-            container.appendChild(expCard);
-        });
+    const sortedExperience = resumeData.experience
+        .slice()
+        .sort((a, b) => parseStartYear(b) - parseStartYear(a));
+    sortedExperience.forEach((exp) => {
+        const index = resumeData.experience.findIndex(e => (e.employer + '_' + e.dates) === (exp.employer + '_' + exp.dates));
+        const expKey = exp.employer + '_' + exp.dates;
+        const expCard = createExperienceCard(exp, index, expKey);
+        container.appendChild(expCard);
+    });
 }
 
-function createExperienceCard(exp, index) {
+function createExperienceCard(exp, index, expKey) {
     const card = document.createElement('div');
     card.className = 'card experience-card';
 
@@ -391,7 +419,7 @@ function createExperienceCard(exp, index) {
         <div class="card-header">
             <h5 class="card-title">${exp.employer || 'New Experience'}</h5>
             <div class="btn-group">
-                <button class="btn btn-sm btn-outline-danger" onclick="removeExperience(${index})">
+                <button class="btn btn-sm btn-outline-danger" onclick="removeExperience('${expKey}')">
                     <i class="bi bi-trash"></i> Delete
                 </button>
             </div>
@@ -456,8 +484,11 @@ function addExperienceEntry() {
 
 function removeExperience(index) {
     if (confirm('Are you sure you want to delete this experience entry?')) {
-        resumeData.experience.splice(index, 1);
-        renderExperience();
+        const idx = resumeData.experience.findIndex(exp => (exp.employer + '_' + exp.dates) === index);
+        if (idx !== -1) {
+            resumeData.experience.splice(idx, 1);
+            renderExperience();
+        }
     }
 }
 
