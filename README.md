@@ -13,6 +13,7 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - Render a tailored resume using a Jinja2 template to Markdown, HTML, and DOCX.
 - **NEW:** Hybrid HTML/CSS resume generation with multiple professional themes.
 - **NEW:** Web-based resume editor for managing master_resume.json ([Issue #2](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/2))
+- **NEW:** Multi-resume support with job listing management and automated tailoring ([Issue #6](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/6))
 
 ## Roadmap (Phase 2 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
@@ -20,11 +21,33 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 
 ## Quickstart
 
-### Web-Based Resume Editor (NEW! ✨)
+### Multi-Resume Dashboard (NEW! ✨✨)
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
+# Migrate existing master resume (first time only)
+python src/migrate_to_multi_resume.py
+
+# Start the API server
+python src/api/app.py
+
+# Open the dashboard in your browser
+# Navigate to: src/web/dashboard.html
+```
+
+**Features:**
+- ✅ Create and manage multiple tailored resumes
+- ✅ Add and track job listings
+- ✅ Automatically tailor resumes to job listings
+- ✅ Visual dashboard with statistics
+- ✅ Duplicate and edit resumes
+- ✅ Export resumes in HTML/DOCX format
+
+See [Multi-Resume Support Documentation](docs/MULTI_RESUME_SUPPORT.md) for details.
+
+### Web-Based Resume Editor
+```bash
 # Start the resume editor (API + Web UI)
 python start_resume_editor.py
 
@@ -41,6 +64,7 @@ python src/api/app.py
 - ✅ Backup history and restoration
 - ✅ Real-time validation
 - ✅ Responsive design (mobile, tablet, desktop)
+- ✅ Edit specific resumes via URL parameter
 
 See [Resume Editor Documentation](docs/RESUME_EDITOR_WEB_INTERFACE.md) for details.
 
