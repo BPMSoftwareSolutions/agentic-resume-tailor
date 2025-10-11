@@ -345,9 +345,7 @@ def generate_docx():
 
     # Generate HTML and DOCX from resume JSON
     try:
-        print(f"Generating DOCX from {resume_json_path}")
-        print(f"Output HTML: {output_html_path}")
-        print(f"Expected DOCX: {docx_path}")
+    # ...existing code...
 
         result = subprocess.run([
             sys.executable,
@@ -357,9 +355,7 @@ def generate_docx():
             '--docx'
         ], capture_output=True, text=True)
 
-        print(f"Return code: {result.returncode}")
-        print(f"STDOUT: {result.stdout}")
-        print(f"STDERR: {result.stderr}")
+    # ...existing code...
 
         if result.returncode != 0:
             return jsonify({'error': f'Failed to generate DOCX: {result.stderr or result.stdout}'}), 500
@@ -372,7 +368,7 @@ def generate_docx():
 
     except Exception as e:
         error_msg = f'Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}'
-        print(error_msg)
+    # ...existing code...
         return jsonify({'error': error_msg}), 500
 
 
