@@ -28,12 +28,26 @@ python src/export_docx.py --md out/Sidney_Resume_DEVOPS.md --docx out/Sidney_Res
 python src/tailor.py --jd data/sample_jd.txt --out out/Sidney_Resume_DEVOPS.html --format html --theme professional
 
 # Or generate directly from master resume
-python src/generate_hybrid_resume.py --input data/master_resume.json --output out/resume.html --theme modern
+python src/generate_hybrid_resume.py --input data/master_resume.json --output out/resume.html --theme creative
+
+# Generate all themes at once
+python src/generate_hybrid_resume.py --input data/master_resume.json --all-themes --output-dir out
+
+# Generate with DOCX export (requires pandoc or python-docx)
+python src/generate_hybrid_resume.py --input data/master_resume.json --output out/resume.html --docx
 ```
 
-**Available Themes:** `professional`, `modern`, `executive`
+**Available Themes:** `professional`, `modern`, `executive`, `creative`
+
+**Theme Features:**
+- **Professional**: Clean, traditional corporate style (Blue/Gray)
+- **Modern**: Contemporary design with subtle accents (Indigo)
+- **Executive**: Premium, executive-level presentation (Black/Gray)
+- **Creative**: Vibrant, creative industry style (Pink/Orange) ✨ NEW!
 
 **Convert to PDF:** Open the HTML file in your browser and use Print → Save as PDF
+
+**DOCX Export:** Requires `pandoc` (preferred) or `pip install python-docx beautifulsoup4 lxml`
 
 ## Documentation
 

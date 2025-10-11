@@ -58,7 +58,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--format", choices=['markdown', 'html'], default='markdown',
                    help='Output format: markdown or html (default: markdown)')
-    ap.add_argument("--theme", choices=['professional', 'modern', 'executive'],
+    ap.add_argument("--theme", choices=['professional', 'modern', 'executive', 'creative'],
                    default='professional',
                    help='HTML theme (only used with --format html)')
     args = ap.parse_args()

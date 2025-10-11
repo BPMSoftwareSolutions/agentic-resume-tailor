@@ -1,0 +1,100 @@
+{
+  "name": "Professional",
+  "description": "Clean, traditional corporate style with blue and gray tones",
+  "pageSize": {
+    "width": 1200,
+    "height": 3000,
+    "units": "px",
+    "printSize": "8.5x11in"
+  },
+  "colors": {
+    "primary": "#2C3E50",
+    "secondary": "#34495E",
+    "background": "#ffffff",
+    "text": "#2C3E50",
+    "textLight": "#7F8C8D",
+    "accent": "#3498DB",
+    "section": "#ECF0F1",
+    "headerText": "#ffffff",
+    "headerTextLight": "#BDC3C7"
+  },
+  "typography": {
+    "fontFamily": "Calibri, Arial, sans-serif",
+    "name": {
+      "size": 36,
+      "weight": "bold",
+      "color": "white"
+    },
+    "title": {
+      "size": 18,
+      "weight": "500",
+      "color": "#BDC3C7"
+    },
+    "heading": {
+      "size": 16,
+      "weight": "700",
+      "color": "#2C3E50"
+    },
+    "subheading": {
+      "size": 14,
+      "weight": "600",
+      "color": "#2C3E50"
+    },
+    "body": {
+      "size": 11,
+      "weight": "normal",
+      "color": "#2C3E50"
+    },
+    "small": {
+      "size": 10,
+      "weight": "normal",
+      "color": "#7F8C8D"
+    },
+    "tag": {
+      "size": 9,
+      "weight": "600",
+      "color": "#3498DB"
+    }
+  },
+  "layout": {
+    "header": {
+      "height": 200,
+      "padding": 50
+    },
+    "section": {
+      "spacing": 25,
+      "padding": 20,
+      "marginTop": 20
+    },
+    "columns": {
+      "gap": 40,
+      "leftWidth": 540,
+      "rightWidth": 540
+    },
+    "margins": {
+      "left": 50,
+      "right": 50,
+      "top": 220,
+      "bottom": 40
+    }
+  },
+  "gradients": {
+    "header": {
+      "id": "headerGrad",
+      "type": "linear",
+      "from": "#2C3E50",
+      "to": "#34495E",
+      "direction": "diagonal"
+    }
+  },
+  "filters": {
+    "cardShadow": {
+      "id": "cardShadow",
+      "type": "shadow",
+      "offset": [0, 2],
+      "blur": 6,
+      "color": "#00000015"
+    }
+  }
+}
+

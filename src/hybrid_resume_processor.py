@@ -17,7 +17,7 @@ class HybridResumeProcessor:
     for programmatic access and transformation.
     """
     
-    def __init__(self, resume_json_path: str, theme: str = "professional"):
+    def __init__(self, resume_json_path: str, theme: str = "creative"):
         """
         Initialize the hybrid resume processor.
         
@@ -27,6 +27,7 @@ class HybridResumeProcessor:
         """
         self.resume_data = self._load_resume_data(resume_json_path)
         self.theme = theme
+        self.theme_config = self._load_theme_config(theme)
         
         # Sort experiences by date (most recent first)
         if 'experience' in self.resume_data:
@@ -35,6 +36,12 @@ class HybridResumeProcessor:
     def _load_resume_data(self, json_path: str) -> Dict[str, Any]:
         """Load resume data from JSON file."""
         with open(json_path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    
+    def _load_theme_config(self, theme: str) -> Dict[str, Any]:
+        """Load theme configuration."""
+        theme_path = Path(__file__).parent.parent / 'config' / 'resume_themes' / theme / 'theme.json'
+        with open(theme_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     
     def _sanitize_id(self, text: str) -> str:
@@ -121,7 +128,19 @@ class HybridResumeProcessor:
         return '\n'.join(html_parts)
     
     def _generate_header_html(self) -> str:
-        """Generate header with contact information."""
+        """
+        Generate header with SVG gradient background.
+        
+        Structure:
+        <div class="header" data-section="header">
+          <svg class="header-bg"><!-- gradient --></svg>
+          <div class="header-content">
+            <div data-section="personal_info">
+              <h1 data-field="name">...</h1>
+            </div>
+          </div>
+        </div>
+        """
         name = self.resume_data.get('name', '')
         title = self.resume_data.get('title', '')
         location = self.resume_data.get('location', '')
@@ -130,6 +149,15 @@ class HybridResumeProcessor:
         phone = contact.get('phone', '')
         
         return f'''    <div class="header" data-section="header">
+      <svg class="header-bg" viewBox="0 0 1200 220" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:{self.theme_config['colors']['primary']}" />
+            <stop offset="100%" style="stop-color:{self.theme_config['colors']['secondary']}" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1200" height="220" fill="url(#headerGrad)" />
+      </svg>
       <div class="header-content">
         <div class="personal-info" data-section="personal_info">
           <h1 data-field="name">{name}</h1>
@@ -144,7 +172,15 @@ class HybridResumeProcessor:
     </div>'''
     
     def _generate_summary_html(self) -> str:
-        """Generate summary section."""
+        """
+        Generate summary section.
+        
+        Structure:
+        <section class="section" data-section="summary">
+          <h2 class="section-heading">...</h2>
+          <p class="summary-text" data-field="summary_text">...</p>
+        </section>
+        """
         summary = self.resume_data.get('summary', '')
         
         return f'''    <section class="section" data-section="summary">
@@ -153,7 +189,18 @@ class HybridResumeProcessor:
     </section>'''
     
     def _generate_skills_html(self) -> str:
-        """Generate two-column skills section."""
+        """
+        Generate two-column skills section.
+        
+        Structure:
+        <section class="section" data-section="skills">
+          <div class="two-column">
+            <div data-section="technical_proficiencies">
+              <div class="skill-category" data-category="cloud">...</div>
+            </div>
+          </div>
+        </section>
+        """
         tech_prof = self.resume_data.get('technical_proficiencies', {})
         expertise = self.resume_data.get('areas_of_expertise', [])
         
@@ -191,7 +238,22 @@ class HybridResumeProcessor:
     </section>'''
     
     def _generate_experience_html(self) -> str:
-        """Generate experience section with bullets."""
+        """
+        Generate experience section with bullets and tags.
+        
+        Structure:
+        <section class="section" data-section="experience">
+          <div class="experience-item" data-position="0" data-company="...">
+            <div class="experience-header">...</div>
+            <div class="bullet-item" data-bullet="0">
+              <div class="bullet-text">...</div>
+              <div class="tags">
+                <span class="tag" data-tag="Python">Python</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        """
         experience = self.resume_data.get('experience', [])
         
         exp_html = ['    <section class="section" data-section="experience">']
@@ -202,7 +264,7 @@ class HybridResumeProcessor:
             location = job.get('location', '')
             dates = job.get('dates', '')
             role = job.get('role', '')
-            bullets = job.get('bullets', job.get('selected_bullets', []))
+            bullets = job.get('bullets', [])
             
             company_id = self._sanitize_id(employer)
             
@@ -220,11 +282,19 @@ class HybridResumeProcessor:
             
             # Generate bullets
             for bullet_idx, bullet in enumerate(bullets):
-                # Handle both string and dict formats
-                bullet_text = bullet if isinstance(bullet, str) else bullet.get('text', '')
+                bullet_text = bullet.get('text', '')
+                tags = bullet.get('tags', [])
                 
                 exp_html.append(f'        <div class="bullet-item" data-bullet="{bullet_idx}">')
-                exp_html.append(f'          <div class="bullet-text">• {bullet_text}</div>')
+                exp_html.append(f'          <div class="bullet-text">{bullet_text}</div>')
+                
+                if tags:
+                    exp_html.append('          <div class="tags">')
+                    for tag in tags:
+                        tag_id = self._sanitize_id(tag)
+                        exp_html.append(f'            <span class="tag" data-tag="{tag_id}">{tag}</span>')
+                    exp_html.append('          </div>')
+                
                 exp_html.append('        </div>')
             
             exp_html.append('      </div>')
@@ -234,33 +304,46 @@ class HybridResumeProcessor:
         return '\n'.join(exp_html)
     
     def _generate_education_html(self) -> str:
-        """Generate education and certifications section."""
+        """
+        Generate education and certifications section.
+        
+        Structure:
+        <section class="section" data-section="education">
+          <div class="education-item" data-position="0">
+            <div class="degree">...</div>
+          </div>
+        </section>
+        """
         education = self.resume_data.get('education', [])
         certifications = self.resume_data.get('certifications', [])
-        achievements = self.resume_data.get('achievements', [])
         
         edu_html = ['    <section class="section" data-section="education">']
-        edu_html.append('      <h2 class="section-heading">EDUCATION & PROFESSIONAL DEVELOPMENT</h2>')
+        edu_html.append('      <h2 class="section-heading">EDUCATION & CERTIFICATIONS</h2>')
         
         # Education items
         for idx, edu in enumerate(education):
             degree = edu.get('degree', '')
             institution = edu.get('institution', '')
             location = edu.get('location', '')
+            year = edu.get('year', '')
             
             edu_html.append(f'      <div class="education-item" data-position="{idx}">')
-            edu_html.append(f'        <div class="degree" data-field="degree">{degree} | {institution}, {location}</div>')
+            edu_html.append(f'        <div class="degree" data-field="degree">{degree}</div>')
+            edu_html.append(f'        <div class="institution" data-field="institution">{institution} • {location} • {year}</div>')
             edu_html.append('      </div>')
         
         # Certifications
         if certifications:
+            edu_html.append('      <div class="certifications" data-section="certifications">')
+            edu_html.append('        <h3 class="subsection-heading">Certifications</h3>')
             for idx, cert in enumerate(certifications):
-                edu_html.append(f'      <div class="certification-item" data-position="{idx}">• {cert}</div>')
-        
-        # Achievements
-        if achievements:
-            for idx, achievement in enumerate(achievements):
-                edu_html.append(f'      <div class="achievement-item" data-position="{idx}">• {achievement}</div>')
+                # Handle both string and object formats
+                if isinstance(cert, dict):
+                    cert_text = f"{cert['name']} ({cert['issuer']}, {cert['date']})"
+                else:
+                    cert_text = cert
+                edu_html.append(f'        <div class="certification-item" data-position="{idx}">{cert_text}</div>')
+            edu_html.append('      </div>')
         
         edu_html.append('    </section>')
         

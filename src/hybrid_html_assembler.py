@@ -13,12 +13,12 @@ class HybridHTMLAssembler:
     Assemble complete HTML document from components.
     """
     
-    def __init__(self, theme: str = "professional"):
+    def __init__(self, theme: str = "creative"):
         """
         Initialize the HTML assembler.
         
         Args:
-            theme: Theme name (professional, modern, executive)
+            theme: Theme name (professional, modern, executive, creative)
         """
         self.theme = theme
     
@@ -55,8 +55,8 @@ class HybridHTMLAssembler:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{resume_name} - Resume</title>
-  <meta name="description" content="Professional resume generated with hybrid HTML approach">
-  <meta name="generator" content="Agentic Resume Tailor - Hybrid Resume Generator">
+  <meta name="description" content="Professional resume generated with hybrid HTML+SVG approach">
+  <meta name="generator" content="SVG Lab Hybrid Resume Generator">
   <meta name="theme" content="{self.theme}">
   <style>
 {css}

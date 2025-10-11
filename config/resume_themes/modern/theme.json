@@ -1,0 +1,100 @@
+{
+  "name": "Modern",
+  "description": "Contemporary design with indigo tones and subtle accents",
+  "pageSize": {
+    "width": 1200,
+    "height": 3000,
+    "units": "px",
+    "printSize": "8.5x11in"
+  },
+  "colors": {
+    "primary": "#1A237E",
+    "secondary": "#283593",
+    "background": "#ffffff",
+    "text": "#1A237E",
+    "textLight": "#5C6BC0",
+    "accent": "#3F51B5",
+    "section": "#E8EAF6",
+    "headerText": "#ffffff",
+    "headerTextLight": "#C5CAE9"
+  },
+  "typography": {
+    "fontFamily": "Segoe UI, Tahoma, sans-serif",
+    "name": {
+      "size": 38,
+      "weight": "bold",
+      "color": "white"
+    },
+    "title": {
+      "size": 19,
+      "weight": "500",
+      "color": "#C5CAE9"
+    },
+    "heading": {
+      "size": 17,
+      "weight": "700",
+      "color": "#1A237E"
+    },
+    "subheading": {
+      "size": 14,
+      "weight": "600",
+      "color": "#283593"
+    },
+    "body": {
+      "size": 11,
+      "weight": "normal",
+      "color": "#1A237E"
+    },
+    "small": {
+      "size": 10,
+      "weight": "normal",
+      "color": "#5C6BC0"
+    },
+    "tag": {
+      "size": 9,
+      "weight": "600",
+      "color": "#3F51B5"
+    }
+  },
+  "layout": {
+    "header": {
+      "height": 210,
+      "padding": 50
+    },
+    "section": {
+      "spacing": 28,
+      "padding": 22,
+      "marginTop": 22
+    },
+    "columns": {
+      "gap": 40,
+      "leftWidth": 540,
+      "rightWidth": 540
+    },
+    "margins": {
+      "left": 50,
+      "right": 50,
+      "top": 230,
+      "bottom": 40
+    }
+  },
+  "gradients": {
+    "header": {
+      "id": "headerGrad",
+      "type": "linear",
+      "from": "#1A237E",
+      "to": "#283593",
+      "direction": "diagonal"
+    }
+  },
+  "filters": {
+    "cardShadow": {
+      "id": "cardShadow",
+      "type": "shadow",
+      "offset": [0, 3],
+      "blur": 7,
+      "color": "#00000018"
+    }
+  }
+}
+

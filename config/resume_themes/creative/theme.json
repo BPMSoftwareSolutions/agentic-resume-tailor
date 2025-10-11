@@ -1,0 +1,100 @@
+{
+  "name": "Creative",
+  "description": "Bold, colorful design with creative visual elements",
+  "pageSize": {
+    "width": 1200,
+    "height": 3000,
+    "units": "px",
+    "printSize": "8.5x11in"
+  },
+  "colors": {
+    "primary": "#ec4899",
+    "secondary": "#f59e0b",
+    "background": "#ffffff",
+    "text": "#1f2937",
+    "textLight": "#6b7280",
+    "accent": "#8b5cf6",
+    "section": "#fef3c7",
+    "headerText": "#ffffff",
+    "headerTextLight": "#fce7f3"
+  },
+  "typography": {
+    "fontFamily": "system-ui, -apple-system, sans-serif",
+    "name": {
+      "size": 38,
+      "weight": "bold",
+      "color": "white"
+    },
+    "title": {
+      "size": 20,
+      "weight": "500",
+      "color": "#fce7f3"
+    },
+    "heading": {
+      "size": 18,
+      "weight": "700",
+      "color": "#ec4899"
+    },
+    "subheading": {
+      "size": 15,
+      "weight": "600",
+      "color": "#1f2937"
+    },
+    "body": {
+      "size": 14,
+      "weight": "normal",
+      "color": "#1f2937"
+    },
+    "small": {
+      "size": 12,
+      "weight": "normal",
+      "color": "#6b7280"
+    },
+    "tag": {
+      "size": 10,
+      "weight": "600",
+      "color": "#7c3aed"
+    }
+  },
+  "layout": {
+    "header": {
+      "height": 220,
+      "padding": 40
+    },
+    "section": {
+      "spacing": 30,
+      "padding": 25,
+      "marginTop": 25
+    },
+    "columns": {
+      "gap": 40,
+      "leftWidth": 540,
+      "rightWidth": 540
+    },
+    "margins": {
+      "left": 40,
+      "right": 40,
+      "top": 240,
+      "bottom": 40
+    }
+  },
+  "gradients": {
+    "header": {
+      "id": "headerGrad",
+      "type": "linear",
+      "from": "#ec4899",
+      "to": "#f59e0b",
+      "direction": "diagonal"
+    }
+  },
+  "filters": {
+    "cardShadow": {
+      "id": "cardShadow",
+      "type": "shadow",
+      "offset": [0, 4],
+      "blur": 8,
+      "color": "#00000020"
+    }
+  }
+}
+
