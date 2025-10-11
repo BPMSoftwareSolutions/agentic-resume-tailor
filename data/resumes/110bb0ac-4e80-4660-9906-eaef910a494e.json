@@ -1,0 +1,33 @@
+{
+  "name": "Test User",
+  "title": "Software Engineer",
+  "location": "Test City, ST",
+  "contact": {
+    "email": "test@example.com",
+    "phone": "(123) 456-7890"
+  },
+  "summary": "Test summary",
+  "experience": [
+    {
+      "employer": "Test Company",
+      "role": "Software Engineer",
+      "dates": "2020 - Present",
+      "bullets": [
+        {
+          "text": "Built CI/CD pipelines",
+          "tags": [
+            "CI/CD",
+            "DevOps"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "school": "Test University",
+      "degree": "BS Computer Science",
+      "year": "2020"
+    }
+  ]
+}
