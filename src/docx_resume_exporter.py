@@ -66,40 +66,40 @@ class DOCXResumeExporter:
         print(f"\n{'='*80}")
         print("DOCX EXPORT")
         print(f"{'='*80}\n")
-        
-        print("🔍 Checking available export methods...")
+
+        print("Checking available export methods...")
         for method, available in self.available_methods.items():
-            status = "✓" if available else "✗"
+            status = "[+]" if available else "[-]"
             print(f"  {status} {method}")
         print()
-        
+
         # Try methods in order of preference
         if self.available_methods['pandoc']:
-            print("📄 Attempting export with pandoc...")
+            print("Attempting export with pandoc...")
             if self._try_pandoc_method(html_path, output_docx_path):
-                print(f"\n✅ DOCX export successful using pandoc!\n")
+                print(f"\nDOCX export successful using pandoc!\n")
                 print(f"{'='*80}\n")
                 return True
-        
+
         if self.available_methods['python-docx']:
-            print("📄 Attempting export with python-docx...")
+            print("Attempting export with python-docx...")
             if self._try_python_docx_method(html_path, output_docx_path):
-                print(f"\n✅ DOCX export successful using python-docx!\n")
+                print(f"\nDOCX export successful using python-docx!\n")
                 print(f"{'='*80}\n")
                 return True
-        
+
         if self.available_methods['weasyprint']:
-            print("📄 Attempting export with weasyprint (PDF intermediate)...")
+            print("Attempting export with weasyprint (PDF intermediate)...")
             if self._try_pdf_conversion_method(html_path, output_docx_path):
-                print(f"\n✅ DOCX export successful using weasyprint!\n")
+                print(f"\nDOCX export successful using weasyprint!\n")
                 print(f"{'='*80}\n")
                 return True
-        
-        print("\n❌ No export methods available!")
+
+        print("\nNo export methods available!")
         print("\nTo enable DOCX export, install one of the following:")
-        print("  • pandoc: https://pandoc.org/installing.html")
-        print("  • python-docx: pip install python-docx beautifulsoup4")
-        print("  • weasyprint: pip install weasyprint\n")
+        print("  - pandoc: https://pandoc.org/installing.html")
+        print("  - python-docx: pip install python-docx beautifulsoup4")
+        print("  - weasyprint: pip install weasyprint\n")
         print(f"{'='*80}\n")
         
         return False
@@ -118,11 +118,11 @@ class DOCXResumeExporter:
             if result.returncode == 0:
                 return True
             else:
-                print(f"⚠️  Pandoc error: {result.stderr}")
+                print(f"WARNING: Pandoc error: {result.stderr}")
                 return False
-                
+
         except Exception as e:
-            print(f"⚠️  Pandoc method failed: {e}")
+            print(f"WARNING: Pandoc method failed: {e}")
             return False
     
     def _try_python_docx_method(self, html_path: str, output_docx_path: str) -> bool:
@@ -487,10 +487,10 @@ class DOCXResumeExporter:
             return True
             
         except ImportError:
-            print("⚠️  python-docx or beautifulsoup4 not available")
+            print("WARNING: python-docx or beautifulsoup4 not available")
             return False
         except Exception as e:
-            print(f"⚠️  python-docx method failed: {e}")
+            print(f"WARNING: python-docx method failed: {e}")
             import traceback
             traceback.print_exc()
             return False
@@ -533,9 +533,9 @@ class DOCXResumeExporter:
             # Save document
             doc.save(output_docx_path)
             return True
-            
+
         except Exception as e:
-            print(f"⚠️  SVG text extraction failed: {e}")
+            print(f"WARNING: SVG text extraction failed: {e}")
             return False
     
     def _try_pdf_conversion_method(self, html_path: str, output_docx_path: str) -> bool:
@@ -546,22 +546,22 @@ class DOCXResumeExporter:
             # Generate PDF first
             pdf_path = output_docx_path.replace('.docx', '.pdf')
             
-            print(f"  → Generating PDF: {pdf_path}")
+            print(f"  -> Generating PDF: {pdf_path}")
             weasyprint.HTML(filename=html_path).write_pdf(pdf_path)
-            
-            print(f"  ✓ PDF generated")
-            print(f"  ℹ️  Note: PDF generated, but DOCX conversion requires additional tools")
-            print(f"  ℹ️  Consider using pandoc or python-docx for direct DOCX export")
+
+            print(f"  [+] PDF generated")
+            print(f"  INFO: Note: PDF generated, but DOCX conversion requires additional tools")
+            print(f"  INFO: Consider using pandoc or python-docx for direct DOCX export")
             
             # We can't easily convert PDF to DOCX without additional tools
             # Return False to try other methods
             return False
             
         except ImportError:
-            print("⚠️  weasyprint not available")
+            print("WARNING: weasyprint not available")
             return False
         except Exception as e:
-            print(f"⚠️  weasyprint method failed: {e}")
+            print(f"WARNING: weasyprint method failed: {e}")
             return False
 
 

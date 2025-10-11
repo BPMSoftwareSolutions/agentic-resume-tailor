@@ -175,6 +175,76 @@
           "text": "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines."
         }
       ],
+      "dates": "2022 – 2024",
+      "employer": "CGI - Daugherty",
+      "location": "Columbus, OH",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [],
+      "dates": "2022 – 2024",
+      "employer": "CGI - Daugherty",
+      "location": "Columbus, OH",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Transformation",
+            "Microservices",
+            "Micro-frontend",
+            "Architecture",
+            "Modernization"
+          ],
+          "text": "Spearheaded transformation of Online Access platform, implementing microservices and micro-frontend architecture to modernize client-facing systems."
+        },
+        {
+          "tags": [
+            "Training",
+            "Quality",
+            "Automation Testing",
+            "Web",
+            "API",
+            "Mobile",
+            "Cross-training"
+          ],
+          "text": "Bolstered team capabilities as well as strengthened built-in quality by introducing cross-training workshops for Web/API and Mobile automation testing."
+        },
+        {
+          "tags": [
+            "Leadership",
+            "Coaching",
+            "SAFe",
+            "RTE",
+            "Scrum Master",
+            "Jira",
+            "Agile"
+          ],
+          "text": "Provided leadership coaching for engineering managers and trained RTEs, scrum masters, and managers on Jira dashboard development for improved visibility."
+        },
+        {
+          "tags": [
+            "Process Improvement",
+            "SAFe",
+            "Release Train",
+            "Delivery",
+            "Quality",
+            "Team Enablement"
+          ],
+          "text": "Reengineered release train processes, cutting delivery timelines by 50% and enabling 13 teams to deploy independently with higher quality."
+        },
+        {
+          "tags": [
+            "Team Structure",
+            "Organization",
+            "Platform",
+            "Delivery",
+            "Optimization"
+          ],
+          "text": "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines."
+        }
+      ],
       "dates": "2021 - 2024",
       "employer": "Edward Jones",
       "location": "Remote",

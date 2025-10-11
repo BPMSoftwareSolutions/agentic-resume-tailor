@@ -1,0 +1,408 @@
+{
+  "achievements": [
+    "GitHub Community Innovative Contributor",
+    "Compuware President of ERG (Employee Resource Group)",
+    "Detroit Community Youth Mentorship Award"
+  ],
+  "areas_of_expertise": [
+    "Enterprise Architecture & Cloud Transformation",
+    "Revenue Growth & Cost Optimization",
+    "SaaS Solution Development",
+    "Security & Data Protection",
+    "AI Adoption & Scaling",
+    "Data-Driven Analytics",
+    "Process Automation",
+    "Relationship Building",
+    "Innovation & Product Development",
+    "Business Strategy & Value Delivery",
+    "Team Leadership & Agile Coaching",
+    "Cybersecurity & Compliance"
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ],
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": ""
+    }
+  ],
+  "experience": [
+    {
+      "bullets": [
+        {
+          "tags": [
+            "SFTP",
+            "ETL",
+            "SQL",
+            "Paylocity",
+            "AI",
+            "VOC",
+            "AWS",
+            "CloudWatch",
+            "Azure Functions",
+            "Selenium",
+            "RPA",
+            "LLM",
+            "React",
+            "NodeJS",
+            "NoSQL",
+            "Stripe",
+            "PayPal"
+          ],
+          "text": "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management."
+        },
+        {
+          "tags": [
+            "Architecture",
+            "Cloud",
+            "TPA",
+            ".NET",
+            "Java",
+            "Integration",
+            "Claims"
+          ],
+          "text": "ClaimChoice Hub: Architected and delivered cloud-native TPA integration platform that migrated workflows from .NET to Java, streamlined eligibility, payroll, and claims processing, and reduced manual overhead to support client scalability."
+        },
+        {
+          "tags": [
+            "Healthcare",
+            "SaaS",
+            "Portal",
+            "Claims",
+            "Scale"
+          ],
+          "text": "Tiding Health (Healthcare SaaS Platform): Devised and executed high-traffic member portals, admin consoles, and claims integration hub serving more than 3M users."
+        },
+        {
+          "tags": [
+            "AI",
+            "Orchestration",
+            "Architecture",
+            "Plugin",
+            "JSON"
+          ],
+          "text": "RenderX (AI-Driven Orchestration Platform): Established self-documenting, JSON-based plugin architecture powered by proprietary MusicalConductor event orchestration engine."
+        },
+        {
+          "tags": [
+            "AI",
+            "RPA",
+            "LLM",
+            "Healthcare",
+            "Real Estate",
+            "Automation"
+          ],
+          "text": "AI & Automation Leadership: Deployed AI-powered RPA bots for healthcare and real estate clients, incorporating LLMs for intelligent decision-making (e.g., ARV analysis, property workflows)."
+        },
+        {
+          "tags": [
+            "Cloud",
+            "Azure",
+            "BI",
+            "ERP",
+            "Integration",
+            "Architecture"
+          ],
+          "text": "Safe Fleet (Cloud Architecture & Enterprise Integrations): Architected unified BI platform on Microsoft Azure, integrating multiple ERP systems and enabling consolidated reporting that supported $60M acquisition."
+        },
+        {
+          "tags": [
+            "Open Source",
+            "Plugin",
+            "Demo",
+            "Innovation"
+          ],
+          "text": "Developed RenderX Plugins Demo to demonstrate platform extensibility, attracting open-source contributors and positioning RenderX as innovation leader."
+        },
+        {
+          "tags": [
+            "Agile",
+            "TDD",
+            "CI/CD",
+            "Jenkins",
+            "Docker",
+            "Kubernetes",
+            "Leadership"
+          ],
+          "text": "Improved delivery speed and reliability by leading Agile team of six and implementing TDD and CI/CD pipelines with Jenkins, Docker, and Kubernetes."
+        },
+        {
+          "tags": [
+            "Automation",
+            "Cloud",
+            "AI",
+            "LLM",
+            "Architecture"
+          ],
+          "text": "Elevated automation pipelines, merging cloud architecture with AI by fine-tuning custom LLMs and AI agents."
+        }
+      ],
+      "dates": "2017 – 2021",
+      "employer": "BPM Software Solutions",
+      "location": "West Bloomfield, MI",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Network Monitoring",
+            "Compliance",
+            "Azure",
+            "AWS",
+            "Multi-datacenter",
+            "Cross-functional"
+          ],
+          "text": "Designed and executed network monitoring application to oversee IT compliance across hundreds of servers in multi-datacenter environments, spanning on-premises, Microsoft Azure, and AWS. Collaborated with cross-functional teams, including developers, business analysts, and infrastructure specialists, to ensure high-quality solution delivery."
+        },
+        {
+          "tags": [
+            "Productivity",
+            "Integration",
+            "CRM",
+            "LMS",
+            "ERP",
+            "Web Application"
+          ],
+          "text": "Amplified month-end closing productivity by 300% through creation of web-based application integrating CRM, LMS, and ERP systems."
+        },
+        {
+          "tags": [
+            "Wealth Management",
+            "Salesforce",
+            "Integration",
+            "Financial",
+            "Reporting"
+          ],
+          "text": "Deployed wealth management platform, consolidating IRA, mutual fund, and investment data into Salesforce, significantly streamlining client reporting, enhancing financial tracking, and empowering advisors with accurate portfolio insights."
+        }
+      ],
+      "dates": "2016 – 2017",
+      "employer": "Interactive Business Solutions",
+      "location": "Troy, MI",
+      "role": "Senior Software Engineering Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Leadership",
+            "Management System",
+            "Multi-location",
+            "Stakeholder Management",
+            "Technology Evaluation"
+          ],
+          "text": "Directed multiple development teams in redesigning and deploying scrap yard information management system across 25 US locations, enhancing operational efficiency and standardization. Partnered with executives and stakeholders to evaluate emerging technologies, balancing innovation with risk, cost, and scalability."
+        },
+        {
+          "tags": [
+            "ERP",
+            "MVVM",
+            "Design Pattern",
+            "Integration",
+            "Business Process"
+          ],
+          "text": "Upgraded eight ERP subsystems using MVVM design pattern, successfully unifying five locations under single application and streamlining business processes."
+        },
+        {
+          "tags": [
+            "Cloud Migration",
+            "AWS",
+            "EC2",
+            "Infrastructure",
+            "Cost Reduction",
+            "Hybrid Cloud"
+          ],
+          "text": "Redeveloped server room and transitioned corporate infrastructure to hybrid cloud on AWS EC2, reducing IT costs by $250K annually by partnering with network team and external IT vendors."
+        }
+      ],
+      "dates": "2015 – 2016",
+      "employer": "Soave Enterprises",
+      "location": "Detroit, MI",
+      "role": "Technology Manager / Software Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Web Application",
+            "Integration",
+            "M&A",
+            "ITIL",
+            "Change Management",
+            "Leadership",
+            "Mentoring",
+            "C#",
+            "ERP",
+            "Offshore"
+          ],
+          "text": "Created web-based product mapping tool to automate integration of acquired companies, accelerating onboarding and expansion in landscape supplies industry. Defined ITIL practices, enterprise change management processes, and application support strategies aligned with company growth objectives in coordination with CIO and CFO. Led and mentored team of offshore developers to support and sustain ERP business layers in C# for more than three years."
+        },
+        {
+          "tags": [
+            "Full-stack",
+            "ERP",
+            "Order Entry",
+            "Invoicing",
+            "Inventory",
+            "Accounting",
+            "Multi-location"
+          ],
+          "text": "Built and maintained full-stack functionality for proprietary ERP system supporting order entry, invoicing, shipping, product maintenance, inventory, and accounting across 400+ stores in the US and Canada."
+        },
+        {
+          "tags": [
+            "Microservices",
+            "Payment Processing",
+            "Security",
+            "Compliance",
+            "Cost Savings"
+          ],
+          "text": "Devised and implemented Wells Fargo Level III–certified credit card processing microservices, securely handling $1M+ in daily settlements and generating $500K in annual cost savings."
+        },
+        {
+          "tags": [
+            "Architecture",
+            "ERP Migration",
+            "Microsoft Dynamics",
+            "Procurement",
+            "Enterprise"
+          ],
+          "text": "Served as Lead Architect, overseeing ERP migration to Microsoft Dynamics AX 2012 R2, delivering new enterprise solutions for procurement, marketing, and accounting modules."
+        }
+      ],
+      "dates": "2010 – 2015",
+      "employer": "John Deere Landscapes",
+      "location": "Troy, MI",
+      "role": "Software Development Lead / Solution Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Transformation",
+            "Microservices",
+            "Micro-frontend",
+            "Architecture",
+            "Modernization"
+          ],
+          "text": "Spearheaded transformation of Online Access platform, implementing microservices and micro-frontend architecture to modernize client-facing systems."
+        },
+        {
+          "tags": [
+            "Training",
+            "Quality",
+            "Automation Testing",
+            "Web",
+            "API",
+            "Mobile",
+            "Cross-training"
+          ],
+          "text": "Bolstered team capabilities as well as strengthened built-in quality by introducing cross-training workshops for Web/API and Mobile automation testing."
+        },
+        {
+          "tags": [
+            "Leadership",
+            "Coaching",
+            "SAFe",
+            "RTE",
+            "Scrum Master",
+            "Jira",
+            "Agile"
+          ],
+          "text": "Provided leadership coaching for engineering managers and trained RTEs, scrum masters, and managers on Jira dashboard development for improved visibility."
+        },
+        {
+          "tags": [
+            "Process Improvement",
+            "SAFe",
+            "Release Train",
+            "Delivery",
+            "Quality",
+            "Team Enablement"
+          ],
+          "text": "Reengineered release train processes, cutting delivery timelines by 50% and enabling 13 teams to deploy independently with higher quality."
+        },
+        {
+          "tags": [
+            "Team Structure",
+            "Organization",
+            "Platform",
+            "Delivery",
+            "Optimization"
+          ],
+          "text": "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines."
+        }
+      ],
+      "dates": "2022 – 2024",
+      "employer": "CGI - Daugherty",
+      "location": "Columbus, OH",
+      "role": "Principle Consultant"
+    }
+  ],
+  "location": "West Bloomfield, MI",
+  "name": "Sidney Jones",
+  "summary": "Accomplished technology leader with extensive experience in driving software engineering management, enterprise architecture, and large-scale transformation initiatives across diverse sectors. Track record of leading cross-functional teams to deliver AI-driven solutions, scalable SaaS platforms, and enterprise-grade cloud architectures that enhance performance, reduce costs, and accelerate delivery. Skilled in microservices, AI/LLM development, and Agile delivery practices, with strong focus on aligning engineering excellence with business goals, optimizing delivery pipelines, and guiding enterprise modernization strategies across global organizations. Entrepreneurial strategist with expertise in resolving complex business challenges, integrating enterprise consulting with scalable product innovation, and coaching teams in Agile/SAFe to ensure continuous improvement.",
+  "technical_proficiencies": {
+    "ai": "Large Language Models (LLMs), AI-assisted coding, RPA, NLP, Intelligent Orchestration",
+    "cloud": "Azure, AWS, SaaS Platforms, Microservices, Serverless Functions",
+    "databases": "Microsoft SQL Server, MongoDB (NoSQL), MySQL, Oracle, PostgreSQL",
+    "devops": "Jenkins, GitHub Actions, Azure DevOps, Docker, Kubernetes, Terraform, IaC",
+    "languages": "C#, .NET (Framework/Core/6+), Python, Java, JavaScript/TypeScript (React, Angular, Node.js), SQL, Golang, C/C++, VB",
+    "opensource": "GitHub open-source projects (RenderX, Valence CLI)",
+    "os": "Windows, Unix, Linux, macOS, iOS, Android",
+    "security": "AES-256 Encryption, Key Vaults, Role-Based Access Control, HIPAA/Data Privacy"
+  },
+  "title": "Software Engineering & Solutions Architect Leader"
+}

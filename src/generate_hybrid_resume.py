@@ -24,12 +24,13 @@ def generate_hybrid_resume(resume_json_path: str, output_html_path: str, theme: 
                           export_docx: bool = False) -> bool:
     """
     Generate hybrid HTML+SVG resume.
-    
+
     Args:
         resume_json_path: Path to resume JSON file
         output_html_path: Path for output HTML file
         theme: Theme name (professional, modern, executive, creative)
-        
+        export_docx: Whether to also export to DOCX format
+
     Returns:
         True if successful, False otherwise
     """
@@ -37,32 +38,32 @@ def generate_hybrid_resume(resume_json_path: str, output_html_path: str, theme: 
         print(f"\n{'='*80}")
         print(f"HYBRID RESUME GENERATION - {theme.upper()} THEME")
         print(f"{'='*80}\n")
-        
+
         # Step 1: Process resume data and generate HTML structure
-        print("📋 Processing resume data and generating HTML structure...")
+        print("Processing resume data and generating HTML structure...")
         processor = HybridResumeProcessor(resume_json_path, theme)
         html_content = processor.generate_html()
-        print(f"✓ HTML structure generated\n")
-        
+        print(f"HTML structure generated\n")
+
         # Step 2: Generate CSS from theme configuration
-        print("🎨 Generating CSS from theme configuration...")
+        print("Generating CSS from theme configuration...")
         css_generator = HybridCSSGenerator(theme)
         css = css_generator.generate_css()
-        print(f"✓ CSS generated\n")
-        
+        print(f"CSS generated\n")
+
         # Step 3: Assemble complete HTML document
-        print("🔧 Assembling complete HTML document...")
+        print("Assembling complete HTML document...")
         assembler = HybridHTMLAssembler(theme)
         resume_name = processor.resume_data.get('name', 'Resume')
         complete_html = assembler.assemble_html(html_content, css, resume_name)
-        print(f"✓ HTML document assembled\n")
-        
+        print(f"HTML document assembled\n")
+
         # Step 4: Save to file
-        print(f"💾 Saving to {output_html_path}...")
+        print(f"Saving to {output_html_path}...")
         success = assembler.save_html(complete_html, output_html_path)
-        
+
         if success:
-            print(f"✓ Resume saved successfully\n")
+            print(f"Resume saved successfully\n")
 
             # Convert to DOCX if requested
             docx_success = True
@@ -71,23 +72,23 @@ def generate_hybrid_resume(resume_json_path: str, output_html_path: str, theme: 
                 exporter = DOCXResumeExporter()
                 docx_success = exporter.export_to_docx(output_html_path, docx_path)
                 if docx_success:
-                    print(f"📄 DOCX: {docx_path}\n")
+                    print(f"DOCX: {docx_path}\n")
 
             print(f"{'='*80}")
-            print("✅ HYBRID RESUME GENERATION COMPLETE!")
+            print("HYBRID RESUME GENERATION COMPLETE!")
             print(f"{'='*80}\n")
-            print(f"📄 HTML: {output_html_path}")
+            print(f"HTML: {output_html_path}")
             if export_docx and docx_success:
-                print(f"📄 DOCX: {docx_path}")
-            print(f"🎨 Theme: {theme}")
-            print(f"👤 Name: {resume_name}\n")
+                print(f"DOCX: {docx_path}")
+            print(f"Theme: {theme}")
+            print(f"Name: {resume_name}\n")
             return True
         else:
-            print(f"❌ Failed to save resume\n")
+            print(f"Failed to save resume\n")
             return False
-            
+
     except Exception as e:
-        print(f"\n❌ Error generating hybrid resume: {e}")
+        print(f"\nError generating hybrid resume: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -96,45 +97,50 @@ def generate_hybrid_resume(resume_json_path: str, output_html_path: str, theme: 
 def generate_all_themes(resume_json_path: str, output_dir: str, export_docx: bool = False) -> dict:
     """
     Generate resume in all available themes.
-    
+
     Args:
         resume_json_path: Path to resume JSON file
         output_dir: Directory for output files
-        
+        export_docx: Whether to also export to DOCX format
+
     Returns:
         Dictionary mapping theme names to success status
     """
-    themes = ['professional', 'modern', 'executive', 'creative']
-    results = {}
-    
+    from pathlib import Path
+
+    # Create output directory
     output_path = Path(output_dir)
     output_path.mkdir(parents=True, exist_ok=True)
-    
+
+    themes = ['professional', 'modern', 'executive', 'creative']
+    results = {}
+
     print(f"\n{'='*80}")
     print("GENERATING ALL THEMES")
     print(f"{'='*80}\n")
-    
+
     for theme in themes:
-        output_html = output_path / f"hybrid-resume-{theme}.html"
-        success = generate_hybrid_resume(resume_json_path, str(output_html), theme, export_docx)
+        output_file = output_path / f"resume_{theme}.html"
+        print(f"Generating {theme} theme...")
+        success = generate_hybrid_resume(resume_json_path, str(output_file), theme, export_docx)
         results[theme] = success
-        
+
         if success:
             print(f"✅ {theme.capitalize()} theme generated successfully\n")
         else:
             print(f"❌ {theme.capitalize()} theme generation failed\n")
-    
+
     # Print summary
     print(f"\n{'='*80}")
     print("GENERATION SUMMARY")
     print(f"{'='*80}\n")
-    
+
     for theme, success in results.items():
         status = "✅ SUCCESS" if success else "❌ FAILED"
         print(f"{status}: {theme.capitalize()}")
-    
+
     print()
-    
+
     return results
 
 
