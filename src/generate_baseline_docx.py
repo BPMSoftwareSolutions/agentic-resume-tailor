@@ -15,6 +15,15 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 
 
+def set_run_font(run, size=10, bold=False, name='Calibri'):
+    """Set font properties for a run."""
+    run.font.name = name
+    run.font.size = Pt(size)
+    if bold:
+        run.font.bold = True
+    return run
+
+
 def add_table_with_header(doc, header_text):
     """Add a 2x3 table with centered header text (yellow background)."""
     table = doc.add_table(rows=2, cols=3)
@@ -34,8 +43,7 @@ def add_table_with_header(doc, header_text):
         for paragraph in cell.paragraphs:
             paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
             for run in paragraph.runs:
-                run.font.bold = True
-                run.font.size = Pt(11)
+                set_run_font(run, size=11, bold=True)
         
         # Add yellow background
         shading_elm = OxmlElement('w:shd')
@@ -68,37 +76,34 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
     # Left cell: Name
     name_cell = header_table.rows[0].cells[0]
     name_para = name_cell.paragraphs[0]
-    name_run = name_para.add_run(data['name'] + ' ')
-    name_run.font.size = Pt(18)
-    name_run.font.bold = True
-    
+    name_run = name_para.add_run(data['name'])
+    set_run_font(name_run, size=18, bold=True)
+
     # Right cell: Contact info
     contact_cell = header_table.rows[0].cells[1]
     contact_para = contact_cell.paragraphs[0]
     contact_text = f"{data['contact']['email']} • {data['contact']['phone']}\nLinkedIn • {data['location']}"
     contact_run = contact_para.add_run(contact_text)
-    contact_run.font.size = Pt(10)
-    
+    set_run_font(contact_run, size=10)
+
     # ===== Title and Summary (as paragraphs) =====
     # Title
     title_para = doc.add_paragraph()
     title_run = title_para.add_run(data['title'])
-    title_run.font.bold = True
-    title_run.font.size = Pt(11)
-    
+    set_run_font(title_run, size=11, bold=True)
+
     # Summary - first sentence bold
     summary_text = data['summary']
     sentences = summary_text.split('. ', 1)
-    
+
     summary_para1 = doc.add_paragraph()
     first_sent_run = summary_para1.add_run(sentences[0] + '.')
-    first_sent_run.font.bold = True
-    first_sent_run.font.size = Pt(10)
-    
+    set_run_font(first_sent_run, size=10, bold=True)
+
     if len(sentences) > 1:
         summary_para2 = doc.add_paragraph()
         rest_run = summary_para2.add_run(sentences[1])
-        rest_run.font.size = Pt(10)
+        set_run_font(rest_run, size=10)
     
     # ===== TABLE 1 & 2: Technical Proficiencies =====
     add_table_with_header(doc, "Technical Proficiencies")
@@ -129,14 +134,13 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
         label_cell = row.cells[0]
         label_para = label_cell.paragraphs[0]
         label_run = label_para.add_run(label)
-        label_run.font.bold = True
-        label_run.font.size = Pt(10)
-        
+        set_run_font(label_run, size=10, bold=True)
+
         # Value cell
         value_cell = row.cells[1]
         value_para = value_cell.paragraphs[0]
         value_run = value_para.add_run(value)
-        value_run.font.size = Pt(10)
+        set_run_font(value_run, size=10)
     
     # ===== TABLE 3 & 4: Areas of Expertise =====
     add_table_with_header(doc, "Areas of Expertise")
@@ -159,7 +163,7 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
         cell_text = '\n'.join(areas[start_idx:end_idx])
         para = cell.paragraphs[0]
         run = para.add_run(cell_text)
-        run.font.size = Pt(10)
+        set_run_font(run, size=10)
     
     # ===== TABLE 5: Career Experience Header =====
     add_table_with_header(doc, "Career Experience")
@@ -170,14 +174,12 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
         company_para = doc.add_paragraph()
         company_text = f"{job['employer']}, {job.get('location', '')}      {job['dates']}"
         company_run = company_para.add_run(company_text)
-        company_run.font.bold = True
-        company_run.font.size = Pt(10)
-        
+        set_run_font(company_run, size=10, bold=True)
+
         # Role (bold)
         role_para = doc.add_paragraph()
         role_run = role_para.add_run(job['role'])
-        role_run.font.bold = True
-        role_run.font.size = Pt(10)
+        set_run_font(role_run, size=10, bold=True)
         
         # Bullets
         for bullet in job.get('bullets', []):
@@ -187,20 +189,19 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
             if ':' in bullet_text:
                 parts = bullet_text.split(':', 1)
                 bullet_para = doc.add_paragraph()
-                
+
                 # Bold part (project name)
                 bold_run = bullet_para.add_run(parts[0] + ':')
-                bold_run.font.bold = True
-                bold_run.font.size = Pt(10)
-                
+                set_run_font(bold_run, size=10, bold=True)
+
                 # Normal part (description)
                 normal_run = bullet_para.add_run(parts[1])
-                normal_run.font.size = Pt(10)
+                set_run_font(normal_run, size=10)
             else:
                 # Regular bullet
                 bullet_para = doc.add_paragraph()
                 bullet_run = bullet_para.add_run(bullet_text)
-                bullet_run.font.size = Pt(10)
+                set_run_font(bullet_run, size=10)
     
     # ===== TABLE 6: Education Header =====
     add_table_with_header(doc, "Education & Professional Development")
@@ -210,19 +211,19 @@ def generate_baseline_docx(resume_json_path, output_docx_path):
         edu_para = doc.add_paragraph()
         edu_text = f"{edu.get('degree', '')} | {edu.get('institution', '')}, {edu.get('location', '')}"
         edu_run = edu_para.add_run(edu_text)
-        edu_run.font.size = Pt(10)
-    
+        set_run_font(edu_run, size=10)
+
     # ===== Certifications (as paragraphs) =====
     for cert in data.get('certifications', []):
         cert_para = doc.add_paragraph()
         cert_run = cert_para.add_run(cert)
-        cert_run.font.size = Pt(10)
-    
+        set_run_font(cert_run, size=10)
+
     # ===== Achievements (as paragraphs) =====
     for achievement in data.get('achievements', []):
         ach_para = doc.add_paragraph()
         ach_run = ach_para.add_run(achievement)
-        ach_run.font.size = Pt(10)
+        set_run_font(ach_run, size=10)
     
     # Save document
     doc.save(output_docx_path)
