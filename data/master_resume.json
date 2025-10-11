@@ -7,6 +7,30 @@
     "phone": "(248) 802-1847"
   },
   "summary": "Accomplished technology leader with extensive experience in driving software engineering management, enterprise architecture, and large-scale transformation initiatives across diverse sectors. Track record of leading cross-functional teams to deliver AI-driven solutions, scalable SaaS platforms, and enterprise-grade cloud architectures that enhance performance, reduce costs, and accelerate delivery. Skilled in microservices, AI/LLM development, and Agile delivery practices, with strong focus on aligning engineering excellence with business goals, optimizing delivery pipelines, and guiding enterprise modernization strategies across global organizations. Entrepreneurial strategist with expertise in resolving complex business challenges, integrating enterprise consulting with scalable product innovation, and coaching teams in Agile/SAFe to ensure continuous improvement.",
+  "technical_proficiencies": {
+    "cloud": "Azure, AWS, SaaS Platforms, Microservices, Serverless Functions",
+    "ai": "Large Language Models (LLMs), AI-assisted coding, RPA, NLP, Intelligent Orchestration",
+    "devops": "Jenkins, GitHub Actions, Azure DevOps, Docker, Kubernetes, Terraform, IaC",
+    "security": "AES-256 Encryption, Key Vaults, Role-Based Access Control, HIPAA/Data Privacy",
+    "languages": "C#, .NET (Framework/Core/6+), Python, Java, JavaScript/TypeScript (React, Angular, Node.js), SQL, Golang, C/C++, VB",
+    "databases": "Microsoft SQL Server, MongoDB (NoSQL), MySQL, Oracle, PostgreSQL",
+    "os": "Windows, Unix, Linux, macOS, iOS, Android",
+    "opensource": "GitHub open-source projects (RenderX, Valence CLI)"
+  },
+  "areas_of_expertise": [
+    "Enterprise Architecture & Cloud Transformation",
+    "Revenue Growth & Cost Optimization",
+    "SaaS Solution Development",
+    "Security & Data Protection",
+    "AI Adoption & Scaling",
+    "Data-Driven Analytics",
+    "Process Automation",
+    "Relationship Building",
+    "Innovation & Product Development",
+    "Business Strategy & Value Delivery",
+    "Team Leadership & Agile Coaching",
+    "Cybersecurity & Compliance"
+  ],
   "experience": [
     {
       "employer": "BPM Software Solutions",
