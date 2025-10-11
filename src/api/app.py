@@ -1,3 +1,4 @@
+from typing import Any, Dict, List, Tuple
 """
 Flask API for Resume Editor Web Interface
 
@@ -38,7 +39,7 @@ BACKUP_DIR = DATA_DIR / "backups"
 BACKUP_DIR.mkdir(exist_ok=True)
 
 
-def validate_resume_structure(data: Dict[str, Any]) -> tuple[bool, List[str]]:
+def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
     """
     Validate the structure of resume JSON data.
     
