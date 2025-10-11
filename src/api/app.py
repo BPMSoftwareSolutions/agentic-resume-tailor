@@ -95,7 +95,7 @@ def validate_resume_structure(data: Dict[str, Any]) -> tuple[bool, List[str]]:
                     errors.append(f"Education entry {idx} must be an object")
                     continue
                 
-                edu_required = ["school", "degree"]
+                edu_required = ["institution", "degree"]
                 for field in edu_required:
                     if field not in edu:
                         errors.append(f"Education entry {idx} missing '{field}'")

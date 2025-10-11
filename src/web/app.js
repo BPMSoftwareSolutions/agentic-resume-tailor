@@ -346,10 +346,20 @@ function renderExperience() {
         resumeData.experience = [];
     }
 
-    resumeData.experience.forEach((exp, index) => {
-        const expCard = createExperienceCard(exp, index);
-        container.appendChild(expCard);
-    });
+    // Sort by start date (descending)
+    const parseStartYear = exp => {
+        if (!exp.dates) return 0;
+        // Expect format like "2017 – 2024" or "2016 – 2017"
+        const match = exp.dates.match(/(\d{4})/);
+        return match ? parseInt(match[1], 10) : 0;
+    };
+    resumeData.experience
+        .slice() // copy to avoid mutating original
+        .sort((a, b) => parseStartYear(b) - parseStartYear(a))
+        .forEach((exp, index) => {
+            const expCard = createExperienceCard(exp, index);
+            container.appendChild(expCard);
+        });
 }
 
 function createExperienceCard(exp, index) {
@@ -515,7 +525,7 @@ function createEducationCard(edu, index) {
 
     card.innerHTML = `
         <div class="card-header">
-            <h5 class="card-title">${edu.school || 'New Education'}</h5>
+            <h5 class="card-title">${edu.institution || 'New Education'}</h5>
             <button class="btn btn-sm btn-outline-danger" onclick="removeEducation(${index})">
                 <i class="bi bi-trash"></i> Delete
             </button>
@@ -523,9 +533,9 @@ function createEducationCard(edu, index) {
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">School</label>
-                    <input type="text" class="form-control" value="${edu.school || ''}"
-                           onchange="updateEducation(${index}, 'school', this.value)">
+              <label class="form-label">Institution</label>
+              <input type="text" class="form-control" value="${edu.institution || ''}"
+                  onchange="updateEducation(${index}, 'institution', this.value)">
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Degree</label>
@@ -556,7 +566,7 @@ function addEducationEntry() {
         resumeData.education = [];
     }
     resumeData.education.push({
-        school: '',
+        institution: 'Institution Name',
         degree: '',
         year: ''
     });
