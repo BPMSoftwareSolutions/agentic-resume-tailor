@@ -15,10 +15,13 @@ def md_to_docx(md_path, docx_path):
     font.name = 'Calibri'
     font.size = Pt(10)  # Default 10pt
 
+    # Add empty first paragraph to match reference template
+    doc.add_paragraph()
+
     lines = md_text.split('\n')
     i = 0
     current_section = None
-    summary_first_line = True
+    summary_first_sentence = True
     seen_title = False
 
     while i < len(lines):
@@ -38,7 +41,7 @@ def md_to_docx(md_path, docx_path):
         elif line.startswith('## '):
             current_section = line[3:].lower()
             if current_section == 'summary':
-                summary_first_line = True
+                summary_first_sentence = True
             i += 1
             continue
 
@@ -58,18 +61,35 @@ def md_to_docx(md_path, docx_path):
             run = p.runs[0]
             run.font.size = Pt(10)
 
-        # Summary section - split into sentences, first bold
+        # Summary section - split into sentences, first sentence bold, rest normal
         elif current_section == 'summary':
-            # Split long summary into multiple sentences
-            sentences = re.split(r'(?<=[.!?])\s+', line)
-            for j, sentence in enumerate(sentences):
-                if sentence.strip():
-                    p = doc.add_paragraph(sentence.strip())
+            # Split summary into sentences (first sentence bold, rest normal)
+            # Look for first sentence ending with period
+            first_sentence_match = re.match(r'^([^.]+\.)\s*(.*)$', line, re.DOTALL)
+            if first_sentence_match and summary_first_sentence:
+                # First sentence - bold
+                first_sent = first_sentence_match.group(1).strip()
+                rest = first_sentence_match.group(2).strip()
+
+                p = doc.add_paragraph(first_sent)
+                run = p.runs[0]
+                run.font.size = Pt(10)
+                run.font.bold = True
+                summary_first_sentence = False
+
+                # Rest of summary - normal
+                if rest:
+                    p = doc.add_paragraph(rest)
                     run = p.runs[0]
                     run.font.size = Pt(10)
-                    if j == 0 and summary_first_line:
-                        run.font.bold = True
-                        summary_first_line = False
+            else:
+                # Continuation or single line
+                p = doc.add_paragraph(line)
+                run = p.runs[0]
+                run.font.size = Pt(10)
+                if summary_first_sentence:
+                    run.font.bold = True
+                    summary_first_sentence = False
 
         # Skills section - skip bullets
         elif current_section == 'skills' and line.startswith('- '):

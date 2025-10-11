@@ -1,21 +1,27 @@
 # {{ name }}
 {{ title }}
-{{ location }} • {{ contact.email }} • {{ contact.phone }}
 
 ## Summary
 {{ summary }}
 
-## Skills
-{% for s in skills %}- {{ s }}
-{% endfor %}
-
 ## Experience
 {% for job in experience %}
-**{{ job.role }} — {{ job.employer }}** ({{ job.dates }})
+**{{ job.role }} — {{ job.employer }}{% if job.location %}, {{ job.location }}{% endif %}** ({{ job.dates }})
 {% for b in job.selected_bullets %}- {{ b }}
 {% endfor %}
+
 {% endfor %}
 
 ## Education
-{% for e in education %}- {{ e.school }} — {{ e.degree }} ({{ e.year }})
+{% for e in education %}- {{ e.degree }} | {{ e.institution }}{% if e.location %}, {{ e.location }}{% endif %}
 {% endfor %}
+
+{% if certifications %}## Certifications
+{% for c in certifications %}- {{ c }}
+{% endfor %}
+{% endif %}
+{% if achievements %}
+## Achievements
+{% for a in achievements %}- {{ a }}
+{% endfor %}
+{% endif %}

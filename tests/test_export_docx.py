@@ -44,9 +44,11 @@ class TestMdToDocx(unittest.TestCase):
         md_to_docx(str(md_path), str(docx_path))
 
         doc = Document(str(docx_path))
-        self.assertGreater(len(doc.paragraphs), 0)
-        # H1 is skipped, title line is shown
-        self.assertIn("DevOps Engineer", doc.paragraphs[0].text)
+        self.assertGreater(len(doc.paragraphs), 1)
+        # First paragraph is empty (matching reference template)
+        self.assertEqual("", doc.paragraphs[0].text.strip())
+        # H1 is skipped, title line is shown in paragraph 1
+        self.assertIn("DevOps Engineer", doc.paragraphs[1].text)
     
     def test_converts_h2_headers(self):
         """Should skip H2 headers (sections) per template format."""
