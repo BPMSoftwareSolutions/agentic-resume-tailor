@@ -130,11 +130,12 @@ class TestEndToEndPipeline(unittest.TestCase):
         
         self.assertTrue(docx_path.exists())
         
-        # Verify DOCX content
+        # Verify DOCX content (H1 name is skipped per template format)
         doc = Document(str(docx_path))
         text = "\n".join([p.text for p in doc.paragraphs])
-        self.assertIn("Test User", text)
+        # Name (H1) is skipped, but title and other content is present
         self.assertIn("DevOps Engineer", text)
+        self.assertIn("Test City", text)
     
     def test_top_bullets_selected(self):
         """Test that top 3 most relevant bullets are selected."""

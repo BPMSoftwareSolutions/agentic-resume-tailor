@@ -36,39 +36,41 @@ class TestMdToDocx(unittest.TestCase):
         self.assertTrue(docx_path.exists())
     
     def test_converts_h1_header(self):
-        """Should convert H1 headers (name)."""
+        """Should skip H1 headers (name) per template format."""
         md_path = Path(self.temp_dir) / "test.md"
         docx_path = Path(self.temp_dir) / "test.docx"
-        
-        md_path.write_text("# John Doe", encoding='utf-8')
+
+        md_path.write_text("# John Doe\nDevOps Engineer", encoding='utf-8')
         md_to_docx(str(md_path), str(docx_path))
-        
+
         doc = Document(str(docx_path))
         self.assertGreater(len(doc.paragraphs), 0)
-        self.assertIn("John Doe", doc.paragraphs[0].text)
+        # H1 is skipped, title line is shown
+        self.assertIn("DevOps Engineer", doc.paragraphs[0].text)
     
     def test_converts_h2_headers(self):
-        """Should convert H2 headers (sections)."""
+        """Should skip H2 headers (sections) per template format."""
         md_path = Path(self.temp_dir) / "test.md"
         docx_path = Path(self.temp_dir) / "test.docx"
-        
-        md_path.write_text("## Experience\n## Education", encoding='utf-8')
+
+        md_path.write_text("Title\n## Summary\nSome summary text\n## Education\n- University Name", encoding='utf-8')
         md_to_docx(str(md_path), str(docx_path))
-        
+
         doc = Document(str(docx_path))
         text = "\n".join([p.text for p in doc.paragraphs])
-        self.assertIn("Experience", text)
-        self.assertIn("Education", text)
+        # H2 headers are skipped, but content is shown
+        self.assertIn("Some summary text", text)
+        self.assertIn("University Name", text)
     
     def test_converts_bullet_points(self):
-        """Should convert bullet points."""
+        """Should convert experience bullet points to regular paragraphs."""
         md_path = Path(self.temp_dir) / "test.md"
         docx_path = Path(self.temp_dir) / "test.docx"
-        
-        md_content = "## Skills\n- Python\n- CI/CD\n- Terraform"
+
+        md_content = "Title\n## Experience\n**Role — Company** (2020 – 2024)\n- Built Python automation\n- Managed CI/CD\n- Used Terraform"
         md_path.write_text(md_content, encoding='utf-8')
         md_to_docx(str(md_path), str(docx_path))
-        
+
         doc = Document(str(docx_path))
         text = "\n".join([p.text for p in doc.paragraphs])
         self.assertIn("Python", text)
@@ -118,21 +120,22 @@ class TestMdToDocx(unittest.TestCase):
         """Should handle UTF-8 encoded characters."""
         md_path = Path(self.temp_dir) / "test.md"
         docx_path = Path(self.temp_dir) / "test.docx"
-        
-        md_content = "# Résumé\n\nC# and C++ developer"
+
+        md_content = "# José García\nSoftware Engineer\nC# and C++ developer"
         md_path.write_text(md_content, encoding='utf-8')
         md_to_docx(str(md_path), str(docx_path))
-        
+
         doc = Document(str(docx_path))
         text = "\n".join([p.text for p in doc.paragraphs])
-        self.assertIn("Résumé", text)
+        # H1 is skipped, but title and content are shown
+        self.assertIn("Software Engineer", text)
         self.assertIn("C#", text)
     
     def test_real_world_resume(self):
         """Test with a realistic resume structure."""
         md_path = Path(self.temp_dir) / "test.md"
         docx_path = Path(self.temp_dir) / "test.docx"
-        
+
         md_content = """# John Doe
 DevOps Engineer
 Location • email@example.com • (123) 456-7890
@@ -155,19 +158,18 @@ Experienced DevOps engineer with 10+ years.
 """
         md_path.write_text(md_content, encoding='utf-8')
         md_to_docx(str(md_path), str(docx_path))
-        
+
         doc = Document(str(docx_path))
         text = "\n".join([p.text for p in doc.paragraphs])
-        
-        # Check key sections are present
-        self.assertIn("John Doe", text)
+
+        # Check key content is present (H1 and H2 headers are skipped per template)
         self.assertIn("DevOps Engineer", text)
-        self.assertIn("Summary", text)
-        self.assertIn("Skills", text)
-        self.assertIn("Experience", text)
-        self.assertIn("Education", text)
-        self.assertIn("CI/CD", text)
+        self.assertIn("Location", text)
+        self.assertIn("Experienced DevOps engineer", text)
+        self.assertIn("Tech Company", text)
+        self.assertIn("Senior DevOps Engineer", text)
         self.assertIn("50%", text)
+        self.assertIn("University Name", text)
     
     def test_file_not_found_error(self):
         """Should raise error for non-existent markdown file."""
