@@ -184,8 +184,45 @@
     }
   ],
   "certifications": [
-    "SAFe 5 Certified DevOps Practitioner",
-    "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    {
+      "name": "SAFe 5 Certified DevOps Practitioner",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "date": "Jan 2023"
+    },
+    {
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "date": "Dec 2022"
+    },
+    {
+      "name": "ICAgile Certified Professional - Agile Team Facilitation",
+      "issuer": "ICAgile",
+      "date": "Oct 2022",
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "name": "ICAgile Certified Professional - Foundations of DevOps",
+      "issuer": "ICAgile",
+      "date": "Oct 2022",
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "name": "Agile Project and Delivery Management",
+      "issuer": "ICAgile",
+      "date": "Sep 2022",
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "name": "ICAgile Certified Professional - Business Agility Foundations",
+      "issuer": "ICAgile",
+      "date": "Aug 2022",
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "name": "Professional Scrum Master™ I (PSM I)",
+      "issuer": "Scrum.org",
+      "date": "May 2022"
+    }
   ],
   "achievements": [
     "GitHub Community Innovative Contributor",
