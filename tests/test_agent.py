@@ -186,7 +186,7 @@ class TestAgent:
     def test_process_message_regular(self, mock_openai_class, tmp_path):
         """Test processing a regular message."""
         memory_file = tmp_path / "memory.json"
-        
+
         # Mock OpenAI client
         mock_client = MagicMock()
         mock_response = MagicMock()
@@ -194,13 +194,17 @@ class TestAgent:
         mock_response.choices[0].message.content = "Test response"
         mock_client.chat.completions.create.return_value = mock_response
         mock_openai_class.return_value = mock_client
-        
+
         with patch.dict(os.environ, {'OPENAI_API_KEY': 'test-key'}):
             agent = Agent(memory_file=str(memory_file))
             response = agent.process_message("Hello")
-            
+
             assert response == "Test response"
-            assert len(agent.memory_manager.memory) == 2  # user + assistant
+            # Should have system prompt + user + assistant = 3 messages
+            assert len(agent.memory_manager.memory) == 3
+            assert agent.memory_manager.memory[0]["role"] == "system"
+            assert agent.memory_manager.memory[1]["role"] == "user"
+            assert agent.memory_manager.memory[2]["role"] == "assistant"
     
     @patch('agent.OpenAI')
     def test_process_message_command(self, mock_openai_class, tmp_path):

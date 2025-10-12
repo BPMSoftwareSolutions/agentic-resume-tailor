@@ -23,6 +23,14 @@
       "location": "Remote",
       "created_at": "2025-10-11T20:19:44.369969",
       "updated_at": "2025-10-11T20:19:44.371970"
+    },
+    {
+      "id": "e0a972bf-cc03-4720-9f81-187fa5734b4a",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-12T09:10:18.914802",
+      "updated_at": "2025-10-12T09:10:18.920324"
     }
   ]
 }
