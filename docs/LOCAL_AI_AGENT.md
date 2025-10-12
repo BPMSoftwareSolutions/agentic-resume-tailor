@@ -10,6 +10,7 @@ The Local AI Agent is a Python-based interactive command-line tool that provides
 
 - 🤖 **Natural Language Interaction**: Chat with OpenAI models directly from your terminal
 - 🔧 **Local Command Execution**: Execute system commands using the `run:` prefix
+- ⚡ **Auto-Execution**: Automatically detects and executes commands suggested by the AI (with confirmation)
 - 💾 **Persistent Memory**: Conversation history is saved and restored across sessions
 - 🔒 **Secure**: API keys are managed via environment variables
 - 🎯 **Simple Interface**: Easy-to-use command-line interface
@@ -76,10 +77,49 @@ Commands:
   - Type 'run: <command>' to execute local commands
   - Type 'exit' or 'quit' to stop
   - Type anything else to chat with the AI
+
+Settings:
+  - Auto-execute: ✅ Enabled
+  - Confirmation: ✅ Required
 ==================================================
 
 💬 >
 ```
+
+### Command-Line Options
+
+The agent supports several command-line options to customize behavior:
+
+```bash
+# Run with default settings (auto-execute with confirmation)
+python agent.py
+
+# Disable auto-execution of AI-suggested commands
+python agent.py --no-auto-execute
+
+# Auto-execute without confirmation (use with caution!)
+python agent.py --no-confirm
+
+# Use a different OpenAI model
+python agent.py --model gpt-4-turbo
+
+# Use a custom memory file
+python agent.py --memory my_memory.json
+
+# Combine options
+python agent.py --model gpt-3.5-turbo --no-confirm
+```
+
+**Available Options:**
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--model MODEL` | OpenAI model to use | `gpt-4` or `OPENAI_MODEL` env var |
+| `--memory FILE` | Memory file path | `memory.json` |
+| `--auto-execute` | Enable auto-execution | Enabled by default |
+| `--no-auto-execute` | Disable auto-execution | - |
+| `--no-confirm` | Skip confirmation prompts | Confirmation enabled by default |
+| `-h, --help` | Show help message | - |
 
 ### Basic Interaction
 
@@ -140,14 +180,19 @@ with open('file.json', 'r') as f:
 This opens the file, parses the JSON, and stores it in the `data` variable.
 ```
 
-### Example 2: Combining AI and Commands
+### Example 2: Auto-Execution with Confirmation (New!)
+
+The agent can now automatically detect and execute commands suggested by the AI:
 
 ```
 💬 > What files are in the current directory?
 
-🤖 I can help you check that. Try running: run: ls
+🤖 I can help you check that.
 
-💬 > run: ls
+run: ls
+
+❓ Execute this command? (y/n/edit): y
+
 🔧 Executing command: ls
 ✅ Command executed successfully:
 agent.py
@@ -156,7 +201,30 @@ requirements.txt
 ...
 ```
 
-### Example 3: Multi-turn Conversation
+**Confirmation Options:**
+- `y` or `yes` - Execute the command
+- `n` or `no` - Skip execution
+- `edit` - Edit the command before executing
+
+### Example 3: Combining AI and Commands
+
+```
+💬 > List all Python files in the src directory
+
+🤖 I'll list all Python files in the src directory.
+
+run: ls src/*.py
+
+❓ Execute this command? (y/n/edit): y
+
+🔧 Executing command: ls src/*.py
+✅ Command executed successfully:
+src/tailor.py
+src/update_resume_experience.py
+...
+```
+
+### Example 4: Multi-turn Conversation
 
 ```
 💬 > I need to create a new Python file
@@ -165,11 +233,32 @@ requirements.txt
 
 💬 > Create a file called hello.py with a simple hello world
 
-🤖 You can create it with this command: run: echo "print('Hello, World!')" > hello.py
+🤖 I'll create a hello.py file with a simple hello world program.
 
-💬 > run: echo "print('Hello, World!')" > hello.py
+run: echo "print('Hello, World!')" > hello.py
+
+❓ Execute this command? (y/n/edit): y
+
 🔧 Executing command: echo "print('Hello, World!')" > hello.py
 ✅ Command executed successfully:
+```
+
+### Example 5: Editing Commands Before Execution
+
+```
+💬 > Update the Ford resume with the latest experience
+
+🤖 I'll update the Ford resume with the experience file.
+
+run: python src/update_resume_experience.py --resume "Ford" --experience "data/job_listings/experience.md"
+
+❓ Execute this command? (y/n/edit): edit
+
+✏️  Edit command: python src/update_resume_experience.py --resume "Ford" --experience "data/job_listings/Tailored Experience Summary for Ford.md"
+
+🔧 Executing edited command: python src/update_resume_experience.py --resume "Ford" --experience "data/job_listings/Tailored Experience Summary for Ford.md"
+✅ Command executed successfully:
+Updated resume: Sidney_Jones_Senior_Software_Engineer_Ford
 ```
 
 ## Memory Persistence
@@ -200,6 +289,38 @@ rm memory.json
 | `OPENAI_API_KEY` | Your OpenAI API key | None | Yes |
 | `OPENAI_MODEL` | Model to use | `gpt-4` | No |
 
+### Auto-Execution Settings
+
+The agent supports two modes for handling AI-suggested commands:
+
+**1. Auto-Execute with Confirmation (Default)**
+- Commands are detected in AI responses
+- User is prompted to confirm before execution
+- Options: `y` (execute), `n` (skip), `edit` (modify command)
+- Safest option for general use
+
+```bash
+python agent.py  # Default behavior
+```
+
+**2. Auto-Execute without Confirmation**
+- Commands are executed immediately without prompting
+- Matches web interface behavior
+- Use with caution - only in trusted environments
+
+```bash
+python agent.py --no-confirm
+```
+
+**3. Manual Execution Only**
+- Disables auto-execution entirely
+- User must manually type `run:` commands
+- Most conservative option
+
+```bash
+python agent.py --no-auto-execute
+```
+
 ### Supported Models
 
 - `gpt-4` (recommended)
@@ -213,15 +334,18 @@ rm memory.json
 
 1. **Never commit your `.env` file** - It contains your API key
 2. **Command execution** - The agent can execute any command you type with `run:`
-3. **API costs** - Each interaction uses your OpenAI API quota
-4. **Memory file** - Contains conversation history in plain text
+3. **Auto-execution** - Commands suggested by AI are executed (with confirmation by default)
+4. **API costs** - Each interaction uses your OpenAI API quota
+5. **Memory file** - Contains conversation history in plain text
 
 ### Best Practices
 
 - Keep your API key secure
-- Review commands before executing them
+- **Always use confirmation mode** (`--no-confirm` should only be used in trusted environments)
+- Review commands before executing them (especially with `edit` option)
 - Monitor your OpenAI API usage
 - Don't share your `memory.json` if it contains sensitive information
+- Use `--no-auto-execute` when working with sensitive systems
 
 ## Troubleshooting
 
@@ -264,6 +388,8 @@ python agent.py
    - Manages OpenAI client
    - Coordinates memory and command execution
    - Handles user interaction loop
+   - Detects and auto-executes commands from AI responses
+   - Manages confirmation flow
 
 2. **MemoryManager** - Handles conversation persistence
    - Loads/saves `memory.json`
@@ -293,6 +419,18 @@ Capture output            Get AI response
     └─────→ MemoryManager ←─────┘
                 ↓
            Save to memory.json
+                ↓
+        Auto-execute enabled?
+                ↓
+               Yes → Extract command from response
+                ↓
+        Confirmation required?
+                ↓
+               Yes → Prompt user (y/n/edit)
+                ↓
+           Execute command
+                ↓
+        Append result to response
                 ↓
            Return response
 ```

@@ -358,13 +358,16 @@ run: python src/tailor.py --resume data/master_resume.json --jd 'data/job_listin
 Available themes: professional, modern, executive, creative
 """
 
-    def __init__(self, memory_file: str = "memory.json", model: str = "gpt-4"):
+    def __init__(self, memory_file: str = "memory.json", model: str = "gpt-4",
+                 auto_execute: bool = True, confirm_execution: bool = True):
         """
         Initialize the agent.
 
         Args:
             memory_file: Path to memory JSON file
             model: OpenAI model to use
+            auto_execute: Whether to auto-execute commands from agent responses
+            confirm_execution: Whether to ask for confirmation before executing
 
         Raises:
             ValueError: If OPENAI_API_KEY is not set
@@ -377,6 +380,8 @@ Available themes: professional, modern, executive, creative
             )
 
         self.model = model
+        self.auto_execute = auto_execute
+        self.confirm_execution = confirm_execution
         self.client = OpenAI(api_key=self.api_key)
         self.memory_manager = MemoryManager(memory_file)
         self.command_executor = CommandExecutor()
@@ -395,10 +400,10 @@ Available themes: professional, modern, executive, creative
     def process_message(self, user_input: str) -> str:
         """
         Process user input and return response.
-        
+
         Args:
             user_input: User's input message
-            
+
         Returns:
             Response string
         """
@@ -406,48 +411,137 @@ Available themes: professional, modern, executive, creative
         if self.command_executor.is_command(user_input):
             command = self.command_executor.extract_command(user_input)
             print(f"🔧 Executing command: {command}")
-            
+
             result = self.command_executor.execute(command)
-            
+
             if result["success"]:
                 response = f"✅ Command executed successfully:\n{result['output']}"
             else:
                 response = f"❌ Command failed:\n{result['error']}"
-            
+
             # Add to memory
             self.memory_manager.add_message("user", user_input)
             self.memory_manager.add_message("assistant", response)
             self.memory_manager.save()
-            
+
             return response
-        
+
         # Regular message - send to OpenAI
         self.memory_manager.add_message("user", user_input)
-        
+
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=self.memory_manager.get_messages()
             )
-            
+
             assistant_message = response.choices[0].message.content
             self.memory_manager.add_message("assistant", assistant_message)
             self.memory_manager.save()
-            
+
+            # Check if response contains a command to auto-execute
+            if self.auto_execute:
+                command = self._extract_command_from_response(assistant_message)
+                if command:
+                    # Ask for confirmation if enabled
+                    should_execute = True
+                    if self.confirm_execution:
+                        should_execute = self._confirm_execution(command)
+
+                    if should_execute:
+                        print(f"🔧 Executing command: {command}")
+                        result = self.command_executor.execute(command)
+                        execution_result = self._format_execution_result(result)
+
+                        # Add execution result to memory
+                        self.memory_manager.add_message("user", f"run: {command}")
+                        self.memory_manager.add_message("assistant", execution_result)
+                        self.memory_manager.save()
+
+                        # Append execution result to response
+                        assistant_message += f"\n\n{execution_result}"
+
             return assistant_message
-            
+
         except Exception as e:
             error_msg = f"❌ Error communicating with OpenAI: {str(e)}"
             print(error_msg)
             return error_msg
     
+    def _extract_command_from_response(self, response: str) -> Optional[str]:
+        """
+        Extract command from agent response (looks for 'run:' pattern).
+
+        Args:
+            response: Agent response text
+
+        Returns:
+            Command string if found, None otherwise
+        """
+        import re
+        pattern = r'run:\s*(.+?)(?:\n|$)'
+        match = re.search(pattern, response, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _confirm_execution(self, command: str) -> bool:
+        """
+        Ask user to confirm command execution.
+
+        Args:
+            command: Command to execute
+
+        Returns:
+            True if user confirms execution, False otherwise
+        """
+        print(f"\n❓ Execute this command? (y/n/edit): ", end="", flush=True)
+        try:
+            response = input().strip().lower()
+        except (KeyboardInterrupt, EOFError):
+            print("\n⏭️  Skipping command execution")
+            return False
+
+        if response in ['y', 'yes']:
+            return True
+        elif response == 'edit':
+            print(f"✏️  Edit command: ", end="", flush=True)
+            try:
+                edited_command = input().strip()
+                if edited_command:
+                    # Execute edited command
+                    print(f"🔧 Executing edited command: {edited_command}")
+                    result = self.command_executor.execute(edited_command)
+                    print(self._format_execution_result(result))
+            except (KeyboardInterrupt, EOFError):
+                print("\n⏭️  Skipping command execution")
+            return False
+        else:
+            print("⏭️  Skipping command execution")
+            return False
+
+    def _format_execution_result(self, result: Dict[str, Any]) -> str:
+        """
+        Format command execution result.
+
+        Args:
+            result: Execution result dictionary
+
+        Returns:
+            Formatted result string
+        """
+        if result["success"]:
+            return f"✅ Command executed successfully:\n{result['output']}"
+        else:
+            return f"❌ Command failed:\n{result['error']}"
+
     def should_exit(self, user_input: str) -> bool:
         """
         Check if user wants to exit.
-        
+
         Args:
             user_input: User's input
-            
+
         Returns:
             True if user wants to exit
         """
@@ -461,6 +555,11 @@ Available themes: professional, modern, executive, creative
         print("  - Type 'run: <command>' to execute local commands")
         print("  - Type 'exit' or 'quit' to stop")
         print("  - Type anything else to chat with the AI")
+        print()
+        print("Settings:")
+        print(f"  - Auto-execute: {'✅ Enabled' if self.auto_execute else '❌ Disabled'}")
+        if self.auto_execute:
+            print(f"  - Confirmation: {'✅ Required' if self.confirm_execution else '❌ Disabled'}")
         print("=" * 50)
         print()
         
@@ -494,14 +593,70 @@ Available themes: professional, modern, executive, creative
 
 def main():
     """Main entry point for the agent."""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Local AI Agent with OpenAI integration",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Run with default settings (auto-execute with confirmation)
+  python agent.py
+
+  # Disable auto-execution
+  python agent.py --no-auto-execute
+
+  # Auto-execute without confirmation
+  python agent.py --no-confirm
+
+  # Use a different model
+  python agent.py --model gpt-4-turbo
+        """
+    )
+
+    parser.add_argument(
+        "--model",
+        default=os.getenv("OPENAI_MODEL", "gpt-4"),
+        help="OpenAI model to use (default: gpt-4 or OPENAI_MODEL env var)"
+    )
+    parser.add_argument(
+        "--memory",
+        default="memory.json",
+        help="Memory file path (default: memory.json)"
+    )
+    parser.add_argument(
+        "--auto-execute",
+        action="store_true",
+        default=True,
+        dest="auto_execute",
+        help="Auto-execute commands from agent responses (default: enabled)"
+    )
+    parser.add_argument(
+        "--no-auto-execute",
+        action="store_false",
+        dest="auto_execute",
+        help="Disable auto-execution of commands"
+    )
+    parser.add_argument(
+        "--no-confirm",
+        action="store_false",
+        dest="confirm_execution",
+        default=True,
+        help="Skip confirmation prompts before executing commands"
+    )
+
+    args = parser.parse_args()
+
     try:
-        # Get model from environment or use default
-        model = os.getenv("OPENAI_MODEL", "gpt-4")
-        
         # Initialize and run agent
-        agent = Agent(model=model)
+        agent = Agent(
+            memory_file=args.memory,
+            model=args.model,
+            auto_execute=args.auto_execute,
+            confirm_execution=args.confirm_execution
+        )
         agent.run()
-        
+
     except ValueError as e:
         print(f"❌ Configuration Error: {e}")
         print("\nPlease set your OPENAI_API_KEY environment variable:")

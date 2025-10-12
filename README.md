@@ -57,25 +57,41 @@ pip install -r requirements.txt
 # Set your OpenAI API key
 export OPENAI_API_KEY='your-api-key-here'
 
-# Run the agent
+# Run the agent (with auto-execution and confirmation)
 python agent.py
+
+# Or disable auto-execution
+python agent.py --no-auto-execute
+
+# Or auto-execute without confirmation (use with caution!)
+python agent.py --no-confirm
 ```
 
 **Features:**
 - 🤖 Interactive chat with OpenAI models
+- ⚡ **Auto-execution** of AI-suggested commands (with confirmation)
 - 🔧 Execute local commands with `run:` prefix
 - 💾 Persistent conversation memory
+- 🎛️ Configurable execution modes
 - 🎯 Simple command-line interface
 
-**Example Usage:**
+**Example with Auto-Execution:**
 ```
 💬 > What files are in this directory?
-🤖 You can check with: run: ls
 
-💬 > run: ls
+🤖 I'll list the files for you.
+
+run: ls
+
+❓ Execute this command? (y/n/edit): y
+
+🔧 Executing command: ls
 ✅ Command executed successfully:
 agent.py  data/  src/  tests/  ...
+```
 
+**Manual Execution:**
+```
 💬 > run: git status
 ✅ Command executed successfully:
 On branch main
