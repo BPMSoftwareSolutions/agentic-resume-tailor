@@ -25,6 +25,28 @@ async function initializeApp() {
         const urlParams = new URLSearchParams(window.location.search);
         currentResumeId = urlParams.get('resume');
 
+        // Load resume index data for filename lookup
+        try {
+            const indexResponse = await fetch(`${API_BASE_URL}/resumes`);
+            if (indexResponse.ok) {
+                window.resumeIndexData = await indexResponse.json();
+            } else {
+                window.resumeIndexData = null;
+            }
+        } catch {
+            window.resumeIndexData = null;
+        }
+
+        // Set page title to 'Resume Manager - [Resume Name]' after resumeIndexData is loaded
+        let resumeTitle = 'Resume Manager';
+        if (currentResumeId && window.resumeIndexData) {
+            const entry = window.resumeIndexData.resumes.find(r => r.id === currentResumeId);
+            if (entry && entry.name) {
+                resumeTitle = `Resume Manager - ${entry.name}`;
+            }
+        }
+        document.title = resumeTitle;
+
         // Load resume data
         await loadResumeData();
 
@@ -60,7 +82,15 @@ async function initializeApp() {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'resume.docx';
+                    // Use resume name from index.json if available
+                    let resumeFilename = 'resume.docx';
+                    if (currentResumeId && window.resumeIndexData) {
+                        const entry = window.resumeIndexData.resumes.find(r => r.id === currentResumeId);
+                        if (entry && entry.name) {
+                            resumeFilename = `${entry.name}.docx`;
+                        }
+                    }
+                    a.download = resumeFilename;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();

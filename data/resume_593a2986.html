@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidney Jones - Resume</title>
+  <meta name="description" content="Professional resume generated with hybrid HTML+SVG approach">
+  <meta name="generator" content="SVG Lab Hybrid Resume Generator">
+  <meta name="theme" content="creative">
+  <style>
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #ffffff;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.resume-container {
+  width: 1200px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout Styles */
+.header {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.section {
+  padding: 25px 40px;
+  margin-top: 25px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.skills-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.experience-left {
+  flex: 1;
+}
+
+.experience-right {
+  text-align: right;
+}
+
+/* Typography Styles */
+.personal-info h1 {
+  font-size: 38px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #fce7f3;
+}
+
+.section-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ec4899;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ec4899;
+}
+
+.subsection-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 15px;
+}
+
+.summary-text {
+  font-size: 14px;
+  color: #1f2937;
+  text-align: justify;
+  line-height: 1.8;
+}
+
+.bullet-text {
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.contact-item {
+  font-size: 12px;
+  color: #fce7f3;
+  margin-bottom: 5px;
+}
+
+/* Component Styles */
+.contact-info {
+  margin-top: 20px;
+}
+
+.skill-category {
+  margin-bottom: 12px;
+}
+
+.skill-label {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.skill-value {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.expertise-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.expertise-item {
+  font-size: 12px;
+  color: #1f2937;
+  padding-left: 20px;
+  position: relative;
+}
+
+.expertise-item::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+}
+
+.experience-item {
+  margin-bottom: 30px;
+}
+
+.employer {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.role {
+  font-size: 14px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.location,
+.dates {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.bullet-item {
+  margin-bottom: 15px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.bullet-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #8b5cf620;
+  color: #7c3aed;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid #8b5cf640;
+}
+
+.education-item {
+  margin-bottom: 15px;
+}
+
+.degree {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.institution {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.certifications {
+  margin-top: 20px;
+}
+
+.certification-item {
+  font-size: 12px;
+  color: #1f2937;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.certification-item::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 0;
+    size: letter;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .resume-container {
+    width: 100%;
+    box-shadow: none;
+    margin: 0;
+  }
+  
+  .section {
+    page-break-inside: avoid;
+  }
+  
+  .experience-item {
+    page-break-inside: avoid;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <div class="header" data-section="header">
+      <svg class="header-bg" viewBox="0 0 1200 220" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ec4899" />
+            <stop offset="100%" style="stop-color:#f59e0b" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1200" height="220" fill="url(#headerGrad)" />
+      </svg>
+      <div class="header-content">
+        <div class="personal-info" data-section="personal_info">
+          <h1 data-field="name">Sidney Jones</h1>
+          <div class="title" data-field="title">Senior DevOps Software Engineer</div>
+        </div>
+        <div class="contact-info" data-section="contact_info">
+          <div class="contact-item" data-field="location">West Bloomfield, MI</div>
+          <div class="contact-item" data-field="email">sjones@bpmsoftwaresolutions.com</div>
+          <div class="contact-item" data-field="phone">(248) 802-1847</div>
+        </div>
+      </div>
+    </div>
+    <section class="section" data-section="summary">
+      <h2 class="section-heading">PROFESSIONAL SUMMARY</h2>
+      <p class="summary-text" data-field="summary_text">Engineer with 10+ years of enterprise and system-level software experience, spanning cloud-native microservices and embedded Linux environments. Skilled in developing C/C++/Python/Java applications, integrating distributed systems, and automating CI/CD pipelines for complex platforms. Adept at debugging system interactions across hardware, firmware, and software layers. Experienced in AUTOSAR-style architecture principles, CAN-based communications, and diagnostics integrations for mission-critical systems.</p>
+    </section>
+    <section class="section" data-section="skills">
+      <h2 class="section-heading">CORE COMPETENCIES</h2>
+      <div class="two-column">
+        <div class="skills-column" data-section="technical_proficiencies">
+          <h3 class="subsection-heading">TECHNICAL PROFICIENCIES</h3>
+          <div class="skill-category" data-category="languages">
+            <div class="skill-label">LANGUAGES:</div>
+            <div class="skill-value">C, C++, Python, Java, C#, Shell Scripting</div>
+          </div>
+          <div class="skill-category" data-category="embedded">
+            <div class="skill-label">EMBEDDED:</div>
+            <div class="skill-value">Embedded Linux, QNX, AUTOSAR, CAN/Ethernet, SoC Integration</div>
+          </div>
+          <div class="skill-category" data-category="cloud">
+            <div class="skill-label">CLOUD:</div>
+            <div class="skill-value">AWS IoT, EC2, Lambda, Docker, Microservices, Hybrid Cloud</div>
+          </div>
+          <div class="skill-category" data-category="devops">
+            <div class="skill-label">DEVOPS:</div>
+            <div class="skill-value">Jenkins, GitHub Actions, CI/CD, Static Code Analysis (SonarQube), Test Automation</div>
+          </div>
+          <div class="skill-category" data-category="diagnostics">
+            <div class="skill-label">DIAGNOSTICS:</div>
+            <div class="skill-value">System Monitoring, Diagnostics Frameworks, Telemetry, Root-cause Debugging</div>
+          </div>
+          <div class="skill-category" data-category="security">
+            <div class="skill-label">SECURITY:</div>
+            <div class="skill-value">AES-256 Encryption, Key Management, Secure OTA, Keeper Security Manager</div>
+          </div>
+          <div class="skill-category" data-category="platforms">
+            <div class="skill-label">PLATFORMS:</div>
+            <div class="skill-value">Linux, Windows, QNX, Real-time OS</div>
+          </div>
+          <div class="skill-category" data-category="tools">
+            <div class="skill-label">TOOLS:</div>
+            <div class="skill-value">SonarQube, MATLAB/Simulink, Git, Jira</div>
+          </div>
+          <div class="skill-category" data-category="automotive">
+            <div class="skill-label">AUTOMOTIVE:</div>
+            <div class="skill-value">AUTOSAR, CAN Bus, ECU Data Logging, Vehicle Communication Systems</div>
+          </div>
+        </div>
+        <div class="skills-column" data-section="areas_of_expertise">
+          <h3 class="subsection-heading">AREAS OF EXPERTISE</h3>
+          <ul class="expertise-list">
+            <li class="expertise-item" data-item="0">Enterprise Architecture & Cloud Transformation</li>
+            <li class="expertise-item" data-item="1">Revenue Growth & Cost Optimization</li>
+            <li class="expertise-item" data-item="2">SaaS Solution Development</li>
+            <li class="expertise-item" data-item="3">Security & Data Protection</li>
+            <li class="expertise-item" data-item="4">AI Adoption & Scaling</li>
+            <li class="expertise-item" data-item="5">Data-Driven Analytics</li>
+            <li class="expertise-item" data-item="6">Process Automation</li>
+            <li class="expertise-item" data-item="7">Relationship Building</li>
+            <li class="expertise-item" data-item="8">Innovation & Product Development</li>
+            <li class="expertise-item" data-item="9">Business Strategy & Value Delivery</li>
+            <li class="expertise-item" data-item="10">Team Leadership & Agile Coaching</li>
+            <li class="expertise-item" data-item="11">Cybersecurity & Compliance</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section" data-section="experience">
+      <h2 class="section-heading">PROFESSIONAL EXPERIENCE</h2>
+      <div class="experience-item" data-position="0" data-company="edward_jones">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Edward Jones</div>
+            <div class="role" data-field="role">Senior Application Architect</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Remote</div>
+            <div class="dates" data-field="dates">2021 - 2024</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Led modernization of a large-scale distributed platform using service-oriented architecture, emphasizing modular integration similar to AUTOSAR stack decomposition.</div>
+          <div class="tags">
+            <span class="tag" data-tag="service_oriented_architecture">Service-oriented Architecture</span>
+            <span class="tag" data-tag="modular_integration">Modular Integration</span>
+            <span class="tag" data-tag="autosar">AUTOSAR</span>
+            <span class="tag" data-tag="platform_modernization">Platform Modernization</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Implemented system-level observability and diagnostics frameworks comparable to SoC monitoring in QNX/Linux environments.</div>
+          <div class="tags">
+            <span class="tag" data-tag="diagnostics">Diagnostics</span>
+            <span class="tag" data-tag="observability">Observability</span>
+            <span class="tag" data-tag="soc_monitoring">SoC Monitoring</span>
+            <span class="tag" data-tag="qnx">QNX</span>
+            <span class="tag" data-tag="linux">Linux</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Designed and optimized CI/CD pipelines for cross-compiled binaries, using Jenkins, Docker, and AWS EC2, integrating automated static code analysis (SonarQube).</div>
+          <div class="tags">
+            <span class="tag" data-tag="ci_cd">CI/CD</span>
+            <span class="tag" data-tag="cross_compilation">Cross-compilation</span>
+            <span class="tag" data-tag="jenkins">Jenkins</span>
+            <span class="tag" data-tag="docker">Docker</span>
+            <span class="tag" data-tag="aws_ec2">AWS EC2</span>
+            <span class="tag" data-tag="static_code_analysis">Static Code Analysis</span>
+            <span class="tag" data-tag="sonarqube">SonarQube</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Collaborated across firmware, API, and UI teams to resolve communication-layer defects, using root-cause analysis techniques parallel to vehicle-bus debugging.</div>
+          <div class="tags">
+            <span class="tag" data-tag="firmware">Firmware</span>
+            <span class="tag" data-tag="api">API</span>
+            <span class="tag" data-tag="ui">UI</span>
+            <span class="tag" data-tag="communication_layer">Communication-layer</span>
+            <span class="tag" data-tag="root_cause_analysis">Root-cause Analysis</span>
+            <span class="tag" data-tag="vehicle_bus_debugging">Vehicle-bus Debugging</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Drove test-driven development and continuous integration practices to achieve embedded-grade quality standards.</div>
+          <div class="tags">
+            <span class="tag" data-tag="tdd">TDD</span>
+            <span class="tag" data-tag="continuous_integration">Continuous Integration</span>
+            <span class="tag" data-tag="embedded_quality">Embedded Quality</span>
+          </div>
+        </div>
+      </div>
+      <div class="experience-item" data-position="1" data-company="bpm_software_solutions">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">BPM Software Solutions</div>
+            <div class="role" data-field="role">Principle Consultant</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">West Bloomfield, MI</div>
+            <div class="dates" data-field="dates">2017 - 2021</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Architected Python and C++ modules for automation pipelines integrating with hardware-triggered sensors and real-time data streams.</div>
+          <div class="tags">
+            <span class="tag" data-tag="python">Python</span>
+            <span class="tag" data-tag="c++">C++</span>
+            <span class="tag" data-tag="automation">Automation</span>
+            <span class="tag" data-tag="hardware_integration">Hardware Integration</span>
+            <span class="tag" data-tag="real_time_data">Real-time Data</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Developed ETL and control systems using event-driven microservices and AWS IoT to mirror vehicle communication systems (CAN-style event buses).</div>
+          <div class="tags">
+            <span class="tag" data-tag="etl">ETL</span>
+            <span class="tag" data-tag="control_systems">Control Systems</span>
+            <span class="tag" data-tag="event_driven_microservices">Event-driven Microservices</span>
+            <span class="tag" data-tag="aws_iot">AWS IoT</span>
+            <span class="tag" data-tag="can_bus">CAN Bus</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Integrated Linux-based agents for secure file transfer and telemetry processingconceptually similar to embedded ECU data logging.</div>
+          <div class="tags">
+            <span class="tag" data-tag="linux">Linux</span>
+            <span class="tag" data-tag="embedded_integration">Embedded Integration</span>
+            <span class="tag" data-tag="secure_file_transfer">Secure File Transfer</span>
+            <span class="tag" data-tag="telemetry">Telemetry</span>
+            <span class="tag" data-tag="ecu_data_logging">ECU Data Logging</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Implemented encryption and key management protocols (AES-256) equivalent to secure OTA (Over-the-Air) data handling in vehicles.</div>
+          <div class="tags">
+            <span class="tag" data-tag="encryption">Encryption</span>
+            <span class="tag" data-tag="key_management">Key Management</span>
+            <span class="tag" data-tag="aes_256">AES-256</span>
+            <span class="tag" data-tag="ota_security">OTA Security</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Mentored engineers in modular design patterns analogous to AUTOSAR component design.</div>
+          <div class="tags">
+            <span class="tag" data-tag="mentoring">Mentoring</span>
+            <span class="tag" data-tag="modular_design">Modular Design</span>
+            <span class="tag" data-tag="autosar">AUTOSAR</span>
+            <span class="tag" data-tag="component_design">Component Design</span>
+          </div>
+        </div>
+      </div>
+      <div class="experience-item" data-position="2" data-company="interactive_business_solutions">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Interactive Business Solutions</div>
+            <div class="role" data-field="role">Senior Software Engineering Consultant</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Troy, MI</div>
+            <div class="dates" data-field="dates">2016 - 2017</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Developed cross-platform diagnostics and monitoring utilities in C#, Python, and shell scripting, handling multi-datacenter (multi-ECU-like) telemetry.</div>
+          <div class="tags">
+            <span class="tag" data-tag="c">C#</span>
+            <span class="tag" data-tag="python">Python</span>
+            <span class="tag" data-tag="shell_scripting">Shell Scripting</span>
+            <span class="tag" data-tag="diagnostics">Diagnostics</span>
+            <span class="tag" data-tag="monitoring">Monitoring</span>
+            <span class="tag" data-tag="telemetry">Telemetry</span>
+            <span class="tag" data-tag="multi_ecu">Multi-ECU</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Built network health monitoring dashboards akin to embedded diagnostics over CAN/Ethernet.</div>
+          <div class="tags">
+            <span class="tag" data-tag="network_monitoring">Network Monitoring</span>
+            <span class="tag" data-tag="diagnostics">Diagnostics</span>
+            <span class="tag" data-tag="can">CAN</span>
+            <span class="tag" data-tag="ethernet">Ethernet</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Delivered real-time reporting and data-integration software supporting critical decision systems with automotive-grade reliability.</div>
+          <div class="tags">
+            <span class="tag" data-tag="real_time_reporting">Real-time Reporting</span>
+            <span class="tag" data-tag="data_integration">Data Integration</span>
+            <span class="tag" data-tag="automotive_reliability">Automotive Reliability</span>
+          </div>
+        </div>
+      </div>
+      <div class="experience-item" data-position="3" data-company="soave_enterprises">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Soave Enterprises</div>
+            <div class="role" data-field="role">Technology Manager / Software Architect</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Detroit, MI</div>
+            <div class="dates" data-field="dates">2015 - 2016</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Led modernization of legacy ERP control systems using .NET and C++, focusing on modular reusability and hardware integration across multiple facilities.</div>
+          <div class="tags">
+            <span class="tag" data-tag="_net">.NET</span>
+            <span class="tag" data-tag="c++">C++</span>
+            <span class="tag" data-tag="erp">ERP</span>
+            <span class="tag" data-tag="modular_reusability">Modular Reusability</span>
+            <span class="tag" data-tag="hardware_integration">Hardware Integration</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Transitioned infrastructure to hybrid AWS/Linux environments, embedding power-mode control logic and telemetry akin to ECU energy-state transitions.</div>
+          <div class="tags">
+            <span class="tag" data-tag="aws">AWS</span>
+            <span class="tag" data-tag="linux">Linux</span>
+            <span class="tag" data-tag="hybrid_cloud">Hybrid Cloud</span>
+            <span class="tag" data-tag="power_mode_control">Power-mode Control</span>
+            <span class="tag" data-tag="telemetry">Telemetry</span>
+            <span class="tag" data-tag="ecu">ECU</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Coordinated with hardware and operations teams to synchronize software deployments with real-world system behaviors.</div>
+          <div class="tags">
+            <span class="tag" data-tag="hardware_coordination">Hardware Coordination</span>
+            <span class="tag" data-tag="operations">Operations</span>
+            <span class="tag" data-tag="software_deployment">Software Deployment</span>
+            <span class="tag" data-tag="system_behaviors">System Behaviors</span>
+          </div>
+        </div>
+      </div>
+      <div class="experience-item" data-position="4" data-company="john_deere_landscapes">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">John Deere Landscapes</div>
+            <div class="role" data-field="role">Software Development Lead / Solution Architect</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Troy, MI</div>
+            <div class="dates" data-field="dates">2010 - 2015</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Designed Level-III certified payment-processing microservices in C# and C++, managing low-latency transaction routing comparable to embedded communication frameworks.</div>
+          <div class="tags">
+            <span class="tag" data-tag="c">C#</span>
+            <span class="tag" data-tag="c++">C++</span>
+            <span class="tag" data-tag="payment_processing">Payment Processing</span>
+            <span class="tag" data-tag="microservices">Microservices</span>
+            <span class="tag" data-tag="low_latency">Low-latency</span>
+            <span class="tag" data-tag="embedded_communication">Embedded Communication</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Implemented modular service orchestration similar to AUTOSAR layers for procurement and inventory systems.</div>
+          <div class="tags">
+            <span class="tag" data-tag="modular_orchestration">Modular Orchestration</span>
+            <span class="tag" data-tag="autosar">AUTOSAR</span>
+            <span class="tag" data-tag="procurement">Procurement</span>
+            <span class="tag" data-tag="inventory">Inventory</span>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Performed root-cause debugging across hardware interfaces and databasesexperience directly applicable to embedded diagnostics and SoC troubleshooting.</div>
+          <div class="tags">
+            <span class="tag" data-tag="root_cause_debugging">Root-cause Debugging</span>
+            <span class="tag" data-tag="hardware_interfaces">Hardware Interfaces</span>
+            <span class="tag" data-tag="databases">Databases</span>
+            <span class="tag" data-tag="embedded_diagnostics">Embedded Diagnostics</span>
+            <span class="tag" data-tag="soc_troubleshooting">SoC Troubleshooting</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" data-section="education">
+      <h2 class="section-heading">EDUCATION & CERTIFICATIONS</h2>
+      <div class="education-item" data-position="0">
+        <div class="degree" data-field="degree">Bachelor of Technology</div>
+        <div class="institution" data-field="institution">University of Phoenix • Troy, MI • 2001 - 2003</div>
+      </div>
+      <div class="education-item" data-position="1">
+        <div class="degree" data-field="degree">Software Engineering Certification</div>
+        <div class="institution" data-field="institution">McGraw-Hill • Washington, DC • 1998 - 2000</div>
+      </div>
+      <div class="certifications" data-section="certifications">
+        <h3 class="subsection-heading">Certifications</h3>
+        <div class="certification-item" data-position="0">SAFe 5 Certified DevOps Practitioner (SAFe by Scaled Agile, Inc., Jan 2023)</div>
+        <div class="certification-item" data-position="1">SAFe 5 Certified - Advanced Scrum Master (SASM) (SAFe by Scaled Agile, Inc., Dec 2022)</div>
+        <div class="certification-item" data-position="2">ICAgile Certified Professional - Agile Team Facilitation (ICAgile, Oct 2022)</div>
+        <div class="certification-item" data-position="3">ICAgile Certified Professional - Foundations of DevOps (ICAgile, Oct 2022)</div>
+        <div class="certification-item" data-position="4">Agile Project and Delivery Management (ICAgile, Sep 2022)</div>
+        <div class="certification-item" data-position="5">ICAgile Certified Professional - Business Agility Foundations (ICAgile, Aug 2022)</div>
+        <div class="certification-item" data-position="6">Professional Scrum Masterâ„¢ I (PSM I) (Scrum.org, May 2022)</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
