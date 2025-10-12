@@ -14,6 +14,7 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - **NEW:** Hybrid HTML/CSS resume generation with multiple professional themes.
 - **NEW:** Web-based resume editor for managing master_resume.json ([Issue #2](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/2))
 - **NEW:** Multi-resume support with job listing management and automated tailoring ([Issue #6](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/6))
+- **NEW:** Local AI Agent for interactive automation and command execution ([Issue #8](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/8))
 
 ## Roadmap (Phase 2 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
@@ -45,6 +46,41 @@ python src/api/app.py
 - ✅ Export resumes in HTML/DOCX format
 
 See [Multi-Resume Support Documentation](docs/MULTI_RESUME_SUPPORT.md) for details.
+
+### Local AI Agent (NEW! 🤖)
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Set your OpenAI API key
+export OPENAI_API_KEY='your-api-key-here'
+
+# Run the agent
+python agent.py
+```
+
+**Features:**
+- 🤖 Interactive chat with OpenAI models
+- 🔧 Execute local commands with `run:` prefix
+- 💾 Persistent conversation memory
+- 🎯 Simple command-line interface
+
+**Example Usage:**
+```
+💬 > What files are in this directory?
+🤖 You can check with: run: ls
+
+💬 > run: ls
+✅ Command executed successfully:
+agent.py  data/  src/  tests/  ...
+
+💬 > run: git status
+✅ Command executed successfully:
+On branch main
+nothing to commit, working tree clean
+```
+
+See [Local AI Agent Documentation](docs/LOCAL_AI_AGENT.md) for details.
 
 ### Web-Based Resume Editor
 ```bash
@@ -104,8 +140,10 @@ python src/generate_hybrid_resume.py --input data/master_resume.json --output ou
 
 ## Documentation
 
-- **[Resume Editor Web Interface](docs/RESUME_EDITOR_WEB_INTERFACE.md)** - Web-based resume editor guide (NEW!)
-- **[CI/CD Pipeline](docs/CI_CD_PIPELINE.md)** - Continuous integration and deployment guide (NEW!)
+- **[Local AI Agent](docs/LOCAL_AI_AGENT.md)** - Interactive AI agent with command execution (NEW! 🤖)
+- **[Resume Editor Web Interface](docs/RESUME_EDITOR_WEB_INTERFACE.md)** - Web-based resume editor guide
+- **[Multi-Resume Support](docs/MULTI_RESUME_SUPPORT.md)** - Multi-resume management guide
+- **[CI/CD Pipeline](docs/CI_CD_PIPELINE.md)** - Continuous integration and deployment guide
 - **[Hybrid HTML Resume Generation](docs/HYBRID_HTML_RESUME_GENERATION.md)** - Complete guide to HTML resume generation
 - **[Quality Tests Summary](docs/QUALITY_TESTS_GREEN_SUMMARY.md)** - Test suite documentation
 - **[TDD Validation Summary](docs/TDD_VALIDATION_SUMMARY.md)** - TDD approach documentation
