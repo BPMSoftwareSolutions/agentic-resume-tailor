@@ -1,0 +1,36 @@
+{
+  "job_listings": [
+    {
+      "id": "credibly-se-iii-20251011",
+      "title": "Senior Software Engineer (SE III)",
+      "company": "Credibly",
+      "file": "Sr. Software Engineer - at Credibly.md",
+      "created_at": "2025-10-11T00:00:00Z",
+      "description": "Senior Software Engineer role focused on Python, AWS, microservices, DynamoDB/MySQL, code review, Agile, mentorship, and financial services applications."
+    },
+    {
+      "id": "7c981526-f8ff-40f2-bfd9-18e6c383b9bd",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-11T20:19:36.840810",
+      "updated_at": "2025-10-11T20:19:36.843811"
+    },
+    {
+      "id": "69493ccc-d957-490f-aafe-56bdc5f4bb51",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-11T20:19:44.369969",
+      "updated_at": "2025-10-11T20:19:44.371970"
+    },
+    {
+      "id": "e0a972bf-cc03-4720-9f81-187fa5734b4a",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-12T09:10:18.914802",
+      "updated_at": "2025-10-12T09:10:18.920324"
+    }
+  ]
+}
