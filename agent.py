@@ -117,10 +117,10 @@ class CommandExecutor:
     def execute(self, command: str) -> Dict[str, Any]:
         """
         Execute a system command.
-        
+
         Args:
             command: Command to execute
-            
+
         Returns:
             Dictionary with success status, output, and error
         """
@@ -130,9 +130,11 @@ class CommandExecutor:
                 shell=True,
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',  # Replace invalid characters instead of failing
                 timeout=30
             )
-            
+
             return {
                 "success": result.returncode == 0,
                 "output": result.stdout,
@@ -306,17 +308,28 @@ run: python src/crud/experience.py --resume "{company}" --list
 - "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
 
 ### 3. Tailor Resume to Job Description (DIFFERENT USE CASE)
-**User Intent**: "Tailor my resume for the {company} position"
-**Command Pattern**: User wants to CREATE a NEW tailored version from master resume
+**User Intent**: "Tailor my resume for the {company} position" or "Create a new resume for {job_posting}"
+**Command Pattern**: User wants to CREATE a NEW tailored version from an existing resume
 
-**Action**: Use tailor.py:
+**IMPORTANT**: When user says "Using the {Company} Resume" or "Use the {Company} resume", they want to use that specific company's resume as the base, NOT the master resume!
+
+**Action**: Use tailor.py with the correct resume:
 ```
-run: python src/tailor.py --resume data/master_resume.json --jd {job_description} --out {output} --format {format} --theme {theme}
+# If user specifies a company resume (e.g., "Ford Resume"):
+run: python src/tailor.py --resume "{company}" --jd "{job_description}" --out "{output}" --format html --theme modern
+
+# If user doesn't specify, use master resume:
+run: python src/tailor.py --resume "Master Resume" --jd "{job_description}" --out "{output}" --format html --theme modern
 ```
 
-**Example:**
+**The tailor.py script now supports resume lookup by name!** Just pass the company name or "Master Resume" and it will find the correct file automatically.
+
+**Examples:**
+User: "Using the Ford Resume, let's create a new for this job posting: X.md"
+You: run: python src/tailor.py --resume "Ford" --jd "data/job_listings/X.md" --out "out/ford_tailored.html" --format html --theme modern
+
 User: "Tailor my resume for the GM position with modern theme"
-You: run: python src/tailor.py --resume data/master_resume.json --jd "data/job_listings/GM Job Description.md" --out out/gm_tailored.html --format html --theme modern
+You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/GM Job Description.md" --out "out/gm_tailored.html" --format html --theme modern
 
 ### List Resumes
 Command: run: cat data/resumes/index.json | python -m json.tool
