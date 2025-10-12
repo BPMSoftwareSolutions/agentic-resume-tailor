@@ -84,14 +84,18 @@ command_executor = CommandExecutor()
 # Command whitelist for security (Issue #12)
 ALLOWED_COMMAND_PREFIXES = [
     'python src/tailor.py',
+    'python src/update_resume_experience.py',
     'python -m pytest',
+    'python -m json.tool',
     'git status',
     'git log',
     'git diff',
     'ls',
     'dir',
     'pwd',
-    'echo'
+    'echo',
+    'cat',
+    'type'  # Windows equivalent of cat
 ]
 
 # Dangerous command patterns to block

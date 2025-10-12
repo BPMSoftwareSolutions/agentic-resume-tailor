@@ -98,6 +98,27 @@ python src/api/app.py
 # Navigate to: src/web/agent.html
 ```
 
+**The agent now has a knowledge base system** that understands the codebase structure! You can give natural language commands like:
+
+```
+💬 > Update the Ford resume with this experience: "data/job_listings/Tailored Experience Summary for Ford.md"
+🤖 I'll update the Ford resume with that experience file.
+
+run: python src/update_resume_experience.py --resume "Ford" --experience "data/job_listings/Tailored Experience Summary for Ford.md"
+
+✅ Successfully updated resume d474d761-18f2-48ab-99b5-9f30c54f75b2
+   Found resume: Sidney_Jones_Senior_Software_Engineer_Ford
+   Added 5 experience entries
+```
+
+The agent automatically:
+- Finds resumes by company name (e.g., "Ford", "GM", "Credibly")
+- Locates the correct files using `data/resumes/index.json`
+- Executes the appropriate helper scripts
+- Updates timestamps and metadata
+
+See [Agent Knowledge Base Documentation](docs/AGENT_KNOWLEDGE_BASE.md) for details.
+
 **Features:**
 - 🌐 Browser-based chat interface
 - 🔧 Execute commands from the web UI
