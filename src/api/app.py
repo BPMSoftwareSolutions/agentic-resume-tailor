@@ -133,7 +133,9 @@ def get_agent_instance():
         try:
             agent_instance = Agent(
                 memory_file=str(AGENT_MEMORY_FILE),
-                model=os.getenv("OPENAI_MODEL", "gpt-4")
+                model=os.getenv("OPENAI_MODEL", "gpt-4"),
+                auto_execute=True,
+                confirm_execution=False  # No confirmation in web UI
             )
         except ValueError as e:
             # OPENAI_API_KEY not set
