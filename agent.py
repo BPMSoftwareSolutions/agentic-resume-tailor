@@ -697,8 +697,11 @@ Available themes: professional, modern, executive, creative
             print(f"  - Confirmation: {'✅ Required' if self.confirm_execution else '❌ Disabled'}")
 
         # Show token usage (Issue #24)
-        stats = self.get_memory_stats()
-        print(f"  - Memory: {stats['token_count']}/{stats['max_tokens']} tokens ({stats['percentage']}%)")
+        try:
+            stats = self.get_memory_stats()
+            print(f"  - Memory: {stats['total_tokens']}/{stats['max_tokens']} tokens ({stats['percentage']}%)")
+        except Exception as e:
+            print(f"  - Memory: Unable to calculate token usage")
 
         print("=" * 50)
         print()
