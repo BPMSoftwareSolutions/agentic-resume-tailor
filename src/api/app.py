@@ -116,7 +116,8 @@ ALLOWED_COMMAND_PREFIXES = [
 BLOCKED_COMMAND_PATTERNS = [
     'rm -rf',
     'del /f /s /q',
-    'format',
+    'format c:',  # More specific - block disk format commands
+    'format d:',
     'dd if=',
     'mkfs',
     '> /dev/',
