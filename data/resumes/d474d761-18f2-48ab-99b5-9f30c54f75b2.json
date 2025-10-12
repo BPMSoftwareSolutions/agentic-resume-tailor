@@ -308,7 +308,7 @@
   ],
   "location": "West Bloomfield, MI",
   "name": "Sidney Jones",
-  "summary": "Engineer with 10+ years of enterprise and system-level software experience, spanning cloud-native microservices and embedded Linux environments. Skilled in developing C/C++/Python/Java applications, integrating distributed systems, and automating CI/CD pipelines for complex platforms. Adept at debugging system interactions across hardware, firmware, and software layers. Experienced in AUTOSAR-style architecture principles, CAN-based communications, and diagnostics integrations for mission-critical systems.",
+  "summary": "Senior Software Engineer and Architect with over two decades of experience spanning automotive diagnostics (Snap-on), QA automation (Compuware), and enterprise cloud modernization (BPM, Edward Jones, SiteOne). Invented a data-driven ECM orchestration framework that revolutionized adaptive vehicle communication and paved the way for modern, protocol-agnostic diagnostics.",
   "technical_proficiencies": {
     "automotive": "AUTOSAR, CAN Bus, ECU Data Logging, Vehicle Communication Systems",
     "cloud": "AWS IoT, EC2, Lambda, Docker, Microservices, Hybrid Cloud",
