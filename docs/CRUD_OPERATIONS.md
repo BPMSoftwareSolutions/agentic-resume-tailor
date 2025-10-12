@@ -6,6 +6,7 @@ Complete guide to managing resume data using CRUD (Create, Read, Update, Delete)
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
+- [Resume Duplication](#resume-duplication)
 - [Natural Language Commands](#natural-language-commands)
 - [Script Reference](#script-reference)
 - [Common Use Cases](#common-use-cases)
@@ -72,6 +73,66 @@ Scripts can find resumes by name (case-insensitive, partial match):
 
 # Or use UUID directly:
 --resume-id "b3013a2a-349a-4080-802c-3bbe6714b576"
+```
+
+## Resume Duplication
+
+Before making granular updates with CRUD scripts, you often need to create a copy of an existing resume. The `duplicate_resume.py` script makes this easy.
+
+### Quick Start
+
+```bash
+# Duplicate by resume name
+python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+# Duplicate master resume
+python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_NewCo"
+
+# Duplicate with description
+python src/duplicate_resume.py --resume "Ford" --new-name "New Resume" --description "Tailored for X position"
+
+# Duplicate by UUID
+python src/duplicate_resume.py --resume-id "d474d761-18f2-48ab-99b5-9f30c54f75b2" --new-name "New Resume Name"
+```
+
+### Parameters
+
+| Parameter | Required | Description |
+|-----------|----------|-------------|
+| `--resume` | Yes* | Source resume name or company identifier (e.g., "Ford", "Master Resume") |
+| `--resume-id` | Yes* | Alternative: Source resume UUID for direct lookup |
+| `--new-name` | Yes | Name for the duplicated resume |
+| `--description` | No | Optional description for the new resume |
+| `--data-dir` | No | Data directory path (default: "data") |
+
+*Either `--resume` or `--resume-id` must be provided.
+
+### Natural Language Examples
+
+The AI agent can translate natural language commands into duplication operations:
+
+| Natural Language | Command |
+|-----------------|---------|
+| "Using the Ford resume, create a new one for the Subscription Billing position" | `python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"` |
+| "Duplicate the Master Resume" | `python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_Copy"` |
+| "Copy my Ford resume for a new company" | `python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Senior_Engineer_NewCo"` |
+
+### Typical Workflow
+
+1. **Duplicate** an existing resume (Master Resume or company-specific resume)
+2. **Update** specific sections using CRUD scripts (optional)
+3. **Tailor** the resume to a job description using `tailor.py` (optional)
+
+**Example:**
+```bash
+# Step 1: Duplicate the Ford resume
+python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+# Step 2: Update the title (optional)
+python src/crud/basic_info.py --resume "Subscription_Billing" --update-title "Engineering Manager - Subscription Billing"
+
+# Step 3: Tailor to job posting (optional)
+python src/tailor.py --resume "Subscription_Billing" --jd "data/job_listings/subscription_billing.md" --out "out/subscription_billing.html" --format html
 ```
 
 ## Natural Language Commands

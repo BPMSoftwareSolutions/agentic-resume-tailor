@@ -11,3 +11,4 @@ pytest-cov
 pytest-html
 openai
 python-dotenv
+tiktoken>=0.5.0

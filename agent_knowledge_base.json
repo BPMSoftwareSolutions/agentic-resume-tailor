@@ -65,6 +65,46 @@
     }
   },
   
+  "resume_duplication": {
+    "script": "src/duplicate_resume.py",
+    "description": "Duplicate an existing resume with a new name",
+    "operations": {
+      "duplicate": {
+        "command": "python src/duplicate_resume.py --resume '{resume_name}' --new-name '{new_name}'",
+        "description": "Create a copy of an existing resume",
+        "parameters": {
+          "resume": "Source resume name or company identifier (e.g., 'Ford', 'Master Resume')",
+          "resume_id": "Alternative: Source resume UUID for direct lookup",
+          "new_name": "Name for the duplicated resume (required)",
+          "description": "Optional description for the new resume"
+        }
+      }
+    },
+    "examples": [
+      "python src/duplicate_resume.py --resume 'Ford' --new-name 'Sidney_Jones_Engineering_Manager_Subscription_Billing'",
+      "python src/duplicate_resume.py --resume 'Master Resume' --new-name 'Sidney_Jones_Senior_Engineer_NewCo'",
+      "python src/duplicate_resume.py --resume-id 'd474d761-18f2-48ab-99b5-9f30c54f75b2' --new-name 'New Resume Name'",
+      "python src/duplicate_resume.py --resume 'Ford' --new-name 'New Resume' --description 'Tailored for X position'"
+    ],
+    "natural_language_patterns": [
+      "create a new resume based on {resume}",
+      "duplicate the {resume} resume",
+      "copy {resume} resume to {new_name}",
+      "using the {resume} resume, create a new one for {job}",
+      "make a copy of {resume} resume",
+      "clone the {resume} resume as {new_name}"
+    ],
+    "workflow": {
+      "description": "Typical workflow for creating a tailored resume",
+      "steps": [
+        "1. Duplicate an existing resume (e.g., Master Resume or company-specific resume)",
+        "2. Optionally update specific sections using CRUD scripts",
+        "3. Optionally tailor the resume to a job description using tailor.py"
+      ],
+      "example": "User: 'Using the Ford resume, create a new one for the Subscription Billing position' → Duplicate Ford resume → Optionally tailor to job posting"
+    }
+  },
+
   "crud_operations": {
     "description": "Specialized scripts for managing individual resume data sections",
     "location": "src/crud/",
@@ -271,7 +311,18 @@
     "create_resume": {
       "description": "Create a new resume (usually by duplicating existing one)",
       "api_endpoint": "POST /api/resumes",
-      "command_alternative": "Use API or manually copy resume JSON file"
+      "cli_command": "python src/duplicate_resume.py --resume '{source}' --new-name '{new_name}'",
+      "note": "Use duplicate_resume.py CLI script for command-line duplication"
+    },
+
+    "duplicate_resume": {
+      "description": "Duplicate an existing resume with a new name",
+      "command": "python src/duplicate_resume.py --resume '{source}' --new-name '{new_name}'",
+      "api_endpoint": "POST /api/resumes/{id}/duplicate",
+      "examples": [
+        "python src/duplicate_resume.py --resume 'Ford' --new-name 'Sidney_Jones_Engineering_Manager_NewCo'",
+        "python src/duplicate_resume.py --resume 'Master Resume' --new-name 'Sidney_Jones_Senior_Engineer_Startup'"
+      ]
     },
     
     "export_resume": {
@@ -434,6 +485,22 @@
         "show my experience"
       ],
       "script": "python src/crud/experience.py"
+    },
+
+    "duplicate_resume": {
+      "patterns": [
+        "create a new resume based on {resume}",
+        "duplicate the {resume} resume",
+        "copy {resume} resume",
+        "using the {resume} resume, create a new one for {job}",
+        "make a copy of {resume} resume",
+        "clone the {resume} resume"
+      ],
+      "script": "python src/duplicate_resume.py",
+      "extraction": {
+        "source_resume": "Extract source resume name (e.g., 'Ford', 'Master Resume')",
+        "new_name": "Extract or generate new resume name based on job/company"
+      }
     },
 
     "tailor_resume": {

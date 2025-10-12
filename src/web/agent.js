@@ -199,10 +199,13 @@ async function loadMemory() {
     try {
         const response = await fetch(`${API_BASE_URL}/agent/memory`);
         const data = await response.json();
-        
+
         if (response.ok && data.success) {
             messageHistory = data.messages;
             updateMessageCount();
+
+            // Load token usage stats (Issue #24)
+            await loadTokenStats();
         }
     } catch (error) {
         console.error('Failed to load memory:', error);
@@ -216,18 +219,75 @@ function updateMessageCount() {
     countElement.textContent = userMessages.length;
 }
 
+/**
+ * Load and display token usage statistics (Issue #24)
+ */
+async function loadTokenStats() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/agent/memory/stats`);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            updateTokenDisplay(data.stats);
+        }
+    } catch (error) {
+        console.error('Failed to load token stats:', error);
+    }
+}
+
+/**
+ * Update token usage display (Issue #24)
+ */
+function updateTokenDisplay(stats) {
+    const tokenCount = document.getElementById('tokenCount');
+    const tokenBarFill = document.getElementById('tokenBarFill');
+    const tokenWarning = document.getElementById('tokenWarning');
+
+    // Update token count text
+    tokenCount.textContent = `${stats.total_tokens}/${stats.max_tokens} tokens (${stats.percentage}%)`;
+
+    // Update progress bar
+    tokenBarFill.style.width = `${stats.percentage}%`;
+
+    // Update bar color based on usage
+    tokenBarFill.classList.remove('warning', 'critical');
+    if (stats.critical) {
+        tokenBarFill.classList.add('critical');
+    } else if (stats.warning) {
+        tokenBarFill.classList.add('warning');
+    }
+
+    // Show/hide warning message
+    if (stats.critical) {
+        tokenWarning.className = 'token-warning critical show';
+        tokenWarning.innerHTML = `
+            <strong>🚨 CRITICAL:</strong> Memory at ${stats.percentage}% capacity (${stats.total_tokens}/${stats.max_tokens} tokens).
+            You are very close to the limit! Consider clearing memory now.
+        `;
+    } else if (stats.warning) {
+        tokenWarning.className = 'token-warning warning show';
+        tokenWarning.innerHTML = `
+            <strong>⚠️ WARNING:</strong> Memory at ${stats.percentage}% capacity (${stats.total_tokens}/${stats.max_tokens} tokens).
+            Consider clearing memory if conversation continues.
+        `;
+    } else {
+        tokenWarning.className = 'token-warning';
+        tokenWarning.innerHTML = '';
+    }
+}
+
 async function clearMemory() {
     if (!confirm('Are you sure you want to clear the conversation history? This cannot be undone.')) {
         return;
     }
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/agent/memory/clear`, {
             method: 'POST'
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok && data.success) {
             // Clear chat display
             const messagesContainer = document.getElementById('chatMessages');
@@ -237,10 +297,13 @@ async function clearMemory() {
                     <div class="message-content">Memory cleared. Starting fresh conversation!</div>
                 </div>
             `;
-            
+
             messageHistory = [];
             updateMessageCount();
-            
+
+            // Refresh token stats (Issue #24)
+            await loadTokenStats();
+
             showAlert('Memory cleared successfully!', 'success', 3000);
         } else {
             showAlert('Failed to clear memory: ' + (data.error || 'Unknown error'), 'danger');

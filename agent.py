@@ -18,6 +18,16 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from openai import OpenAI
 
+# Import agent modules for result analysis and token management
+try:
+    from src.agent.result_analyzer import ResultAnalyzer
+    from src.agent.token_manager import TokenManager
+except ImportError:
+    # Fallback if running from different directory
+    sys.path.insert(0, str(Path(__file__).parent))
+    from src.agent.result_analyzer import ResultAnalyzer
+    from src.agent.token_manager import TokenManager
+
 # Fix Windows console encoding for emoji support
 if sys.platform == 'win32':
     try:
@@ -307,7 +317,33 @@ run: python src/crud/experience.py --resume "{company}" --list
 - "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
 - "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
 
-### 3. Tailor Resume to Job Description (DIFFERENT USE CASE)
+### 3. Duplicate Resume (CREATE NEW RESUME COPY)
+**User Intent**: "Using the Ford resume, create a new one for X" or "Duplicate the Ford resume"
+**Command Pattern**: User wants to DUPLICATE an existing resume with a new name
+
+**Action**: Use duplicate_resume.py script:
+```
+run: python src/duplicate_resume.py --resume "{source_resume}" --new-name "{new_name}"
+```
+
+**Examples:**
+User: "Using the Ford resume, create a new one for the Subscription Billing position"
+You: I'll create a new resume based on your Ford resume for the Subscription Billing position.
+
+run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+User: "Duplicate the Master Resume for a new company"
+You: run: python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_NewCo"
+
+User: "Copy my Ford resume"
+You: run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Senior_Engineer_Ford_Copy"
+
+**Optional**: Add description with --description flag:
+```
+run: python src/duplicate_resume.py --resume "Ford" --new-name "New_Resume" --description "Tailored for X position"
+```
+
+### 4. Tailor Resume to Job Description (DIFFERENT USE CASE)
 **User Intent**: "Tailor my resume for the {company} position" or "Create a new resume for {job_posting}"
 **Command Pattern**: User wants to CREATE a NEW tailored version from an existing resume
 
@@ -340,14 +376,31 @@ Command: run: ls data/job_listings/
 ## Available Commands
 
 You can execute commands with 'run:' prefix. Whitelisted commands include:
+- python src/duplicate_resume.py (for duplicating resumes)
 - python src/tailor.py (for resume tailoring)
+- python src/update_resume_experience.py (for updating resume experience)
+- python src/crud/*.py (for granular CRUD operations)
 - python -m pytest (for testing)
 - git status, git log, git diff
 - ls, dir, pwd, echo, cat
 
 ## Example Interactions
 
-### Example 1: Update Resume (Use Helper Script)
+### Example 1: Duplicate Resume (NEW - Issue #19)
+User: "Using the Ford resume, create a new one for the Subscription Billing position"
+
+You: "I'll create a new resume based on your Ford resume for the Subscription Billing position.
+
+run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+[After execution]
+✅ Successfully duplicated resume!
+   New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
+   New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
+
+Would you like me to tailor this resume to the job posting now?"
+
+### Example 2: Update Resume (Use Helper Script)
 User: "Update the Ford resume with this experience: data/job_listings/Tailored Experience Summary for Ford.md"
 
 You: "I'll update the Ford resume with that experience file.
@@ -357,7 +410,7 @@ run: python src/update_resume_experience.py --resume "Ford" --experience "data/j
 [After execution]
 ✅ Successfully updated the Ford resume!"
 
-### Example 2: List Resumes
+### Example 3: List Resumes
 User: "What resumes do I have?"
 
 You: "Let me check your available resumes.
@@ -366,7 +419,7 @@ run: cat data/resumes/index.json
 
 [Show the list of resumes]"
 
-### Example 3: Tailor Resume (Different from Update)
+### Example 4: Tailor Resume (Different from Update and Duplicate)
 User: "Tailor my resume for the GM position with modern theme"
 
 You: "I'll tailor your master resume for the GM position using the modern theme.
@@ -377,10 +430,31 @@ run: python src/tailor.py --resume data/master_resume.json --jd 'data/job_listin
 ✅ Resume tailored successfully!"
 
 ## Key Reminders
+- For "Create/duplicate resume" → Use duplicate_resume.py (creates a copy of existing resume)
 - For "Update resume" → Use update_resume_experience.py (adds/updates experience)
 - For "Tailor resume" → Use tailor.py (creates new tailored version)
 - Always execute commands immediately, don't ask for clarification
 - The helper scripts handle file discovery automatically
+
+## IMPORTANT: Verify Command Results
+After executing CRUD operations, ALWAYS review the output to verify success:
+
+1. **Check for success indicators**: Look for "[SUCCESS]" or "Successfully" messages
+2. **Verify the data**: If the output shows IDs, names, or counts, mention them to the user
+3. **Offer next steps**: After successful operations, suggest logical follow-up actions
+
+**Example:**
+After duplicating a resume, you should say:
+"✅ Successfully duplicated resume!
+   - New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
+   - New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
+
+Would you like me to:
+1. Update specific sections of this new resume?
+2. Tailor it to a job posting?
+3. List all your resumes?"
+
+**If an error occurs**, explain what went wrong and suggest solutions.
 
 Available themes: professional, modern, executive, creative
 """
@@ -413,6 +487,10 @@ Available themes: professional, modern, executive, creative
         self.memory_manager = MemoryManager(memory_file)
         self.command_executor = CommandExecutor()
 
+        # Initialize result analyzer and token manager (Issue #24)
+        self.result_analyzer = ResultAnalyzer()
+        self.token_manager = TokenManager(model=model)
+
         # Load existing memory
         self.memory_manager.load()
 
@@ -434,6 +512,11 @@ Available themes: professional, modern, executive, creative
         Returns:
             Response string
         """
+        # Check token usage before processing (Issue #24)
+        token_status = self.token_manager.check_limit(self.memory_manager.get_messages())
+        if token_status['warning'] and token_status['message']:
+            print(f"\n{token_status['message']}\n")
+
         # Check if it's a command
         if self.command_executor.is_command(user_input):
             command = self.command_executor.extract_command(user_input)
@@ -441,10 +524,17 @@ Available themes: professional, modern, executive, creative
 
             result = self.command_executor.execute(command)
 
-            if result["success"]:
-                response = f"✅ Command executed successfully:\n{result['output']}"
-            else:
-                response = f"❌ Command failed:\n{result['error']}"
+            # Use result analyzer for intelligent feedback (Issue #24)
+            analysis = self.result_analyzer.analyze(command, result)
+
+            # Format response with analysis
+            response = analysis['message']
+
+            # Add suggestions if available
+            if analysis['suggestions']:
+                response += f"\n\n💡 What would you like to do next?\n"
+                for i, suggestion in enumerate(analysis['suggestions'], 1):
+                    response += f"   {i}. {suggestion}\n"
 
             # Add to memory
             self.memory_manager.add_message("user", user_input)
@@ -478,7 +568,16 @@ Available themes: professional, modern, executive, creative
                     if should_execute:
                         print(f"🔧 Executing command: {command}")
                         result = self.command_executor.execute(command)
-                        execution_result = self._format_execution_result(result)
+
+                        # Use result analyzer for intelligent feedback (Issue #24)
+                        analysis = self.result_analyzer.analyze(command, result)
+                        execution_result = analysis['message']
+
+                        # Add suggestions if available
+                        if analysis['suggestions']:
+                            execution_result += f"\n\n💡 What would you like to do next?\n"
+                            for i, suggestion in enumerate(analysis['suggestions'], 1):
+                                execution_result += f"   {i}. {suggestion}\n"
 
                         # Add execution result to memory
                         self.memory_manager.add_message("user", f"run: {command}")
@@ -573,6 +672,15 @@ Available themes: professional, modern, executive, creative
             True if user wants to exit
         """
         return user_input.strip().lower() in ["exit", "quit"]
+
+    def get_memory_stats(self) -> Dict[str, Any]:
+        """
+        Get memory usage statistics (Issue #24).
+
+        Returns:
+            Dictionary with token usage statistics
+        """
+        return self.token_manager.get_stats(self.memory_manager.get_messages())
     
     def run(self) -> None:
         """Run the interactive agent loop."""
@@ -587,6 +695,11 @@ Available themes: professional, modern, executive, creative
         print(f"  - Auto-execute: {'✅ Enabled' if self.auto_execute else '❌ Disabled'}")
         if self.auto_execute:
             print(f"  - Confirmation: {'✅ Required' if self.confirm_execution else '❌ Disabled'}")
+
+        # Show token usage (Issue #24)
+        stats = self.get_memory_stats()
+        print(f"  - Memory: {stats['token_count']}/{stats['max_tokens']} tokens ({stats['percentage']}%)")
+
         print("=" * 50)
         print()
         

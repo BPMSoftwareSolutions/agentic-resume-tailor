@@ -30,13 +30,14 @@ Job Listing Endpoints (Issue #6):
 - DELETE /api/job-listings/<id> - Delete specific job listing
 - POST /api/job-listings/<id>/extract-keywords - Extract keywords from job description
 
-Agent Integration Endpoints (Issue #12):
+Agent Integration Endpoints (Issue #12, #24):
 - POST /api/agent/chat - Send message to AI agent
 - GET /api/agent/memory - Get agent conversation memory
 - POST /api/agent/memory/clear - Clear agent memory
+- GET /api/agent/memory/stats - Get token usage statistics (Issue #24)
 - POST /api/agent/validate-command - Validate command for security
 
-Related to GitHub Issues #2, #6, and #12
+Related to GitHub Issues #2, #6, #12, and #24
 """
 
 import json
@@ -81,10 +82,11 @@ agent_instance = None
 memory_manager = None
 command_executor = CommandExecutor()
 
-# Command whitelist for security (Issue #12, #17)
+# Command whitelist for security (Issue #12, #17, #19)
 ALLOWED_COMMAND_PREFIXES = [
     'python src/tailor.py',
     'python src/update_resume_experience.py',
+    'python src/duplicate_resume.py',  # Issue #19: Resume duplication
     # CRUD scripts (Issue #17)
     'python src/crud/basic_info.py',
     'python src/crud/summary.py',
@@ -1161,6 +1163,40 @@ def clear_agent_memory():
 
     except Exception as e:
         return jsonify({"error": f"Failed to clear memory: {str(e)}"}), 500
+
+
+@app.route('/api/agent/memory/stats', methods=['GET'])
+def get_agent_memory_stats():
+    """
+    Get agent memory usage statistics (Issue #24).
+
+    Returns:
+        JSON response with token usage statistics:
+        - total_tokens: Current token count
+        - max_tokens: Maximum allowed tokens
+        - percentage: Usage percentage
+        - warning: Boolean indicating if at warning threshold
+        - critical: Boolean indicating if at critical threshold
+        - message_count: Number of messages in memory
+        - role_counts: Count of messages by role
+        - role_tokens: Token count by role
+        - estimation_method: 'accurate' or 'estimated'
+        - model: Model name
+    """
+    try:
+        agent = get_agent_instance()
+        if agent is None:
+            return jsonify({"error": "Agent not initialized. OPENAI_API_KEY may not be set."}), 500
+
+        stats = agent.get_memory_stats()
+
+        return jsonify({
+            "success": True,
+            "stats": stats
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to get memory stats: {str(e)}"}), 500
 
 
 @app.route('/api/agent/validate-command', methods=['POST'])
