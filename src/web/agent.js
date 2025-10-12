@@ -52,20 +52,20 @@ function setupEventListeners() {
 async function sendMessage() {
     const input = document.getElementById('chatInput');
     const message = input.value.trim();
-    
+
     if (!message) {
         return;
     }
-    
+
     // Clear input
     input.value = '';
-    
+
     // Add user message to chat
     addMessageToChat('user', message);
-    
+
     // Show typing indicator
     showTypingIndicator(true);
-    
+
     try {
         // Send to API
         const response = await fetch(`${API_BASE_URL}/agent/chat`, {
@@ -75,23 +75,84 @@ async function sendMessage() {
             },
             body: JSON.stringify({ message })
         });
-        
+
         const data = await response.json();
-        
+
         if (response.ok && data.success) {
             // Add assistant response to chat
             addMessageToChat('assistant', data.response);
+
+            // Check if response contains a command to execute
+            const commandMatch = extractCommand(data.response);
+            if (commandMatch) {
+                // Auto-execute the command
+                await autoExecuteCommand(commandMatch);
+            }
         } else {
             // Show error
             addMessageToChat('error', data.error || 'Failed to get response from agent');
         }
-        
+
         // Update memory count
         await loadMemory();
-        
+
     } catch (error) {
         console.error('Failed to send message:', error);
         addMessageToChat('error', 'Failed to communicate with agent. Please check if the API server is running.');
+    } finally {
+        showTypingIndicator(false);
+    }
+}
+
+/**
+ * Extract command from agent response
+ * Looks for patterns like "run: <command>" in the response
+ */
+function extractCommand(response) {
+    // Match "run: <command>" pattern
+    const runPattern = /run:\s*(.+?)(?:\n|$)/i;
+    const match = response.match(runPattern);
+
+    if (match && match[1]) {
+        return match[1].trim();
+    }
+
+    return null;
+}
+
+/**
+ * Auto-execute a command suggested by the agent
+ */
+async function autoExecuteCommand(command) {
+    try {
+        addMessageToChat('system', `🔧 Executing command: ${command}`);
+        showTypingIndicator(true);
+
+        // Send command with "run:" prefix to agent
+        const response = await fetch(`${API_BASE_URL}/agent/chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: `run: ${command}` })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Add command result to chat
+            addMessageToChat('system', data.response);
+        } else {
+            // Show error
+            addMessageToChat('error', data.error || 'Failed to execute command');
+        }
+
+        // Update memory
+        await loadMemory();
+
+    } catch (error) {
+        console.error('Failed to execute command:', error);
+        addMessageToChat('error', `Failed to execute command: ${error.message}`);
     } finally {
         showTypingIndicator(false);
     }
