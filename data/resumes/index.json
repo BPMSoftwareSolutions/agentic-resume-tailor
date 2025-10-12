@@ -40,7 +40,7 @@
       "id": "d474d761-18f2-48ab-99b5-9f30c54f75b2",
       "name": "Sidney_Jones_Senior_Software_Engineer_Ford",
       "created_at": "2025-10-12T08:49:00.020000",
-      "updated_at": "2025-10-12T08:51:39.985858",
+      "updated_at": "2025-10-12T10:28:48.700161",
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Sidney_Jones_Senior_Software_Engineer_GM"
@@ -95,6 +95,33 @@
       "name": "Base Resume",
       "created_at": "2025-10-12T10:01:50.215410",
       "updated_at": "2025-10-12T10:01:50.215410",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
+    },
+    {
+      "id": "9483cc12-75a1-47a8-91b8-f56dbc3f4fa3",
+      "name": "Test Resume",
+      "created_at": "2025-10-12T10:32:03.216206",
+      "updated_at": "2025-10-12T10:32:03.216206",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "4256d8fe-0bc6-4ae4-ad07-75a6b9e9381f",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-12T10:32:03.222204",
+      "updated_at": "2025-10-12T10:32:03.222204",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "a32964da-9ace-440e-870b-46f868cfadd8",
+      "name": "Base Resume",
+      "created_at": "2025-10-12T10:32:03.229714",
+      "updated_at": "2025-10-12T10:32:03.229714",
       "job_listing_id": null,
       "is_master": false,
       "description": ""

@@ -50,5 +50,21 @@
   {
     "role": "assistant",
     "content": "✅ Command executed successfully:\ntest\n"
+  },
+  {
+    "role": "user",
+    "content": "Can you update my resume with revised content?"
+  },
+  {
+    "role": "assistant",
+    "content": "Sure, to assist you in updating your resume, I will need some information from you. Could you please provide the following?\n\n1. The path to your resume JSON file. For example, `data/resumes/old_resume.json`.\n2. The specifics of the revised content. If the changes are in another file, please provide its path as well.\n3. Preferred output format and theme (if applicable): HTML with theme (e.g., `professional`, `modern`, `executive`, or `creative`), or markdown, and whether a DOCX version is needed."
+  },
+  {
+    "role": "user",
+    "content": "Update the Ford resume with this experience: \"C:\\source\\repos\\bpm\\internal\\agentic-resume-tailor\\data\\job_listings\\Tailored Experience Summary for Ford.md\""
+  },
+  {
+    "role": "assistant",
+    "content": "I understand that you want to update your resume with a new experience relevant to Ford. Can you also provide the following details?\n\n1. The path to your current resume JSON file. For example, `data/resumes/old_resume.json`.\n2. Your preferred output format: HTML with theme (e.g., `professional`, `modern`, `executive`, or `creative`), or markdown. Also, please let me know if a DOCX version is also needed. \n\nOnce I have these details, I can generate the appropriate command to update your resume!"
   }
 ]

@@ -1,0 +1,222 @@
+{
+  "version": "1.0.0",
+  "description": "Knowledge base for AI Agent to understand codebase structure and operations",
+  "last_updated": "2025-10-12",
+  
+  "data_structure": {
+    "resumes": {
+      "location": "data/resumes/",
+      "index_file": "data/resumes/index.json",
+      "description": "Contains all resume versions (master and tailored)",
+      "file_format": "UUID.json",
+      "index_structure": {
+        "resumes": [
+          {
+            "id": "UUID of the resume",
+            "name": "Human-readable name (e.g., 'Sidney_Jones_Senior_Software_Engineer_Ford')",
+            "created_at": "ISO timestamp",
+            "updated_at": "ISO timestamp",
+            "job_listing_id": "Optional: linked job listing UUID",
+            "is_master": "Boolean: true for master resume",
+            "description": "Optional description"
+          }
+        ]
+      },
+      "operations": {
+        "find_resume_by_name": "Search index.json for resume with matching name (case-insensitive, partial match)",
+        "find_resume_by_company": "Extract company name from resume name (e.g., 'Ford' from 'Sidney_Jones_Senior_Software_Engineer_Ford')",
+        "get_resume_id": "Extract 'id' field from matching resume in index.json",
+        "get_resume_path": "Construct path as 'data/resumes/{id}.json'"
+      },
+      "name_patterns": {
+        "master": "Master Resume",
+        "tailored": "{FirstName}_{LastName}_{Role}_{Company}",
+        "examples": [
+          "Sidney_Jones_Senior_Software_Engineer_Ford",
+          "Sidney_Jones_Senior_Software_Engineer_GM",
+          "Sidney_Jones_Senior_Software_Engineer_Credibly"
+        ]
+      }
+    },
+    
+    "job_listings": {
+      "location": "data/job_listings/",
+      "index_file": "data/job_listings/index.json",
+      "description": "Contains job descriptions and tailored experience summaries",
+      "file_formats": [
+        "UUID.json - Structured job listing data",
+        "*.md - Markdown files with job descriptions or tailored experience"
+      ],
+      "markdown_files": {
+        "job_descriptions": "Original job postings (e.g., 'Sr. Software Engineer - at Credibly.md')",
+        "tailored_experience": "AI-generated tailored experience summaries (e.g., 'Tailored Experience Summary for Ford.md')"
+      },
+      "operations": {
+        "find_by_company": "Search for markdown files containing company name",
+        "find_tailored_experience": "Look for files matching pattern 'Tailored Experience Summary for {Company}.md'",
+        "parse_experience": "Extract experience sections from markdown (look for headers with '###' or '**')"
+      }
+    },
+    
+    "backups": {
+      "location": "data/backups/",
+      "description": "Automatic backups of master_resume.json",
+      "file_pattern": "master_resume_backup_YYYYMMDD_HHMMSS.json"
+    }
+  },
+  
+  "common_operations": {
+    "update_resume_with_experience": {
+      "description": "Update a resume with experience from a markdown file",
+      "steps": [
+        "1. Parse the command to extract resume identifier (name/company) and experience file path",
+        "2. Load data/resumes/index.json to find the resume",
+        "3. Search for resume by name or company (case-insensitive)",
+        "4. Extract the resume 'id' from the matching entry",
+        "5. Load the resume file: data/resumes/{id}.json",
+        "6. Read the experience markdown file",
+        "7. Parse experience sections from markdown (look for ### headers or ** bold sections)",
+        "8. Update the 'experience' array in the resume JSON",
+        "9. Save the updated resume back to data/resumes/{id}.json",
+        "10. Update the 'updated_at' timestamp in data/resumes/index.json"
+      ],
+      "example_command": "Update the Ford resume with this experience: 'data/job_listings/Tailored Experience Summary for Ford.md'",
+      "parsing_rules": {
+        "resume_identifier": "Extract company name or resume name from command (e.g., 'Ford', 'GM', 'Credibly')",
+        "file_path": "Extract file path (absolute or relative)",
+        "search_strategy": "Search index.json for resume name containing the identifier"
+      }
+    },
+    
+    "tailor_resume": {
+      "description": "Tailor a resume to a specific job listing",
+      "command": "python src/tailor.py --resume {resume_path} --jd {job_description_path} --out {output_path} --format {format} --theme {theme}",
+      "parameters": {
+        "resume": "Path to resume JSON file (e.g., data/resumes/{id}.json or data/master_resume.json)",
+        "jd": "Path to job description file (e.g., data/job_listings/*.md)",
+        "out": "Output file path (e.g., out/tailored_resume.html)",
+        "format": "Output format: 'html', 'markdown', or 'docx'",
+        "theme": "HTML theme: 'professional', 'modern', 'executive', 'creative'"
+      },
+      "example": "python src/tailor.py --resume data/master_resume.json --jd 'data/job_listings/Sr. Software Engineer - at Credibly.md' --out out/credibly_tailored.html --format html --theme professional"
+    },
+    
+    "list_resumes": {
+      "description": "List all available resumes",
+      "method": "Read data/resumes/index.json and display resume names with IDs",
+      "api_endpoint": "GET /api/resumes"
+    },
+    
+    "list_job_listings": {
+      "description": "List all job listings",
+      "method": "Read data/job_listings/index.json and list markdown files in data/job_listings/",
+      "api_endpoint": "GET /api/job-listings"
+    },
+    
+    "create_resume": {
+      "description": "Create a new resume (usually by duplicating existing one)",
+      "api_endpoint": "POST /api/resumes",
+      "command_alternative": "Use API or manually copy resume JSON file"
+    },
+    
+    "export_resume": {
+      "description": "Export resume to DOCX format",
+      "command": "python src/generate_hybrid_resume.py --resume {resume_path} --output {output_path}",
+      "api_endpoint": "POST /api/resume/docx"
+    }
+  },
+  
+  "api_endpoints": {
+    "base_url": "http://localhost:5000/api",
+    "resumes": {
+      "list": "GET /api/resumes",
+      "get": "GET /api/resumes/{id}",
+      "create": "POST /api/resumes",
+      "update": "PUT /api/resumes/{id}",
+      "delete": "DELETE /api/resumes/{id}",
+      "duplicate": "POST /api/resumes/{id}/duplicate",
+      "tailor": "POST /api/resumes/{id}/tailor"
+    },
+    "job_listings": {
+      "list": "GET /api/job-listings",
+      "get": "GET /api/job-listings/{id}",
+      "create": "POST /api/job-listings",
+      "update": "PUT /api/job-listings/{id}",
+      "delete": "DELETE /api/job-listings/{id}"
+    },
+    "agent": {
+      "chat": "POST /api/agent/chat",
+      "memory": "GET /api/agent/memory",
+      "clear_memory": "POST /api/agent/memory/clear",
+      "validate_command": "POST /api/agent/validate-command"
+    }
+  },
+  
+  "file_locations": {
+    "master_resume": "data/master_resume.json",
+    "resumes_directory": "data/resumes/",
+    "job_listings_directory": "data/job_listings/",
+    "output_directory": "out/",
+    "backups_directory": "data/backups/",
+    "templates": "templates/",
+    "source_code": "src/",
+    "tests": "tests/",
+    "documentation": "docs/"
+  },
+  
+  "command_patterns": {
+    "update_resume": {
+      "patterns": [
+        "update {resume_name} with {file_path}",
+        "update the {company} resume with {file_path}",
+        "add experience from {file_path} to {resume_name}",
+        "apply {file_path} to {resume_name}"
+      ],
+      "extraction": {
+        "resume_identifier": "Extract company name or resume name (case-insensitive)",
+        "file_path": "Extract file path (can be absolute or relative)"
+      }
+    },
+    
+    "tailor_resume": {
+      "patterns": [
+        "tailor {resume_name} for {company}",
+        "tailor my resume for {job_description}",
+        "create tailored resume for {company}",
+        "customize resume for {job_posting}"
+      ]
+    },
+    
+    "list_items": {
+      "patterns": [
+        "list resumes",
+        "show all resumes",
+        "what resumes do I have",
+        "list job listings",
+        "show job postings"
+      ]
+    }
+  },
+  
+  "natural_language_understanding": {
+    "company_name_extraction": {
+      "description": "Extract company names from commands",
+      "examples": {
+        "Ford": ["Ford", "ford", "FORD", "Ford Motor Company"],
+        "GM": ["GM", "General Motors", "gm"],
+        "Credibly": ["Credibly", "credibly"]
+      }
+    },
+    
+    "resume_matching": {
+      "description": "Match user intent to specific resume",
+      "strategies": [
+        "Exact name match in index.json",
+        "Partial name match (case-insensitive)",
+        "Company name extraction from resume name",
+        "Fuzzy matching for typos"
+      ]
+    }
+  }
+}
+
