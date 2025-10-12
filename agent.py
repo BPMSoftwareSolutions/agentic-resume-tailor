@@ -18,6 +18,20 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from openai import OpenAI
 
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    try:
+        # Set console to UTF-8 mode
+        os.system('chcp 65001 > nul')
+        # Reconfigure stdout/stderr to use UTF-8
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        # If reconfiguration fails, continue without emoji support
+        pass
+
 
 class MemoryManager:
     """Manages persistent memory for agent interactions."""
@@ -103,10 +117,10 @@ class CommandExecutor:
     def execute(self, command: str) -> Dict[str, Any]:
         """
         Execute a system command.
-        
+
         Args:
             command: Command to execute
-            
+
         Returns:
             Dictionary with success status, output, and error
         """
@@ -116,9 +130,11 @@ class CommandExecutor:
                 shell=True,
                 capture_output=True,
                 text=True,
+                encoding='utf-8',
+                errors='replace',  # Replace invalid characters instead of failing
                 timeout=30
             )
-            
+
             return {
                 "success": result.returncode == 0,
                 "output": result.stdout,
@@ -216,18 +232,104 @@ You: run: python src/update_resume_experience.py --resume "Ford" --experience "d
 - --replace: Replace all experience (default: prepend new experience)
 - --resume-id: Use resume UUID directly instead of searching by name
 
-### 2. Tailor Resume to Job Description (DIFFERENT USE CASE)
-**User Intent**: "Tailor my resume for the {company} position"
-**Command Pattern**: User wants to CREATE a NEW tailored version from master resume
+### 2. CRUD Operations for Resume Data (GRANULAR UPDATES)
+**User Intent**: Update specific sections of a resume (skills, summary, education, etc.)
+**Location**: src/crud/ directory contains specialized scripts for each data model
 
-**Action**: Use tailor.py:
+**Available CRUD Scripts:**
+
+#### Basic Info (name, title, location, contact)
 ```
-run: python src/tailor.py --resume data/master_resume.json --jd {job_description} --out {output} --format {format} --theme {theme}
+run: python src/crud/basic_info.py --resume "{company}" --update-title "{title}"
+run: python src/crud/basic_info.py --resume "{company}" --update-email "{email}"
+run: python src/crud/basic_info.py --resume "{company}" --update-location "{location}"
+run: python src/crud/basic_info.py --resume "{company}" --show
 ```
 
-**Example:**
+#### Summary
+```
+run: python src/crud/summary.py --resume "{company}" --update "{text}"
+run: python src/crud/summary.py --resume "{company}" --append "{text}"
+run: python src/crud/summary.py --resume "{company}" --show
+```
+
+#### Technical Skills
+```
+run: python src/crud/technical_skills.py --resume "{company}" --add-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --update-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --append-to-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --list
+```
+
+#### Areas of Expertise
+```
+run: python src/crud/expertise.py --resume "{company}" --add "{expertise}"
+run: python src/crud/expertise.py --resume "{company}" --delete "{expertise}"
+run: python src/crud/expertise.py --resume "{company}" --list
+```
+
+#### Achievements
+```
+run: python src/crud/achievements.py --resume "{company}" --add "{achievement}"
+run: python src/crud/achievements.py --resume "{company}" --delete "{achievement}"
+run: python src/crud/achievements.py --resume "{company}" --list
+```
+
+#### Education
+```
+run: python src/crud/education.py --resume "{company}" --add --degree "{degree}" --institution "{institution}" --location "{location}" --year "{year}"
+run: python src/crud/education.py --resume "{company}" --update --institution "{institution}" --year "{year}"
+run: python src/crud/education.py --resume "{company}" --delete --institution "{institution}"
+run: python src/crud/education.py --resume "{company}" --list
+```
+
+#### Certifications
+```
+run: python src/crud/certifications.py --resume "{company}" --add --name "{name}" --issuer "{issuer}" --date "{date}"
+run: python src/crud/certifications.py --resume "{company}" --update --name "{name}" --date "{date}"
+run: python src/crud/certifications.py --resume "{company}" --delete --name "{name}"
+run: python src/crud/certifications.py --resume "{company}" --list
+```
+
+#### Experience (Granular)
+```
+run: python src/crud/experience.py --resume "{company}" --add --employer "{employer}" --role "{role}" --dates "{dates}" --location "{location}"
+run: python src/crud/experience.py --resume "{company}" --add-bullet --employer "{employer}" --text "{text}" --tags "{tags}"
+run: python src/crud/experience.py --resume "{company}" --update-bullet --employer "{employer}" --index {index} --text "{text}"
+run: python src/crud/experience.py --resume "{company}" --delete-bullet --employer "{employer}" --index {index}
+run: python src/crud/experience.py --resume "{company}" --delete --employer "{employer}"
+run: python src/crud/experience.py --resume "{company}" --list
+```
+
+**Natural Language Examples:**
+- "Add Python to my technical skills" → run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
+- "Update my title to Principal Architect" → run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+- "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
+- "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
+
+### 3. Tailor Resume to Job Description (DIFFERENT USE CASE)
+**User Intent**: "Tailor my resume for the {company} position" or "Create a new resume for {job_posting}"
+**Command Pattern**: User wants to CREATE a NEW tailored version from an existing resume
+
+**IMPORTANT**: When user says "Using the {Company} Resume" or "Use the {Company} resume", they want to use that specific company's resume as the base, NOT the master resume!
+
+**Action**: Use tailor.py with the correct resume:
+```
+# If user specifies a company resume (e.g., "Ford Resume"):
+run: python src/tailor.py --resume "{company}" --jd "{job_description}" --out "{output}" --format html --theme modern
+
+# If user doesn't specify, use master resume:
+run: python src/tailor.py --resume "Master Resume" --jd "{job_description}" --out "{output}" --format html --theme modern
+```
+
+**The tailor.py script now supports resume lookup by name!** Just pass the company name or "Master Resume" and it will find the correct file automatically.
+
+**Examples:**
+User: "Using the Ford Resume, let's create a new for this job posting: X.md"
+You: run: python src/tailor.py --resume "Ford" --jd "data/job_listings/X.md" --out "out/ford_tailored.html" --format html --theme modern
+
 User: "Tailor my resume for the GM position with modern theme"
-You: run: python src/tailor.py --resume data/master_resume.json --jd "data/job_listings/GM Job Description.md" --out out/gm_tailored.html --format html --theme modern
+You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/GM Job Description.md" --out "out/gm_tailored.html" --format html --theme modern
 
 ### List Resumes
 Command: run: cat data/resumes/index.json | python -m json.tool
@@ -283,13 +385,16 @@ run: python src/tailor.py --resume data/master_resume.json --jd 'data/job_listin
 Available themes: professional, modern, executive, creative
 """
 
-    def __init__(self, memory_file: str = "memory.json", model: str = "gpt-4"):
+    def __init__(self, memory_file: str = "memory.json", model: str = "gpt-4",
+                 auto_execute: bool = True, confirm_execution: bool = True):
         """
         Initialize the agent.
 
         Args:
             memory_file: Path to memory JSON file
             model: OpenAI model to use
+            auto_execute: Whether to auto-execute commands from agent responses
+            confirm_execution: Whether to ask for confirmation before executing
 
         Raises:
             ValueError: If OPENAI_API_KEY is not set
@@ -302,6 +407,8 @@ Available themes: professional, modern, executive, creative
             )
 
         self.model = model
+        self.auto_execute = auto_execute
+        self.confirm_execution = confirm_execution
         self.client = OpenAI(api_key=self.api_key)
         self.memory_manager = MemoryManager(memory_file)
         self.command_executor = CommandExecutor()
@@ -320,10 +427,10 @@ Available themes: professional, modern, executive, creative
     def process_message(self, user_input: str) -> str:
         """
         Process user input and return response.
-        
+
         Args:
             user_input: User's input message
-            
+
         Returns:
             Response string
         """
@@ -331,48 +438,137 @@ Available themes: professional, modern, executive, creative
         if self.command_executor.is_command(user_input):
             command = self.command_executor.extract_command(user_input)
             print(f"🔧 Executing command: {command}")
-            
+
             result = self.command_executor.execute(command)
-            
+
             if result["success"]:
                 response = f"✅ Command executed successfully:\n{result['output']}"
             else:
                 response = f"❌ Command failed:\n{result['error']}"
-            
+
             # Add to memory
             self.memory_manager.add_message("user", user_input)
             self.memory_manager.add_message("assistant", response)
             self.memory_manager.save()
-            
+
             return response
-        
+
         # Regular message - send to OpenAI
         self.memory_manager.add_message("user", user_input)
-        
+
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=self.memory_manager.get_messages()
             )
-            
+
             assistant_message = response.choices[0].message.content
             self.memory_manager.add_message("assistant", assistant_message)
             self.memory_manager.save()
-            
+
+            # Check if response contains a command to auto-execute
+            if self.auto_execute:
+                command = self._extract_command_from_response(assistant_message)
+                if command:
+                    # Ask for confirmation if enabled
+                    should_execute = True
+                    if self.confirm_execution:
+                        should_execute = self._confirm_execution(command)
+
+                    if should_execute:
+                        print(f"🔧 Executing command: {command}")
+                        result = self.command_executor.execute(command)
+                        execution_result = self._format_execution_result(result)
+
+                        # Add execution result to memory
+                        self.memory_manager.add_message("user", f"run: {command}")
+                        self.memory_manager.add_message("assistant", execution_result)
+                        self.memory_manager.save()
+
+                        # Append execution result to response
+                        assistant_message += f"\n\n{execution_result}"
+
             return assistant_message
-            
+
         except Exception as e:
             error_msg = f"❌ Error communicating with OpenAI: {str(e)}"
             print(error_msg)
             return error_msg
     
+    def _extract_command_from_response(self, response: str) -> Optional[str]:
+        """
+        Extract command from agent response (looks for 'run:' pattern).
+
+        Args:
+            response: Agent response text
+
+        Returns:
+            Command string if found, None otherwise
+        """
+        import re
+        pattern = r'run:\s*(.+?)(?:\n|$)'
+        match = re.search(pattern, response, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _confirm_execution(self, command: str) -> bool:
+        """
+        Ask user to confirm command execution.
+
+        Args:
+            command: Command to execute
+
+        Returns:
+            True if user confirms execution, False otherwise
+        """
+        print(f"\n❓ Execute this command? (y/n/edit): ", end="", flush=True)
+        try:
+            response = input().strip().lower()
+        except (KeyboardInterrupt, EOFError):
+            print("\n⏭️  Skipping command execution")
+            return False
+
+        if response in ['y', 'yes']:
+            return True
+        elif response == 'edit':
+            print(f"✏️  Edit command: ", end="", flush=True)
+            try:
+                edited_command = input().strip()
+                if edited_command:
+                    # Execute edited command
+                    print(f"🔧 Executing edited command: {edited_command}")
+                    result = self.command_executor.execute(edited_command)
+                    print(self._format_execution_result(result))
+            except (KeyboardInterrupt, EOFError):
+                print("\n⏭️  Skipping command execution")
+            return False
+        else:
+            print("⏭️  Skipping command execution")
+            return False
+
+    def _format_execution_result(self, result: Dict[str, Any]) -> str:
+        """
+        Format command execution result.
+
+        Args:
+            result: Execution result dictionary
+
+        Returns:
+            Formatted result string
+        """
+        if result["success"]:
+            return f"✅ Command executed successfully:\n{result['output']}"
+        else:
+            return f"❌ Command failed:\n{result['error']}"
+
     def should_exit(self, user_input: str) -> bool:
         """
         Check if user wants to exit.
-        
+
         Args:
             user_input: User's input
-            
+
         Returns:
             True if user wants to exit
         """
@@ -386,6 +582,11 @@ Available themes: professional, modern, executive, creative
         print("  - Type 'run: <command>' to execute local commands")
         print("  - Type 'exit' or 'quit' to stop")
         print("  - Type anything else to chat with the AI")
+        print()
+        print("Settings:")
+        print(f"  - Auto-execute: {'✅ Enabled' if self.auto_execute else '❌ Disabled'}")
+        if self.auto_execute:
+            print(f"  - Confirmation: {'✅ Required' if self.confirm_execution else '❌ Disabled'}")
         print("=" * 50)
         print()
         
@@ -419,14 +620,70 @@ Available themes: professional, modern, executive, creative
 
 def main():
     """Main entry point for the agent."""
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Local AI Agent with OpenAI integration",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Run with default settings (auto-execute with confirmation)
+  python agent.py
+
+  # Disable auto-execution
+  python agent.py --no-auto-execute
+
+  # Auto-execute without confirmation
+  python agent.py --no-confirm
+
+  # Use a different model
+  python agent.py --model gpt-4-turbo
+        """
+    )
+
+    parser.add_argument(
+        "--model",
+        default=os.getenv("OPENAI_MODEL", "gpt-4"),
+        help="OpenAI model to use (default: gpt-4 or OPENAI_MODEL env var)"
+    )
+    parser.add_argument(
+        "--memory",
+        default="memory.json",
+        help="Memory file path (default: memory.json)"
+    )
+    parser.add_argument(
+        "--auto-execute",
+        action="store_true",
+        default=True,
+        dest="auto_execute",
+        help="Auto-execute commands from agent responses (default: enabled)"
+    )
+    parser.add_argument(
+        "--no-auto-execute",
+        action="store_false",
+        dest="auto_execute",
+        help="Disable auto-execution of commands"
+    )
+    parser.add_argument(
+        "--no-confirm",
+        action="store_false",
+        dest="confirm_execution",
+        default=True,
+        help="Skip confirmation prompts before executing commands"
+    )
+
+    args = parser.parse_args()
+
     try:
-        # Get model from environment or use default
-        model = os.getenv("OPENAI_MODEL", "gpt-4")
-        
         # Initialize and run agent
-        agent = Agent(model=model)
+        agent = Agent(
+            memory_file=args.memory,
+            model=args.model,
+            auto_execute=args.auto_execute,
+            confirm_execution=args.confirm_execution
+        )
         agent.run()
-        
+
     except ValueError as e:
         print(f"❌ Configuration Error: {e}")
         print("\nPlease set your OPENAI_API_KEY environment variable:")

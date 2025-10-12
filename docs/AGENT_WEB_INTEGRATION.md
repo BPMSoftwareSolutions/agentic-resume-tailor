@@ -44,14 +44,30 @@ The Local AI Agent has been successfully integrated into the Resume Editor Web U
 ```python
 ALLOWED_COMMAND_PREFIXES = [
     'python src/tailor.py',
+    'python src/update_resume_experience.py',
+    # CRUD scripts (Issue #17)
+    'python src/crud/basic_info.py',
+    'python src/crud/summary.py',
+    'python src/crud/technical_skills.py',
+    'python src/crud/expertise.py',
+    'python src/crud/achievements.py',
+    'python src/crud/education.py',
+    'python src/crud/certifications.py',
+    'python src/crud/experience.py',
+    # Testing and utilities
     'python -m pytest',
+    'python -m json.tool',
+    # Git commands
     'git status',
     'git log',
     'git diff',
+    # File system commands
     'ls',
     'dir',
     'pwd',
-    'echo'
+    'echo',
+    'cat',
+    'type'
 ]
 ```
 
@@ -118,6 +134,26 @@ Agent: I can help you tailor your resume! To get started, I'll need...
 User: run: python src/tailor.py --help
 Agent: ✅ Command executed successfully:
 usage: tailor.py [-h] --resume RESUME --jd JD --out OUT...
+```
+
+**CRUD Operations (Natural Language):**
+```
+User: Add Python to my technical skills
+Agent: I'll add Python to your technical skills.
+run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
+✅ Successfully added Python to languages category
+
+User: Update my title to Principal Architect
+Agent: I'll update your title.
+run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+✅ Successfully updated title
+
+User: List my certifications
+Agent: I'll list your certifications.
+run: python src/crud/certifications.py --resume "Master Resume" --list
+✅ Certifications (7 entries):
+  [0] SAFe 5 Certified DevOps Practitioner
+  ...
 ```
 
 ### Quick Actions

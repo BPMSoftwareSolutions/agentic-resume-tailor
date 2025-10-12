@@ -1,4 +1,4 @@
-import json, argparse
+import json, argparse, sys, os
 from jinja2 import Template
 from jd_parser import extract_keywords
 from scorer import score_bullets
@@ -6,8 +6,95 @@ from rewriter import rewrite_star
 from jd_fetcher import ingest_jd
 from pathlib import Path
 
-def load_resume(path):
-    return json.loads(Path(path).read_text(encoding='utf-8'))
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    try:
+        # Set console to UTF-8 mode
+        os.system('chcp 65001 > nul')
+        # Reconfigure stdout/stderr to use UTF-8
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        # If reconfiguration fails, continue without emoji support
+        pass
+
+def load_resume_index(data_dir: Path):
+    """Load the resume index file."""
+    index_file = data_dir / "resumes" / "index.json"
+    if not index_file.exists():
+        raise FileNotFoundError(f"Resume index not found: {index_file}")
+
+    with open(index_file, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def find_resume_by_identifier(index_data, identifier: str):
+    """
+    Find a resume by name or company identifier.
+
+    Args:
+        index_data: Resume index data
+        identifier: Company name or resume name to search for
+
+    Returns:
+        Resume metadata dict or None if not found
+    """
+    identifier_lower = identifier.lower()
+
+    for resume in index_data.get("resumes", []):
+        name = resume.get("name", "").lower()
+
+        # Check for exact match or partial match
+        if identifier_lower in name or name in identifier_lower:
+            return resume
+
+    return None
+
+
+def load_resume(path_or_identifier):
+    """
+    Load resume by file path or identifier (company name).
+
+    Args:
+        path_or_identifier: Either a file path or a resume identifier
+
+    Returns:
+        Resume data dict
+    """
+    # Check if it's a file path
+    path = Path(path_or_identifier)
+    if path.exists() and path.is_file():
+        return json.loads(path.read_text(encoding='utf-8'))
+
+    # Otherwise, try to find by identifier
+    data_dir = Path("data")
+    try:
+        index_data = load_resume_index(data_dir)
+        resume_meta = find_resume_by_identifier(index_data, path_or_identifier)
+
+        if not resume_meta:
+            raise FileNotFoundError(
+                f"Resume not found: '{path_or_identifier}'. "
+                f"Provide either a valid file path or a resume name/company identifier."
+            )
+
+        resume_id = resume_meta["id"]
+        resume_file = data_dir / "resumes" / f"{resume_id}.json"
+
+        if not resume_file.exists():
+            raise FileNotFoundError(f"Resume file not found: {resume_file}")
+
+        print(f"📂 Found resume: {resume_meta['name']}")
+        return json.loads(resume_file.read_text(encoding='utf-8'))
+
+    except FileNotFoundError:
+        raise
+    except Exception as e:
+        raise FileNotFoundError(
+            f"Could not load resume '{path_or_identifier}': {e}"
+        )
 
 def select_and_rewrite(experience, keywords, per_job=3):
     tailored = []
@@ -99,7 +186,7 @@ def main():
         description='Tailor resume to job description with keyword extraction and rewriting'
     )
     ap.add_argument("--resume", default="data/master_resume.json",
-                   help='Path to resume JSON file')
+                   help='Resume file path OR resume name/company identifier (e.g., "Ford", "Master Resume")')
     ap.add_argument("--jd", required=True,
                    help='Path to job description file or URL')
     ap.add_argument("--template", default="templates/resume.md.j2",

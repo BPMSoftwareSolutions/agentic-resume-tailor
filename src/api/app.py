@@ -81,15 +81,27 @@ agent_instance = None
 memory_manager = None
 command_executor = CommandExecutor()
 
-# Command whitelist for security (Issue #12)
+# Command whitelist for security (Issue #12, #17)
 ALLOWED_COMMAND_PREFIXES = [
     'python src/tailor.py',
     'python src/update_resume_experience.py',
+    # CRUD scripts (Issue #17)
+    'python src/crud/basic_info.py',
+    'python src/crud/summary.py',
+    'python src/crud/technical_skills.py',
+    'python src/crud/expertise.py',
+    'python src/crud/achievements.py',
+    'python src/crud/education.py',
+    'python src/crud/certifications.py',
+    'python src/crud/experience.py',
+    # Testing and utilities
     'python -m pytest',
     'python -m json.tool',
+    # Git commands
     'git status',
     'git log',
     'git diff',
+    # File system commands
     'ls',
     'dir',
     'pwd',

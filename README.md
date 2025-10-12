@@ -16,6 +16,7 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - **NEW:** Multi-resume support with job listing management and automated tailoring ([Issue #6](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/6))
 - **NEW:** Local AI Agent for interactive automation and command execution ([Issue #8](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/8))
 - **NEW:** AI Agent Web Integration - Chat with the agent directly from your browser ([Issue #12](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/12))
+- **NEW:** CRUD Scripts for granular resume data management with AI agent integration ([Issue #17](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/17))
 
 ## Roadmap (Phase 2 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
@@ -56,25 +57,41 @@ pip install -r requirements.txt
 # Set your OpenAI API key
 export OPENAI_API_KEY='your-api-key-here'
 
-# Run the agent
+# Run the agent (with auto-execution and confirmation)
 python agent.py
+
+# Or disable auto-execution
+python agent.py --no-auto-execute
+
+# Or auto-execute without confirmation (use with caution!)
+python agent.py --no-confirm
 ```
 
 **Features:**
 - 🤖 Interactive chat with OpenAI models
+- ⚡ **Auto-execution** of AI-suggested commands (with confirmation)
 - 🔧 Execute local commands with `run:` prefix
 - 💾 Persistent conversation memory
+- 🎛️ Configurable execution modes
 - 🎯 Simple command-line interface
 
-**Example Usage:**
+**Example with Auto-Execution:**
 ```
 💬 > What files are in this directory?
-🤖 You can check with: run: ls
 
-💬 > run: ls
+🤖 I'll list the files for you.
+
+run: ls
+
+❓ Execute this command? (y/n/edit): y
+
+🔧 Executing command: ls
 ✅ Command executed successfully:
 agent.py  data/  src/  tests/  ...
+```
 
+**Manual Execution:**
+```
 💬 > run: git status
 ✅ Command executed successfully:
 On branch main
@@ -134,6 +151,57 @@ See [Agent Knowledge Base Documentation](docs/AGENT_KNOWLEDGE_BASE.md) for detai
 - View job listings
 
 See [Agent Web Integration Documentation](docs/AGENT_WEB_INTEGRATION.md) for details.
+
+### Resume CRUD Operations (NEW! 📝)
+```bash
+# Manage resume data with specialized scripts
+
+# Update basic info
+python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Software Architect"
+
+# Add technical skills
+python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python, Rust"
+
+# Add expertise area
+python src/crud/expertise.py --resume "Master Resume" --add "Cloud-Native Architecture"
+
+# Add certification
+python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Nov 2025"
+
+# List all operations
+python src/crud/expertise.py --resume "Master Resume" --list
+```
+
+**Features:**
+- 📝 Granular control over every resume section
+- 🤖 Natural language integration with AI agent
+- ✅ Automatic validation and timestamp updates
+- 🔍 Find resumes by name (no UUIDs needed)
+- 🛡️ Built-in error handling and validation
+
+**Available CRUD Scripts:**
+- `basic_info.py` - Name, title, location, contact
+- `summary.py` - Resume summary text
+- `technical_skills.py` - Technical proficiencies by category
+- `expertise.py` - Areas of expertise
+- `achievements.py` - Achievements
+- `education.py` - Education entries
+- `certifications.py` - Certification entries
+- `experience.py` - Work experience and bullets
+
+**Natural Language Examples (via AI Agent):**
+```
+💬 > Add Python to my technical skills
+🤖 run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
+
+💬 > Update my title to Principal Architect
+🤖 run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+
+💬 > List my certifications
+🤖 run: python src/crud/certifications.py --resume "Master Resume" --list
+```
+
+See [CRUD Operations Documentation](docs/CRUD_OPERATIONS.md) for complete guide.
 
 ### Web-Based Resume Editor
 ```bash
