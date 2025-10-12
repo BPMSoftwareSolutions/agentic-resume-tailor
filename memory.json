@@ -146,5 +146,13 @@
   {
     "role": "assistant",
     "content": "Sure, to remove the duplicate experiences under \"Edward Jones (2021–2024)\", we can use the helper script with the --replace option to replace the entire experience with a new one.\n\nrun: python src/update_resume_experience.py --resume \"Ford\" --experience \"new_experience_file_path\" --replace\n\nRemember to replace \"new_experience_file_path\" with the actual path to the new experience file. \n\nIt's worth noting that this operation will replace all of the existing experience with the entries from the new file. Please ensure that this file contains all of the experiences you'd like to include in the updated resume."
+  },
+  {
+    "role": "user",
+    "content": "Using the Ford Resume, let's create a new for this job posting: Subscription Billing Software Engineering Manager.md"
+  },
+  {
+    "role": "assistant",
+    "content": "Sure, let's tailor the Ford resume for the Subscription Billing Software Engineering Manager position. Here's the command:\n\nrun: python src/tailor.py --resume data/resumes/Sidney_Jones_Senior_Software_Engineer_Ford.json --jd \"data/job_listings/Subscription Billing Software Engineering Manager.md\" --out \"out/Sidney_Jones_Subscription_Billing_Manager_Ford_Tailored.html\" --format html --theme modern"
   }
 ]
