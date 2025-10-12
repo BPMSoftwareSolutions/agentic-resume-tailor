@@ -77,6 +77,44 @@ python src/update_resume_experience.py --resume "Ford" --experience "data/job_li
 - `--replace`: Replace all experience (default: prepend)
 - `--data-dir`: Data directory path (default: data)
 
+#### CRUD Scripts (`src/crud/`)
+
+Specialized scripts for managing individual resume sections:
+
+**Available Scripts**:
+- `basic_info.py` - Name, title, location, contact information
+- `summary.py` - Resume summary text
+- `technical_skills.py` - Technical proficiencies by category
+- `expertise.py` - Areas of expertise
+- `achievements.py` - Achievements
+- `education.py` - Education entries
+- `certifications.py` - Certification entries
+- `experience.py` - Work experience and bullets
+
+**Example Usage**:
+```bash
+# Update title
+python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+
+# Add technical skill
+python src/crud/technical_skills.py --resume "Ford" --append-to-category "languages" "Python"
+
+# Add certification
+python src/crud/certifications.py --resume "Ford" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Nov 2025"
+
+# List expertise areas
+python src/crud/expertise.py --resume "Master Resume" --list
+```
+
+**Common Features**:
+- Natural language friendly (find by resume name)
+- Automatic timestamp updates
+- Built-in validation
+- Consistent error handling
+- Comprehensive help (`--help`)
+
+See [CRUD Operations Documentation](CRUD_OPERATIONS.md) for complete guide.
+
 ## Data Structure
 
 ### Resumes
@@ -149,6 +187,68 @@ run: cat data/resumes/index.json
 Or via API:
 ```bash
 GET http://localhost:5000/api/resumes
+```
+
+### CRUD Operations (Granular Updates)
+
+#### Update Basic Information
+
+**User Command**:
+```
+Update my title to Principal Software Architect
+```
+
+**Agent Execution**:
+```bash
+run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Software Architect"
+```
+
+#### Add Technical Skills
+
+**User Command**:
+```
+Add Python and Rust to my programming languages
+```
+
+**Agent Execution**:
+```bash
+run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python, Rust"
+```
+
+#### Add Certification
+
+**User Command**:
+```
+Add my AWS certification
+```
+
+**Agent Execution**:
+```bash
+run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "November 2025"
+```
+
+#### List Expertise Areas
+
+**User Command**:
+```
+List my areas of expertise
+```
+
+**Agent Execution**:
+```bash
+run: python src/crud/expertise.py --resume "Master Resume" --list
+```
+
+#### Add Experience Bullet
+
+**User Command**:
+```
+Add a bullet to my Microsoft experience about leading a team
+```
+
+**Agent Execution**:
+```bash
+run: python src/crud/experience.py --resume "Master Resume" --add-bullet --employer "Microsoft" --text "Led team of 10 engineers in developing cloud-native solutions" --tags "Leadership,Cloud"
 ```
 
 ### Tailor Resume to Job
