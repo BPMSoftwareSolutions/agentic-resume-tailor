@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Dashboard - Multi-Resume Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .resume-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            height: 100%;
+        }
+        .resume-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .master-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .job-listing-card {
+            transition: transform 0.2s;
+        }
+        .job-listing-card:hover {
+            transform: translateY(-2px);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">
+                <i class="bi bi-file-earmark-person"></i> Resume Dashboard
+            </span>
+            <div class="d-flex">
+                <a href="index.html" class="btn btn-light btn-sm me-2">
+                    <i class="bi bi-pencil"></i> Resume Editor
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <div id="alertContainer"></div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-file-earmark-text"></i> Total Resumes</h5>
+                        <h2 id="totalResumes">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-briefcase"></i> Job Listings</h5>
+                        <h2 id="totalJobListings">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stat-card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="bi bi-star"></i> Tailored Resumes</h5>
+                        <h2 id="tailoredResumes">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="resumes-tab" data-bs-toggle="tab" data-bs-target="#resumes" type="button">
+                    <i class="bi bi-file-earmark-text"></i> Resumes
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="job-listings-tab" data-bs-toggle="tab" data-bs-target="#job-listings" type="button">
+                    <i class="bi bi-briefcase"></i> Job Listings
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="dashboardTabContent">
+            <!-- Resumes Tab -->
+            <div class="tab-pane fade show active" id="resumes" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>My Resumes</h4>
+                    <button class="btn btn-primary" id="createResumeBtn">
+                        <i class="bi bi-plus-circle"></i> Create New Resume
+                    </button>
+                </div>
+                
+                <div id="loadingResumes" class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading resumes...</p>
+                </div>
+
+                <div id="resumesContainer" class="row g-3" style="display: none;"></div>
+            </div>
+
+            <!-- Job Listings Tab -->
+            <div class="tab-pane fade" id="job-listings" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4>Job Listings</h4>
+                    <button class="btn btn-primary" id="createJobListingBtn">
+                        <i class="bi bi-plus-circle"></i> Add Job Listing
+                    </button>
+                </div>
+
+                <div id="loadingJobListings" class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Loading job listings...</p>
+                </div>
+
+                <div id="jobListingsContainer" class="row g-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Resume Modal -->
+    <div class="modal fade" id="createResumeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Resume</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createResumeForm">
+                        <div class="mb-3">
+                            <label for="resumeName" class="form-label">Resume Name *</label>
+                            <input type="text" class="form-control" id="resumeName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="resumeDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="resumeDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="baseResume" class="form-label">Base Resume</label>
+                            <select class="form-select" id="baseResume">
+                                <option value="">Start from scratch</option>
+                            </select>
+                            <small class="text-muted">Select a resume to duplicate, or start from scratch</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveResumeBtn">Create Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Job Listing Modal -->
+    <div class="modal fade" id="createJobListingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Job Listing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createJobListingForm">
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title *</label>
+                            <input type="text" class="form-control" id="jobTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobCompany" class="form-label">Company *</label>
+                            <input type="text" class="form-control" id="jobCompany" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobLocation" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="jobLocation">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobUrl" class="form-label">Job Posting URL</label>
+                            <input type="url" class="form-control" id="jobUrl">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobSalary" class="form-label">Salary Range</label>
+                            <input type="text" class="form-control" id="jobSalary" placeholder="e.g., $100k - $150k">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobDescription" class="form-label">Job Description *</label>
+                            <textarea class="form-control" id="jobDescription" rows="8" required></textarea>
+                            <small class="text-muted">Paste the full job description here. Keywords will be extracted automatically.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveJobListingBtn">Add Job Listing</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tailor Resume Modal -->
+    <div class="modal fade" id="tailorResumeModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tailor Resume to Job</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="tailorResumeForm">
+                        <input type="hidden" id="tailorSourceResumeId">
+                        <div class="mb-3">
+                            <label for="tailorJobListing" class="form-label">Select Job Listing *</label>
+                            <select class="form-select" id="tailorJobListing" required>
+                                <option value="">Choose a job listing...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tailorResumeName" class="form-label">New Resume Name *</label>
+                            <input type="text" class="form-control" id="tailorResumeName" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveTailorBtn">
+                        <i class="bi bi-magic"></i> Tailor Resume
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

@@ -2,18 +2,35 @@ from typing import Any, Dict, List, Tuple
 """
 Flask API for Resume Editor Web Interface
 
-This API provides endpoints for managing the master_resume.json file.
-Supports reading, updating, validating, and backing up resume data.
+This API provides endpoints for managing resumes and job listings.
+Supports single resume (backward compatibility) and multi-resume operations.
 
 Endpoints:
-- GET /api/resume - Read current resume data
-- PUT /api/resume - Update resume data
+- GET /api/resume - Read current/master resume data (backward compatibility)
+- PUT /api/resume - Update master resume data (backward compatibility)
 - POST /api/resume/validate - Validate resume JSON structure
 - GET /api/resume/backup - Create backup of current resume
 - GET /api/resume/backups - List all available backups
 - POST /api/resume/restore - Restore from a backup
 
-Related to GitHub Issue #2
+Multi-Resume Endpoints (Issue #6):
+- GET /api/resumes - List all resumes
+- POST /api/resumes - Create new resume
+- GET /api/resumes/<id> - Get specific resume
+- PUT /api/resumes/<id> - Update specific resume
+- DELETE /api/resumes/<id> - Delete specific resume
+- POST /api/resumes/<id>/duplicate - Duplicate resume
+- POST /api/resumes/<id>/tailor - Tailor resume to job listing
+
+Job Listing Endpoints (Issue #6):
+- GET /api/job-listings - List all job listings
+- POST /api/job-listings - Create new job listing
+- GET /api/job-listings/<id> - Get specific job listing
+- PUT /api/job-listings/<id> - Update specific job listing
+- DELETE /api/job-listings/<id> - Delete specific job listing
+- POST /api/job-listings/<id>/extract-keywords - Extract keywords from job description
+
+Related to GitHub Issues #2 and #6
 """
 
 import json
@@ -21,10 +38,16 @@ import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
+
+# Add src to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from models.resume import Resume, ResumeMetadata
+from models.job_listing import JobListing
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -37,6 +60,10 @@ BACKUP_DIR = DATA_DIR / "backups"
 
 # Ensure backup directory exists
 BACKUP_DIR.mkdir(exist_ok=True)
+
+# Initialize models
+resume_model = Resume(DATA_DIR)
+job_listing_model = JobListing(DATA_DIR)
 
 
 def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
@@ -324,13 +351,22 @@ def restore_backup():
         return jsonify({"error": f"Failed to restore backup: {str(e)}"}), 500
 
 
-@app.route('/api/resume/docx', methods=['GET'])
+@app.route('/api/resume/docx', methods=['GET', 'POST'])
 def generate_docx():
     """
     Generate and return the resume DOCX file for download.
 
     This endpoint generates a DOCX file from the resume JSON
     and returns it as a downloadable file.
+
+    For GET requests: Uses master_resume.json (backward compatibility)
+    For POST requests: Accepts resume_id or resume_path in JSON body
+
+    Request Body (POST):
+        {
+            "resume_id": "uuid-of-resume",  // Optional: ID of resume to export
+            "resume_path": "path/to/resume.json"  // Optional: Direct path to resume
+        }
 
     Returns:
         DOCX file download or error response
@@ -340,14 +376,40 @@ def generate_docx():
 
     # Paths
     generate_script = BASE_DIR / 'src' / 'generate_hybrid_resume.py'
-    resume_json_path = DATA_DIR / 'master_resume.json'
-    output_html_path = DATA_DIR / 'resume.html'
-    docx_path = DATA_DIR / 'resume.docx'
+
+    # Determine which resume to use
+    if request.method == 'POST':
+        data = request.get_json() or {}
+        resume_id = data.get('resume_id')
+        resume_path = data.get('resume_path')
+
+        if resume_id:
+            # Use resume ID to get the resume file
+            resume_json_path = DATA_DIR / 'resumes' / f'{resume_id}.json'
+            if not resume_json_path.exists():
+                return jsonify({'error': f'Resume with ID {resume_id} not found'}), 404
+        elif resume_path:
+            # Use provided path
+            resume_json_path = Path(resume_path)
+            if not resume_json_path.is_absolute():
+                resume_json_path = DATA_DIR / resume_path
+            if not resume_json_path.exists():
+                return jsonify({'error': f'Resume file not found at {resume_path}'}), 404
+        else:
+            # Default to master resume
+            resume_json_path = DATA_DIR / 'master_resume.json'
+    else:
+        # GET request - use master resume for backward compatibility
+        resume_json_path = DATA_DIR / 'master_resume.json'
+
+    # Create unique output paths to avoid conflicts
+    import uuid
+    unique_id = str(uuid.uuid4())[:8]
+    output_html_path = DATA_DIR / f'resume_{unique_id}.html'
+    docx_path = DATA_DIR / f'resume_{unique_id}.docx'
 
     # Generate HTML and DOCX from resume JSON
     try:
-    # ...existing code...
-
         result = subprocess.run([
             sys.executable,
             str(generate_script),
@@ -356,8 +418,6 @@ def generate_docx():
             '--docx'
         ], capture_output=True, text=True)
 
-    # ...existing code...
-
         if result.returncode != 0:
             return jsonify({'error': f'Failed to generate DOCX: {result.stderr or result.stdout}'}), 500
 
@@ -365,12 +425,525 @@ def generate_docx():
         if not docx_path.exists():
             return jsonify({'error': f'DOCX file was not created at {docx_path}. Output: {result.stdout}'}), 500
 
-        return send_file(docx_path, as_attachment=True, download_name='resume.docx')
+        # Send file and clean up after
+        response = send_file(docx_path, as_attachment=True, download_name='resume.docx')
+
+        # Clean up temporary files
+        @response.call_on_close
+        def cleanup():
+            try:
+                if output_html_path.exists():
+                    output_html_path.unlink()
+                if docx_path.exists():
+                    docx_path.unlink()
+            except Exception:
+                pass
+
+        return response
 
     except Exception as e:
         error_msg = f'Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}'
-    # ...existing code...
         return jsonify({'error': error_msg}), 500
+
+
+# ============================================================================
+# Multi-Resume API Endpoints (Issue #6)
+# ============================================================================
+
+@app.route('/api/resumes', methods=['GET'])
+def list_resumes():
+    """
+    List all resumes.
+
+    Returns:
+        JSON response with list of resumes
+    """
+    try:
+        resumes = resume_model.list_all()
+        return jsonify({
+            "success": True,
+            "resumes": [r.to_dict() for r in resumes]
+        })
+    except Exception as e:
+        return jsonify({"error": f"Failed to list resumes: {str(e)}"}), 500
+
+
+@app.route('/api/resumes', methods=['POST'])
+def create_resume():
+    """
+    Create a new resume.
+
+    Request body:
+        {
+            "name": "Resume name",
+            "data": { resume data },
+            "job_listing_id": "optional job listing ID",
+            "description": "optional description"
+        }
+
+    Returns:
+        JSON response with created resume metadata
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        name = body.get("name")
+        data = body.get("data")
+        job_listing_id = body.get("job_listing_id")
+        description = body.get("description", "")
+
+        if not name:
+            return jsonify({"error": "Resume name is required"}), 400
+
+        if not data:
+            return jsonify({"error": "Resume data is required"}), 400
+
+        # Validate resume structure
+        is_valid, errors = validate_resume_structure(data)
+        if not is_valid:
+            return jsonify({"error": "Validation failed", "details": errors}), 400
+
+        # Create resume
+        metadata = resume_model.create(
+            data=data,
+            name=name,
+            job_listing_id=job_listing_id,
+            description=description
+        )
+
+        return jsonify({
+            "success": True,
+            "message": "Resume created successfully",
+            "resume": metadata.to_dict()
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to create resume: {str(e)}"}), 500
+
+
+@app.route('/api/resumes/<resume_id>', methods=['GET'])
+def get_resume_by_id(resume_id: str):
+    """
+    Get a specific resume by ID.
+
+    Args:
+        resume_id: Resume ID
+
+    Returns:
+        JSON response with resume data
+    """
+    try:
+        data = resume_model.get(resume_id)
+
+        if not data:
+            return jsonify({"error": "Resume not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "data": data
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to get resume: {str(e)}"}), 500
+
+
+@app.route('/api/resumes/<resume_id>', methods=['PUT'])
+def update_resume_by_id(resume_id: str):
+    """
+    Update a specific resume.
+
+    Args:
+        resume_id: Resume ID
+
+    Request body:
+        {
+            "data": { updated resume data },
+            "name": "optional new name",
+            "description": "optional new description"
+        }
+
+    Returns:
+        JSON response with success status
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        # Update resume data if provided
+        if "data" in body:
+            data = body["data"]
+
+            # Validate resume structure
+            is_valid, errors = validate_resume_structure(data)
+            if not is_valid:
+                return jsonify({"error": "Validation failed", "details": errors}), 400
+
+            success = resume_model.update(resume_id, data)
+            if not success:
+                return jsonify({"error": "Resume not found"}), 404
+
+        # Update metadata if provided
+        metadata_updates = {}
+        if "name" in body:
+            metadata_updates["name"] = body["name"]
+        if "description" in body:
+            metadata_updates["description"] = body["description"]
+        if "job_listing_id" in body:
+            metadata_updates["job_listing_id"] = body["job_listing_id"]
+
+        if metadata_updates:
+            resume_model.update_metadata(resume_id, **metadata_updates)
+
+        return jsonify({
+            "success": True,
+            "message": "Resume updated successfully"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to update resume: {str(e)}"}), 500
+
+
+@app.route('/api/resumes/<resume_id>', methods=['DELETE'])
+def delete_resume_by_id(resume_id: str):
+    """
+    Delete a specific resume.
+
+    Args:
+        resume_id: Resume ID
+
+    Returns:
+        JSON response with success status
+    """
+    try:
+        success = resume_model.delete(resume_id)
+
+        if not success:
+            return jsonify({"error": "Resume not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "message": "Resume deleted successfully"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete resume: {str(e)}"}), 500
+
+
+@app.route('/api/resumes/<resume_id>/duplicate', methods=['POST'])
+def duplicate_resume(resume_id: str):
+    """
+    Duplicate a resume.
+
+    Args:
+        resume_id: Source resume ID
+
+    Request body:
+        {
+            "name": "New resume name"
+        }
+
+    Returns:
+        JSON response with new resume metadata
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body or "name" not in body:
+            return jsonify({"error": "Resume name is required"}), 400
+
+        new_name = body["name"]
+
+        metadata = resume_model.duplicate(resume_id, new_name)
+
+        if not metadata:
+            return jsonify({"error": "Source resume not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "message": "Resume duplicated successfully",
+            "resume": metadata.to_dict()
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to duplicate resume: {str(e)}"}), 500
+
+
+@app.route('/api/resumes/<resume_id>/tailor', methods=['POST'])
+def tailor_resume(resume_id: str):
+    """
+    Tailor a resume to a job listing.
+
+    Args:
+        resume_id: Resume ID to tailor
+
+    Request body:
+        {
+            "job_listing_id": "Job listing ID",
+            "new_resume_name": "Name for tailored resume"
+        }
+
+    Returns:
+        JSON response with tailored resume metadata
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        job_listing_id = body.get("job_listing_id")
+        new_resume_name = body.get("new_resume_name")
+
+        if not job_listing_id:
+            return jsonify({"error": "Job listing ID is required"}), 400
+
+        if not new_resume_name:
+            return jsonify({"error": "New resume name is required"}), 400
+
+        # Get source resume
+        source_data = resume_model.get(resume_id)
+        if not source_data:
+            return jsonify({"error": "Source resume not found"}), 404
+
+        # Get job listing
+        job_listing = job_listing_model.get(job_listing_id)
+        if not job_listing:
+            return jsonify({"error": "Job listing not found"}), 404
+
+        # Extract keywords from job listing if not already done
+        keywords = job_listing.get("keywords", [])
+        if not keywords:
+            keywords = job_listing_model.extract_keywords(job_listing_id)
+
+        # Tailor the resume using existing logic
+        from tailor import select_and_rewrite
+
+        tailored_data = source_data.copy()
+        if "experience" in tailored_data:
+            tailored_data["experience"] = select_and_rewrite(
+                tailored_data["experience"],
+                keywords
+            )
+
+        # Create new tailored resume
+        metadata = resume_model.create(
+            data=tailored_data,
+            name=new_resume_name,
+            job_listing_id=job_listing_id,
+            description=f"Tailored for {job_listing.get('title', 'Unknown')} at {job_listing.get('company', 'Unknown')}"
+        )
+
+        return jsonify({
+            "success": True,
+            "message": "Resume tailored successfully",
+            "resume": metadata.to_dict(),
+            "keywords_used": keywords[:10]  # Return first 10 keywords
+        }), 201
+
+    except Exception as e:
+        import traceback
+        return jsonify({
+            "error": f"Failed to tailor resume: {str(e)}",
+            "traceback": traceback.format_exc()
+        }), 500
+
+
+# ============================================================================
+# Job Listing API Endpoints (Issue #6)
+# ============================================================================
+
+@app.route('/api/job-listings', methods=['GET'])
+def list_job_listings():
+    """
+    List all job listings.
+
+    Returns:
+        JSON response with list of job listings
+    """
+    try:
+        job_listings = job_listing_model.list_all()
+        return jsonify({
+            "success": True,
+            "job_listings": job_listings
+        })
+    except Exception as e:
+        return jsonify({"error": f"Failed to list job listings: {str(e)}"}), 500
+
+
+@app.route('/api/job-listings', methods=['POST'])
+def create_job_listing():
+    """
+    Create a new job listing.
+
+    Request body:
+        {
+            "title": "Job title",
+            "company": "Company name",
+            "description": "Job description",
+            "url": "optional URL",
+            "location": "optional location",
+            "salary_range": "optional salary range"
+        }
+
+    Returns:
+        JSON response with created job listing
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        title = body.get("title")
+        company = body.get("company")
+        description = body.get("description")
+
+        if not title:
+            return jsonify({"error": "Job title is required"}), 400
+
+        if not company:
+            return jsonify({"error": "Company name is required"}), 400
+
+        if not description:
+            return jsonify({"error": "Job description is required"}), 400
+
+        # Create job listing
+        job_data = job_listing_model.create(
+            title=title,
+            company=company,
+            description=description,
+            url=body.get("url"),
+            location=body.get("location"),
+            salary_range=body.get("salary_range")
+        )
+
+        # Extract keywords automatically
+        job_listing_model.extract_keywords(job_data["id"])
+
+        return jsonify({
+            "success": True,
+            "message": "Job listing created successfully",
+            "job_listing": job_data
+        }), 201
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to create job listing: {str(e)}"}), 500
+
+
+@app.route('/api/job-listings/<job_id>', methods=['GET'])
+def get_job_listing(job_id: str):
+    """
+    Get a specific job listing by ID.
+
+    Args:
+        job_id: Job listing ID
+
+    Returns:
+        JSON response with job listing data
+    """
+    try:
+        job_data = job_listing_model.get(job_id)
+
+        if not job_data:
+            return jsonify({"error": "Job listing not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "job_listing": job_data
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to get job listing: {str(e)}"}), 500
+
+
+@app.route('/api/job-listings/<job_id>', methods=['PUT'])
+def update_job_listing(job_id: str):
+    """
+    Update a specific job listing.
+
+    Args:
+        job_id: Job listing ID
+
+    Request body: Fields to update
+
+    Returns:
+        JSON response with success status
+    """
+    try:
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        success = job_listing_model.update(job_id, **body)
+
+        if not success:
+            return jsonify({"error": "Job listing not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "message": "Job listing updated successfully"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to update job listing: {str(e)}"}), 500
+
+
+@app.route('/api/job-listings/<job_id>', methods=['DELETE'])
+def delete_job_listing(job_id: str):
+    """
+    Delete a specific job listing.
+
+    Args:
+        job_id: Job listing ID
+
+    Returns:
+        JSON response with success status
+    """
+    try:
+        success = job_listing_model.delete(job_id)
+
+        if not success:
+            return jsonify({"error": "Job listing not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "message": "Job listing deleted successfully"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to delete job listing: {str(e)}"}), 500
+
+
+@app.route('/api/job-listings/<job_id>/extract-keywords', methods=['POST'])
+def extract_job_keywords(job_id: str):
+    """
+    Extract keywords from job listing description.
+
+    Args:
+        job_id: Job listing ID
+
+    Returns:
+        JSON response with extracted keywords
+    """
+    try:
+        keywords = job_listing_model.extract_keywords(job_id)
+
+        if keywords is None:
+            return jsonify({"error": "Job listing not found"}), 404
+
+        return jsonify({
+            "success": True,
+            "keywords": keywords
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to extract keywords: {str(e)}"}), 500
 
 
 if __name__ == '__main__':

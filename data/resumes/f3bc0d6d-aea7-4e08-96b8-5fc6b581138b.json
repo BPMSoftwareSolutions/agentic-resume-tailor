@@ -1,0 +1,324 @@
+{
+  "achievements": [
+    "GitHub Community Innovative Contributor",
+    "Compuware President of ERG (Employee Resource Group)",
+    "Detroit Community Youth Mentorship Award"
+  ],
+  "areas_of_expertise": [
+    "Enterprise Architecture & Cloud Transformation",
+    "Revenue Growth & Cost Optimization",
+    "SaaS Solution Development",
+    "Security & Data Protection",
+    "AI Adoption & Scaling",
+    "Data-Driven Analytics",
+    "Process Automation",
+    "Relationship Building",
+    "Innovation & Product Development",
+    "Business Strategy & Value Delivery",
+    "Team Leadership & Agile Coaching",
+    "Cybersecurity & Compliance"
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Masterâ„¢ I (PSM I)"
+    }
+  ],
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": "2001 - 2003"
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": "1998 - 2000"
+    }
+  ],
+  "experience": [
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Python",
+            "C++",
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data"
+          ],
+          "text": "Architected Python and C++ modules for automation pipelines integrating with hardware-triggered sensors and real-time data streams."
+        },
+        {
+          "tags": [
+            "ETL",
+            "Control Systems",
+            "Event-driven Microservices",
+            "AWS IoT",
+            "CAN Bus"
+          ],
+          "text": "Developed ETL and control systems using event-driven microservices and AWS IoT to mirror vehicle communication systems (CAN-style event buses)."
+        },
+        {
+          "tags": [
+            "Linux",
+            "Embedded Integration",
+            "Secure File Transfer",
+            "Telemetry",
+            "ECU Data Logging"
+          ],
+          "text": "Integrated Linux-based agents for secure file transfer and telemetry processingconceptually similar to embedded ECU data logging."
+        },
+        {
+          "tags": [
+            "Encryption",
+            "Key Management",
+            "AES-256",
+            "OTA Security"
+          ],
+          "text": "Implemented encryption and key management protocols (AES-256) equivalent to secure OTA (Over-the-Air) data handling in vehicles."
+        },
+        {
+          "tags": [
+            "Mentoring",
+            "Modular Design",
+            "AUTOSAR",
+            "Component Design"
+          ],
+          "text": "Mentored engineers in modular design patterns analogous to AUTOSAR component design."
+        }
+      ],
+      "dates": "Aug 2017 - Nov 2021",
+      "employer": "BPM Software Solutions",
+      "location": "West Bloomfield, MI",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "C#",
+            "Python",
+            "Shell Scripting",
+            "Diagnostics",
+            "Monitoring",
+            "Telemetry",
+            "Multi-ECU"
+          ],
+          "text": "Developed cross-platform diagnostics and monitoring utilities in C#, Python, and shell scripting, handling multi-datacenter (multi-ECU-like) telemetry."
+        },
+        {
+          "tags": [
+            "Network Monitoring",
+            "Diagnostics",
+            "CAN",
+            "Ethernet"
+          ],
+          "text": "Built network health monitoring dashboards akin to embedded diagnostics over CAN/Ethernet."
+        },
+        {
+          "tags": [
+            "Real-time Reporting",
+            "Data Integration",
+            "Automotive Reliability"
+          ],
+          "text": "Delivered real-time reporting and data-integration software supporting critical decision systems with automotive-grade reliability."
+        }
+      ],
+      "dates": "2016 - 2017",
+      "employer": "Interactive Business Solutions",
+      "location": "Troy, MI",
+      "role": "Senior Software Engineering Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            ".NET",
+            "C++",
+            "ERP",
+            "Modular Reusability",
+            "Hardware Integration"
+          ],
+          "text": "Led modernization of legacy ERP control systems using .NET and C++, focusing on modular reusability and hardware integration across multiple facilities."
+        },
+        {
+          "tags": [
+            "AWS",
+            "Linux",
+            "Hybrid Cloud",
+            "Power-mode Control",
+            "Telemetry",
+            "ECU"
+          ],
+          "text": "Transitioned infrastructure to hybrid AWS/Linux environments, embedding power-mode control logic and telemetry akin to ECU energy-state transitions."
+        },
+        {
+          "tags": [
+            "Hardware Coordination",
+            "Operations",
+            "Software Deployment",
+            "System Behaviors"
+          ],
+          "text": "Coordinated with hardware and operations teams to synchronize software deployments with real-world system behaviors."
+        }
+      ],
+      "dates": "2015 - 2016",
+      "employer": "Soave Enterprises",
+      "location": "Detroit, MI",
+      "role": "Technology Manager / Software Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "C#",
+            "C++",
+            "Payment Processing",
+            "Microservices",
+            "Low-latency",
+            "Embedded Communication"
+          ],
+          "text": "Designed Level-III certified payment-processing microservices in C# and C++, managing low-latency transaction routing comparable to embedded communication frameworks."
+        },
+        {
+          "tags": [
+            "Modular Orchestration",
+            "AUTOSAR",
+            "Procurement",
+            "Inventory"
+          ],
+          "text": "Implemented modular service orchestration similar to AUTOSAR layers for procurement and inventory systems."
+        },
+        {
+          "tags": [
+            "Root-cause Debugging",
+            "Hardware Interfaces",
+            "Databases",
+            "Embedded Diagnostics",
+            "SoC Troubleshooting"
+          ],
+          "text": "Performed root-cause debugging across hardware interfaces and databasesexperience directly applicable to embedded diagnostics and SoC troubleshooting."
+        }
+      ],
+      "dates": "2010 - 2015",
+      "employer": "John Deere Landscapes",
+      "location": "Troy, MI",
+      "role": "Software Development Lead / Solution Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Service-oriented Architecture",
+            "Modular Integration",
+            "AUTOSAR",
+            "Platform Modernization"
+          ],
+          "text": "Led modernization of a large-scale distributed platform using service-oriented architecture, emphasizing modular integration similar to AUTOSAR stack decomposition."
+        },
+        {
+          "tags": [
+            "Diagnostics",
+            "Observability",
+            "SoC Monitoring",
+            "QNX",
+            "Linux"
+          ],
+          "text": "Implemented system-level observability and diagnostics frameworks comparable to SoC monitoring in QNX/Linux environments."
+        },
+        {
+          "tags": [
+            "CI/CD",
+            "Cross-compilation",
+            "Jenkins",
+            "Docker",
+            "AWS EC2",
+            "Static Code Analysis",
+            "SonarQube"
+          ],
+          "text": "Designed and optimized CI/CD pipelines for cross-compiled binaries, using Jenkins, Docker, and AWS EC2, integrating automated static code analysis (SonarQube)."
+        },
+        {
+          "tags": [
+            "Firmware",
+            "API",
+            "UI",
+            "Communication-layer",
+            "Root-cause Analysis",
+            "Vehicle-bus Debugging"
+          ],
+          "text": "Collaborated across firmware, API, and UI teams to resolve communication-layer defects, using root-cause analysis techniques parallel to vehicle-bus debugging."
+        },
+        {
+          "tags": [
+            "TDD",
+            "Continuous Integration",
+            "Embedded Quality"
+          ],
+          "text": "Drove test-driven development and continuous integration practices to achieve embedded-grade quality standards."
+        }
+      ],
+      "dates": "Nov 2021 - Nov 2024",
+      "employer": "Edward Jones",
+      "location": "Remote",
+      "role": "Senior Application Architect"
+    }
+  ],
+  "location": "West Bloomfield, MI",
+  "name": "Sidney Jones",
+  "summary": "Engineer with 10+ years of enterprise and system-level software experience, spanning cloud-native microservices and embedded Linux environments. Skilled in developing C/C++/Python/Java applications, integrating distributed systems, and automating CI/CD pipelines for complex platforms. Adept at debugging system interactions across hardware, firmware, and software layers. Experienced in AUTOSAR-style architecture principles, CAN-based communications, and diagnostics integrations for mission-critical systems.",
+  "technical_proficiencies": {
+    "automotive": "AUTOSAR, CAN Bus, ECU Data Logging, Vehicle Communication Systems",
+    "cloud": "AWS IoT, EC2, Lambda, Docker, Microservices, Hybrid Cloud",
+    "devops": "Jenkins, GitHub Actions, CI/CD, Static Code Analysis (SonarQube), Test Automation",
+    "diagnostics": "System Monitoring, Diagnostics Frameworks, Telemetry, Root-cause Debugging",
+    "embedded": "Embedded Linux, QNX, AUTOSAR, CAN/Ethernet, SoC Integration",
+    "languages": "C, C++, Python, Java, C#, Shell Scripting",
+    "platforms": "Linux, Windows, QNX, Real-time OS",
+    "security": "AES-256 Encryption, Key Management, Secure OTA, Keeper Security Manager",
+    "tools": "SonarQube, MATLAB/Simulink, Git, Jira"
+  },
+  "title": "Senior DevOps Software Engineer"
+}
