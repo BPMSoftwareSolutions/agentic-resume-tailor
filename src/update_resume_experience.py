@@ -258,8 +258,8 @@ def main():
         # Update resume
         print(f"\nUpdating resume...")
         update_resume_experience(data_dir, resume_id, experiences, args.replace)
-        
-        print(f"✅ Successfully updated resume {resume_id}")
+
+        print(f"[SUCCESS] Successfully updated resume {resume_id}")
         print(f"   Experience entries: {'replaced' if args.replace else 'prepended'}")
         
     except FileNotFoundError as e:

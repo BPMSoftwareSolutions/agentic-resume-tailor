@@ -199,6 +199,246 @@
       ]
     },
     {
+      "employer": "**Edward Jones",
+      "role": "Senior Application Architect / Platform Team Delivery Lead",
+      "dates": "2021–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of Edward Jones’ enterprise *Online Access* platform, **transitioning from legacy monoliths to microservices and micro-frontends** using **Java, Python, and AWS**.",
+          "tags": []
+        },
+        {
+          "text": "Directed **cross-functional teams (web, mobile, API, mainframe)** across multiple delivery trains, implementing **continuous delivery pipelines** that reduced release time by 50%.",
+          "tags": []
+        },
+        {
+          "text": "Established **technical delivery governance** — code quality metrics, automation standards, and DevOps maturity assessments across 13 Agile teams.",
+          "tags": []
+        },
+        {
+          "text": "Championed **architecture alignment and technical debt reduction**, driving standardization across cloud environments and improving developer velocity.",
+          "tags": []
+        },
+        {
+          "text": "Partnered with **product and platform leadership** to define modernization OKRs, resulting in measurable improvements in throughput, reliability, and built-in quality.",
+          "tags": []
+        },
+        {
+          "text": "Mentored technical leads and engineering managers, fostering a culture of collaboration, continuous improvement, and architectural integrity.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "2017–2021",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Spearheaded **cloud-first modernization initiatives** for financial and healthcare clients, transitioning legacy ERP and reporting systems to **Azure and AWS** platforms.",
+          "tags": []
+        },
+        {
+          "text": "Designed and implemented **scalable, distributed architectures** using **Python, Node.js, React, and serverless components**, aligning engineering outcomes with business KPIs.",
+          "tags": []
+        },
+        {
+          "text": "Built and led **multi-team engineering environments**, implementing **Agile/DevOps practices** (continuous testing, containerization, and IaC via Terraform).",
+          "tags": []
+        },
+        {
+          "text": "Established **software delivery playbooks** and reusable CI/CD modules that accelerated project onboarding and reduced deployment friction.",
+          "tags": []
+        },
+        {
+          "text": "Championed **team growth through mentorship**, establishing technical workshops and upskilling programs on modern stacks and security-by-design principles.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**Interactive Business Solutions",
+      "role": "Senior Software Engineering Consultant",
+      "dates": "2016–2017",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
+          "tags": []
+        },
+        {
+          "text": "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
+          "tags": []
+        },
+        {
+          "text": "Mentored developers in Agile story decomposition, code review, and sprint execution practices.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**Soave Enterprises",
+      "role": "Technology Manager / Software Architect",
+      "dates": "2015–2016",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
+          "tags": []
+        },
+        {
+          "text": "Introduced **DevOps and CI/CD pipelines**, automating release workflows and infrastructure provisioning.",
+          "tags": []
+        },
+        {
+          "text": "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010–2015",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
+          "tags": []
+        },
+        {
+          "text": "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
+          "tags": []
+        },
+        {
+          "text": "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**Edward Jones",
+      "role": "Senior Application Architect / Platform Team Delivery Lead",
+      "dates": "2021–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of Edward Jones’ enterprise *Online Access* platform, **transitioning from legacy monoliths to microservices and micro-frontends** using **Java, Python, and AWS**.",
+          "tags": []
+        },
+        {
+          "text": "Directed **cross-functional teams (web, mobile, API, mainframe)** across multiple delivery trains, implementing **continuous delivery pipelines** that reduced release time by 50%.",
+          "tags": []
+        },
+        {
+          "text": "Established **technical delivery governance** — code quality metrics, automation standards, and DevOps maturity assessments across 13 Agile teams.",
+          "tags": []
+        },
+        {
+          "text": "Championed **architecture alignment and technical debt reduction**, driving standardization across cloud environments and improving developer velocity.",
+          "tags": []
+        },
+        {
+          "text": "Partnered with **product and platform leadership** to define modernization OKRs, resulting in measurable improvements in throughput, reliability, and built-in quality.",
+          "tags": []
+        },
+        {
+          "text": "Mentored technical leads and engineering managers, fostering a culture of collaboration, continuous improvement, and architectural integrity.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "2017–2021",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Spearheaded **cloud-first modernization initiatives** for financial and healthcare clients, transitioning legacy ERP and reporting systems to **Azure and AWS** platforms.",
+          "tags": []
+        },
+        {
+          "text": "Designed and implemented **scalable, distributed architectures** using **Python, Node.js, React, and serverless components**, aligning engineering outcomes with business KPIs.",
+          "tags": []
+        },
+        {
+          "text": "Built and led **multi-team engineering environments**, implementing **Agile/DevOps practices** (continuous testing, containerization, and IaC via Terraform).",
+          "tags": []
+        },
+        {
+          "text": "Established **software delivery playbooks** and reusable CI/CD modules that accelerated project onboarding and reduced deployment friction.",
+          "tags": []
+        },
+        {
+          "text": "Championed **team growth through mentorship**, establishing technical workshops and upskilling programs on modern stacks and security-by-design principles.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**Interactive Business Solutions",
+      "role": "Senior Software Engineering Consultant",
+      "dates": "2016–2017",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
+          "tags": []
+        },
+        {
+          "text": "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
+          "tags": []
+        },
+        {
+          "text": "Mentored developers in Agile story decomposition, code review, and sprint execution practices.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**Soave Enterprises",
+      "role": "Technology Manager / Software Architect",
+      "dates": "2015–2016",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
+          "tags": []
+        },
+        {
+          "text": "Introduced **DevOps and CI/CD pipelines**, automating release workflows and infrastructure provisioning.",
+          "tags": []
+        },
+        {
+          "text": "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability.",
+          "tags": []
+        }
+      ]
+    },
+    {
+      "employer": "**John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010–2015",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
+          "tags": []
+        },
+        {
+          "text": "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
+          "tags": []
+        },
+        {
+          "text": "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects.",
+          "tags": []
+        }
+      ]
+    },
+    {
       "bullets": [
         {
           "tags": [
