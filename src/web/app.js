@@ -33,7 +33,21 @@ async function initializeApp() {
         document.getElementById('generateDocxBtn').addEventListener('click', async () => {
             try {
                 showAlert('Generating DOCX, please wait...', 'info');
-                const response = await fetch(`${API_BASE_URL}/resume/docx`);
+
+                // Prepare request based on whether we're editing a specific resume
+                let fetchOptions = {};
+                if (currentResumeId) {
+                    // Send POST request with resume ID
+                    fetchOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ resume_id: currentResumeId })
+                    };
+                }
+
+                const response = await fetch(`${API_BASE_URL}/resume/docx`, fetchOptions);
                 if (!response.ok) {
                     let errorMsg = 'Failed to generate DOCX';
                     try {

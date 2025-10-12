@@ -351,13 +351,22 @@ def restore_backup():
         return jsonify({"error": f"Failed to restore backup: {str(e)}"}), 500
 
 
-@app.route('/api/resume/docx', methods=['GET'])
+@app.route('/api/resume/docx', methods=['GET', 'POST'])
 def generate_docx():
     """
     Generate and return the resume DOCX file for download.
 
     This endpoint generates a DOCX file from the resume JSON
     and returns it as a downloadable file.
+
+    For GET requests: Uses master_resume.json (backward compatibility)
+    For POST requests: Accepts resume_id or resume_path in JSON body
+
+    Request Body (POST):
+        {
+            "resume_id": "uuid-of-resume",  // Optional: ID of resume to export
+            "resume_path": "path/to/resume.json"  // Optional: Direct path to resume
+        }
 
     Returns:
         DOCX file download or error response
@@ -367,14 +376,40 @@ def generate_docx():
 
     # Paths
     generate_script = BASE_DIR / 'src' / 'generate_hybrid_resume.py'
-    resume_json_path = DATA_DIR / 'master_resume.json'
-    output_html_path = DATA_DIR / 'resume.html'
-    docx_path = DATA_DIR / 'resume.docx'
+
+    # Determine which resume to use
+    if request.method == 'POST':
+        data = request.get_json() or {}
+        resume_id = data.get('resume_id')
+        resume_path = data.get('resume_path')
+
+        if resume_id:
+            # Use resume ID to get the resume file
+            resume_json_path = DATA_DIR / 'resumes' / f'{resume_id}.json'
+            if not resume_json_path.exists():
+                return jsonify({'error': f'Resume with ID {resume_id} not found'}), 404
+        elif resume_path:
+            # Use provided path
+            resume_json_path = Path(resume_path)
+            if not resume_json_path.is_absolute():
+                resume_json_path = DATA_DIR / resume_path
+            if not resume_json_path.exists():
+                return jsonify({'error': f'Resume file not found at {resume_path}'}), 404
+        else:
+            # Default to master resume
+            resume_json_path = DATA_DIR / 'master_resume.json'
+    else:
+        # GET request - use master resume for backward compatibility
+        resume_json_path = DATA_DIR / 'master_resume.json'
+
+    # Create unique output paths to avoid conflicts
+    import uuid
+    unique_id = str(uuid.uuid4())[:8]
+    output_html_path = DATA_DIR / f'resume_{unique_id}.html'
+    docx_path = DATA_DIR / f'resume_{unique_id}.docx'
 
     # Generate HTML and DOCX from resume JSON
     try:
-    # ...existing code...
-
         result = subprocess.run([
             sys.executable,
             str(generate_script),
@@ -383,8 +418,6 @@ def generate_docx():
             '--docx'
         ], capture_output=True, text=True)
 
-    # ...existing code...
-
         if result.returncode != 0:
             return jsonify({'error': f'Failed to generate DOCX: {result.stderr or result.stdout}'}), 500
 
@@ -392,11 +425,24 @@ def generate_docx():
         if not docx_path.exists():
             return jsonify({'error': f'DOCX file was not created at {docx_path}. Output: {result.stdout}'}), 500
 
-        return send_file(docx_path, as_attachment=True, download_name='resume.docx')
+        # Send file and clean up after
+        response = send_file(docx_path, as_attachment=True, download_name='resume.docx')
+
+        # Clean up temporary files
+        @response.call_on_close
+        def cleanup():
+            try:
+                if output_html_path.exists():
+                    output_html_path.unlink()
+                if docx_path.exists():
+                    docx_path.unlink()
+            except Exception:
+                pass
+
+        return response
 
     except Exception as e:
         error_msg = f'Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}'
-    # ...existing code...
         return jsonify({'error': error_msg}), 500
 
 

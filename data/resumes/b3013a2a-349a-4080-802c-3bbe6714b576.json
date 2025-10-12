@@ -82,6 +82,161 @@
       "bullets": [
         {
           "tags": [
+            "SFTP",
+            "ETL",
+            "SQL",
+            "Paylocity",
+            "AI",
+            "VOC",
+            "AWS",
+            "CloudWatch",
+            "Azure Functions",
+            "Selenium",
+            "RPA",
+            "LLM",
+            "React",
+            "NodeJS",
+            "NoSQL",
+            "Stripe",
+            "PayPal"
+          ],
+          "text": "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management."
+        },
+        {
+          "tags": [
+            "Architecture",
+            "Cloud",
+            "TPA",
+            ".NET",
+            "Java",
+            "Integration",
+            "Claims"
+          ],
+          "text": "ClaimChoice Hub: Architected and delivered cloud-native TPA integration platform that migrated workflows from .NET to Java, streamlined eligibility, payroll, and claims processing, and reduced manual overhead to support client scalability."
+        },
+        {
+          "tags": [
+            "Healthcare",
+            "SaaS",
+            "Portal",
+            "Claims",
+            "Scale"
+          ],
+          "text": "Tiding Health (Healthcare SaaS Platform): Devised and executed high-traffic member portals, admin consoles, and claims integration hub serving more than 3M users."
+        },
+        {
+          "tags": [
+            "AI",
+            "Orchestration",
+            "Architecture",
+            "Plugin",
+            "JSON"
+          ],
+          "text": "RenderX (AI-Driven Orchestration Platform): Established self-documenting, JSON-based plugin architecture powered by proprietary MusicalConductor event orchestration engine."
+        },
+        {
+          "tags": [
+            "AI",
+            "RPA",
+            "LLM",
+            "Healthcare",
+            "Real Estate",
+            "Automation"
+          ],
+          "text": "AI & Automation Leadership: Deployed AI-powered RPA bots for healthcare and real estate clients, incorporating LLMs for intelligent decision-making (e.g., ARV analysis, property workflows)."
+        },
+        {
+          "tags": [
+            "Cloud",
+            "Azure",
+            "BI",
+            "ERP",
+            "Integration",
+            "Architecture"
+          ],
+          "text": "Safe Fleet (Cloud Architecture & Enterprise Integrations): Architected unified BI platform on Microsoft Azure, integrating multiple ERP systems and enabling consolidated reporting that supported $60M acquisition."
+        },
+        {
+          "tags": [
+            "Open Source",
+            "Plugin",
+            "Demo",
+            "Innovation"
+          ],
+          "text": "Developed RenderX Plugins Demo to demonstrate platform extensibility, attracting open-source contributors and positioning RenderX as innovation leader."
+        },
+        {
+          "tags": [
+            "Agile",
+            "TDD",
+            "CI/CD",
+            "Jenkins",
+            "Docker",
+            "Kubernetes",
+            "Leadership"
+          ],
+          "text": "Improved delivery speed and reliability by leading Agile team of six and implementing TDD and CI/CD pipelines with Jenkins, Docker, and Kubernetes."
+        },
+        {
+          "tags": [
+            "Automation",
+            "Cloud",
+            "AI",
+            "LLM",
+            "Architecture"
+          ],
+          "text": "Elevated automation pipelines, merging cloud architecture with AI by fine-tuning custom LLMs and AI agents."
+        }
+      ],
+      "dates": "2017 – 2021",
+      "employer": "BPM Software Solutions",
+      "location": "West Bloomfield, MI",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Network Monitoring",
+            "Compliance",
+            "Azure",
+            "AWS",
+            "Multi-datacenter",
+            "Cross-functional"
+          ],
+          "text": "Designed and executed network monitoring application to oversee IT compliance across hundreds of servers in multi-datacenter environments, spanning on-premises, Microsoft Azure, and AWS. Collaborated with cross-functional teams, including developers, business analysts, and infrastructure specialists, to ensure high-quality solution delivery."
+        },
+        {
+          "tags": [
+            "Productivity",
+            "Integration",
+            "CRM",
+            "LMS",
+            "ERP",
+            "Web Application"
+          ],
+          "text": "Amplified month-end closing productivity by 300% through creation of web-based application integrating CRM, LMS, and ERP systems."
+        },
+        {
+          "tags": [
+            "Wealth Management",
+            "Salesforce",
+            "Integration",
+            "Financial",
+            "Reporting"
+          ],
+          "text": "Deployed wealth management platform, consolidating IRA, mutual fund, and investment data into Salesforce, significantly streamlining client reporting, enhancing financial tracking, and empowering advisors with accurate portfolio insights."
+        }
+      ],
+      "dates": "2016 – 2017",
+      "employer": "Interactive Business Solutions",
+      "location": "Troy, MI",
+      "role": "Senior Software Engineering Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
             "Leadership",
             "Management System",
             "Multi-location",
@@ -116,6 +271,61 @@
       "employer": "Soave Enterprises",
       "location": "Detroit, MI",
       "role": "Technology Manager / Software Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Web Application",
+            "Integration",
+            "M&A",
+            "ITIL",
+            "Change Management",
+            "Leadership",
+            "Mentoring",
+            "C#",
+            "ERP",
+            "Offshore"
+          ],
+          "text": "Created web-based product mapping tool to automate integration of acquired companies, accelerating onboarding and expansion in landscape supplies industry. Defined ITIL practices, enterprise change management processes, and application support strategies aligned with company growth objectives in coordination with CIO and CFO. Led and mentored team of offshore developers to support and sustain ERP business layers in C# for more than three years."
+        },
+        {
+          "tags": [
+            "Full-stack",
+            "ERP",
+            "Order Entry",
+            "Invoicing",
+            "Inventory",
+            "Accounting",
+            "Multi-location"
+          ],
+          "text": "Built and maintained full-stack functionality for proprietary ERP system supporting order entry, invoicing, shipping, product maintenance, inventory, and accounting across 400+ stores in the US and Canada."
+        },
+        {
+          "tags": [
+            "Microservices",
+            "Payment Processing",
+            "Security",
+            "Compliance",
+            "Cost Savings"
+          ],
+          "text": "Devised and implemented Wells Fargo Level III–certified credit card processing microservices, securely handling $1M+ in daily settlements and generating $500K in annual cost savings."
+        },
+        {
+          "tags": [
+            "Architecture",
+            "ERP Migration",
+            "Microsoft Dynamics",
+            "Procurement",
+            "Enterprise"
+          ],
+          "text": "Served as Lead Architect, overseeing ERP migration to Microsoft Dynamics AX 2012 R2, delivering new enterprise solutions for procurement, marketing, and accounting modules."
+        }
+      ],
+      "dates": "2010 – 2015",
+      "employer": "John Deere Landscapes",
+      "location": "Troy, MI",
+      "role": "Software Development Lead / Solution Architect"
     },
     {
       "bullets": [

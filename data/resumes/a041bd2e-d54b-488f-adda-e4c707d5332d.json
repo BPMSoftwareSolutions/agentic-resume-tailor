@@ -1,0 +1,474 @@
+{
+  "achievements": [
+    "GitHub Community Innovative Contributor",
+    "Compuware President of ERG (Employee Resource Group)",
+    "Detroit Community Youth Mentorship Award"
+  ],
+  "areas_of_expertise": [
+    "Enterprise Architecture & Cloud Transformation",
+    "Revenue Growth & Cost Optimization",
+    "SaaS Solution Development",
+    "Security & Data Protection",
+    "AI Adoption & Scaling",
+    "Data-Driven Analytics",
+    "Process Automation",
+    "Relationship Building",
+    "Innovation & Product Development",
+    "Business Strategy & Value Delivery",
+    "Team Leadership & Agile Coaching",
+    "Cybersecurity & Compliance"
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Masterâ„¢ I (PSM I)"
+    }
+  ],
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": "2001 - 2003"
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": "1998 - 2000"
+    }
+  ],
+  "experience": [
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Python",
+            "AWS",
+            "SQL",
+            "ERP",
+            "Financial Reporting",
+            "Automation",
+            "Dashboards"
+          ],
+          "text": "Designed and implemented distributed financial reporting and automation systems using Python, AWS, and SQL, integrating multiple ERP data sources into unified dashboards."
+        },
+        {
+          "tags": [
+            "ETL",
+            "AWS",
+            "CloudWatch",
+            "Lambda",
+            "EC2",
+            "Reporting",
+            "Business Intelligence",
+            "Error Tracking"
+          ],
+          "text": "Built ETL pipelines and automated reporting systems on AWS using CloudWatch, Lambda, and EC2, providing real-time business intelligence and error tracking."
+        },
+        {
+          "tags": [
+            "Microservices",
+            "APIs",
+            "Financial Origination",
+            "Servicing",
+            "Flask",
+            "SQLAlchemy",
+            "Modular",
+            "Scalable"
+          ],
+          "text": "Developed microservices-based APIs to support financial origination and servicing platforms, leveraging Flask and SQLAlchemy ORM for modular, scalable code."
+        },
+        {
+          "tags": [
+            "CI/CD",
+            "Jenkins",
+            "Docker",
+            "Deployments",
+            "Rollback Automation"
+          ],
+          "text": "Implemented CI/CD pipelines with Jenkins and Docker, ensuring seamless deployments and rollback automation."
+        },
+        {
+          "tags": [
+            "Event-driven",
+            "Integrations",
+            "Payroll",
+            "Claims",
+            "Payment Systems",
+            "High-volume",
+            "Transaction Processing"
+          ],
+          "text": "Engineered event-driven integrations between payroll, claims, and payment systems, supporting high-volume transaction processing."
+        },
+        {
+          "tags": [
+            "Encryption",
+            "Security",
+            "AES-256",
+            "Keeper Security Manager",
+            "Data Protection",
+            "Compliance"
+          ],
+          "text": "Developed encryption and security workflows for financial data using AES-256 and Keeper Security Manager, ensuring data protection and regulatory compliance."
+        },
+        {
+          "tags": [
+            "Mentoring",
+            "Development Standards",
+            "Code Reviews",
+            "Unit Testing",
+            "Feature Decomposition"
+          ],
+          "text": "Mentored junior developers and established development standards for code reviews, unit testing, and feature decomposition."
+        }
+      ],
+      "dates": "2017 â€“ 2021",
+      "employer": "BPM Software Solutions",
+      "location": "West Bloomfield, MI",
+      "role": "Principle Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Python",
+            "Backend Integration",
+            "Wealth Management",
+            "IRA",
+            "Mutual Fund",
+            "Investment Data",
+            "Salesforce"
+          ],
+          "text": "Developed Python-based backend integrations for wealth management systems consolidating IRA, mutual fund, and investment data into Salesforce."
+        },
+        {
+          "tags": [
+            "Automation",
+            "Reporting",
+            "AWS Lambda",
+            "S3",
+            "SQL",
+            "Financial Operations"
+          ],
+          "text": "Built automated month-end reporting pipelines using AWS Lambda, S3, and SQL to streamline financial operations."
+        },
+        {
+          "tags": [
+            "Network Monitoring",
+            "IT Compliance",
+            "Python",
+            "AWS",
+            "Multi-datacenter"
+          ],
+          "text": "Created network monitoring tools for IT compliance using Python and AWS, spanning multi-datacenter environments."
+        },
+        {
+          "tags": [
+            "Web Applications",
+            "CRM",
+            "LMS",
+            "ERP",
+            "Productivity"
+          ],
+          "text": "Designed web-based applications integrating CRM, LMS, and ERP systems, increasing month-end closing productivity by 300%."
+        },
+        {
+          "tags": [
+            "Collaboration",
+            "Deployment Speed",
+            "Observability",
+            "CI/CD",
+            "Containerization"
+          ],
+          "text": "Collaborated with cross-functional teams to improve deployment speed and observability through CI/CD and containerization best practices."
+        }
+      ],
+      "dates": "2016 â€“ 2017",
+      "employer": "Interactive Business Solutions",
+      "location": "Troy, MI",
+      "role": "Senior Software Engineering Consultant"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Python",
+            ".NET",
+            "Information Systems",
+            "Multi-site",
+            "Operational Efficiency"
+          ],
+          "text": "Directed multi-site rollout of Python- and .NET-based information systems across 25 US locations, improving operational efficiency."
+        },
+        {
+          "tags": [
+            "AWS",
+            "Hybrid Cloud",
+            "Automation",
+            "EC2",
+            "Cost Reduction"
+          ],
+          "text": "Designed hybrid AWS cloud infrastructure, reducing annual IT costs by  through automation and EC2 migration."
+        },
+        {
+          "tags": [
+            "ERP",
+            "MVVM",
+            "Microservices",
+            "Financial Data",
+            "Inventory Data",
+            "Integration"
+          ],
+          "text": "Modernized ERP subsystems using MVVM and microservices, integrating financial and inventory data across regions."
+        },
+        {
+          "tags": [
+            "DevOps",
+            "Docker",
+            "Continuous Delivery",
+            "Business Applications"
+          ],
+          "text": "Led DevOps transition with Docker, enabling continuous delivery pipelines for internal business applications."
+        },
+        {
+          "tags": [
+            "Stakeholder Partnership",
+            "Modernization",
+            "Business Goals",
+            "Cost Constraints"
+          ],
+          "text": "Partnered with stakeholders to balance modernization initiatives with business goals and cost constraints."
+        }
+      ],
+      "dates": "2015 â€“ 2016",
+      "employer": "Soave Enterprises",
+      "location": "Detroit, MI",
+      "role": "Technology Manager / Software Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "ERP",
+            "Enterprise-scale",
+            "Retail",
+            "US",
+            "Canada"
+          ],
+          "text": "Architected and maintained enterprise-scale ERP system supporting 400+ retail locations in the US and Canada."
+        },
+        {
+          "tags": [
+            "Python",
+            "C#",
+            "Financial Microservices",
+            "Credit Card Processing",
+            "Wells Fargo",
+            "Level III",
+            "Transactions"
+          ],
+          "text": "Developed Python- and C#-based financial microservices for Wells Fargo Level IIIcertified credit card processing, handling + daily transactions."
+        },
+        {
+          "tags": [
+            "ERP Migration",
+            "Microsoft Dynamics AX 2012",
+            "Procurement",
+            "Accounting",
+            "Marketing",
+            "Integration"
+          ],
+          "text": "Migrated legacy ERP to Microsoft Dynamics AX 2012, integrating procurement, accounting, and marketing modules."
+        },
+        {
+          "tags": [
+            "CI/CD",
+            "Automation",
+            "TDD",
+            "Delivery Reliability"
+          ],
+          "text": "Implemented CI/CD automation pipelines and test-driven development (TDD) to improve delivery reliability."
+        },
+        {
+          "tags": [
+            "Team Management",
+            "Mentoring",
+            "Offshore Teams",
+            "Coding Best Practices",
+            "DevOps"
+          ],
+          "text": "Managed and mentored offshore teams, establishing coding and DevOps best practices across development groups."
+        }
+      ],
+      "dates": "2010 â€“ 2015",
+      "employer": "John Deere Landscapes",
+      "location": "Troy, MI",
+      "role": "Software Development Lead / Solution Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Python",
+            "Flask",
+            "Microservices",
+            "Micro-frontend",
+            "AWS Lambda",
+            "SQLAlchemy",
+            "Architecture",
+            "Scalability"
+          ],
+          "text": "Led modernization of Edward Jones’ Online Access platform by implementing Python- and AWS-based microservices with a micro-frontend architecture, improving scalability and delivery speed."
+        },
+        {
+          "tags": [
+            "Python",
+            "CI/CD",
+            "Jenkins",
+            "GitHub Actions",
+            "Docker",
+            "Automation"
+          ],
+          "text": "Developed and optimized Python-based CI/CD pipelines with Jenkins, GitHub Actions, and Docker, automating build, test, and deployment workflows across multiple environments."
+        },
+        {
+          "tags": [
+            "Event-driven",
+            "Financial Reporting",
+            "MySQL",
+            "DynamoDB",
+            "AWS S3",
+            "Data Integrity",
+            "Compliance"
+          ],
+          "text": "Designed event-driven financial reporting and servicing pipelines, integrating data from MySQL, DynamoDB, and AWS S3 while ensuring end-to-end data integrity and compliance."
+        },
+        {
+          "tags": [
+            "Monitoring",
+            "Alerting",
+            "AWS CloudWatch",
+            "Python",
+            "Reliability"
+          ],
+          "text": "Engineered monitoring and alerting solutions using AWS CloudWatch and custom Python scripts, improving fault detection and system reliability by 40%."
+        },
+        {
+          "tags": [
+            "Agile",
+            "Mentoring",
+            "Code Review",
+            "Test Automation",
+            "Story Decomposition"
+          ],
+          "text": "Championed Agile engineering practices, mentoring junior developers on code reviews, test automation, and story decomposition to enhance delivery predictability."
+        },
+        {
+          "tags": [
+            "AI",
+            "LLM",
+            "Forecasting",
+            "Automation",
+            "Predictive Analytics",
+            "Financial Workflows"
+          ],
+          "text": "Partnered with data science and business teams to deploy AI-driven forecasting and LLM-powered automation prototypes, establishing groundwork for predictive analytics in financial workflows."
+        },
+        {
+          "tags": [
+            "DevSecOps",
+            "Security Scanning",
+            "Compliance",
+            "CI/CD"
+          ],
+          "text": "Implemented DevSecOps best practices, integrating security scanning and compliance checks directly into CI/CD pipelines."
+        },
+        {
+          "tags": [
+            "Containerization",
+            "Docker",
+            "AWS EC2",
+            "Collaboration",
+            "Onboarding"
+          ],
+          "text": "Introduced containerized local development environments with Docker and AWS EC2, streamlining onboarding and cross-team collaboration."
+        },
+        {
+          "tags": [
+            "Python",
+            "Flask",
+            "SQLAlchemy",
+            "AWS",
+            "MySQL",
+            "DynamoDB",
+            "Docker",
+            "Jenkins",
+            "GitHub Actions",
+            "Terraform",
+            "Agile",
+            "Scrum"
+          ],
+          "text": "Key Technologies: Python, Flask, SQLAlchemy, AWS (Lambda, S3, EC2, CloudWatch), MySQL, DynamoDB, Docker, Jenkins, GitHub Actions, Terraform, Agile/Scrum"
+        }
+      ],
+      "dates": "2021 - 2024",
+      "employer": "Edward Jones",
+      "location": "Remote",
+      "role": "Senior Application Architect"
+    }
+  ],
+  "location": "West Bloomfield, MI",
+  "name": "Sidney Jones",
+  "summary": "Accomplished technology leader with extensive experience in driving software engineering management, enterprise architecture, and large-scale transformation initiatives across diverse sectors. Track record of leading cross-functional teams to deliver AI-driven solutions, scalable SaaS platforms, and enterprise-grade cloud architectures that enhance performance, reduce costs, and accelerate delivery. Skilled in microservices, AI/LLM development, and Agile delivery practices, with a strong focus on aligning engineering excellence with business goals, optimizing delivery pipelines, and guiding enterprise modernization strategies across global organizations. Entrepreneurial strategist with expertise in resolving complex business challenges, integrating enterprise consulting with scalable product innovation, and coaching teams in Agile/SAFe to ensure continuous improvement.",
+  "technical_proficiencies": {
+    "ai": "Large Language Models (LLMs), AI-assisted coding, RPA, NLP, Intelligent Orchestration",
+    "cloud": "Azure, AWS, SaaS Platforms, Microservices, Serverless Functions",
+    "databases": "Microsoft SQL Server, MongoDB (NoSQL), MySQL, Oracle, PostgreSQL",
+    "devops": "Jenkins, GitHub Actions, Azure DevOps, Docker, Kubernetes, Terraform, IaC",
+    "languages": "C#, .NET (Framework/Core/6+), Python, Java, JavaScript/TypeScript (React, Angular, Node.js), SQL, Golang, C/C++, VB",
+    "opensource": "GitHub open-source projects (RenderX, Valence CLI)",
+    "os": "Windows, Unix, Linux, macOS, iOS, Android",
+    "security": "AES-256 Encryption, Key Vaults, Role-Based Access Control, HIPAA/Data Privacy"
+  },
+  "title": "Senior DevOps Software Engineer"
+}

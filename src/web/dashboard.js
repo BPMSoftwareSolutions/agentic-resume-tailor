@@ -163,6 +163,44 @@ async function deleteResume(resumeId, resumeName) {
     }
 }
 
+async function exportResumeDocx(resumeId, resumeName) {
+    try {
+        showAlert('Generating DOCX, please wait...', 'info');
+
+        const response = await fetch(`${API_BASE_URL}/resume/docx`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ resume_id: resumeId })
+        });
+
+        if (!response.ok) {
+            let errorMsg = 'Failed to generate DOCX';
+            try {
+                const errorData = await response.json();
+                errorMsg = errorData.error || errorMsg;
+            } catch {}
+            throw new Error(errorMsg);
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${resumeName}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+        showAlert('DOCX generated and downloaded!', 'success', 3000);
+    } catch (error) {
+        console.error('Failed to export resume:', error);
+        showAlert('Failed to export resume: ' + error.message, 'danger');
+    }
+}
+
 async function createJobListing() {
     try {
         const title = document.getElementById('jobTitle').value.trim();
@@ -293,7 +331,7 @@ function renderResumes() {
                     ${resume.description ? `<p class="card-text text-muted small">${escapeHtml(resume.description)}</p>` : ''}
                     ${resume.job_listing_id ? '<p class="card-text"><small class="text-success"><i class="bi bi-briefcase"></i> Linked to job</small></p>' : ''}
                     <p class="card-text"><small class="text-muted">Updated: ${formatDate(resume.updated_at)}</small></p>
-                    <div class="btn-group w-100" role="group">
+                    <div class="btn-group w-100 mb-2" role="group">
                         <a href="index.html?resume=${resume.id}" class="btn btn-sm btn-primary">
                             <i class="bi bi-pencil"></i> Edit
                         </a>
@@ -304,6 +342,9 @@ function renderResumes() {
                             <i class="bi bi-trash"></i>
                         </button>` : ''}
                     </div>
+                    <button class="btn btn-sm btn-success w-100" onclick="exportResumeDocx('${resume.id}', '${escapeHtml(resume.name)}')">
+                        <i class="bi bi-file-earmark-word"></i> Export DOCX
+                    </button>
                 </div>
             </div>
         </div>

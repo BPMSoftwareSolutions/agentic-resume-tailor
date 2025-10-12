@@ -67,6 +67,11 @@ data/
 - `DELETE /api/job-listings/<id>` - Delete specific job listing
 - `POST /api/job-listings/<id>/extract-keywords` - Extract keywords
 
+**Export Endpoints:**
+- `GET /api/resume/docx` - Export master resume as DOCX (backward compatible)
+- `POST /api/resume/docx` - Export specific resume as DOCX
+  - Body: `{"resume_id": "uuid"}` or `{"resume_path": "path/to/resume.json"}`
+
 **Legacy Endpoints (Backward Compatibility):**
 - `GET /api/resume` - Get master resume
 - `PUT /api/resume` - Update master resume
@@ -180,7 +185,20 @@ This will:
 
 ### Exporting a Resume
 
-Currently, export functionality uses the existing DOCX generation:
+#### From the Dashboard
+
+1. Open the dashboard
+2. Find the resume you want to export
+3. Click the "Export DOCX" button
+4. The DOCX file will be downloaded automatically
+
+#### From the Resume Editor
+
+1. Open a resume in the editor
+2. Click the "Generate DOCX" button in the top navigation
+3. The DOCX file will be downloaded automatically
+
+#### From the Command Line
 
 ```bash
 # Export a specific resume
@@ -188,6 +206,19 @@ python src/generate_hybrid_resume.py \
   --input data/resumes/{resume-id}.json \
   --output out/resume.html \
   --docx
+```
+
+#### Via API
+
+```bash
+# Export a specific resume by ID
+curl -X POST http://localhost:5000/api/resume/docx \
+  -H "Content-Type: application/json" \
+  -d '{"resume_id": "{resume-id}"}' \
+  --output resume.docx
+
+# Export master resume (backward compatible)
+curl http://localhost:5000/api/resume/docx --output resume.docx
 ```
 
 ## API Examples
@@ -248,7 +279,8 @@ python -m pytest tests/ -v
 
 - 15 unit tests for Resume and JobListing models
 - 14 API integration tests
-- All tests passing ✅
+- 7 DOCX export tests
+- **Total: 36 tests, all passing** ✅
 
 ## Future Enhancements
 

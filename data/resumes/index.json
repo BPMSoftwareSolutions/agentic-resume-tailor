@@ -4,7 +4,7 @@
       "id": "b3013a2a-349a-4080-802c-3bbe6714b576",
       "name": "Master Resume",
       "created_at": "2025-10-11T19:07:06.199315",
-      "updated_at": "2025-10-11T19:07:06.199315",
+      "updated_at": "2025-10-11T19:44:36.396864",
       "job_listing_id": null,
       "is_master": true,
       "description": "Primary resume containing all experience and skills"
@@ -14,6 +14,69 @@
       "name": "Test Resume",
       "created_at": "2025-10-11T19:08:31.418250",
       "updated_at": "2025-10-11T19:08:31.418250",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
+    },
+    {
+      "id": "a041bd2e-d54b-488f-adda-e4c707d5332d",
+      "name": "Sidney_Jones_Senior_Software_Engineer_Credibly",
+      "created_at": "2025-10-11T19:48:18.060995",
+      "updated_at": "2025-10-11T20:15:35.775877",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Master Resume"
+    },
+    {
+      "id": "764ca76f-f476-4399-a583-b7b19bcff627",
+      "name": "Test Resume",
+      "created_at": "2025-10-11T20:19:36.830812",
+      "updated_at": "2025-10-11T20:19:36.830812",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "c2333e43-8898-4501-82e1-7ccf5310f635",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-11T20:19:36.836810",
+      "updated_at": "2025-10-11T20:19:36.836810",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "56e88f4f-c2a4-4d17-8248-786dba38463e",
+      "name": "Base Resume",
+      "created_at": "2025-10-11T20:19:36.844812",
+      "updated_at": "2025-10-11T20:19:36.844812",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
+    },
+    {
+      "id": "c8dbf0d5-7a32-4a16-8807-39c6d19f55c8",
+      "name": "Test Resume",
+      "created_at": "2025-10-11T20:19:44.358970",
+      "updated_at": "2025-10-11T20:19:44.358970",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "7f35c36f-610f-499f-9d1e-ac2020f90c8b",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-11T20:19:44.366969",
+      "updated_at": "2025-10-11T20:19:44.366969",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "34d79a2a-94d6-4200-8a92-568d8ae9869a",
+      "name": "Base Resume",
+      "created_at": "2025-10-11T20:19:44.372977",
+      "updated_at": "2025-10-11T20:19:44.372977",
       "job_listing_id": null,
       "is_master": false,
       "description": ""
