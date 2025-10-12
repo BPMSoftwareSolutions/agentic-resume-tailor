@@ -1,10 +1,24 @@
-import json, argparse
+import json, argparse, sys, os
 from jinja2 import Template
 from jd_parser import extract_keywords
 from scorer import score_bullets
 from rewriter import rewrite_star
 from jd_fetcher import ingest_jd
 from pathlib import Path
+
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    try:
+        # Set console to UTF-8 mode
+        os.system('chcp 65001 > nul')
+        # Reconfigure stdout/stderr to use UTF-8
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        # If reconfiguration fails, continue without emoji support
+        pass
 
 def load_resume(path):
     return json.loads(Path(path).read_text(encoding='utf-8'))
