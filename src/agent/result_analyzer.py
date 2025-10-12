@@ -281,13 +281,32 @@ class ResultAnalyzer:
                 ]
         
         elif status == 'error':
-            # Suggest fixes based on error type
-            if 'not found' in command.lower() or 'does not exist' in command.lower():
-                suggestions = [
-                    "List all available resumes: python src/crud/list_resumes.py",
-                    "Check the resume name spelling",
-                    "Use the resume UUID instead of name"
-                ]
+            # Suggest fixes based on error type with self-correction
+            error_msg = str(extracted_info.get('error_message', '')).lower()
+
+            # File not found errors - provide actionable suggestions
+            if 'file not found' in error_msg or 'not found' in error_msg or 'does not exist' in error_msg:
+                if 'job_listings' in error_msg or 'job description' in error_msg:
+                    suggestions = [
+                        "List available job listings: dir data\\job_listings\\*.md",
+                        "Check if the file exists in a different location",
+                        "Create the job listing file first",
+                        "Use an existing job listing file instead"
+                    ]
+                elif 'resume' in error_msg:
+                    suggestions = [
+                        "List available resumes: type data\\resumes\\index.json",
+                        "Check the resume name spelling",
+                        "Use the Master Resume instead",
+                        "Create a new resume first"
+                    ]
+                else:
+                    suggestions = [
+                        "Check the command syntax",
+                        "Verify input file paths exist",
+                        "Review error message for details",
+                        "Try with different parameters"
+                    ]
             else:
                 suggestions = [
                     "Check the command syntax",
@@ -295,6 +314,6 @@ class ResultAnalyzer:
                     "Review error message for details",
                     "Try with different parameters"
                 ]
-        
+
         return suggestions
 
