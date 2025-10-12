@@ -30,12 +30,19 @@ Job Listing Endpoints (Issue #6):
 - DELETE /api/job-listings/<id> - Delete specific job listing
 - POST /api/job-listings/<id>/extract-keywords - Extract keywords from job description
 
-Related to GitHub Issues #2 and #6
+Agent Integration Endpoints (Issue #12):
+- POST /api/agent/chat - Send message to AI agent
+- GET /api/agent/memory - Get agent conversation memory
+- POST /api/agent/memory/clear - Clear agent memory
+- POST /api/agent/validate-command - Validate command for security
+
+Related to GitHub Issues #2, #6, and #12
 """
 
 import json
 import shutil
 import sys
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, Any, List, Optional
@@ -45,9 +52,12 @@ from flask_cors import CORS
 
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
+# Add root to path for agent import
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from models.resume import Resume, ResumeMetadata
 from models.job_listing import JobListing
+from agent import Agent, MemoryManager, CommandExecutor
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -57,6 +67,7 @@ BASE_DIR = Path(__file__).parent.parent.parent
 DATA_DIR = BASE_DIR / "data"
 RESUME_FILE = DATA_DIR / "master_resume.json"
 BACKUP_DIR = DATA_DIR / "backups"
+AGENT_MEMORY_FILE = BASE_DIR / "memory.json"
 
 # Ensure backup directory exists
 BACKUP_DIR.mkdir(exist_ok=True)
@@ -64,6 +75,91 @@ BACKUP_DIR.mkdir(exist_ok=True)
 # Initialize models
 resume_model = Resume(DATA_DIR)
 job_listing_model = JobListing(DATA_DIR)
+
+# Initialize agent components (lazy initialization for agent instance)
+agent_instance = None
+memory_manager = None
+command_executor = CommandExecutor()
+
+# Command whitelist for security (Issue #12)
+ALLOWED_COMMAND_PREFIXES = [
+    'python src/tailor.py',
+    'python -m pytest',
+    'git status',
+    'git log',
+    'git diff',
+    'ls',
+    'dir',
+    'pwd',
+    'echo'
+]
+
+# Dangerous command patterns to block
+BLOCKED_COMMAND_PATTERNS = [
+    'rm -rf',
+    'del /f /s /q',
+    'format',
+    'dd if=',
+    'mkfs',
+    '> /dev/',
+    'chmod 777',
+    'sudo',
+    'su ',
+]
+
+
+def get_agent_instance():
+    """Get or create the agent instance."""
+    global agent_instance
+    if agent_instance is None:
+        try:
+            agent_instance = Agent(
+                memory_file=str(AGENT_MEMORY_FILE),
+                model=os.getenv("OPENAI_MODEL", "gpt-4")
+            )
+        except ValueError as e:
+            # OPENAI_API_KEY not set
+            return None
+    return agent_instance
+
+
+def get_memory_manager():
+    """Get or create the memory manager instance."""
+    global memory_manager
+    if memory_manager is None:
+        memory_manager = MemoryManager(str(AGENT_MEMORY_FILE))
+        memory_manager.load()
+    return memory_manager
+
+
+def validate_command_security(command: str) -> Tuple[bool, str]:
+    """
+    Validate command for security concerns.
+
+    Args:
+        command: Command string to validate
+
+    Returns:
+        Tuple of (is_valid, error_message)
+    """
+    command_lower = command.lower().strip()
+
+    # Check for blocked patterns
+    for pattern in BLOCKED_COMMAND_PATTERNS:
+        if pattern.lower() in command_lower:
+            return False, f"Command contains blocked pattern: {pattern}"
+
+    # Check if command starts with allowed prefix
+    is_allowed = False
+    for prefix in ALLOWED_COMMAND_PREFIXES:
+        if command_lower.startswith(prefix.lower()):
+            is_allowed = True
+            break
+
+    if not is_allowed:
+        return False, "Command not in whitelist. Only specific commands are allowed for security."
+
+    return True, ""
 
 
 def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
@@ -944,6 +1040,152 @@ def extract_job_keywords(job_id: str):
 
     except Exception as e:
         return jsonify({"error": f"Failed to extract keywords: {str(e)}"}), 500
+
+
+# ============================================================================
+# Agent Integration API Endpoints (Issue #12)
+# ============================================================================
+
+@app.route('/api/agent/chat', methods=['POST'])
+def agent_chat():
+    """
+    Send a message to the AI agent and get a response.
+
+    Request Body:
+        {
+            "message": "User message or command"
+        }
+
+    Returns:
+        JSON response with agent's reply
+    """
+    try:
+        data = request.get_json()
+
+        if not data or 'message' not in data:
+            return jsonify({"error": "Missing 'message' in request body"}), 400
+
+        message = data['message'].strip()
+
+        if not message:
+            return jsonify({"error": "Message cannot be empty"}), 400
+
+        # Get agent instance
+        agent = get_agent_instance()
+        if agent is None:
+            return jsonify({
+                "error": "Agent not configured. Please set OPENAI_API_KEY environment variable."
+            }), 500
+
+        # Check if it's a command and validate security
+        if command_executor.is_command(message):
+            command = command_executor.extract_command(message)
+            is_valid, error_msg = validate_command_security(command)
+
+            if not is_valid:
+                return jsonify({
+                    "success": False,
+                    "error": f"Command blocked for security: {error_msg}"
+                }), 403
+
+        # Process message through agent
+        response = agent.process_message(message)
+
+        return jsonify({
+            "success": True,
+            "response": response
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to process message: {str(e)}"}), 500
+
+
+@app.route('/api/agent/memory', methods=['GET'])
+def get_agent_memory():
+    """
+    Get the agent's conversation memory.
+
+    Returns:
+        JSON response with conversation history
+    """
+    try:
+        memory = get_memory_manager()
+        messages = memory.get_messages()
+
+        return jsonify({
+            "success": True,
+            "messages": messages
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to retrieve memory: {str(e)}"}), 500
+
+
+@app.route('/api/agent/memory/clear', methods=['POST'])
+def clear_agent_memory():
+    """
+    Clear the agent's conversation memory.
+
+    Returns:
+        JSON response with success status
+    """
+    try:
+        memory = get_memory_manager()
+        memory.memory = []
+        memory.save()
+
+        # Reset agent instance to reload with fresh memory
+        global agent_instance
+        agent_instance = None
+
+        return jsonify({
+            "success": True,
+            "message": "Agent memory cleared successfully"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to clear memory: {str(e)}"}), 500
+
+
+@app.route('/api/agent/validate-command', methods=['POST'])
+def validate_command():
+    """
+    Validate a command for security before execution.
+
+    Request Body:
+        {
+            "command": "Command to validate"
+        }
+
+    Returns:
+        JSON response with validation result
+    """
+    try:
+        data = request.get_json()
+
+        if not data or 'command' not in data:
+            return jsonify({"error": "Missing 'command' in request body"}), 400
+
+        command = data['command'].strip()
+
+        if not command:
+            return jsonify({"error": "Command cannot be empty"}), 400
+
+        is_valid, error_msg = validate_command_security(command)
+
+        if not is_valid:
+            return jsonify({
+                "valid": False,
+                "error": error_msg
+            }), 403
+
+        return jsonify({
+            "valid": True,
+            "message": "Command is allowed"
+        })
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to validate command: {str(e)}"}), 500
 
 
 if __name__ == '__main__':

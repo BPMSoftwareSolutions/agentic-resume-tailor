@@ -1,0 +1,54 @@
+[
+  {
+    "role": "system",
+    "content": "You are a helpful AI assistant for resume tailoring and job application automation.\n\nYou can help users tailor their resumes to specific job postings. When a user asks to tailor their resume,\nyou should:\n\n1. Ask for the job description file path (e.g., data/job_listings/Sr. Software Engineer - at Credibly.md)\n   or URL if not provided\n2. Ask for the resume JSON file path (e.g., data/resumes/a041bd2e-d54b-488f-adda-e4c707d5332d.json or\n   data/master_resume.json) if not provided\n3. Ask for output format preferences (HTML with theme, or markdown, and whether DOCX is needed)\n4. Generate the appropriate command to execute\n\nCommon tailoring intents include phrases like:\n- \"tailor my resume\"\n- \"fit my resume to this job\"\n- \"customize resume for\"\n- \"adapt my resume\"\n- \"optimize resume for this position\"\n\nWhen you detect a tailoring intent, help gather the required information and suggest the appropriate\ncommand using the 'run:' prefix.\n\nExample commands:\n- Markdown: run: python src/tailor.py --resume data/master_resume.json --jd \"data/job_listings/job.md\" --out out/tailored.md --format markdown\n- HTML: run: python src/tailor.py --resume data/master_resume.json --jd \"data/job_listings/job.md\" --out out/tailored.html --format html --theme professional\n- HTML with DOCX: run: python src/tailor.py --resume data/master_resume.json --jd \"data/job_listings/job.md\" --out out/tailored.html --format html --theme professional --docx\n\nAvailable themes: professional, modern, executive, creative\n"
+  },
+  {
+    "role": "user",
+    "content": "Review my codebase and give me a summary of it"
+  },
+  {
+    "role": "assistant",
+    "content": "As an AI model developed by OpenAI, I'm currently not capable of reviewing codebases or evaluating specific programming projects. My current abilities deal with processing text-based data, generating human-like text, and supporting users with queries based on my training data, so I wouldn't be able to provide a direct summary of your codebase. However, you can ask questions related to code! I can help explain programming concepts, discuss best practices, and answer other code-related questions you might have to the best of my ability."
+  },
+  {
+    "role": "user",
+    "content": "If you were to observe a codebase, what would be your strategy on a Windows Desktop via CLI"
+  },
+  {
+    "role": "assistant",
+    "content": "Presumably you'd be working with a version control system like Git. Here's a rough step-by-step strategy:\n\n1. **Clone the Repository**: Use Git to clone the repository onto your local machine.\n\n2. **Directory Structure**: Navigate through the directory structure of the project to get a feel for how it's organized. Look for a `src/` directory for source code, a `test/` directory for tests, a `bin/` or `dist/` directory for build artifacts, etc.\n\n3. **Package/Project Configuration Files**: Examine any package or project configuration files (e.g. `package.json`, `pom.xml`, `setup.py`, etc.). These files are usually present in the root directory.\n\n4. **Documentation**: If present, check `README.md`, `CONTRIBUTING.md`, and the `docs/` directory. These files often provide invaluable context about the project.\n\n5. **Examine Important Files**: Following the cues from the project's directory structure and documentation, identify and open a few key files.\n\n6. **Code Analysis Tools**: Use code analysis tools to get metrics about the codebase. This can help assess the overall quality and maintainability of the code.\n\n7. **Dependencies**: Check the libraries and frameworks the project is dependent on. Are there any old versions or outdated libraries being used?\n\n8. **Testing Suit and CI/CD files**: Look for unit tests, integration tests and CI/CD pipeline files (like `.travis.yml` for Travis CI or `Jenkinsfile` for Jenkins).\n\nNote: Depending upon the programming language used in the project, there may be language-specific tools or strategies that could be used! \n\nRemember the aim of the code review is not only to understand the codebase but also to identify possible areas of improvement regarding code efficiency, maintainability, readability, among others."
+  },
+  {
+    "role": "user",
+    "content": "Thank you"
+  },
+  {
+    "role": "assistant",
+    "content": "You're welcome! If you have any other questions, feel free to ask. Happy coding!"
+  },
+  {
+    "role": "user",
+    "content": "what capabilities do you have?"
+  },
+  {
+    "role": "assistant",
+    "content": "As an AI developed by OpenAI, I can perform various tasks such as:\n\n1. **Natural Language Processing**: I understand and generate human-like text, enabling me to perform tasks such as text translation, summarization, question answering, and creating written content.\n\n2. **Data Comprehension**: While I can't directly access databases or personal data (unless shared in the conversation), I can help interpret data trends, explain data concepts, and provide insights based on given data.\n\n3. **Programming Assistance**: I can help with code-related queries, explaining concepts, suggesting fixes for errors, and even writing short code snippets.\n\n4. **Learning and Education**: I can provide explanations on a wide range of topics and assist with studying or learning new things.\n\n5. **Task Automation**: I can generate certain types of scripts, outline steps for automating tasks, or explain how automation works in various contexts.\n\n6. **Resume Tailoring**: As set for this instance, I can guide users in tailoring their resumes to specific job postings and suggest the appropriate command to generate the tailored resume.\n\nPlease note that while I strive for accuracy and completeness, I don't replace professional services. It's also important to note that I don't have the ability to access personal data about individuals unless it has been shared with me in the course of our conversation. I am designed to respect user privacy and confidentiality."
+  },
+  {
+    "role": "user",
+    "content": "Hello"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "run: echo test"
+  },
+  {
+    "role": "assistant",
+    "content": "✅ Command executed successfully:\ntest\n"
+  }
+]

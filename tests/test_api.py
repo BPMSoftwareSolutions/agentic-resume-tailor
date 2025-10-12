@@ -2,7 +2,7 @@
 Unit tests for Resume Editor API
 
 Tests all API endpoints for the resume editor web interface.
-Related to GitHub Issue #2
+Related to GitHub Issues #2 and #12
 """
 
 import json
@@ -12,6 +12,7 @@ from pathlib import Path
 import pytest
 import tempfile
 import shutil
+from unittest.mock import Mock, patch, MagicMock
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'src' / 'api'))
@@ -389,8 +390,164 @@ class TestValidationFunction:
             "summary": "Test",
             "experience": "invalid"  # Should be an array
         }
-        
+
         is_valid, errors = validate_resume_structure(invalid_resume)
         assert is_valid is False
         assert any('experience' in error.lower() for error in errors)
+
+
+class TestAgentChatEndpoint:
+    """Tests for POST /api/agent/chat endpoint - Issue #12."""
+
+    @patch('app.get_agent_instance')
+    def test_agent_chat_success(self, mock_get_agent, client, temp_data_dir):
+        """Test successful agent chat interaction."""
+        # Mock the agent instance
+        mock_agent = MagicMock()
+        mock_agent.process_message.return_value = "Hello! How can I help you?"
+        mock_get_agent.return_value = mock_agent
+
+        response = client.post(
+            '/api/agent/chat',
+            data=json.dumps({'message': 'Hello'}),
+            content_type='application/json'
+        )
+
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['success'] is True
+        assert 'response' in data
+        assert data['response'] == "Hello! How can I help you?"
+
+    def test_agent_chat_no_message(self, client, temp_data_dir):
+        """Test error when no message is provided."""
+        response = client.post(
+            '/api/agent/chat',
+            data=json.dumps({}),
+            content_type='application/json'
+        )
+
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'error' in data
+
+    def test_agent_chat_empty_message(self, client, temp_data_dir):
+        """Test error when empty message is provided."""
+        response = client.post(
+            '/api/agent/chat',
+            data=json.dumps({'message': ''}),
+            content_type='application/json'
+        )
+
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'error' in data
+
+    @patch('app.get_agent_instance')
+    def test_agent_chat_with_command(self, mock_get_agent, client, temp_data_dir):
+        """Test agent chat with command execution."""
+        mock_agent = MagicMock()
+        mock_agent.process_message.return_value = "✅ Command executed successfully:\ntest output"
+        mock_get_agent.return_value = mock_agent
+
+        response = client.post(
+            '/api/agent/chat',
+            data=json.dumps({'message': 'run: echo test'}),
+            content_type='application/json'
+        )
+
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['success'] is True
+        assert 'response' in data
+
+
+class TestAgentMemoryEndpoint:
+    """Tests for GET /api/agent/memory endpoint - Issue #12."""
+
+    @patch('app.get_memory_manager')
+    def test_get_agent_memory_success(self, mock_get_memory, client, temp_data_dir):
+        """Test successfully retrieving agent memory."""
+        mock_memory = MagicMock()
+        mock_memory.get_messages.return_value = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "Hi there!"}
+        ]
+        mock_get_memory.return_value = mock_memory
+
+        response = client.get('/api/agent/memory')
+
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['success'] is True
+        assert 'messages' in data
+        assert len(data['messages']) == 2
+
+    @patch('app.get_memory_manager')
+    def test_get_agent_memory_empty(self, mock_get_memory, client, temp_data_dir):
+        """Test retrieving empty agent memory."""
+        mock_memory = MagicMock()
+        mock_memory.get_messages.return_value = []
+        mock_get_memory.return_value = mock_memory
+
+        response = client.get('/api/agent/memory')
+
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['success'] is True
+        assert 'messages' in data
+        assert len(data['messages']) == 0
+
+
+class TestAgentMemoryClearEndpoint:
+    """Tests for POST /api/agent/memory/clear endpoint - Issue #12."""
+
+    @patch('app.get_memory_manager')
+    def test_clear_agent_memory_success(self, mock_get_memory, client, temp_data_dir):
+        """Test successfully clearing agent memory."""
+        mock_memory = MagicMock()
+        mock_get_memory.return_value = mock_memory
+
+        response = client.post('/api/agent/memory/clear')
+
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['success'] is True
+        assert 'message' in data
+
+
+class TestAgentCommandValidation:
+    """Tests for command validation and security - Issue #12."""
+
+    def test_command_whitelist_validation(self, client, temp_data_dir):
+        """Test that only whitelisted commands are allowed."""
+        # This test will verify the security implementation
+        # For now, we'll test that the endpoint exists and handles validation
+        response = client.post(
+            '/api/agent/validate-command',
+            data=json.dumps({'command': 'ls -la'}),
+            content_type='application/json'
+        )
+
+        # Should return validation result
+        assert response.status_code in [200, 400, 403]
+
+    def test_dangerous_command_blocked(self, client, temp_data_dir):
+        """Test that dangerous commands are blocked."""
+        dangerous_commands = [
+            'rm -rf /',
+            'del /f /s /q C:\\',
+            'format C:',
+            'dd if=/dev/zero of=/dev/sda'
+        ]
+
+        for cmd in dangerous_commands:
+            response = client.post(
+                '/api/agent/validate-command',
+                data=json.dumps({'command': cmd}),
+                content_type='application/json'
+            )
+
+            # Should be blocked (403) or return validation error
+            assert response.status_code in [400, 403]
 

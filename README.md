@@ -15,6 +15,7 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - **NEW:** Web-based resume editor for managing master_resume.json ([Issue #2](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/2))
 - **NEW:** Multi-resume support with job listing management and automated tailoring ([Issue #6](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/6))
 - **NEW:** Local AI Agent for interactive automation and command execution ([Issue #8](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/8))
+- **NEW:** AI Agent Web Integration - Chat with the agent directly from your browser ([Issue #12](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/12))
 
 ## Roadmap (Phase 2 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
@@ -81,6 +82,37 @@ nothing to commit, working tree clean
 ```
 
 See [Local AI Agent Documentation](docs/LOCAL_AI_AGENT.md) for details.
+
+### AI Agent Web Interface (NEW! 🌐🤖)
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Set your OpenAI API key
+export OPENAI_API_KEY='your-api-key-here'
+
+# Start the API server
+python src/api/app.py
+
+# Open the agent interface in your browser
+# Navigate to: src/web/agent.html
+```
+
+**Features:**
+- 🌐 Browser-based chat interface
+- 🔧 Execute commands from the web UI
+- 💾 Persistent conversation memory
+- 🔒 Command whitelisting and security controls
+- ⚡ Quick action shortcuts
+- 📜 View and manage conversation history
+
+**Quick Actions:**
+- Tailor resume to job posting
+- Check git status
+- Run tests
+- View job listings
+
+See [Agent Web Integration Documentation](docs/AGENT_WEB_INTEGRATION.md) for details.
 
 ### Web-Based Resume Editor
 ```bash
