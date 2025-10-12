@@ -2,7 +2,7 @@
  * Resume Editor Application
  *
  * Main JavaScript application for managing master_resume.json
- * Related to GitHub Issue #2
+ * Related to GitHub Issues #2 and #6
  */
 
 // Configuration
@@ -10,6 +10,7 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // Global state
 let resumeData = null;
+let currentResumeId = null;
 let currentSection = 'basic-info';
 let hasUnsavedChanges = false;
 
@@ -20,6 +21,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initializeApp() {
     try {
+        // Check if a specific resume ID is provided in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        currentResumeId = urlParams.get('resume');
+
+        // Load resume index data for filename lookup
+        try {
+            const indexResponse = await fetch(`${API_BASE_URL}/resumes`);
+            if (indexResponse.ok) {
+                window.resumeIndexData = await indexResponse.json();
+            } else {
+                window.resumeIndexData = null;
+            }
+        } catch {
+            window.resumeIndexData = null;
+        }
+
+        // Set page title to 'Resume Manager - [Resume Name]' after resumeIndexData is loaded
+        let resumeTitle = 'Resume Manager';
+        if (currentResumeId && window.resumeIndexData) {
+            const entry = window.resumeIndexData.resumes.find(r => r.id === currentResumeId);
+            if (entry && entry.name) {
+                resumeTitle = `Resume Manager - ${entry.name}`;
+            }
+        }
+        document.title = resumeTitle;
+
         // Load resume data
         await loadResumeData();
 
@@ -28,7 +55,21 @@ async function initializeApp() {
         document.getElementById('generateDocxBtn').addEventListener('click', async () => {
             try {
                 showAlert('Generating DOCX, please wait...', 'info');
-                const response = await fetch(`${API_BASE_URL}/resume/docx`);
+
+                // Prepare request based on whether we're editing a specific resume
+                let fetchOptions = {};
+                if (currentResumeId) {
+                    // Send POST request with resume ID
+                    fetchOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ resume_id: currentResumeId })
+                    };
+                }
+
+                const response = await fetch(`${API_BASE_URL}/resume/docx`, fetchOptions);
                 if (!response.ok) {
                     let errorMsg = 'Failed to generate DOCX';
                     try {
@@ -41,7 +82,15 @@ async function initializeApp() {
                 const url = window.URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = 'resume.docx';
+                    // Use resume name from index.json if available
+                    let resumeFilename = 'resume.docx';
+                    if (currentResumeId && window.resumeIndexData) {
+                        const entry = window.resumeIndexData.resumes.find(r => r.id === currentResumeId);
+                        if (entry && entry.name) {
+                            resumeFilename = `${entry.name}.docx`;
+                        }
+                    }
+                    a.download = resumeFilename;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -68,7 +117,14 @@ async function initializeApp() {
 
 // API Functions
 async function loadResumeData() {
-    const response = await fetch(`${API_BASE_URL}/resume`);
+    let endpoint = `${API_BASE_URL}/resume`;
+
+    // If a specific resume ID is provided, load that resume
+    if (currentResumeId) {
+        endpoint = `${API_BASE_URL}/resumes/${currentResumeId}`;
+    }
+
+    const response = await fetch(endpoint);
     if (!response.ok) {
         throw new Error('Failed to load resume data');
     }
@@ -88,13 +144,23 @@ async function saveResumeData() {
             return;
         }
 
+        // Determine endpoint based on whether we're editing a specific resume
+        let endpoint = `${API_BASE_URL}/resume`;
+        let method = 'PUT';
+        let body = JSON.stringify(resumeData);
+
+        if (currentResumeId) {
+            endpoint = `${API_BASE_URL}/resumes/${currentResumeId}`;
+            body = JSON.stringify({ data: resumeData });
+        }
+
         // Save to API
-        const response = await fetch(`${API_BASE_URL}/resume`, {
-            method: 'PUT',
+        const response = await fetch(endpoint, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(resumeData)
+            body: body
         });
 
         if (!response.ok) {
@@ -103,7 +169,11 @@ async function saveResumeData() {
 
         const result = await response.json();
         hasUnsavedChanges = false;
-        showAlert(`Resume saved successfully! Backup created: ${result.backup}`, 'success', 5000);
+
+        const message = result.backup
+            ? `Resume saved successfully! Backup created: ${result.backup}`
+            : 'Resume saved successfully!';
+        showAlert(message, 'success', 5000);
     } catch (error) {
         console.error('Failed to save resume:', error);
         showAlert('Failed to save resume data. Please try again.', 'danger');

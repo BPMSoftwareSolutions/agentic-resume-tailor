@@ -9,3 +9,5 @@ pytest
 pytest-flask
 pytest-cov
 pytest-html
+openai
+python-dotenv

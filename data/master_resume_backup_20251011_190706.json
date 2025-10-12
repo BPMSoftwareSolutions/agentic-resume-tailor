@@ -1,0 +1,198 @@
+{
+  "achievements": [
+    "GitHub Community Innovative Contributor",
+    "Compuware President of ERG (Employee Resource Group)",
+    "Detroit Community Youth Mentorship Award"
+  ],
+  "areas_of_expertise": [
+    "Enterprise Architecture & Cloud Transformation",
+    "Revenue Growth & Cost Optimization",
+    "SaaS Solution Development",
+    "Security & Data Protection",
+    "AI Adoption & Scaling",
+    "Data-Driven Analytics",
+    "Process Automation",
+    "Relationship Building",
+    "Innovation & Product Development",
+    "Business Strategy & Value Delivery",
+    "Team Leadership & Agile Coaching",
+    "Cybersecurity & Compliance"
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ],
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": ""
+    }
+  ],
+  "experience": [
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Leadership",
+            "Management System",
+            "Multi-location",
+            "Stakeholder Management",
+            "Technology Evaluation"
+          ],
+          "text": "Directed multiple development teams in redesigning and deploying scrap yard information management system across 25 US locations, enhancing operational efficiency and standardization. Partnered with executives and stakeholders to evaluate emerging technologies, balancing innovation with risk, cost, and scalability."
+        },
+        {
+          "tags": [
+            "ERP",
+            "MVVM",
+            "Design Pattern",
+            "Integration",
+            "Business Process"
+          ],
+          "text": "Upgraded eight ERP subsystems using MVVM design pattern, successfully unifying five locations under single application and streamlining business processes."
+        },
+        {
+          "tags": [
+            "Cloud Migration",
+            "AWS",
+            "EC2",
+            "Infrastructure",
+            "Cost Reduction",
+            "Hybrid Cloud"
+          ],
+          "text": "Redeveloped server room and transitioned corporate infrastructure to hybrid cloud on AWS EC2, reducing IT costs by $250K annually by partnering with network team and external IT vendors."
+        }
+      ],
+      "dates": "2015 – 2016",
+      "employer": "Soave Enterprises",
+      "location": "Detroit, MI",
+      "role": "Technology Manager / Software Architect"
+    },
+    {
+      "bullets": [
+        {
+          "tags": [
+            "Transformation",
+            "Microservices",
+            "Micro-frontend",
+            "Architecture",
+            "Modernization"
+          ],
+          "text": "Spearheaded transformation of Online Access platform, implementing microservices and micro-frontend architecture to modernize client-facing systems."
+        },
+        {
+          "tags": [
+            "Training",
+            "Quality",
+            "Automation Testing",
+            "Web",
+            "API",
+            "Mobile",
+            "Cross-training"
+          ],
+          "text": "Bolstered team capabilities as well as strengthened built-in quality by introducing cross-training workshops for Web/API and Mobile automation testing."
+        },
+        {
+          "tags": [
+            "Leadership",
+            "Coaching",
+            "SAFe",
+            "RTE",
+            "Scrum Master",
+            "Jira",
+            "Agile"
+          ],
+          "text": "Provided leadership coaching for engineering managers and trained RTEs, scrum masters, and managers on Jira dashboard development for improved visibility."
+        },
+        {
+          "tags": [
+            "Process Improvement",
+            "SAFe",
+            "Release Train",
+            "Delivery",
+            "Quality",
+            "Team Enablement"
+          ],
+          "text": "Reengineered release train processes, cutting delivery timelines by 50% and enabling 13 teams to deploy independently with higher quality."
+        },
+        {
+          "tags": [
+            "Team Structure",
+            "Organization",
+            "Platform",
+            "Delivery",
+            "Optimization"
+          ],
+          "text": "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines."
+        }
+      ],
+      "dates": "2021 - 2024",
+      "employer": "Edward Jones",
+      "location": "Remote",
+      "role": "Senior Application Architect"
+    }
+  ],
+  "location": "West Bloomfield, MI",
+  "name": "Sidney Jones",
+  "summary": "Accomplished technology leader with extensive experience in driving software engineering management, enterprise architecture, and large-scale transformation initiatives across diverse sectors. Track record of leading cross-functional teams to deliver AI-driven solutions, scalable SaaS platforms, and enterprise-grade cloud architectures that enhance performance, reduce costs, and accelerate delivery. Skilled in microservices, AI/LLM development, and Agile delivery practices, with a strong focus on aligning engineering excellence with business goals, optimizing delivery pipelines, and guiding enterprise modernization strategies across global organizations. Entrepreneurial strategist with expertise in resolving complex business challenges, integrating enterprise consulting with scalable product innovation, and coaching teams in Agile/SAFe to ensure continuous improvement.",
+  "technical_proficiencies": {
+    "ai": "Large Language Models (LLMs), AI-assisted coding, RPA, NLP, Intelligent Orchestration",
+    "cloud": "Azure, AWS, SaaS Platforms, Microservices, Serverless Functions",
+    "databases": "Microsoft SQL Server, MongoDB (NoSQL), MySQL, Oracle, PostgreSQL",
+    "devops": "Jenkins, GitHub Actions, Azure DevOps, Docker, Kubernetes, Terraform, IaC",
+    "languages": "C#, .NET (Framework/Core/6+), Python, Java, JavaScript/TypeScript (React, Angular, Node.js), SQL, Golang, C/C++, VB",
+    "opensource": "GitHub open-source projects (RenderX, Valence CLI)",
+    "os": "Windows, Unix, Linux, macOS, iOS, Android",
+    "security": "AES-256 Encryption, Key Vaults, Role-Based Access Control, HIPAA/Data Privacy"
+  },
+  "title": "Senior DevOps Software Engineer"
+}
