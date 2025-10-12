@@ -216,7 +216,82 @@ You: run: python src/update_resume_experience.py --resume "Ford" --experience "d
 - --replace: Replace all experience (default: prepend new experience)
 - --resume-id: Use resume UUID directly instead of searching by name
 
-### 2. Tailor Resume to Job Description (DIFFERENT USE CASE)
+### 2. CRUD Operations for Resume Data (GRANULAR UPDATES)
+**User Intent**: Update specific sections of a resume (skills, summary, education, etc.)
+**Location**: src/crud/ directory contains specialized scripts for each data model
+
+**Available CRUD Scripts:**
+
+#### Basic Info (name, title, location, contact)
+```
+run: python src/crud/basic_info.py --resume "{company}" --update-title "{title}"
+run: python src/crud/basic_info.py --resume "{company}" --update-email "{email}"
+run: python src/crud/basic_info.py --resume "{company}" --update-location "{location}"
+run: python src/crud/basic_info.py --resume "{company}" --show
+```
+
+#### Summary
+```
+run: python src/crud/summary.py --resume "{company}" --update "{text}"
+run: python src/crud/summary.py --resume "{company}" --append "{text}"
+run: python src/crud/summary.py --resume "{company}" --show
+```
+
+#### Technical Skills
+```
+run: python src/crud/technical_skills.py --resume "{company}" --add-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --update-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --append-to-category "{category}" "{skills}"
+run: python src/crud/technical_skills.py --resume "{company}" --list
+```
+
+#### Areas of Expertise
+```
+run: python src/crud/expertise.py --resume "{company}" --add "{expertise}"
+run: python src/crud/expertise.py --resume "{company}" --delete "{expertise}"
+run: python src/crud/expertise.py --resume "{company}" --list
+```
+
+#### Achievements
+```
+run: python src/crud/achievements.py --resume "{company}" --add "{achievement}"
+run: python src/crud/achievements.py --resume "{company}" --delete "{achievement}"
+run: python src/crud/achievements.py --resume "{company}" --list
+```
+
+#### Education
+```
+run: python src/crud/education.py --resume "{company}" --add --degree "{degree}" --institution "{institution}" --location "{location}" --year "{year}"
+run: python src/crud/education.py --resume "{company}" --update --institution "{institution}" --year "{year}"
+run: python src/crud/education.py --resume "{company}" --delete --institution "{institution}"
+run: python src/crud/education.py --resume "{company}" --list
+```
+
+#### Certifications
+```
+run: python src/crud/certifications.py --resume "{company}" --add --name "{name}" --issuer "{issuer}" --date "{date}"
+run: python src/crud/certifications.py --resume "{company}" --update --name "{name}" --date "{date}"
+run: python src/crud/certifications.py --resume "{company}" --delete --name "{name}"
+run: python src/crud/certifications.py --resume "{company}" --list
+```
+
+#### Experience (Granular)
+```
+run: python src/crud/experience.py --resume "{company}" --add --employer "{employer}" --role "{role}" --dates "{dates}" --location "{location}"
+run: python src/crud/experience.py --resume "{company}" --add-bullet --employer "{employer}" --text "{text}" --tags "{tags}"
+run: python src/crud/experience.py --resume "{company}" --update-bullet --employer "{employer}" --index {index} --text "{text}"
+run: python src/crud/experience.py --resume "{company}" --delete-bullet --employer "{employer}" --index {index}
+run: python src/crud/experience.py --resume "{company}" --delete --employer "{employer}"
+run: python src/crud/experience.py --resume "{company}" --list
+```
+
+**Natural Language Examples:**
+- "Add Python to my technical skills" → run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
+- "Update my title to Principal Architect" → run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+- "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
+- "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
+
+### 3. Tailor Resume to Job Description (DIFFERENT USE CASE)
 **User Intent**: "Tailor my resume for the {company} position"
 **Command Pattern**: User wants to CREATE a NEW tailored version from master resume
 

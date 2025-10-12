@@ -65,6 +65,160 @@
     }
   },
   
+  "crud_operations": {
+    "description": "Specialized scripts for managing individual resume data sections",
+    "location": "src/crud/",
+    "shared_utilities": "src/crud/__init__.py",
+
+    "basic_info": {
+      "script": "python src/crud/basic_info.py",
+      "description": "Manage name, title, location, and contact information",
+      "operations": ["update-name", "update-title", "update-location", "update-email", "update-phone", "show"],
+      "examples": [
+        "python src/crud/basic_info.py --resume 'Ford' --update-title 'Principal Software Architect'",
+        "python src/crud/basic_info.py --resume 'Master Resume' --update-email 'new@email.com'",
+        "python src/crud/basic_info.py --resume 'Ford' --show"
+      ],
+      "natural_language_patterns": [
+        "Update my title to {title}",
+        "Change my email to {email}",
+        "Update my location to {location}",
+        "Show my basic info"
+      ]
+    },
+
+    "summary": {
+      "script": "python src/crud/summary.py",
+      "description": "Manage resume summary text",
+      "operations": ["update", "append", "show", "from-file"],
+      "examples": [
+        "python src/crud/summary.py --resume 'Ford' --update 'New summary text...'",
+        "python src/crud/summary.py --resume 'Ford' --append 'Additional experience with AI/ML.'",
+        "python src/crud/summary.py --resume 'Ford' --from-file 'summary.txt'",
+        "python src/crud/summary.py --resume 'Ford' --show"
+      ],
+      "natural_language_patterns": [
+        "Update my summary to {text}",
+        "Add {text} to my summary",
+        "Show my summary"
+      ]
+    },
+
+    "technical_skills": {
+      "script": "python src/crud/technical_skills.py",
+      "description": "Manage technical proficiencies organized by category",
+      "operations": ["add-category", "update-category", "append-to-category", "delete-category", "list", "show"],
+      "categories": ["ai", "cloud", "databases", "devops", "languages", "opensource", "os", "security"],
+      "examples": [
+        "python src/crud/technical_skills.py --resume 'Ford' --add-category 'security' 'OAuth, JWT, SAML'",
+        "python src/crud/technical_skills.py --resume 'Ford' --update-category 'cloud' 'Azure, AWS, GCP'",
+        "python src/crud/technical_skills.py --resume 'Ford' --append-to-category 'languages' 'Rust, Go'",
+        "python src/crud/technical_skills.py --resume 'Ford' --delete-category 'security'",
+        "python src/crud/technical_skills.py --resume 'Ford' --list"
+      ],
+      "natural_language_patterns": [
+        "Add {skill} to my {category} skills",
+        "Update my {category} skills to include {skills}",
+        "Remove {skill} from my skills",
+        "List my technical skills"
+      ]
+    },
+
+    "expertise": {
+      "script": "python src/crud/expertise.py",
+      "description": "Manage areas of expertise (array of strings)",
+      "operations": ["add", "list", "update", "delete", "clear"],
+      "examples": [
+        "python src/crud/expertise.py --resume 'Ford' --add 'AI/ML Engineering'",
+        "python src/crud/expertise.py --resume 'Ford' --update 'Old Text' 'New Text'",
+        "python src/crud/expertise.py --resume 'Ford' --delete 'Legacy System Maintenance'",
+        "python src/crud/expertise.py --resume 'Ford' --list"
+      ],
+      "natural_language_patterns": [
+        "Add {expertise} to my areas of expertise",
+        "Remove {expertise} from my expertise",
+        "List my areas of expertise"
+      ]
+    },
+
+    "achievements": {
+      "script": "python src/crud/achievements.py",
+      "description": "Manage achievements (array of strings)",
+      "operations": ["add", "list", "update", "delete", "clear"],
+      "examples": [
+        "python src/crud/achievements.py --resume 'Ford' --add 'AWS Certified Solutions Architect'",
+        "python src/crud/achievements.py --resume 'Ford' --delete 'GitHub Community Contributor'",
+        "python src/crud/achievements.py --resume 'Ford' --list"
+      ],
+      "natural_language_patterns": [
+        "Add achievement: {achievement}",
+        "Remove {achievement} from my achievements",
+        "List my achievements"
+      ]
+    },
+
+    "education": {
+      "script": "python src/crud/education.py",
+      "description": "Manage education entries",
+      "operations": ["add", "list", "update", "delete"],
+      "fields": ["degree", "institution", "location", "year"],
+      "examples": [
+        "python src/crud/education.py --resume 'Ford' --add --degree 'Master of Science' --institution 'MIT' --location 'Cambridge, MA' --year '2020'",
+        "python src/crud/education.py --resume 'Ford' --update --institution 'MIT' --year '2021'",
+        "python src/crud/education.py --resume 'Ford' --delete --institution 'University of Phoenix'",
+        "python src/crud/education.py --resume 'Ford' --list"
+      ],
+      "natural_language_patterns": [
+        "Add my {degree} from {institution}",
+        "Update my {institution} degree year to {year}",
+        "Remove my {institution} education",
+        "List my education"
+      ]
+    },
+
+    "certifications": {
+      "script": "python src/crud/certifications.py",
+      "description": "Manage certification entries",
+      "operations": ["add", "list", "update", "delete"],
+      "fields": ["name", "issuer", "date", "credential"],
+      "examples": [
+        "python src/crud/certifications.py --resume 'Ford' --add --name 'AWS Solutions Architect' --issuer 'Amazon' --date 'Oct 2025' --credential 'ABC123'",
+        "python src/crud/certifications.py --resume 'Ford' --update --name 'PSM I' --date 'June 2023'",
+        "python src/crud/certifications.py --resume 'Ford' --delete --name 'PSM I'",
+        "python src/crud/certifications.py --resume 'Ford' --list"
+      ],
+      "natural_language_patterns": [
+        "Add my {certification} certification",
+        "Update the date of my {certification} to {date}",
+        "Remove my {certification}",
+        "List my certifications"
+      ]
+    },
+
+    "experience": {
+      "script": "python src/crud/experience.py",
+      "description": "Manage work experience entries and bullets",
+      "operations": ["add", "add-bullet", "update-bullet", "delete-bullet", "delete", "list", "from-markdown"],
+      "fields": ["employer", "role", "dates", "location", "bullets"],
+      "examples": [
+        "python src/crud/experience.py --resume 'Ford' --add --employer 'Microsoft' --role 'Senior Engineer' --dates '2020-2023' --location 'Remote'",
+        "python src/crud/experience.py --resume 'Ford' --add-bullet --employer 'Microsoft' --text 'Led team of 10 engineers' --tags 'Leadership,Management'",
+        "python src/crud/experience.py --resume 'Ford' --update-bullet --employer 'Microsoft' --index 0 --text 'New bullet text'",
+        "python src/crud/experience.py --resume 'Ford' --delete-bullet --employer 'Microsoft' --index 0",
+        "python src/crud/experience.py --resume 'Ford' --delete --employer 'Microsoft'",
+        "python src/crud/experience.py --resume 'Ford' --list",
+        "python src/crud/experience.py --resume 'Ford' --from-markdown 'experience.md' --replace"
+      ],
+      "natural_language_patterns": [
+        "Add a new job at {employer} as {role}",
+        "Add a bullet to my {employer} experience about {topic}",
+        "Update the first bullet of my {employer} experience",
+        "Delete my {employer} job",
+        "List my work experience"
+      ]
+    }
+  },
+
   "common_operations": {
     "update_resume_with_experience": {
       "description": "Update a resume with experience from a markdown file",
@@ -85,7 +239,8 @@
         "resume_identifier": "Extract company name or resume name from command (e.g., 'Ford', 'GM', 'Credibly')",
         "file_path": "Extract file path (absolute or relative)",
         "search_strategy": "Search index.json for resume name containing the identifier"
-      }
+      },
+      "note": "For more granular experience management, use src/crud/experience.py instead"
     },
     
     "tailor_resume": {
@@ -177,7 +332,110 @@
         "file_path": "Extract file path (can be absolute or relative)"
       }
     },
-    
+
+    "crud_basic_info": {
+      "patterns": [
+        "update my title to {title}",
+        "change my title to {title}",
+        "update my email to {email}",
+        "change my email to {email}",
+        "update my location to {location}",
+        "change my location to {location}",
+        "update my phone to {phone}",
+        "show my basic info",
+        "show my contact information"
+      ],
+      "script": "python src/crud/basic_info.py"
+    },
+
+    "crud_summary": {
+      "patterns": [
+        "update my summary to {text}",
+        "change my summary to {text}",
+        "add {text} to my summary",
+        "append {text} to my summary",
+        "show my summary"
+      ],
+      "script": "python src/crud/summary.py"
+    },
+
+    "crud_technical_skills": {
+      "patterns": [
+        "add {skill} to my {category} skills",
+        "add {skill} to my technical skills",
+        "update my {category} skills to include {skills}",
+        "remove {skill} from my skills",
+        "list my technical skills",
+        "show my technical skills"
+      ],
+      "script": "python src/crud/technical_skills.py"
+    },
+
+    "crud_expertise": {
+      "patterns": [
+        "add {expertise} to my areas of expertise",
+        "add {expertise} to my expertise",
+        "remove {expertise} from my expertise",
+        "delete {expertise} from my areas of expertise",
+        "list my areas of expertise",
+        "show my expertise"
+      ],
+      "script": "python src/crud/expertise.py"
+    },
+
+    "crud_achievements": {
+      "patterns": [
+        "add achievement: {achievement}",
+        "add {achievement} to my achievements",
+        "remove {achievement} from my achievements",
+        "delete {achievement} from my achievements",
+        "list my achievements",
+        "show my achievements"
+      ],
+      "script": "python src/crud/achievements.py"
+    },
+
+    "crud_education": {
+      "patterns": [
+        "add my {degree} from {institution}",
+        "add education: {degree} from {institution}",
+        "update my {institution} degree",
+        "remove my {institution} education",
+        "delete my {institution} education",
+        "list my education",
+        "show my education"
+      ],
+      "script": "python src/crud/education.py"
+    },
+
+    "crud_certifications": {
+      "patterns": [
+        "add my {certification} certification",
+        "add certification: {certification}",
+        "update my {certification} certification",
+        "remove my {certification} certification",
+        "delete my {certification}",
+        "list my certifications",
+        "show my certifications"
+      ],
+      "script": "python src/crud/certifications.py"
+    },
+
+    "crud_experience": {
+      "patterns": [
+        "add a new job at {employer}",
+        "add experience at {employer}",
+        "add a bullet to my {employer} experience",
+        "add bullet to {employer}: {text}",
+        "update my {employer} experience",
+        "delete my {employer} job",
+        "remove my {employer} experience",
+        "list my work experience",
+        "show my experience"
+      ],
+      "script": "python src/crud/experience.py"
+    },
+
     "tailor_resume": {
       "patterns": [
         "tailor {resume_name} for {company}",
@@ -186,7 +444,7 @@
         "customize resume for {job_posting}"
       ]
     },
-    
+
     "list_items": {
       "patterns": [
         "list resumes",
