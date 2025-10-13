@@ -308,14 +308,19 @@ run: python src/crud/experience.py --resume "{company}" --add-bullet --employer 
 run: python src/crud/experience.py --resume "{company}" --update-bullet --employer "{employer}" --index {index} --text "{text}"
 run: python src/crud/experience.py --resume "{company}" --delete-bullet --employer "{employer}" --index {index}
 run: python src/crud/experience.py --resume "{company}" --delete --employer "{employer}"
-run: python src/crud/experience.py --resume "{company}" --list
+run: python src/crud/experience.py --resume "{company}" --list                    # Truncated preview (80 chars)
+run: python src/crud/experience.py --resume "{company}" --list --verbose         # Full bullet text
 ```
+
+**IMPORTANT**: When user asks to "list all", "show all", "see full details", or "complete experience", ALWAYS use --verbose flag!
 
 **Natural Language Examples:**
 - "Add Python to my technical skills" → run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
 - "Update my title to Principal Architect" → run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
 - "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
 - "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
+- "List all experiences in Ford resume" → run: python src/crud/experience.py --resume "Ford" --list --verbose
+- "Show my experience" → run: python src/crud/experience.py --resume "Master Resume" --list --verbose
 
 ### 3. Duplicate Resume (CREATE NEW EDITABLE RESUME)
 **User Intent**: "Using the Ford resume, create a new one for X" or "Duplicate the Ford resume" or "Create a new resume for X"
