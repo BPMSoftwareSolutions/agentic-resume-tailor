@@ -437,22 +437,114 @@ run: cat data/resumes/index.json
 
 [Show the list of resumes]"
 
-### Example 4: Tailor Resume (Different from Update and Duplicate)
-User: "Tailor my resume for the GM position with modern theme"
+### Example 4: Intelligent Resume Tailoring (NEW - Phase 2)
+User: "Tailor my Ford resume for the GM Subscription Billing position"
 
-You: "I'll tailor your master resume for the GM position using the modern theme.
+You: "I'll analyze the job posting and intelligently tailor your Ford resume.
 
-run: python src/tailor.py --resume data/master_resume.json --jd 'data/job_listings/GM Job Description.md' --out out/gm_tailored.html --format html --theme modern
+run: python src/orchestrator/crud_orchestrator.py 'data/job_listings/Subscription Billing Software Engineering Manager.md' 'data/resumes/{resume_id}.json' 'Ford'
+
+[After execution - shows match score and operations]
+✅ Generated 10 tailoring operations:
+   - Update title to match job
+   - Add missing skills (aws, azure, zuora, etc.)
+   - Add relevant expertise areas
+   - Suggestions for manual updates
+
+Would you like me to execute these operations to update your resume?"
+
+### Example 5: Export Resume (HTML/DOCX)
+User: "Export my Ford resume as HTML with modern theme"
+
+You: "I'll export your Ford resume to HTML.
+
+run: python src/tailor.py --resume 'Ford' --jd 'data/job_listings/Ford Job Description.md' --out out/ford_resume.html --format html --theme modern --docx
 
 [After execution]
-✅ Resume tailored successfully!"
+✅ Resume exported successfully!"
 
 ## Key Reminders
 - For "Create/duplicate resume" → Use duplicate_resume.py (creates a copy of existing resume)
 - For "Update resume" → Use update_resume_experience.py (adds/updates experience)
-- For "Tailor resume" → Use tailor.py (creates new tailored version)
+- For "Tailor resume intelligently" → Use crud_orchestrator.py (analyzes job and generates CRUD operations)
+- For "Export resume" → Use tailor.py (creates HTML/DOCX output files)
 - Always execute commands immediately, don't ask for clarification
 - The helper scripts handle file discovery automatically
+
+## INTELLIGENT RESUME TAILORING (Phase 2 - NEW)
+
+The system now includes intelligent orchestration for automated resume tailoring:
+
+### Orchestration Modules (src/orchestrator/)
+
+#### 1. Resume Matcher
+**Purpose**: Analyze how well a resume matches a job posting
+**Command**: `python src/orchestrator/resume_matcher.py <job_file.md> <resume_file.json>`
+**Output**:
+- Match score (0-100%)
+- Matching skills
+- Missing skills
+- Relevant experience entries
+- Improvement suggestions
+
+#### 2. CRUD Orchestrator
+**Purpose**: Generate and execute sequences of CRUD operations to tailor resumes
+**Command**: `python src/orchestrator/crud_orchestrator.py <job_file.md> <resume_file.json> <resume_name>`
+**Features**:
+- Analyzes job requirements vs resume content
+- Generates prioritized CRUD operations
+- Supports dry-run mode (default)
+- Categorizes skills automatically (languages, cloud, devops, billing, AI)
+
+**Operation Types Generated**:
+1. Update title to match job
+2. Add missing technical skills (categorized)
+3. Update summary (manual suggestion)
+4. Add relevant expertise areas
+5. Highlight compliance experience (manual suggestion)
+
+**Example Usage**:
+```
+run: python src/orchestrator/crud_orchestrator.py 'data/job_listings/GM Job.md' 'data/resumes/{id}.json' 'Ford'
+```
+
+### Parser Modules (src/parsers/)
+
+#### 1. Job Posting Parser
+**Purpose**: Extract structured data from job posting markdown files
+**Command**: `python src/parsers/job_posting_parser.py <job_file.md>`
+**Extracts**: title, company, location, skills, responsibilities, experience requirements
+
+#### 2. Experience Parser
+**Purpose**: Parse markdown experience files
+**Command**: `python src/parsers/experience_parser.py <experience_file.md>`
+**Format**: `### **Employer - Role (Dates)**`
+
+#### 3. Natural Language Command Parser
+**Purpose**: Map natural language to CRUD commands
+**Examples**:
+- "Add Python to my technical skills" → technical_skills.py command
+- "Update my title to Principal Architect" → basic_info.py command
+
+### When to Use What
+
+**Intelligent Tailoring** (Recommended for job applications):
+```
+run: python src/orchestrator/crud_orchestrator.py <job_file> <resume_file> <resume_name>
+```
+Use when: User wants to tailor resume for a specific job posting
+
+**Manual CRUD Operations** (For specific updates):
+```
+run: python src/crud/technical_skills.py --resume "Ford" --add-category "languages" "Python, Java"
+```
+Use when: User wants to update a specific section
+
+**Export to HTML/DOCX** (For final output):
+```
+run: python src/tailor.py --resume "Ford" --jd <job_file> --out <output> --format html --docx
+```
+Use when: User wants to export resume for submission
 
 ## IMPORTANT: Verify Command Results
 After executing CRUD operations, ALWAYS review the output to verify success:

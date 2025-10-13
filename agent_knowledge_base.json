@@ -658,6 +658,159 @@
         }
       ]
     }
+  },
+
+  "orchestrator": {
+    "description": "Intelligent orchestration modules for automated resume tailoring",
+    "location": "src/orchestrator/",
+
+    "resume_matcher": {
+      "file": "src/orchestrator/resume_matcher.py",
+      "class": "ResumeMatcher",
+      "description": "Compare job requirements with resume content and calculate match scores",
+      "usage": "python src/orchestrator/resume_matcher.py <job_posting_file> <resume_file>",
+      "functionality": [
+        "Extract skills from resume (technical_skills, expertise, experience)",
+        "Compare with job requirements",
+        "Calculate match score (0-100%)",
+        "Identify matching and missing skills",
+        "Find relevant experience entries",
+        "Generate improvement suggestions"
+      ],
+      "scoring_algorithm": {
+        "skills_match": "50% weight",
+        "experience_relevance": "30% weight",
+        "title_match": "10% weight",
+        "years_of_experience": "10% weight"
+      },
+      "output_format": {
+        "score": "float (0-100)",
+        "matching_skills": "array of strings",
+        "missing_skills": "array of strings",
+        "relevant_experience": "array of experience objects with relevance scores",
+        "suggestions": "array of actionable recommendations",
+        "details": "object with detailed scoring breakdown"
+      },
+      "example_output": {
+        "score": 65.5,
+        "matching_skills": ["python", "aws", "docker"],
+        "missing_skills": ["java", "kubernetes", "azure"],
+        "relevant_experience": [
+          {
+            "employer": "Tech Corp",
+            "role": "Senior Engineer",
+            "relevance_score": 8.5,
+            "matching_bullets": 3
+          }
+        ],
+        "suggestions": [
+          "Add these missing skills: java, kubernetes, azure",
+          "Consider updating title to match job: 'Engineering Manager'",
+          "Emphasize experience at Tech Corp - it has 3 relevant bullets"
+        ]
+      }
+    },
+
+    "crud_orchestrator": {
+      "file": "src/orchestrator/crud_orchestrator.py",
+      "class": "CRUDOrchestrator",
+      "description": "Generate and execute sequences of CRUD operations to tailor resumes",
+      "usage": "python src/orchestrator/crud_orchestrator.py <job_posting_file> <resume_file> <resume_name>",
+      "functionality": [
+        "Analyze job requirements and resume gaps",
+        "Generate prioritized CRUD operation sequences",
+        "Execute operations with progress feedback",
+        "Support dry-run mode for testing",
+        "Automatic skill categorization"
+      ],
+      "operation_priorities": {
+        "1": "Update title to match job",
+        "2": "Add missing technical skills (categorized)",
+        "3": "Update summary (manual suggestion)",
+        "4": "Add relevant expertise areas",
+        "5": "Highlight compliance experience (manual suggestion)"
+      },
+      "skill_categories": [
+        "languages - Programming languages (Python, Java, JavaScript, etc.)",
+        "cloud - Cloud platforms (AWS, Azure, GCP)",
+        "databases - Database systems (SQL, MongoDB, PostgreSQL, etc.)",
+        "devops - DevOps tools (Docker, Kubernetes, CI/CD, Git, etc.)",
+        "billing - Billing systems (Zuora, Stripe, Chargebee, etc.)",
+        "ai - AI/ML technologies (TensorFlow, PyTorch, etc.)"
+      ],
+      "modes": {
+        "dry_run": "Generate operations without executing (default)",
+        "execute": "Generate and execute operations"
+      },
+      "output_format": {
+        "operations": "array of operation objects",
+        "results": "execution results object"
+      },
+      "operation_structure": {
+        "command": "string (CRUD command to execute)",
+        "description": "string (human-readable description)",
+        "priority": "integer (1-5)",
+        "type": "string (basic_info, technical_skills, expertise, etc.)",
+        "manual": "boolean (true if requires manual intervention)"
+      },
+      "example_usage": [
+        {
+          "scenario": "Tailor resume for job posting",
+          "command": "python src/orchestrator/crud_orchestrator.py 'data/job_listings/GM Job.md' 'data/resumes/resume_id.json' 'Ford'",
+          "output": "10 operations generated (title update, skill additions, expertise additions, manual suggestions)"
+        }
+      ],
+      "integration_workflow": {
+        "step_1": "Parse job posting with JobPostingParser",
+        "step_2": "Match resume with ResumeMatcher",
+        "step_3": "Generate operations with CRUDOrchestrator",
+        "step_4": "Review operations (dry-run)",
+        "step_5": "Execute operations (if approved)",
+        "step_6": "Export resume with tailor.py"
+      }
+    }
+  },
+
+  "intelligent_tailoring_workflow": {
+    "description": "Complete workflow for intelligent resume tailoring (Phase 2)",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Parse job posting",
+        "command": "python src/parsers/job_posting_parser.py <job_file>",
+        "output": "Structured job data (title, skills, responsibilities, etc.)"
+      },
+      {
+        "step": 2,
+        "action": "Match resume with job",
+        "command": "python src/orchestrator/resume_matcher.py <job_file> <resume_file>",
+        "output": "Match score, missing skills, suggestions"
+      },
+      {
+        "step": 3,
+        "action": "Generate CRUD operations",
+        "command": "python src/orchestrator/crud_orchestrator.py <job_file> <resume_file> <resume_name>",
+        "output": "Prioritized list of operations to execute"
+      },
+      {
+        "step": 4,
+        "action": "Execute operations (optional)",
+        "command": "Set dry_run=False in orchestrator",
+        "output": "Updated resume JSON"
+      },
+      {
+        "step": 5,
+        "action": "Export resume",
+        "command": "python src/tailor.py --resume <resume_name> --jd <job_file> --out <output> --format html --docx",
+        "output": "HTML and DOCX files for submission"
+      }
+    ],
+    "user_commands": [
+      "Tailor my Ford resume for the GM position",
+      "Analyze how well my resume matches this job posting",
+      "What skills am I missing for this job?",
+      "Update my resume to match this job description"
+    ]
   }
 }
 
