@@ -247,14 +247,21 @@
         "python src/crud/experience.py --resume 'Ford' --delete-bullet --employer 'Microsoft' --index 0",
         "python src/crud/experience.py --resume 'Ford' --delete --employer 'Microsoft'",
         "python src/crud/experience.py --resume 'Ford' --list",
+        "python src/crud/experience.py --resume 'Ford' --list --verbose",
         "python src/crud/experience.py --resume 'Ford' --from-markdown 'experience.md' --replace"
       ],
+      "options": {
+        "--list": "List all experience entries (truncated to 80 chars)",
+        "--list --verbose": "List all experience entries with full bullet text",
+        "--verbose": "Show full text instead of truncated preview (use with --list)"
+      },
       "natural_language_patterns": [
         "Add a new job at {employer} as {role}",
         "Add a bullet to my {employer} experience about {topic}",
         "Update the first bullet of my {employer} experience",
         "Delete my {employer} job",
-        "List my work experience"
+        "List my work experience",
+        "Show all my experience with full details"
       ]
     }
   },
@@ -494,9 +501,12 @@
         "delete my {employer} job",
         "remove my {employer} experience",
         "list my work experience",
-        "show my experience"
+        "show my experience",
+        "list all experiences from {resume}",
+        "show full experience details"
       ],
-      "script": "python src/crud/experience.py"
+      "script": "python src/crud/experience.py",
+      "tip": "Use --verbose flag to show full bullet text instead of truncated preview"
     },
 
     "duplicate_resume": {
