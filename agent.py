@@ -317,9 +317,13 @@ run: python src/crud/experience.py --resume "{company}" --list
 - "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
 - "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
 
-### 3. Duplicate Resume (CREATE NEW RESUME COPY)
-**User Intent**: "Using the Ford resume, create a new one for X" or "Duplicate the Ford resume"
-**Command Pattern**: User wants to DUPLICATE an existing resume with a new name
+### 3. Duplicate Resume (CREATE NEW EDITABLE RESUME)
+**User Intent**: "Using the Ford resume, create a new one for X" or "Duplicate the Ford resume" or "Create a new resume for X"
+**Command Pattern**: User wants to CREATE A NEW RESUME JSON FILE that can be edited later
+
+**IMPORTANT DISTINCTION**:
+- "Create a new resume" = duplicate_resume.py (creates editable JSON in database)
+- "Export/generate HTML" = tailor.py (creates one-time HTML output)
 
 **Action**: Use duplicate_resume.py script:
 ```
@@ -343,9 +347,13 @@ You: run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jone
 run: python src/duplicate_resume.py --resume "Ford" --new-name "New_Resume" --description "Tailored for X position"
 ```
 
-### 4. Tailor Resume to Job Description (DIFFERENT USE CASE)
-**User Intent**: "Tailor my resume for the {company} position" or "Create a new resume for {job_posting}"
-**Command Pattern**: User wants to CREATE a NEW tailored version from an existing resume
+**WORKFLOW**: After duplicating, you can optionally:
+1. Update sections with CRUD scripts
+2. Generate HTML/DOCX output with tailor.py
+
+### 4. Tailor Resume to Job Description (EXPORT TO HTML/DOCX)
+**User Intent**: "Export my resume as HTML" or "Generate a tailored HTML for {job}" or "Create an HTML version"
+**Command Pattern**: User wants to EXPORT an existing resume to HTML/DOCX format (one-time output, not editable)
 
 **IMPORTANT**: When user says "Using the {Company} Resume" or "Use the {Company} resume", they want to use that specific company's resume as the base, NOT the master resume!
 
@@ -361,11 +369,14 @@ run: python src/tailor.py --resume "Master Resume" --jd "{job_description}" --ou
 **The tailor.py script now supports resume lookup by name!** Just pass the company name or "Master Resume" and it will find the correct file automatically.
 
 **Examples:**
-User: "Using the Ford Resume, let's create a new for this job posting: X.md"
+User: "Export the Ford Resume as HTML for this job posting: X.md"
 You: run: python src/tailor.py --resume "Ford" --jd "data/job_listings/X.md" --out "out/ford_tailored.html" --format html --theme modern
 
-User: "Tailor my resume for the GM position with modern theme"
+User: "Generate an HTML version of my resume for the GM position"
 You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/GM Job Description.md" --out "out/gm_tailored.html" --format html --theme modern
+
+User: "Create a tailored HTML for the Credibly job"
+You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/Sr. Software Engineer - at Credibly.md" --out "out/credibly.html" --format html --theme modern
 
 ### List Resumes
 Command: run: cat data/resumes/index.json | python -m json.tool
@@ -386,7 +397,7 @@ You can execute commands with 'run:' prefix. Whitelisted commands include:
 
 ## Example Interactions
 
-### Example 1: Duplicate Resume (NEW - Issue #19)
+### Example 1: Create New Resume (Duplicate + Optional Tailor)
 User: "Using the Ford resume, create a new one for the Subscription Billing position"
 
 You: "I'll create a new resume based on your Ford resume for the Subscription Billing position.
@@ -398,7 +409,14 @@ run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Eng
    New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
    New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
 
-Would you like me to tailor this resume to the job posting now?"
+This creates a new editable resume in the database. Would you like me to:
+1. Export it as HTML/DOCX for the job posting?
+2. Update specific sections first?
+3. Leave it as-is for now?"
+
+**IMPORTANT**: If user says "create a new resume", ALWAYS use duplicate_resume.py first, NOT tailor.py!
+- duplicate_resume.py = Creates editable JSON in database
+- tailor.py = Exports to HTML/DOCX (one-time output)
 
 ### Example 2: Update Resume (Use Helper Script)
 User: "Update the Ford resume with this experience: data/job_listings/Tailored Experience Summary for Ford.md"
