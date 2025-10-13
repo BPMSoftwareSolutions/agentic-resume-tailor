@@ -82,7 +82,7 @@ agent_instance = None
 memory_manager = None
 command_executor = CommandExecutor()
 
-# Command whitelist for security (Issue #12, #17, #19)
+# Command whitelist for security (Issue #12, #17, #19, #27)
 ALLOWED_COMMAND_PREFIXES = [
     'python src/tailor.py',
     'python src/update_resume_experience.py',
@@ -96,6 +96,12 @@ ALLOWED_COMMAND_PREFIXES = [
     'python src/crud/education.py',
     'python src/crud/certifications.py',
     'python src/crud/experience.py',
+    # Orchestrator and parsers (Issue #27: Phase 2)
+    'python src/orchestrator/resume_matcher.py',
+    'python src/orchestrator/crud_orchestrator.py',
+    'python src/parsers/job_posting_parser.py',
+    'python src/parsers/experience_parser.py',
+    'python src/parsers/nl_command_parser.py',
     # Testing and utilities
     'python -m pytest',
     'python -m json.tool',
