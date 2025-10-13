@@ -20,9 +20,12 @@ Usage:
     # Delete experience entry
     python src/crud/experience.py --resume "Ford" --delete --employer "Microsoft"
     
-    # List all experience
+    # List all experience (truncated)
     python src/crud/experience.py --resume "Ford" --list
-    
+
+    # List all experience (full text)
+    python src/crud/experience.py --resume "Ford" --list --verbose
+
     # Import from markdown
     python src/crud/experience.py --resume "Ford" --from-markdown "experience.md" --replace
 
@@ -253,28 +256,36 @@ def delete_experience(
     return resume_data
 
 
-def list_experience(resume_data: Dict[str, Any]) -> None:
+def list_experience(resume_data: Dict[str, Any], verbose: bool = False) -> None:
     """
     List all experience entries.
-    
+
     Args:
         resume_data: Resume data
+        verbose: If True, show full bullet text; if False, truncate to 80 chars
     """
     experience_list = resume_data.get("experience", [])
     print(f"\nExperience ({len(experience_list)} entries):")
-    
+
     for i, exp in enumerate(experience_list):
         print(f"\n  [{i}] {exp.get('employer', 'N/A')} — {exp.get('role', 'N/A')}")
         print(f"      {exp.get('dates', 'N/A')}")
         if exp.get('location'):
             print(f"      {exp['location']}")
-        
+
         bullets = exp.get('bullets', [])
         print(f"      Bullets: {len(bullets)}")
         for j, bullet in enumerate(bullets):
             text = bullet.get('text', '')
-            preview = text[:80] + "..." if len(text) > 80 else text
-            print(f"        [{j}] {preview}")
+            if verbose:
+                # Show full text with word wrapping
+                import textwrap
+                wrapped = textwrap.fill(text, width=100, initial_indent='        ', subsequent_indent='        ')
+                print(f"        [{j}] {wrapped[8:]}")  # Remove initial indent from first line since we add it
+            else:
+                # Show preview (truncated)
+                preview = text[:80] + "..." if len(text) > 80 else text
+                print(f"        [{j}] {preview}")
 
 
 def parse_experience_from_markdown(md_file: Path) -> List[Dict[str, Any]]:
@@ -401,7 +412,7 @@ Examples:
     parser.add_argument("--delete", action="store_true", help="Delete experience entry")
     parser.add_argument("--list", action="store_true", help="List all experience")
     parser.add_argument("--from-markdown", metavar="FILE", help="Import from markdown file")
-    
+
     # Fields
     parser.add_argument("--employer", help="Employer name")
     parser.add_argument("--role", help="Job role/title")
@@ -411,8 +422,9 @@ Examples:
     parser.add_argument("--tags", help="Comma-separated tags")
     parser.add_argument("--index", type=int, help="Bullet or experience index")
     parser.add_argument("--replace", action="store_true", help="Replace all experience (for --from-markdown)")
-    
+
     # Options
+    parser.add_argument("--verbose", "-v", action="store_true", help="Show full bullet text (for --list)")
     parser.add_argument("--data-dir", default="data", help="Data directory path")
     
     args = parser.parse_args()
@@ -431,7 +443,7 @@ Examples:
         modified = False
         
         if args.list:
-            list_experience(resume_data)
+            list_experience(resume_data, verbose=args.verbose)
         
         if args.add:
             if not args.employer or not args.role or not args.dates:
