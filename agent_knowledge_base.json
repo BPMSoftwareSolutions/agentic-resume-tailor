@@ -297,14 +297,26 @@
     },
     
     "list_resumes": {
-      "description": "List all available resumes",
-      "method": "Read data/resumes/index.json and display resume names with IDs",
+      "description": "List all available resumes in a formatted table",
+      "command": "python src/utils/list_resumes.py",
+      "options": {
+        "--format table": "Formatted table with details (default)",
+        "--format simple": "Simple numbered list",
+        "--format json": "JSON output"
+      },
+      "example": "python src/utils/list_resumes.py --format table",
       "api_endpoint": "GET /api/resumes"
     },
-    
+
     "list_job_listings": {
-      "description": "List all job listings",
-      "method": "Read data/job_listings/index.json and list markdown files in data/job_listings/",
+      "description": "List all job listings in a formatted table",
+      "command": "python src/utils/list_job_listings.py",
+      "options": {
+        "--format table": "Formatted table with details (default)",
+        "--format simple": "Simple numbered list",
+        "--format json": "JSON output"
+      },
+      "example": "python src/utils/list_job_listings.py --format simple",
       "api_endpoint": "GET /api/job-listings"
     },
     

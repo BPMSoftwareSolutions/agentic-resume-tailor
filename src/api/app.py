@@ -102,6 +102,9 @@ ALLOWED_COMMAND_PREFIXES = [
     'python src/parsers/job_posting_parser.py',
     'python src/parsers/experience_parser.py',
     'python src/parsers/nl_command_parser.py',
+    # Utility scripts for listing and formatting
+    'python src/utils/list_resumes.py',
+    'python src/utils/list_job_listings.py',
     # Testing and utilities
     'python -m pytest',
     'python -m json.tool',

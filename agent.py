@@ -378,13 +378,19 @@ You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/
 User: "Create a tailored HTML for the Credibly job"
 You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/Sr. Software Engineer - at Credibly.md" --out "out/credibly.html" --format html --theme modern
 
-### List Resumes (Cross-Platform)
-Command: run: python -m json.tool data/resumes/index.json
+### List Resumes (Formatted Table)
+Command: run: python src/utils/list_resumes.py
+Options:
+  --format table   # Default: formatted table with details
+  --format simple  # Simple numbered list
+  --format json    # JSON output
 
-### List Job Listings (Cross-Platform)
-Windows: run: dir data\job_listings /b
-Unix/Mac: run: ls data/job_listings/
-**Recommended (cross-platform)**: run: python -c "import os; print('\n'.join(os.listdir('data/job_listings')))"
+### List Job Listings (Formatted Table)
+Command: run: python src/utils/list_job_listings.py
+Options:
+  --format table   # Default: formatted table with details
+  --format simple  # Simple numbered list
+  --format json    # JSON output
 
 ## Available Commands
 
@@ -442,9 +448,9 @@ User: "What resumes do I have?"
 
 You: "Let me check your available resumes.
 
-run: python -m json.tool data/resumes/index.json
+run: python src/utils/list_resumes.py
 
-[Show the list of resumes]"
+[Shows formatted table with resume names, master status, updated dates, and descriptions]"
 
 ### Example 4: Intelligent Resume Tailoring (NEW - Phase 2)
 User: "Tailor my Ford resume for the GM Subscription Billing position"
