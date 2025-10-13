@@ -65,6 +65,46 @@
     }
   },
   
+  "resume_duplication": {
+    "script": "src/duplicate_resume.py",
+    "description": "Duplicate an existing resume with a new name",
+    "operations": {
+      "duplicate": {
+        "command": "python src/duplicate_resume.py --resume '{resume_name}' --new-name '{new_name}'",
+        "description": "Create a copy of an existing resume",
+        "parameters": {
+          "resume": "Source resume name or company identifier (e.g., 'Ford', 'Master Resume')",
+          "resume_id": "Alternative: Source resume UUID for direct lookup",
+          "new_name": "Name for the duplicated resume (required)",
+          "description": "Optional description for the new resume"
+        }
+      }
+    },
+    "examples": [
+      "python src/duplicate_resume.py --resume 'Ford' --new-name 'Sidney_Jones_Engineering_Manager_Subscription_Billing'",
+      "python src/duplicate_resume.py --resume 'Master Resume' --new-name 'Sidney_Jones_Senior_Engineer_NewCo'",
+      "python src/duplicate_resume.py --resume-id 'd474d761-18f2-48ab-99b5-9f30c54f75b2' --new-name 'New Resume Name'",
+      "python src/duplicate_resume.py --resume 'Ford' --new-name 'New Resume' --description 'Tailored for X position'"
+    ],
+    "natural_language_patterns": [
+      "create a new resume based on {resume}",
+      "duplicate the {resume} resume",
+      "copy {resume} resume to {new_name}",
+      "using the {resume} resume, create a new one for {job}",
+      "make a copy of {resume} resume",
+      "clone the {resume} resume as {new_name}"
+    ],
+    "workflow": {
+      "description": "Typical workflow for creating a tailored resume",
+      "steps": [
+        "1. Duplicate an existing resume (e.g., Master Resume or company-specific resume)",
+        "2. Optionally update specific sections using CRUD scripts",
+        "3. Optionally tailor the resume to a job description using tailor.py"
+      ],
+      "example": "User: 'Using the Ford resume, create a new one for the Subscription Billing position' → Duplicate Ford resume → Optionally tailor to job posting"
+    }
+  },
+
   "crud_operations": {
     "description": "Specialized scripts for managing individual resume data sections",
     "location": "src/crud/",
@@ -207,14 +247,21 @@
         "python src/crud/experience.py --resume 'Ford' --delete-bullet --employer 'Microsoft' --index 0",
         "python src/crud/experience.py --resume 'Ford' --delete --employer 'Microsoft'",
         "python src/crud/experience.py --resume 'Ford' --list",
+        "python src/crud/experience.py --resume 'Ford' --list --verbose",
         "python src/crud/experience.py --resume 'Ford' --from-markdown 'experience.md' --replace"
       ],
+      "options": {
+        "--list": "List all experience entries (truncated to 80 chars)",
+        "--list --verbose": "List all experience entries with full bullet text",
+        "--verbose": "Show full text instead of truncated preview (use with --list)"
+      },
       "natural_language_patterns": [
         "Add a new job at {employer} as {role}",
         "Add a bullet to my {employer} experience about {topic}",
         "Update the first bullet of my {employer} experience",
         "Delete my {employer} job",
-        "List my work experience"
+        "List my work experience",
+        "Show all my experience with full details"
       ]
     }
   },
@@ -257,21 +304,44 @@
     },
     
     "list_resumes": {
-      "description": "List all available resumes",
-      "method": "Read data/resumes/index.json and display resume names with IDs",
+      "description": "List all available resumes in a formatted table",
+      "command": "python src/utils/list_resumes.py",
+      "options": {
+        "--format table": "Formatted table with details (default)",
+        "--format simple": "Simple numbered list",
+        "--format json": "JSON output"
+      },
+      "example": "python src/utils/list_resumes.py --format table",
       "api_endpoint": "GET /api/resumes"
     },
-    
+
     "list_job_listings": {
-      "description": "List all job listings",
-      "method": "Read data/job_listings/index.json and list markdown files in data/job_listings/",
+      "description": "List all job listings in a formatted table",
+      "command": "python src/utils/list_job_listings.py",
+      "options": {
+        "--format table": "Formatted table with details (default)",
+        "--format simple": "Simple numbered list",
+        "--format json": "JSON output"
+      },
+      "example": "python src/utils/list_job_listings.py --format simple",
       "api_endpoint": "GET /api/job-listings"
     },
     
     "create_resume": {
       "description": "Create a new resume (usually by duplicating existing one)",
       "api_endpoint": "POST /api/resumes",
-      "command_alternative": "Use API or manually copy resume JSON file"
+      "cli_command": "python src/duplicate_resume.py --resume '{source}' --new-name '{new_name}'",
+      "note": "Use duplicate_resume.py CLI script for command-line duplication"
+    },
+
+    "duplicate_resume": {
+      "description": "Duplicate an existing resume with a new name",
+      "command": "python src/duplicate_resume.py --resume '{source}' --new-name '{new_name}'",
+      "api_endpoint": "POST /api/resumes/{id}/duplicate",
+      "examples": [
+        "python src/duplicate_resume.py --resume 'Ford' --new-name 'Sidney_Jones_Engineering_Manager_NewCo'",
+        "python src/duplicate_resume.py --resume 'Master Resume' --new-name 'Sidney_Jones_Senior_Engineer_Startup'"
+      ]
     },
     
     "export_resume": {
@@ -431,9 +501,28 @@
         "delete my {employer} job",
         "remove my {employer} experience",
         "list my work experience",
-        "show my experience"
+        "show my experience",
+        "list all experiences from {resume}",
+        "show full experience details"
       ],
-      "script": "python src/crud/experience.py"
+      "script": "python src/crud/experience.py",
+      "tip": "Use --verbose flag to show full bullet text instead of truncated preview"
+    },
+
+    "duplicate_resume": {
+      "patterns": [
+        "create a new resume based on {resume}",
+        "duplicate the {resume} resume",
+        "copy {resume} resume",
+        "using the {resume} resume, create a new one for {job}",
+        "make a copy of {resume} resume",
+        "clone the {resume} resume"
+      ],
+      "script": "python src/duplicate_resume.py",
+      "extraction": {
+        "source_resume": "Extract source resume name (e.g., 'Ford', 'Master Resume')",
+        "new_name": "Extract or generate new resume name based on job/company"
+      }
     },
 
     "tailor_resume": {
@@ -465,7 +554,7 @@
         "Credibly": ["Credibly", "credibly"]
       }
     },
-    
+
     "resume_matching": {
       "description": "Match user intent to specific resume",
       "strategies": [
@@ -475,6 +564,275 @@
         "Fuzzy matching for typos"
       ]
     }
+  },
+
+  "parsers": {
+    "description": "Parser modules for intelligent resume operations",
+    "location": "src/parsers/",
+
+    "job_posting_parser": {
+      "file": "src/parsers/job_posting_parser.py",
+      "class": "JobPostingParser",
+      "description": "Parse job postings to extract structured requirements",
+      "usage": "python src/parsers/job_posting_parser.py <job_posting_file>",
+      "extracts": [
+        "Job title and level",
+        "Company name",
+        "Location and work arrangement",
+        "Required technical skills",
+        "Preferred skills",
+        "Key responsibilities",
+        "Years of experience required",
+        "Management experience",
+        "Soft skills",
+        "Compliance requirements (SOX, GDPR, etc.)"
+      ],
+      "output_format": {
+        "title": "string",
+        "company": "string",
+        "location": "string",
+        "work_arrangement": "string (hybrid/remote/on-site)",
+        "required_skills": "array of strings",
+        "preferred_skills": "array of strings",
+        "responsibilities": "array of strings",
+        "experience_years": "integer or null",
+        "management_experience": "integer or null",
+        "technical_requirements": "array of strings",
+        "soft_skills": "array of strings",
+        "compliance_requirements": "array of strings"
+      }
+    },
+
+    "experience_parser": {
+      "file": "src/parsers/experience_parser.py",
+      "class": "ExperienceParser",
+      "description": "Parse markdown experience files to extract work history",
+      "usage": "python src/parsers/experience_parser.py <experience_file>",
+      "input_format": "Markdown with ### headers for each experience entry",
+      "header_pattern": "### **Employer - Role (Dates)**",
+      "extracts": [
+        "Employer name",
+        "Role/title",
+        "Dates (start-end)",
+        "Location (if present)",
+        "Bullet points/achievements",
+        "Tags/skills"
+      ],
+      "output_format": {
+        "employer": "string",
+        "role": "string",
+        "dates": "string",
+        "location": "string",
+        "bullets": "array of strings",
+        "tags": "array of strings"
+      }
+    },
+
+    "nl_command_parser": {
+      "file": "src/parsers/nl_command_parser.py",
+      "class": "NLCommandParser",
+      "description": "Parse natural language commands and map to CRUD operations",
+      "usage": "python src/parsers/nl_command_parser.py",
+      "intents": [
+        "add - Add new items",
+        "update - Modify existing items",
+        "remove - Delete items",
+        "list - Show all items",
+        "show - Display specific item",
+        "create - Create new resume",
+        "duplicate - Copy resume"
+      ],
+      "entities": [
+        "technical_skills - Technical proficiencies",
+        "expertise - Areas of expertise",
+        "experience - Work history",
+        "education - Educational background",
+        "certification - Certifications",
+        "summary - Resume summary",
+        "basic_info - Name, title, contact info",
+        "achievements - Accomplishments",
+        "resume - Resume operations"
+      ],
+      "output_format": {
+        "intent": "string",
+        "entity": "string",
+        "resume": "string",
+        "parameters": "object",
+        "command": "string (CRUD command to execute)",
+        "original": "string (original command)"
+      },
+      "examples": [
+        {
+          "input": "Add Python to my technical skills",
+          "output": "python src/crud/technical_skills.py --resume 'Master Resume' --append-to-category 'languages' 'Python'"
+        },
+        {
+          "input": "Update my title to Principal Architect",
+          "output": "python src/crud/basic_info.py --resume 'Master Resume' --update-title 'Principal Architect'"
+        },
+        {
+          "input": "List my certifications",
+          "output": "python src/crud/certifications.py --resume 'Master Resume' --list"
+        },
+        {
+          "input": "Duplicate the Ford resume as GM_Resume",
+          "output": "python src/duplicate_resume.py --resume 'Ford' --new-name 'GM_Resume'"
+        }
+      ]
+    }
+  },
+
+  "orchestrator": {
+    "description": "Intelligent orchestration modules for automated resume tailoring",
+    "location": "src/orchestrator/",
+
+    "resume_matcher": {
+      "file": "src/orchestrator/resume_matcher.py",
+      "class": "ResumeMatcher",
+      "description": "Compare job requirements with resume content and calculate match scores",
+      "usage": "python src/orchestrator/resume_matcher.py <job_posting_file> <resume_file>",
+      "functionality": [
+        "Extract skills from resume (technical_skills, expertise, experience)",
+        "Compare with job requirements",
+        "Calculate match score (0-100%)",
+        "Identify matching and missing skills",
+        "Find relevant experience entries",
+        "Generate improvement suggestions"
+      ],
+      "scoring_algorithm": {
+        "skills_match": "50% weight",
+        "experience_relevance": "30% weight",
+        "title_match": "10% weight",
+        "years_of_experience": "10% weight"
+      },
+      "output_format": {
+        "score": "float (0-100)",
+        "matching_skills": "array of strings",
+        "missing_skills": "array of strings",
+        "relevant_experience": "array of experience objects with relevance scores",
+        "suggestions": "array of actionable recommendations",
+        "details": "object with detailed scoring breakdown"
+      },
+      "example_output": {
+        "score": 65.5,
+        "matching_skills": ["python", "aws", "docker"],
+        "missing_skills": ["java", "kubernetes", "azure"],
+        "relevant_experience": [
+          {
+            "employer": "Tech Corp",
+            "role": "Senior Engineer",
+            "relevance_score": 8.5,
+            "matching_bullets": 3
+          }
+        ],
+        "suggestions": [
+          "Add these missing skills: java, kubernetes, azure",
+          "Consider updating title to match job: 'Engineering Manager'",
+          "Emphasize experience at Tech Corp - it has 3 relevant bullets"
+        ]
+      }
+    },
+
+    "crud_orchestrator": {
+      "file": "src/orchestrator/crud_orchestrator.py",
+      "class": "CRUDOrchestrator",
+      "description": "Generate and execute sequences of CRUD operations to tailor resumes",
+      "usage": "python src/orchestrator/crud_orchestrator.py <job_posting_file> <resume_file> <resume_name>",
+      "functionality": [
+        "Analyze job requirements and resume gaps",
+        "Generate prioritized CRUD operation sequences",
+        "Execute operations with progress feedback",
+        "Support dry-run mode for testing",
+        "Automatic skill categorization"
+      ],
+      "operation_priorities": {
+        "1": "Update title to match job",
+        "2": "Add missing technical skills (categorized)",
+        "3": "Update summary (manual suggestion)",
+        "4": "Add relevant expertise areas",
+        "5": "Highlight compliance experience (manual suggestion)"
+      },
+      "skill_categories": [
+        "languages - Programming languages (Python, Java, JavaScript, etc.)",
+        "cloud - Cloud platforms (AWS, Azure, GCP)",
+        "databases - Database systems (SQL, MongoDB, PostgreSQL, etc.)",
+        "devops - DevOps tools (Docker, Kubernetes, CI/CD, Git, etc.)",
+        "billing - Billing systems (Zuora, Stripe, Chargebee, etc.)",
+        "ai - AI/ML technologies (TensorFlow, PyTorch, etc.)"
+      ],
+      "modes": {
+        "dry_run": "Generate operations without executing (default)",
+        "execute": "Generate and execute operations"
+      },
+      "output_format": {
+        "operations": "array of operation objects",
+        "results": "execution results object"
+      },
+      "operation_structure": {
+        "command": "string (CRUD command to execute)",
+        "description": "string (human-readable description)",
+        "priority": "integer (1-5)",
+        "type": "string (basic_info, technical_skills, expertise, etc.)",
+        "manual": "boolean (true if requires manual intervention)"
+      },
+      "example_usage": [
+        {
+          "scenario": "Tailor resume for job posting",
+          "command": "python src/orchestrator/crud_orchestrator.py 'data/job_listings/GM Job.md' 'data/resumes/resume_id.json' 'Ford'",
+          "output": "10 operations generated (title update, skill additions, expertise additions, manual suggestions)"
+        }
+      ],
+      "integration_workflow": {
+        "step_1": "Parse job posting with JobPostingParser",
+        "step_2": "Match resume with ResumeMatcher",
+        "step_3": "Generate operations with CRUDOrchestrator",
+        "step_4": "Review operations (dry-run)",
+        "step_5": "Execute operations (if approved)",
+        "step_6": "Export resume with tailor.py"
+      }
+    }
+  },
+
+  "intelligent_tailoring_workflow": {
+    "description": "Complete workflow for intelligent resume tailoring (Phase 2)",
+    "steps": [
+      {
+        "step": 1,
+        "action": "Parse job posting",
+        "command": "python src/parsers/job_posting_parser.py <job_file>",
+        "output": "Structured job data (title, skills, responsibilities, etc.)"
+      },
+      {
+        "step": 2,
+        "action": "Match resume with job",
+        "command": "python src/orchestrator/resume_matcher.py <job_file> <resume_file>",
+        "output": "Match score, missing skills, suggestions"
+      },
+      {
+        "step": 3,
+        "action": "Generate CRUD operations",
+        "command": "python src/orchestrator/crud_orchestrator.py <job_file> <resume_file> <resume_name>",
+        "output": "Prioritized list of operations to execute"
+      },
+      {
+        "step": 4,
+        "action": "Execute operations (optional)",
+        "command": "Set dry_run=False in orchestrator",
+        "output": "Updated resume JSON"
+      },
+      {
+        "step": 5,
+        "action": "Export resume",
+        "command": "python src/tailor.py --resume <resume_name> --jd <job_file> --out <output> --format html --docx",
+        "output": "HTML and DOCX files for submission"
+      }
+    ],
+    "user_commands": [
+      "Tailor my Ford resume for the GM position",
+      "Analyze how well my resume matches this job posting",
+      "What skills am I missing for this job?",
+      "Update my resume to match this job description"
+    ]
   }
 }
 

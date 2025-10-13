@@ -18,6 +18,16 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from openai import OpenAI
 
+# Import agent modules for result analysis and token management
+try:
+    from src.agent.result_analyzer import ResultAnalyzer
+    from src.agent.token_manager import TokenManager
+except ImportError:
+    # Fallback if running from different directory
+    sys.path.insert(0, str(Path(__file__).parent))
+    from src.agent.result_analyzer import ResultAnalyzer
+    from src.agent.token_manager import TokenManager
+
 # Fix Windows console encoding for emoji support
 if sys.platform == 'win32':
     try:
@@ -298,18 +308,57 @@ run: python src/crud/experience.py --resume "{company}" --add-bullet --employer 
 run: python src/crud/experience.py --resume "{company}" --update-bullet --employer "{employer}" --index {index} --text "{text}"
 run: python src/crud/experience.py --resume "{company}" --delete-bullet --employer "{employer}" --index {index}
 run: python src/crud/experience.py --resume "{company}" --delete --employer "{employer}"
-run: python src/crud/experience.py --resume "{company}" --list
+run: python src/crud/experience.py --resume "{company}" --list                    # Truncated preview (80 chars)
+run: python src/crud/experience.py --resume "{company}" --list --verbose         # Full bullet text
 ```
+
+**IMPORTANT**: When user asks to "list all", "show all", "see full details", or "complete experience", ALWAYS use --verbose flag!
 
 **Natural Language Examples:**
 - "Add Python to my technical skills" → run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
 - "Update my title to Principal Architect" → run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
 - "Add my AWS certification" → run: python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Oct 2025"
 - "List my areas of expertise" → run: python src/crud/expertise.py --resume "Master Resume" --list
+- "List all experiences in Ford resume" → run: python src/crud/experience.py --resume "Ford" --list --verbose
+- "Show my experience" → run: python src/crud/experience.py --resume "Master Resume" --list --verbose
 
-### 3. Tailor Resume to Job Description (DIFFERENT USE CASE)
-**User Intent**: "Tailor my resume for the {company} position" or "Create a new resume for {job_posting}"
-**Command Pattern**: User wants to CREATE a NEW tailored version from an existing resume
+### 3. Duplicate Resume (CREATE NEW EDITABLE RESUME)
+**User Intent**: "Using the Ford resume, create a new one for X" or "Duplicate the Ford resume" or "Create a new resume for X"
+**Command Pattern**: User wants to CREATE A NEW RESUME JSON FILE that can be edited later
+
+**IMPORTANT DISTINCTION**:
+- "Create a new resume" = duplicate_resume.py (creates editable JSON in database)
+- "Export/generate HTML" = tailor.py (creates one-time HTML output)
+
+**Action**: Use duplicate_resume.py script:
+```
+run: python src/duplicate_resume.py --resume "{source_resume}" --new-name "{new_name}"
+```
+
+**Examples:**
+User: "Using the Ford resume, create a new one for the Subscription Billing position"
+You: I'll create a new resume based on your Ford resume for the Subscription Billing position.
+
+run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+User: "Duplicate the Master Resume for a new company"
+You: run: python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_NewCo"
+
+User: "Copy my Ford resume"
+You: run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Senior_Engineer_Ford_Copy"
+
+**Optional**: Add description with --description flag:
+```
+run: python src/duplicate_resume.py --resume "Ford" --new-name "New_Resume" --description "Tailored for X position"
+```
+
+**WORKFLOW**: After duplicating, you can optionally:
+1. Update sections with CRUD scripts
+2. Generate HTML/DOCX output with tailor.py
+
+### 4. Tailor Resume to Job Description (EXPORT TO HTML/DOCX)
+**User Intent**: "Export my resume as HTML" or "Generate a tailored HTML for {job}" or "Create an HTML version"
+**Command Pattern**: User wants to EXPORT an existing resume to HTML/DOCX format (one-time output, not editable)
 
 **IMPORTANT**: When user says "Using the {Company} Resume" or "Use the {Company} resume", they want to use that specific company's resume as the base, NOT the master resume!
 
@@ -325,29 +374,71 @@ run: python src/tailor.py --resume "Master Resume" --jd "{job_description}" --ou
 **The tailor.py script now supports resume lookup by name!** Just pass the company name or "Master Resume" and it will find the correct file automatically.
 
 **Examples:**
-User: "Using the Ford Resume, let's create a new for this job posting: X.md"
+User: "Export the Ford Resume as HTML for this job posting: X.md"
 You: run: python src/tailor.py --resume "Ford" --jd "data/job_listings/X.md" --out "out/ford_tailored.html" --format html --theme modern
 
-User: "Tailor my resume for the GM position with modern theme"
+User: "Generate an HTML version of my resume for the GM position"
 You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/GM Job Description.md" --out "out/gm_tailored.html" --format html --theme modern
 
-### List Resumes
-Command: run: cat data/resumes/index.json | python -m json.tool
+User: "Create a tailored HTML for the Credibly job"
+You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/Sr. Software Engineer - at Credibly.md" --out "out/credibly.html" --format html --theme modern
 
-### List Job Listings
-Command: run: ls data/job_listings/
+### List Resumes (Formatted Table)
+Command: run: python src/utils/list_resumes.py
+Options:
+  --format table   # Default: formatted table with details
+  --format simple  # Simple numbered list
+  --format json    # JSON output
+
+### List Job Listings (Formatted Table)
+Command: run: python src/utils/list_job_listings.py
+Options:
+  --format table   # Default: formatted table with details
+  --format simple  # Simple numbered list
+  --format json    # JSON output
 
 ## Available Commands
 
+**IMPORTANT - Cross-Platform Compatibility:**
+- The system may be running on Windows, Linux, or Mac
+- ALWAYS use Python commands when possible (they work everywhere)
+- AVOID Unix-specific commands like `cat`, `ls`, `grep` on Windows
+- Use `python -m json.tool` instead of `cat file.json | python -m json.tool`
+- Use `dir` on Windows or `ls` on Unix, OR use Python: `python -c "import os; print(os.listdir('path'))"`
+
 You can execute commands with 'run:' prefix. Whitelisted commands include:
+- python src/duplicate_resume.py (for duplicating resumes)
 - python src/tailor.py (for resume tailoring)
+- python src/update_resume_experience.py (for updating resume experience)
+- python src/crud/*.py (for granular CRUD operations)
 - python -m pytest (for testing)
 - git status, git log, git diff
 - ls, dir, pwd, echo, cat
 
 ## Example Interactions
 
-### Example 1: Update Resume (Use Helper Script)
+### Example 1: Create New Resume (Duplicate + Optional Tailor)
+User: "Using the Ford resume, create a new one for the Subscription Billing position"
+
+You: "I'll create a new resume based on your Ford resume for the Subscription Billing position.
+
+run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+[After execution]
+✅ Successfully duplicated resume!
+   New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
+   New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
+
+This creates a new editable resume in the database. Would you like me to:
+1. Export it as HTML/DOCX for the job posting?
+2. Update specific sections first?
+3. Leave it as-is for now?"
+
+**IMPORTANT**: If user says "create a new resume", ALWAYS use duplicate_resume.py first, NOT tailor.py!
+- duplicate_resume.py = Creates editable JSON in database
+- tailor.py = Exports to HTML/DOCX (one-time output)
+
+### Example 2: Update Resume (Use Helper Script)
 User: "Update the Ford resume with this experience: data/job_listings/Tailored Experience Summary for Ford.md"
 
 You: "I'll update the Ford resume with that experience file.
@@ -357,30 +448,143 @@ run: python src/update_resume_experience.py --resume "Ford" --experience "data/j
 [After execution]
 ✅ Successfully updated the Ford resume!"
 
-### Example 2: List Resumes
+### Example 3: List Resumes
 User: "What resumes do I have?"
 
 You: "Let me check your available resumes.
 
-run: cat data/resumes/index.json
+run: python src/utils/list_resumes.py
 
-[Show the list of resumes]"
+[Shows formatted table with resume names, master status, updated dates, and descriptions]"
 
-### Example 3: Tailor Resume (Different from Update)
-User: "Tailor my resume for the GM position with modern theme"
+### Example 4: Intelligent Resume Tailoring (NEW - Phase 2)
+User: "Tailor my Ford resume for the GM Subscription Billing position"
 
-You: "I'll tailor your master resume for the GM position using the modern theme.
+You: "I'll analyze the job posting and intelligently tailor your Ford resume.
 
-run: python src/tailor.py --resume data/master_resume.json --jd 'data/job_listings/GM Job Description.md' --out out/gm_tailored.html --format html --theme modern
+run: python src/orchestrator/crud_orchestrator.py 'data/job_listings/Subscription Billing Software Engineering Manager.md' 'data/resumes/{resume_id}.json' 'Ford'
+
+[After execution - shows match score and operations]
+✅ Generated 10 tailoring operations:
+   - Update title to match job
+   - Add missing skills (aws, azure, zuora, etc.)
+   - Add relevant expertise areas
+   - Suggestions for manual updates
+
+Would you like me to execute these operations to update your resume?"
+
+### Example 5: Export Resume (HTML/DOCX)
+User: "Export my Ford resume as HTML with modern theme"
+
+You: "I'll export your Ford resume to HTML.
+
+run: python src/tailor.py --resume 'Ford' --jd 'data/job_listings/Ford Job Description.md' --out out/ford_resume.html --format html --theme modern --docx
 
 [After execution]
-✅ Resume tailored successfully!"
+✅ Resume exported successfully!"
 
 ## Key Reminders
+- For "Create/duplicate resume" → Use duplicate_resume.py (creates a copy of existing resume)
 - For "Update resume" → Use update_resume_experience.py (adds/updates experience)
-- For "Tailor resume" → Use tailor.py (creates new tailored version)
+- For "Tailor resume intelligently" → Use crud_orchestrator.py (analyzes job and generates CRUD operations)
+- For "Export resume" → Use tailor.py (creates HTML/DOCX output files)
 - Always execute commands immediately, don't ask for clarification
 - The helper scripts handle file discovery automatically
+
+## INTELLIGENT RESUME TAILORING (Phase 2 - NEW)
+
+The system now includes intelligent orchestration for automated resume tailoring:
+
+### Orchestration Modules (src/orchestrator/)
+
+#### 1. Resume Matcher
+**Purpose**: Analyze how well a resume matches a job posting
+**Command**: `python src/orchestrator/resume_matcher.py <job_file.md> <resume_file.json>`
+**Output**:
+- Match score (0-100%)
+- Matching skills
+- Missing skills
+- Relevant experience entries
+- Improvement suggestions
+
+#### 2. CRUD Orchestrator
+**Purpose**: Generate and execute sequences of CRUD operations to tailor resumes
+**Command**: `python src/orchestrator/crud_orchestrator.py <job_file.md> <resume_file.json> <resume_name>`
+**Features**:
+- Analyzes job requirements vs resume content
+- Generates prioritized CRUD operations
+- Supports dry-run mode (default)
+- Categorizes skills automatically (languages, cloud, devops, billing, AI)
+
+**Operation Types Generated**:
+1. Update title to match job
+2. Add missing technical skills (categorized)
+3. Update summary (manual suggestion)
+4. Add relevant expertise areas
+5. Highlight compliance experience (manual suggestion)
+
+**Example Usage**:
+```
+run: python src/orchestrator/crud_orchestrator.py 'data/job_listings/GM Job.md' 'data/resumes/{id}.json' 'Ford'
+```
+
+### Parser Modules (src/parsers/)
+
+#### 1. Job Posting Parser
+**Purpose**: Extract structured data from job posting markdown files
+**Command**: `python src/parsers/job_posting_parser.py <job_file.md>`
+**Extracts**: title, company, location, skills, responsibilities, experience requirements
+
+#### 2. Experience Parser
+**Purpose**: Parse markdown experience files
+**Command**: `python src/parsers/experience_parser.py <experience_file.md>`
+**Format**: `### **Employer - Role (Dates)**`
+
+#### 3. Natural Language Command Parser
+**Purpose**: Map natural language to CRUD commands
+**Examples**:
+- "Add Python to my technical skills" → technical_skills.py command
+- "Update my title to Principal Architect" → basic_info.py command
+
+### When to Use What
+
+**Intelligent Tailoring** (Recommended for job applications):
+```
+run: python src/orchestrator/crud_orchestrator.py <job_file> <resume_file> <resume_name>
+```
+Use when: User wants to tailor resume for a specific job posting
+
+**Manual CRUD Operations** (For specific updates):
+```
+run: python src/crud/technical_skills.py --resume "Ford" --add-category "languages" "Python, Java"
+```
+Use when: User wants to update a specific section
+
+**Export to HTML/DOCX** (For final output):
+```
+run: python src/tailor.py --resume "Ford" --jd <job_file> --out <output> --format html --docx
+```
+Use when: User wants to export resume for submission
+
+## IMPORTANT: Verify Command Results
+After executing CRUD operations, ALWAYS review the output to verify success:
+
+1. **Check for success indicators**: Look for "[SUCCESS]" or "Successfully" messages
+2. **Verify the data**: If the output shows IDs, names, or counts, mention them to the user
+3. **Offer next steps**: After successful operations, suggest logical follow-up actions
+
+**Example:**
+After duplicating a resume, you should say:
+"✅ Successfully duplicated resume!
+   - New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
+   - New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
+
+Would you like me to:
+1. Update specific sections of this new resume?
+2. Tailor it to a job posting?
+3. List all your resumes?"
+
+**If an error occurs**, explain what went wrong and suggest solutions.
 
 Available themes: professional, modern, executive, creative
 """
@@ -413,6 +617,10 @@ Available themes: professional, modern, executive, creative
         self.memory_manager = MemoryManager(memory_file)
         self.command_executor = CommandExecutor()
 
+        # Initialize result analyzer and token manager (Issue #24)
+        self.result_analyzer = ResultAnalyzer()
+        self.token_manager = TokenManager(model=model)
+
         # Load existing memory
         self.memory_manager.load()
 
@@ -434,6 +642,11 @@ Available themes: professional, modern, executive, creative
         Returns:
             Response string
         """
+        # Check token usage before processing (Issue #24)
+        token_status = self.token_manager.check_limit(self.memory_manager.get_messages())
+        if token_status['warning'] and token_status['message']:
+            print(f"\n{token_status['message']}\n")
+
         # Check if it's a command
         if self.command_executor.is_command(user_input):
             command = self.command_executor.extract_command(user_input)
@@ -441,10 +654,17 @@ Available themes: professional, modern, executive, creative
 
             result = self.command_executor.execute(command)
 
-            if result["success"]:
-                response = f"✅ Command executed successfully:\n{result['output']}"
-            else:
-                response = f"❌ Command failed:\n{result['error']}"
+            # Use result analyzer for intelligent feedback (Issue #24)
+            analysis = self.result_analyzer.analyze(command, result)
+
+            # Format response with analysis
+            response = analysis['message']
+
+            # Add suggestions if available
+            if analysis['suggestions']:
+                response += f"\n\n💡 What would you like to do next?\n"
+                for i, suggestion in enumerate(analysis['suggestions'], 1):
+                    response += f"   {i}. {suggestion}\n"
 
             # Add to memory
             self.memory_manager.add_message("user", user_input)
@@ -478,7 +698,16 @@ Available themes: professional, modern, executive, creative
                     if should_execute:
                         print(f"🔧 Executing command: {command}")
                         result = self.command_executor.execute(command)
-                        execution_result = self._format_execution_result(result)
+
+                        # Use result analyzer for intelligent feedback (Issue #24)
+                        analysis = self.result_analyzer.analyze(command, result)
+                        execution_result = analysis['message']
+
+                        # Add suggestions if available
+                        if analysis['suggestions']:
+                            execution_result += f"\n\n💡 What would you like to do next?\n"
+                            for i, suggestion in enumerate(analysis['suggestions'], 1):
+                                execution_result += f"   {i}. {suggestion}\n"
 
                         # Add execution result to memory
                         self.memory_manager.add_message("user", f"run: {command}")
@@ -573,6 +802,15 @@ Available themes: professional, modern, executive, creative
             True if user wants to exit
         """
         return user_input.strip().lower() in ["exit", "quit"]
+
+    def get_memory_stats(self) -> Dict[str, Any]:
+        """
+        Get memory usage statistics (Issue #24).
+
+        Returns:
+            Dictionary with token usage statistics
+        """
+        return self.token_manager.get_stats(self.memory_manager.get_messages())
     
     def run(self) -> None:
         """Run the interactive agent loop."""
@@ -587,6 +825,14 @@ Available themes: professional, modern, executive, creative
         print(f"  - Auto-execute: {'✅ Enabled' if self.auto_execute else '❌ Disabled'}")
         if self.auto_execute:
             print(f"  - Confirmation: {'✅ Required' if self.confirm_execution else '❌ Disabled'}")
+
+        # Show token usage (Issue #24)
+        try:
+            stats = self.get_memory_stats()
+            print(f"  - Memory: {stats['total_tokens']}/{stats['max_tokens']} tokens ({stats['percentage']}%)")
+        except Exception as e:
+            print(f"  - Memory: Unable to calculate token usage")
+
         print("=" * 50)
         print()
         

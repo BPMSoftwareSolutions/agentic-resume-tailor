@@ -102,6 +102,58 @@
             font-size: 0.9em;
             color: #6c757d;
         }
+
+        .token-usage {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85em;
+        }
+
+        .token-bar {
+            width: 150px;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .token-bar-fill {
+            height: 100%;
+            background-color: #28a745;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .token-bar-fill.warning {
+            background-color: #ffc107;
+        }
+
+        .token-bar-fill.critical {
+            background-color: #dc3545;
+        }
+
+        .token-warning {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .token-warning.show {
+            display: block;
+        }
+
+        .token-warning.warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+        }
+
+        .token-warning.critical {
+            background-color: #f8d7da;
+            border: 1px solid #dc3545;
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +187,12 @@
                             <small class="memory-stats">
                                 <span id="messageCount">0</span> messages in memory
                             </small>
+                            <div class="token-usage mt-2">
+                                <span id="tokenCount">0/8192 tokens (0%)</span>
+                                <div class="token-bar">
+                                    <div class="token-bar-fill" id="tokenBarFill" style="width: 0%"></div>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <button class="btn btn-sm btn-outline-secondary me-2" id="viewMemoryBtn">
@@ -146,6 +204,9 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        <!-- Token Warning (Issue #24) -->
+                        <div class="token-warning" id="tokenWarning"></div>
+
                         <div class="chat-container">
                             <div class="chat-messages" id="chatMessages">
                                 <div class="message system">

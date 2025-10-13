@@ -125,6 +125,15 @@
       "job_listing_id": null,
       "is_master": false,
       "description": ""
+    },
+    {
+      "id": "d21f830e-b291-4684-97a9-8ac1e060fb76",
+      "name": "Test_Resume_For_Issue_19",
+      "created_at": "2025-10-12T13:28:28.028665",
+      "updated_at": "2025-10-12T13:28:28.028665",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Master Resume"
     }
   ]
 }

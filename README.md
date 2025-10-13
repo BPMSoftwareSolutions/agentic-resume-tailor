@@ -17,8 +17,65 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - **NEW:** Local AI Agent for interactive automation and command execution ([Issue #8](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/8))
 - **NEW:** AI Agent Web Integration - Chat with the agent directly from your browser ([Issue #12](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/12))
 - **NEW:** CRUD Scripts for granular resume data management with AI agent integration ([Issue #17](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/17))
+- **NEW:** CLI Resume Duplication - Create copies of resumes via command line with natural language support ([Issue #19](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/19))
+- **NEW:** Auto-Verification & Token Management - Intelligent result analysis and memory warnings ([Issue #24](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/24))
+- **NEW:** Intelligent CRUD Orchestration - Automated resume tailoring with job analysis and smart operations ([Issue #27](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/27))
 
-## Roadmap (Phase 2 – optional & ToS‑aware)
+## Phase 2: Intelligent Resume Orchestration ✨
+
+The system now includes intelligent orchestration for automated resume tailoring:
+
+### 🎯 Key Features
+
+- **Job Posting Parser**: Extract structured data from job postings (skills, responsibilities, requirements)
+- **Resume Matcher**: Calculate match scores (0-100%) and identify gaps
+- **CRUD Orchestrator**: Generate and execute prioritized sequences of CRUD operations
+- **Natural Language Commands**: Parse commands like "Add Python to my technical skills"
+- **Automatic Skill Categorization**: Intelligently categorize skills (languages, cloud, devops, billing, AI)
+- **Agent Integration**: Full integration with the AI agent for conversational resume tailoring
+
+### 🚀 Quick Start
+
+```bash
+# Parse a job posting
+python src/parsers/job_posting_parser.py "data/job_listings/GM Job.md"
+
+# Match your resume with the job
+python src/orchestrator/resume_matcher.py \
+  "data/job_listings/GM Job.md" \
+  "data/resumes/resume_id.json"
+
+# Generate tailoring operations (dry-run)
+python src/orchestrator/crud_orchestrator.py \
+  "data/job_listings/GM Job.md" \
+  "data/resumes/resume_id.json" \
+  "Ford"
+```
+
+### 📊 Example Output
+
+```
+=== Resume Match Analysis ===
+Overall Match Score: 65.5%
+Missing Skills: zuora, revpro, azure, gcp, datadog
+
+=== CRUD Orchestration Plan ===
+Generated 10 operations:
+1. Update title to: Subscription Billing Software Engineering Manager
+2. Add languages skills: java, microservices, rest
+3. Add cloud skills: aws, azure, gcp
+4. Add devops skills: ci/cd, datadog, git
+5. Add billing skills: revpro, subscription billing, zuora
+...
+```
+
+### 📚 Documentation
+
+- [Phase 2 Implementation Summary](docs/PHASE_2_IMPLEMENTATION_SUMMARY.md)
+- [Orchestration Usage Examples](docs/ORCHESTRATION_USAGE_EXAMPLES.md)
+- [Agent Knowledge Base](agent_knowledge_base.json)
+
+## Roadmap (Phase 3 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
 - Human‑in‑the‑loop Playwright flows for sites that require manual review/submit. **Do not bypass CAPTCHAs or site anti‑bot controls.**
 
@@ -74,6 +131,9 @@ python agent.py --no-confirm
 - 💾 Persistent conversation memory
 - 🎛️ Configurable execution modes
 - 🎯 Simple command-line interface
+- ✅ **Auto-verification** of command results with intelligent feedback
+- 📊 **Token management** with warnings at 80% and critical alerts at 95%
+- 💡 **Next-step suggestions** after successful operations
 
 **Example with Auto-Execution:**
 ```
@@ -151,6 +211,96 @@ See [Agent Knowledge Base Documentation](docs/AGENT_KNOWLEDGE_BASE.md) for detai
 - View job listings
 
 See [Agent Web Integration Documentation](docs/AGENT_WEB_INTEGRATION.md) for details.
+
+### Auto-Verification & Token Management (NEW! ✅📊)
+
+The AI agent now includes intelligent result analysis and token management:
+
+**Auto-Verification Features:**
+- ✅ Automatic parsing of command outputs for success/failure
+- 📊 Extraction of key information (IDs, names, counts, paths)
+- 💡 Intelligent next-step suggestions after operations
+- 🔍 Error analysis with fix recommendations
+
+**Token Management Features:**
+- 📊 Real-time token counting using `tiktoken`
+- ⚠️ Warning at 80% memory capacity
+- 🚨 Critical alert at 95% memory capacity
+- 💾 Memory optimization suggestions
+- 📈 Detailed usage statistics
+
+**Example with Auto-Verification:**
+```
+💬 > run: python src/duplicate_resume.py --resume "Ford" --new-name "Test_Resume"
+
+✅ Command executed successfully
+
+[SUCCESS] Successfully duplicated resume!
+[INFO]    New Resume ID: abc-123-def-456
+[INFO]    New Resume Name: Test_Resume
+
+💡 What would you like to do next?
+   1. Update specific sections (experience, skills, summary)
+   2. Tailor it to a job posting
+   3. List all your resumes
+   4. Export to PDF or DOCX
+```
+
+**Token Warning Example:**
+```
+⚠️  WARNING: Memory at 82.3% capacity (6584/8000 tokens).
+Consider clearing memory if conversation continues.
+
+Suggestions:
+  • Clear old conversation history: Use 'clear memory' command
+  • Start a new conversation session
+  • Export important information before clearing
+```
+
+See [Auto-Verification & Token Management Documentation](docs/AUTO_VERIFICATION_TOKEN_MANAGEMENT.md) for details.
+
+### Resume Duplication (NEW! 📋)
+```bash
+# Duplicate an existing resume with a new name
+
+# Duplicate by resume name
+python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+# Duplicate master resume
+python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_NewCo"
+
+# Duplicate with description
+python src/duplicate_resume.py --resume "Ford" --new-name "New Resume" --description "Tailored for X position"
+```
+
+**Features:**
+- 📋 Create copies of existing resumes via CLI
+- 🤖 Natural language support via AI agent
+- 🔍 Find source resume by name (no UUIDs needed)
+- ✅ Automatic metadata and timestamp management
+- 📝 Optional description for new resume
+
+**Natural Language Examples (via AI Agent):**
+```
+💬 > Using the Ford resume, create a new one for the Subscription Billing position
+🤖 I'll create a new resume based on your Ford resume for the Subscription Billing position.
+
+run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
+
+✅ Successfully duplicated resume!
+   New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
+   New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
+
+💬 > Duplicate the Master Resume
+🤖 run: python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_Copy"
+```
+
+**Typical Workflow:**
+1. Duplicate an existing resume (Master Resume or company-specific)
+2. Update specific sections using CRUD scripts (optional)
+3. Tailor to job description using `tailor.py` (optional)
+
+See [CRUD Operations Documentation](docs/CRUD_OPERATIONS.md) for details.
 
 ### Resume CRUD Operations (NEW! 📝)
 ```bash
