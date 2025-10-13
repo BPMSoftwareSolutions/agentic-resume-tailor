@@ -532,7 +532,7 @@
         "Credibly": ["Credibly", "credibly"]
       }
     },
-    
+
     "resume_matching": {
       "description": "Match user intent to specific resume",
       "strategies": [
@@ -540,6 +540,122 @@
         "Partial name match (case-insensitive)",
         "Company name extraction from resume name",
         "Fuzzy matching for typos"
+      ]
+    }
+  },
+
+  "parsers": {
+    "description": "Parser modules for intelligent resume operations",
+    "location": "src/parsers/",
+
+    "job_posting_parser": {
+      "file": "src/parsers/job_posting_parser.py",
+      "class": "JobPostingParser",
+      "description": "Parse job postings to extract structured requirements",
+      "usage": "python src/parsers/job_posting_parser.py <job_posting_file>",
+      "extracts": [
+        "Job title and level",
+        "Company name",
+        "Location and work arrangement",
+        "Required technical skills",
+        "Preferred skills",
+        "Key responsibilities",
+        "Years of experience required",
+        "Management experience",
+        "Soft skills",
+        "Compliance requirements (SOX, GDPR, etc.)"
+      ],
+      "output_format": {
+        "title": "string",
+        "company": "string",
+        "location": "string",
+        "work_arrangement": "string (hybrid/remote/on-site)",
+        "required_skills": "array of strings",
+        "preferred_skills": "array of strings",
+        "responsibilities": "array of strings",
+        "experience_years": "integer or null",
+        "management_experience": "integer or null",
+        "technical_requirements": "array of strings",
+        "soft_skills": "array of strings",
+        "compliance_requirements": "array of strings"
+      }
+    },
+
+    "experience_parser": {
+      "file": "src/parsers/experience_parser.py",
+      "class": "ExperienceParser",
+      "description": "Parse markdown experience files to extract work history",
+      "usage": "python src/parsers/experience_parser.py <experience_file>",
+      "input_format": "Markdown with ### headers for each experience entry",
+      "header_pattern": "### **Employer - Role (Dates)**",
+      "extracts": [
+        "Employer name",
+        "Role/title",
+        "Dates (start-end)",
+        "Location (if present)",
+        "Bullet points/achievements",
+        "Tags/skills"
+      ],
+      "output_format": {
+        "employer": "string",
+        "role": "string",
+        "dates": "string",
+        "location": "string",
+        "bullets": "array of strings",
+        "tags": "array of strings"
+      }
+    },
+
+    "nl_command_parser": {
+      "file": "src/parsers/nl_command_parser.py",
+      "class": "NLCommandParser",
+      "description": "Parse natural language commands and map to CRUD operations",
+      "usage": "python src/parsers/nl_command_parser.py",
+      "intents": [
+        "add - Add new items",
+        "update - Modify existing items",
+        "remove - Delete items",
+        "list - Show all items",
+        "show - Display specific item",
+        "create - Create new resume",
+        "duplicate - Copy resume"
+      ],
+      "entities": [
+        "technical_skills - Technical proficiencies",
+        "expertise - Areas of expertise",
+        "experience - Work history",
+        "education - Educational background",
+        "certification - Certifications",
+        "summary - Resume summary",
+        "basic_info - Name, title, contact info",
+        "achievements - Accomplishments",
+        "resume - Resume operations"
+      ],
+      "output_format": {
+        "intent": "string",
+        "entity": "string",
+        "resume": "string",
+        "parameters": "object",
+        "command": "string (CRUD command to execute)",
+        "original": "string (original command)"
+      },
+      "examples": [
+        {
+          "input": "Add Python to my technical skills",
+          "output": "python src/crud/technical_skills.py --resume 'Master Resume' --append-to-category 'languages' 'Python'"
+        },
+        {
+          "input": "Update my title to Principal Architect",
+          "output": "python src/crud/basic_info.py --resume 'Master Resume' --update-title 'Principal Architect'"
+        },
+        {
+          "input": "List my certifications",
+          "output": "python src/crud/certifications.py --resume 'Master Resume' --list"
+        },
+        {
+          "input": "Duplicate the Ford resume as GM_Resume",
+          "output": "python src/duplicate_resume.py --resume 'Ford' --new-name 'GM_Resume'"
+        }
       ]
     }
   }
