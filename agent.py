@@ -378,13 +378,22 @@ You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/
 User: "Create a tailored HTML for the Credibly job"
 You: run: python src/tailor.py --resume "Master Resume" --jd "data/job_listings/Sr. Software Engineer - at Credibly.md" --out "out/credibly.html" --format html --theme modern
 
-### List Resumes
-Command: run: cat data/resumes/index.json | python -m json.tool
+### List Resumes (Cross-Platform)
+Command: run: python -m json.tool data/resumes/index.json
 
-### List Job Listings
-Command: run: ls data/job_listings/
+### List Job Listings (Cross-Platform)
+Windows: run: dir data\job_listings /b
+Unix/Mac: run: ls data/job_listings/
+**Recommended (cross-platform)**: run: python -c "import os; print('\n'.join(os.listdir('data/job_listings')))"
 
 ## Available Commands
+
+**IMPORTANT - Cross-Platform Compatibility:**
+- The system may be running on Windows, Linux, or Mac
+- ALWAYS use Python commands when possible (they work everywhere)
+- AVOID Unix-specific commands like `cat`, `ls`, `grep` on Windows
+- Use `python -m json.tool` instead of `cat file.json | python -m json.tool`
+- Use `dir` on Windows or `ls` on Unix, OR use Python: `python -c "import os; print(os.listdir('path'))"`
 
 You can execute commands with 'run:' prefix. Whitelisted commands include:
 - python src/duplicate_resume.py (for duplicating resumes)
@@ -433,7 +442,7 @@ User: "What resumes do I have?"
 
 You: "Let me check your available resumes.
 
-run: cat data/resumes/index.json
+run: python -m json.tool data/resumes/index.json
 
 [Show the list of resumes]"
 
