@@ -19,8 +19,63 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - **NEW:** CRUD Scripts for granular resume data management with AI agent integration ([Issue #17](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/17))
 - **NEW:** CLI Resume Duplication - Create copies of resumes via command line with natural language support ([Issue #19](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/19))
 - **NEW:** Auto-Verification & Token Management - Intelligent result analysis and memory warnings ([Issue #24](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/24))
+- **NEW:** Intelligent CRUD Orchestration - Automated resume tailoring with job analysis and smart operations ([Issue #27](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/27))
 
-## Roadmap (Phase 2 – optional & ToS‑aware)
+## Phase 2: Intelligent Resume Orchestration ✨
+
+The system now includes intelligent orchestration for automated resume tailoring:
+
+### 🎯 Key Features
+
+- **Job Posting Parser**: Extract structured data from job postings (skills, responsibilities, requirements)
+- **Resume Matcher**: Calculate match scores (0-100%) and identify gaps
+- **CRUD Orchestrator**: Generate and execute prioritized sequences of CRUD operations
+- **Natural Language Commands**: Parse commands like "Add Python to my technical skills"
+- **Automatic Skill Categorization**: Intelligently categorize skills (languages, cloud, devops, billing, AI)
+- **Agent Integration**: Full integration with the AI agent for conversational resume tailoring
+
+### 🚀 Quick Start
+
+```bash
+# Parse a job posting
+python src/parsers/job_posting_parser.py "data/job_listings/GM Job.md"
+
+# Match your resume with the job
+python src/orchestrator/resume_matcher.py \
+  "data/job_listings/GM Job.md" \
+  "data/resumes/resume_id.json"
+
+# Generate tailoring operations (dry-run)
+python src/orchestrator/crud_orchestrator.py \
+  "data/job_listings/GM Job.md" \
+  "data/resumes/resume_id.json" \
+  "Ford"
+```
+
+### 📊 Example Output
+
+```
+=== Resume Match Analysis ===
+Overall Match Score: 65.5%
+Missing Skills: zuora, revpro, azure, gcp, datadog
+
+=== CRUD Orchestration Plan ===
+Generated 10 operations:
+1. Update title to: Subscription Billing Software Engineering Manager
+2. Add languages skills: java, microservices, rest
+3. Add cloud skills: aws, azure, gcp
+4. Add devops skills: ci/cd, datadog, git
+5. Add billing skills: revpro, subscription billing, zuora
+...
+```
+
+### 📚 Documentation
+
+- [Phase 2 Implementation Summary](docs/PHASE_2_IMPLEMENTATION_SUMMARY.md)
+- [Orchestration Usage Examples](docs/ORCHESTRATION_USAGE_EXAMPLES.md)
+- [Agent Knowledge Base](agent_knowledge_base.json)
+
+## Roadmap (Phase 3 – optional & ToS‑aware)
 - Integrations with job boards that **offer APIs or explicit automation permissions** (e.g., Greenhouse/Lever postings on employer sites).
 - Human‑in‑the‑loop Playwright flows for sites that require manual review/submit. **Do not bypass CAPTCHAs or site anti‑bot controls.**
 
