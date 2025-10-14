@@ -2,9 +2,10 @@
 """
 Token Manager - Intelligent token counting and memory management.
 Related to GitHub Issue #24 - Phase 1: Auto-Verification & Result Analysis
+Updated for GitHub Issue #30 - Multi-provider support
 
 This module provides:
-- Accurate token counting using tiktoken
+- Accurate token counting for OpenAI and Claude models
 - Warning at 80% token capacity
 - Critical alert at 95% token capacity
 - Memory optimization suggestions
@@ -17,48 +18,58 @@ import json
 
 class TokenManager:
     """Manages token counting and provides memory usage warnings."""
-    
+
     # Model token limits (conservative estimates)
     MODEL_LIMITS = {
+        # OpenAI models
         'gpt-4': 8192,
         'gpt-4-turbo': 128000,
         'gpt-4-turbo-preview': 128000,
         'gpt-4-32k': 32768,
         'gpt-3.5-turbo': 4096,
         'gpt-3.5-turbo-16k': 16384,
+        # Claude models
+        'claude-3-5-sonnet-20241022': 200000,
+        'claude-3-5-haiku-20241022': 200000,
+        'claude-3-opus-20240229': 200000,
+        'claude-3-sonnet-20240229': 200000,
+        'claude-3-haiku-20240307': 200000,
     }
-    
-    def __init__(self, model: str = "gpt-4", max_tokens: Optional[int] = None):
+
+    def __init__(self, provider: str = "openai", model: str = "gpt-4", max_tokens: Optional[int] = None):
         """
         Initialize the token manager.
-        
+
         Args:
-            model: OpenAI model name
+            provider: LLM provider ('openai' or 'claude')
+            model: Model name
             max_tokens: Maximum token limit (if None, uses model default)
         """
+        self.provider = provider
         self.model = model
         self.max_tokens = max_tokens or self._get_model_limit(model)
         self.warning_threshold = 0.80  # Warn at 80%
         self.critical_threshold = 0.95  # Critical at 95%
-        
-        # Try to import tiktoken for accurate counting
+
+        # Try to import tiktoken for accurate counting (OpenAI models)
         self.tiktoken_available = False
         self.encoding = None
-        try:
-            import tiktoken
-            self.encoding = tiktoken.encoding_for_model(model)
-            self.tiktoken_available = True
-        except ImportError:
-            # Fall back to estimation if tiktoken not available
-            pass
-        except KeyError:
-            # Model not found in tiktoken, use cl100k_base as default
+        if provider == 'openai':
             try:
                 import tiktoken
-                self.encoding = tiktoken.get_encoding("cl100k_base")
+                self.encoding = tiktoken.encoding_for_model(model)
                 self.tiktoken_available = True
-            except:
+            except ImportError:
+                # Fall back to estimation if tiktoken not available
                 pass
+            except KeyError:
+                # Model not found in tiktoken, use cl100k_base as default
+                try:
+                    import tiktoken
+                    self.encoding = tiktoken.get_encoding("cl100k_base")
+                    self.tiktoken_available = True
+                except:
+                    pass
     
     def _get_model_limit(self, model: str) -> int:
         """
