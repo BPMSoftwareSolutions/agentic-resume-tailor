@@ -369,7 +369,7 @@
     "employer": "John Deere Landscapes",
     "role": "Software Development Lead / Solution Architect",
     "dates": "2010–2015",
-    "location": "",
+      "location": "Troy, MI",
     "bullets": [
       "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
       "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
