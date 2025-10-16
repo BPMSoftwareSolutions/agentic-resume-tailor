@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sidney Jones - Resume</title>
+  <meta name="description" content="Professional resume generated with hybrid HTML+SVG approach">
+  <meta name="generator" content="SVG Lab Hybrid Resume Generator">
+  <meta name="theme" content="creative">
+  <style>
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #ffffff;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.resume-container {
+  width: 1200px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout Styles */
+.header {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.section {
+  padding: 25px 40px;
+  margin-top: 25px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.skills-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.experience-left {
+  flex: 1;
+}
+
+.experience-right {
+  text-align: right;
+}
+
+/* Typography Styles */
+.personal-info h1 {
+  font-size: 38px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #fce7f3;
+}
+
+.section-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ec4899;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #ec4899;
+}
+
+.subsection-heading {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 15px;
+}
+
+.summary-text {
+  font-size: 14px;
+  color: #1f2937;
+  text-align: justify;
+  line-height: 1.8;
+}
+
+.bullet-text {
+  font-size: 14px;
+  color: #1f2937;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.contact-item {
+  font-size: 12px;
+  color: #fce7f3;
+  margin-bottom: 5px;
+}
+
+/* Component Styles */
+.contact-info {
+  margin-top: 20px;
+}
+
+.skill-category {
+  margin-bottom: 12px;
+}
+
+.skill-label {
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.skill-value {
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.expertise-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.expertise-item {
+  font-size: 12px;
+  color: #1f2937;
+  padding-left: 20px;
+  position: relative;
+}
+
+.expertise-item::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+}
+
+.experience-item {
+  margin-bottom: 30px;
+}
+
+.employer {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.role {
+  font-size: 14px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.location,
+.dates {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.bullet-item {
+  margin-bottom: 15px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.bullet-item::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: #8b5cf620;
+  color: #7c3aed;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid #8b5cf640;
+}
+
+.education-item {
+  margin-bottom: 15px;
+}
+
+.degree {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.institution {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.certifications {
+  margin-top: 20px;
+}
+
+.certification-item {
+  font-size: 12px;
+  color: #1f2937;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.certification-item::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #ec4899;
+  font-weight: bold;
+}
+
+/* Print Styles */
+@media print {
+  @page {
+    margin: 0;
+    size: letter;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .resume-container {
+    width: 100%;
+    box-shadow: none;
+    margin: 0;
+  }
+  
+  .section {
+    page-break-inside: avoid;
+  }
+  
+  .experience-item {
+    page-break-inside: avoid;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="resume-container">
+    <div class="header" data-section="header">
+      <svg class="header-bg" viewBox="0 0 1200 220" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ec4899" />
+            <stop offset="100%" style="stop-color:#f59e0b" />
+          </linearGradient>
+        </defs>
+        <rect x="0" y="0" width="1200" height="220" fill="url(#headerGrad)" />
+      </svg>
+      <div class="header-content">
+        <div class="personal-info" data-section="personal_info">
+          <h1 data-field="name">Sidney Jones</h1>
+          <div class="title" data-field="title">Lead Software Engineer — AI</div>
+        </div>
+        <div class="contact-info" data-section="contact_info">
+          <div class="contact-item" data-field="location">West Bloomfield, MI</div>
+          <div class="contact-item" data-field="email">sjones@bpmsoftwaresolutions.com</div>
+          <div class="contact-item" data-field="phone">(248) 802-1847</div>
+        </div>
+      </div>
+    </div>
+    <section class="section" data-section="summary">
+      <h2 class="section-heading">PROFESSIONAL SUMMARY</h2>
+      <p class="summary-text" data-field="summary_text">Senior engineering leader focused on building production-grade AI platforms and services. Track record delivering scalable backend systems, LLM integration and orchestration, retrieval-augmented applications, and CI/CD-driven delivery on AWS. Experienced with Python, FastAPI, Postgres, Terraform, and observability to drive safe, performant ML-enabled features into production.</p>
+    </section>
+    <section class="section" data-section="skills">
+      <h2 class="section-heading">CORE COMPETENCIES</h2>
+      <div class="two-column">
+        <div class="skills-column" data-section="technical_proficiencies">
+          <h3 class="subsection-heading">TECHNICAL PROFICIENCIES</h3>
+          <div class="skill-category" data-category="core_languages">
+            <div class="skill-label">CORE LANGUAGES:</div>
+            <div class="skill-value">Python, Java, C#, SQL, JavaScript (React, Node.js)</div>
+          </div>
+          <div class="skill-category" data-category="frameworks">
+            <div class="skill-label">FRAMEWORKS:</div>
+            <div class="skill-value">FastAPI, Flask, Spring Boot, .NET Core</div>
+          </div>
+          <div class="skill-category" data-category="cloud_devops">
+            <div class="skill-label">CLOUD DEVOPS:</div>
+            <div class="skill-value">AWS (Lambda, API Gateway, S3, DynamoDB), Azure Functions, Azure DevOps, Terraform, GitHub Actions, Jenkins, Docker, Kubernetes</div>
+          </div>
+          <div class="skill-category" data-category="ai_ml_integration">
+            <div class="skill-label">AI ML INTEGRATION:</div>
+            <div class="skill-value">LLM Orchestration (OpenAI, Anthropic), Agentic AI Design, MLOps, Data Pipelines, AI Observability</div>
+          </div>
+          <div class="skill-category" data-category="security_compliance">
+            <div class="skill-label">SECURITY COMPLIANCE:</div>
+            <div class="skill-value">AES-256, KeeperSecurity, DevSecOps, Role-Based Access Control</div>
+          </div>
+        </div>
+        <div class="skills-column" data-section="areas_of_expertise">
+          <h3 class="subsection-heading">AREAS OF EXPERTISE</h3>
+          <ul class="expertise-list">
+            <li class="expertise-item" data-item="0">AI Platform Development</li>
+            <li class="expertise-item" data-item="1">LLM Integration & Orchestration</li>
+            <li class="expertise-item" data-item="2">Retrieval Systems & Vector Search</li>
+            <li class="expertise-item" data-item="3">Backend Architecture & APIs</li>
+            <li class="expertise-item" data-item="4">Infrastructure as Code & DevOps</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section" data-section="experience">
+      <h2 class="section-heading">PROFESSIONAL EXPERIENCE</h2>
+      <div class="experience-item" data-position="0" data-company="cgi_–_daugherty___edward_jones">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">CGI – Daugherty / Edward Jones</div>
+            <div class="role" data-field="role">Principal Consultant / Platform Team Delivery Lead – Digital Client Experience (2021–2024, St. Louis, MO)</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">St. Louis, MO</div>
+            <div class="dates" data-field="dates">2021–2024</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Modernized enterprise “Online Access” platform, transitioning from legacy monoliths to microservices and micro-frontends in Java, Python, and AWS, improving scalability and team autonomy.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Built AI-ready service infrastructure to support natural language and recommendation workflows, integrating RESTful APIs with LLM orchestration layers for future AI-driven client insights.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Designed end-to-end CI/CD pipelines in Azure DevOps with Terraform and Jenkins to automate build, test, and deployment for over 13 Agile teams, enabling 50 % faster release cycles.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Established observability and feedback systems (Dynatrace, Splunk) with event-driven alerting to monitor API performance, latency, and AI model output quality.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Championed trunk-based development and feature-flag deployment strategies for faster iteration and safe rollout of AI-powered features.</div>
+        </div>
+        <div class="bullet-item" data-bullet="5">
+          <div class="bullet-text">Mentored platform engineers and architects in continuous delivery, domain-driven design, and data-driven experimentation across multiple delivery trains.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="python">Python</span>
+          <span class="tag" data-tag="java">Java</span>
+          <span class="tag" data-tag="rest_api">REST API</span>
+          <span class="tag" data-tag="fastapi">FastAPI</span>
+          <span class="tag" data-tag="aws">AWS</span>
+          <span class="tag" data-tag="terraform">Terraform</span>
+          <span class="tag" data-tag="azure_devops">Azure DevOps</span>
+          <span class="tag" data-tag="ci_cd">CI/CD</span>
+          <span class="tag" data-tag="trunk_based_development">Trunk-Based Development</span>
+          <span class="tag" data-tag="feature_flags">Feature Flags</span>
+          <span class="tag" data-tag="llm_integration">LLM Integration</span>
+          <span class="tag" data-tag="microservices">Microservices</span>
+          <span class="tag" data-tag="observability">Observability</span>
+          <span class="tag" data-tag="leadership">Leadership</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="1" data-company="daugherty_–_cox_communications">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Daugherty – Cox Communications</div>
+            <div class="role" data-field="role">Platform Architect – Cloud Infrastructure & Automation</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">St. Louis, MO</div>
+            <div class="dates" data-field="dates">2021–2024</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Architected and deployed AI-driven backend services in AWS Lambda and API Gateway, integrating predictive analytics APIs and dynamic content pipelines.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Implemented Terraform-based IaC modules to manage scalable compute, storage, and event infrastructure supporting AI model execution and data ingestion.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Integrated KeeperSecurity-managed AES-256 encryption for secure handling of model tokens, embeddings, and PII, aligning with enterprise DevSecOps standards.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Developed GitHub Actions pipelines with linting, IaC validation, and automated security scans, achieving 100 % environment parity between staging and production.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Collaborated with data-science teams to productize ML inference endpoints into deployable APIs and automate retraining cycles through CI/CD orchestration.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="aws_lambda">AWS Lambda</span>
+          <span class="tag" data-tag="api_gateway">API Gateway</span>
+          <span class="tag" data-tag="terraform">Terraform</span>
+          <span class="tag" data-tag="github_actions">GitHub Actions</span>
+          <span class="tag" data-tag="python">Python</span>
+          <span class="tag" data-tag="fastapi">FastAPI</span>
+          <span class="tag" data-tag="keepersecurity">KeeperSecurity</span>
+          <span class="tag" data-tag="aes_256">AES-256</span>
+          <span class="tag" data-tag="devsecops">DevSecOps</span>
+          <span class="tag" data-tag="data_pipelines">Data Pipelines</span>
+          <span class="tag" data-tag="ai_integration">AI Integration</span>
+          <span class="tag" data-tag="ml_ops">ML Ops</span>
+          <span class="tag" data-tag="ci_cd_automation">CI/CD Automation</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="2" data-company="bpm_software_solutions">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">BPM Software Solutions</div>
+            <div class="role" data-field="role">Senior Software Architect / Engineering Lead</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">West Bloomfield, MI</div>
+            <div class="dates" data-field="dates">2017–2021</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Led cloud-first modernization for analytics and automation clients, deploying data and AI platforms on Azure & AWS with serverless microservices and secure data APIs.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Designed and implemented LLM-powered orchestration systems for business automation (RenderX platform), combining Python agents, event pipelines, and plugin-based AI extensibility.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Built AI-driven ETL and RPA pipelines for financial and healthcare systems using Python, Selenium, and SQL—automating eligibility, payroll, and compliance workflows.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Productized data-intensive backend services (FastAPI, Flask) supporting millions of records per day, optimized via Docker and Kubernetes-based CI/CD pipelines.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Implemented Infrastructure-as-Code (Terraform) and automated observability (Azure Monitor, CloudWatch) to provide predictive analytics on system performance and AI throughput.</div>
+        </div>
+        <div class="bullet-item" data-bullet="5">
+          <div class="bullet-text">Mentored engineers and clients on AI integration patterns, model observability, and continuous experimentation frameworks.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="python">Python</span>
+          <span class="tag" data-tag="fastapi">FastAPI</span>
+          <span class="tag" data-tag="flask">Flask</span>
+          <span class="tag" data-tag="ai_agents">AI Agents</span>
+          <span class="tag" data-tag="llm_integration">LLM Integration</span>
+          <span class="tag" data-tag="etl_pipelines">ETL Pipelines</span>
+          <span class="tag" data-tag="rpa">RPA</span>
+          <span class="tag" data-tag="azure">Azure</span>
+          <span class="tag" data-tag="aws">AWS</span>
+          <span class="tag" data-tag="terraform">Terraform</span>
+          <span class="tag" data-tag="kubernetes">Kubernetes</span>
+          <span class="tag" data-tag="docker">Docker</span>
+          <span class="tag" data-tag="data_security">Data Security</span>
+          <span class="tag" data-tag="observability">Observability</span>
+          <span class="tag" data-tag="leadership">Leadership</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="3" data-company="interactive_business_solutions">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Interactive Business Solutions</div>
+            <div class="role" data-field="role">Senior Software Engineering Consultant</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Troy, MI</div>
+            <div class="dates" data-field="dates">2016–2017</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Developed web-based financial and compliance applications integrating Salesforce, AWS, and internal data systems.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Established CI/CD pipelines with automated testing and trunk-based branching, reducing manual deployment steps by > 60 %.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Mentored junior developers on modern DevOps, continuous testing, and microservice decomposition.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="python">Python</span>
+          <span class="tag" data-tag="aws">AWS</span>
+          <span class="tag" data-tag="salesforce_apis">Salesforce APIs</span>
+          <span class="tag" data-tag="ci_cd">CI/CD</span>
+          <span class="tag" data-tag="trunk_based_development">Trunk-Based Development</span>
+          <span class="tag" data-tag="agile_leadership">Agile Leadership</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="4" data-company="soave_enterprises">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Soave Enterprises</div>
+            <div class="role" data-field="role">Technology Manager / Software Architect</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Detroit, MI</div>
+            <div class="dates" data-field="dates">2015 – 2016</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Directed modernization of corporate IT across 25 U.S. locations, designing a hybrid AWS EC2 cloud architecture and automating deployments through early DevOps pipelines.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Introduced Infrastructure-as-Code and configuration automation for ERP subsystems, enabling consistent builds and reducing release time from days to hours.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Unified eight disparate ERP systems using MVVM and service-oriented design, consolidating operations under a single enterprise application.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Partnered with network engineering to redesign server infrastructure and implement proactive monitoring, reducing IT costs by $250 K annually.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Established branching and integration practices that later evolved into full trunk-based development across distributed teams.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="aws_ec2">AWS EC2</span>
+          <span class="tag" data-tag="hybrid_cloud">Hybrid Cloud</span>
+          <span class="tag" data-tag="infrastructure_modernization">Infrastructure Modernization</span>
+          <span class="tag" data-tag="ci_cd">CI/CD</span>
+          <span class="tag" data-tag="devops">DevOps</span>
+          <span class="tag" data-tag="iac">IaC</span>
+          <span class="tag" data-tag="erp_integration">ERP Integration</span>
+          <span class="tag" data-tag="automation">Automation</span>
+          <span class="tag" data-tag="agile_leadership">Agile Leadership</span>
+          <span class="tag" data-tag="cost_optimization">Cost Optimization</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="5" data-company="john_deere_landscapes">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">John Deere Landscapes</div>
+            <div class="role" data-field="role">Software Development Lead / Solution Architect</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Troy, MI</div>
+            <div class="dates" data-field="dates">2010 – 2015</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Led modernization of the enterprise-scale ERP system supporting 400+ retail sites across North America, establishing one of the company’s first automated build and test pipelines.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Introduced continuous integration and unit-test enforcement, paving the way for trunk-based development years before mainstream DevOps adoption.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Architected Wells Fargo Level III–certified payment microservices, processing $1 M+ in daily settlements and generating over $500 K in annual savings through secure, low-latency transaction automation.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Migrated ERP modules to Microsoft Dynamics AX 2012 R2, modularizing procurement, logistics, and accounting components into independently deployable services.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Mentored distributed teams on code quality, release automation, and early CI/CD concepts, cultivating a delivery-first engineering culture.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="c">C#</span>
+          <span class="tag" data-tag="_net">.NET</span>
+          <span class="tag" data-tag="microsoft_dynamics_ax">Microsoft Dynamics AX</span>
+          <span class="tag" data-tag="ci_cd">CI/CD</span>
+          <span class="tag" data-tag="trunk_based_development">Trunk-Based Development</span>
+          <span class="tag" data-tag="payment_systems">Payment Systems</span>
+          <span class="tag" data-tag="microservices">Microservices</span>
+          <span class="tag" data-tag="enterprise_architecture">Enterprise Architecture</span>
+          <span class="tag" data-tag="automation_leadership">Automation Leadership</span>
+          <span class="tag" data-tag="tdd">TDD</span>
+          <span class="tag" data-tag="sql_server">SQL Server</span>
+        </div>
+      </div>
+      <div class="experience-item" data-position="6" data-company="compuware">
+        <div class="experience-header">
+          <div class="experience-left">
+            <div class="employer" data-field="employer">Compuware</div>
+            <div class="role" data-field="role">Senior Software Developer</div>
+          </div>
+          <div class="experience-right">
+            <div class="location" data-field="location">Detroit, MI</div>
+            <div class="dates" data-field="dates">2006 – 2010</div>
+          </div>
+        </div>
+        <div class="bullet-item" data-bullet="0">
+          <div class="bullet-text">Engineered enterprise-scale QA automation and load-testing frameworks (QALoad, QADirector) used by clients such as Ford, GM, and Blue Cross, standardizing test execution across distributed systems.</div>
+        </div>
+        <div class="bullet-item" data-bullet="1">
+          <div class="bullet-text">Developed E2E automation frameworks in C++ and Java that integrated performance testing directly into the earliest DevOps pipelines.</div>
+        </div>
+        <div class="bullet-item" data-bullet="2">
+          <div class="bullet-text">Automated defect-tracking and regression testing processes, increasing release velocity and reliability for large-scale automotive and healthcare platforms.</div>
+        </div>
+        <div class="bullet-item" data-bullet="3">
+          <div class="bullet-text">Created internal performance benchmarking utilities that evolved into global commercial QA products, improving observability and continuous feedback for engineering teams.</div>
+        </div>
+        <div class="bullet-item" data-bullet="4">
+          <div class="bullet-text">Collaborated across dev, QA, and product teams to institutionalize continuous testing culture that predated modern CI/CD adoption.</div>
+        </div>
+        <div class="tags">
+          <span class="tag" data-tag="qa_automation">QA Automation</span>
+          <span class="tag" data-tag="performance_testing">Performance Testing</span>
+          <span class="tag" data-tag="e2e_frameworks">E2E Frameworks</span>
+          <span class="tag" data-tag="c++">C++</span>
+          <span class="tag" data-tag="java">Java</span>
+          <span class="tag" data-tag="devops">DevOps</span>
+          <span class="tag" data-tag="continuous_testing">Continuous Testing</span>
+          <span class="tag" data-tag="scalability">Scalability</span>
+          <span class="tag" data-tag="enterprise_software">Enterprise Software</span>
+          <span class="tag" data-tag="agile_practices">Agile Practices</span>
+        </div>
+      </div>
+    </section>
+    <section class="section" data-section="education">
+      <h2 class="section-heading">EDUCATION & CERTIFICATIONS</h2>
+      <div class="education-item" data-position="0">
+        <div class="degree" data-field="degree">Bachelor of Technology</div>
+        <div class="institution" data-field="institution">University of Phoenix • Troy, MI • </div>
+      </div>
+      <div class="education-item" data-position="1">
+        <div class="degree" data-field="degree">Software Engineering Certification</div>
+        <div class="institution" data-field="institution">McGraw-Hill • Washington, DC • </div>
+      </div>
+      <div class="certifications" data-section="certifications">
+        <h3 class="subsection-heading">Certifications</h3>
+        <div class="certification-item" data-position="0">SAFe 5 Certified DevOps Practitioner (SAFe by Scaled Agile, Inc., Jan 2023)</div>
+        <div class="certification-item" data-position="1">SAFe 5 Certified - Advanced Scrum Master (SASM) (SAFe by Scaled Agile, Inc., Dec 2022)</div>
+        <div class="certification-item" data-position="2">ICAgile Certified Professional - Agile Team Facilitation (ICAgile, Oct 2022)</div>
+        <div class="certification-item" data-position="3">ICAgile Certified Professional - Foundations of DevOps (ICAgile, Oct 2022)</div>
+        <div class="certification-item" data-position="4">Agile Project and Delivery Management (ICAgile, Sep 2022)</div>
+        <div class="certification-item" data-position="5">ICAgile Certified Professional - Business Agility Foundations (ICAgile, Aug 2022)</div>
+        <div class="certification-item" data-position="6">Professional Scrum Master™ I (PSM I) (Scrum.org, May 2022)</div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
