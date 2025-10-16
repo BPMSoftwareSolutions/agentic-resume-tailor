@@ -252,8 +252,8 @@
     "id": "27ce6038-db0c-4d44-9d28-0f1d3a334377",
     "employer": "Edward Jones",
     "role": "Senior Application Architect / Platform Team Delivery Lead",
-    "dates": "2021–2024",
-    "location": "",
+    "dates": "2022–2024",
+    "location": "St. Louis, MO",
     "bullets": [
       "Led modernization of Edward Jones’ enterprise *Online Access* platform, **transitioning from legacy monoliths to microservices and micro-frontends** using **Java, Python, and AWS**.",
       "Directed **cross-functional teams (web, mobile, API, mainframe)** across multiple delivery trains, implementing **continuous delivery pipelines** that reduced release time by 50%.",
@@ -284,7 +284,7 @@
     "employer": "BPM Software Solutions",
     "role": "Senior Software Architect / Engineering Lead",
     "dates": "2017–2021",
-    "location": "",
+    "location": "West Bloomfield, MI",
     "bullets": [
       "Spearheaded **cloud-first modernization initiatives** for financial and healthcare clients, transitioning legacy ERP and reporting systems to **Azure and AWS** platforms.",
       "Designed and implemented **scalable, distributed architectures** using **Python, Node.js, React, and serverless components**, aligning engineering outcomes with business KPIs.",
@@ -314,7 +314,7 @@
     "employer": "Interactive Business Solutions",
     "role": "Senior Software Engineering Consultant",
     "dates": "2016–2017",
-    "location": "",
+    "location": "Troy, MI",
     "bullets": [
       "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
       "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
@@ -341,7 +341,7 @@
     "employer": "Soave Enterprises",
     "role": "Technology Manager / Software Architect",
     "dates": "2015–2016",
-    "location": "",
+    "location": "Detroit, MI",
     "bullets": [
       "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
       "Introduced **DevOps and CI/CD pipelines**, automating release workflows and infrastructure provisioning.",
@@ -453,7 +453,7 @@
     "employer": "CGI – Daugherty / Edward Jones",
     "role": "Principal Consultant / Platform Team Delivery Lead – Digital Client Experience",
     "dates": "2021–2024",
-    "location": "",
+    "location": "St. Louis, MO",
     "bullets": [
       "Led modernization of the Online Access platform, transitioning from monolithic architecture to cloud-native microservices and micro-frontends using Java, Spring Boot, and Angular.",
       "Drove CI/CD platform maturity, evolving Azure DevOps pipelines into trunk-based development workflows supporting 13 Agile teams across web, API, mobile, and mainframe domains.",
@@ -481,8 +481,8 @@
     "id": "1ff0286e-68d3-43f6-929f-30c4ea3bc936",
     "employer": "Daugherty – Cox Communications",
     "role": "Platform Architect – Cloud Infrastructure & Automation",
-    "dates": "2023–2024",
-    "location": "",
+    "dates": "2021–2024",
+    "location": "St. Louis, MO",
     "bullets": [
       "Architected and deployed CI/CD pipelines in GitHub Actions for API Gateway and AWS Lambda microservices using Terraform-based IaC modules.",
       "Transitioned teams from manual staging branches to trunk-based continuous integration, integrating linting, IaC validation, and security scans into the mainline workflow.",

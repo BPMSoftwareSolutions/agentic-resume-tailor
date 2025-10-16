@@ -1,0 +1,757 @@
+{
+  "sql": {
+    "label": "SQL",
+    "category": "technology",
+    "synonyms": []
+  },
+  "aws": {
+    "label": "AWS",
+    "category": "technology",
+    "synonyms": []
+  },
+  "cloudwatch": {
+    "label": "CloudWatch",
+    "category": "technology",
+    "synonyms": []
+  },
+  "azure-functions": {
+    "label": "Azure Functions",
+    "category": "technology",
+    "synonyms": []
+  },
+  "react": {
+    "label": "React",
+    "category": "technology",
+    "synonyms": []
+  },
+  "nodejs": {
+    "label": "NodeJS",
+    "category": "technology",
+    "synonyms": []
+  },
+  "nosql": {
+    "label": "NoSQL",
+    "category": "technology",
+    "synonyms": []
+  },
+  "java": {
+    "label": "Java",
+    "category": "technology",
+    "synonyms": []
+  },
+  "azure": {
+    "label": "Azure",
+    "category": "technology",
+    "synonyms": []
+  },
+  "jenkins": {
+    "label": "Jenkins",
+    "category": "technology",
+    "synonyms": []
+  },
+  "docker": {
+    "label": "Docker",
+    "category": "technology",
+    "synonyms": []
+  },
+  "kubernetes": {
+    "label": "Kubernetes",
+    "category": "technology",
+    "synonyms": []
+  },
+  "sftp": {
+    "label": "SFTP",
+    "category": "skill",
+    "synonyms": []
+  },
+  "etl": {
+    "label": "ETL",
+    "category": "skill",
+    "synonyms": []
+  },
+  "paylocity": {
+    "label": "Paylocity",
+    "category": "skill",
+    "synonyms": []
+  },
+  "ai": {
+    "label": "AI",
+    "category": "skill",
+    "synonyms": []
+  },
+  "voc": {
+    "label": "VOC",
+    "category": "skill",
+    "synonyms": []
+  },
+  "selenium": {
+    "label": "Selenium",
+    "category": "skill",
+    "synonyms": []
+  },
+  "rpa": {
+    "label": "RPA",
+    "category": "skill",
+    "synonyms": []
+  },
+  "llm": {
+    "label": "LLM",
+    "category": "skill",
+    "synonyms": []
+  },
+  "stripe": {
+    "label": "Stripe",
+    "category": "skill",
+    "synonyms": []
+  },
+  "paypal": {
+    "label": "PayPal",
+    "category": "skill",
+    "synonyms": []
+  },
+  "architecture": {
+    "label": "Architecture",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cloud": {
+    "label": "Cloud",
+    "category": "skill",
+    "synonyms": []
+  },
+  "tpa": {
+    "label": "TPA",
+    "category": "skill",
+    "synonyms": []
+  },
+  "net": {
+    "label": ".NET",
+    "category": "skill",
+    "synonyms": []
+  },
+  "integration": {
+    "label": "Integration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "claims": {
+    "label": "Claims",
+    "category": "skill",
+    "synonyms": []
+  },
+  "healthcare": {
+    "label": "Healthcare",
+    "category": "skill",
+    "synonyms": []
+  },
+  "saas": {
+    "label": "SaaS",
+    "category": "skill",
+    "synonyms": []
+  },
+  "portal": {
+    "label": "Portal",
+    "category": "skill",
+    "synonyms": []
+  },
+  "scale": {
+    "label": "Scale",
+    "category": "skill",
+    "synonyms": []
+  },
+  "orchestration": {
+    "label": "Orchestration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "plugin": {
+    "label": "Plugin",
+    "category": "skill",
+    "synonyms": []
+  },
+  "json": {
+    "label": "JSON",
+    "category": "skill",
+    "synonyms": []
+  },
+  "real-estate": {
+    "label": "Real Estate",
+    "category": "skill",
+    "synonyms": []
+  },
+  "automation": {
+    "label": "Automation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "bi": {
+    "label": "BI",
+    "category": "skill",
+    "synonyms": []
+  },
+  "erp": {
+    "label": "ERP",
+    "category": "skill",
+    "synonyms": []
+  },
+  "open-source": {
+    "label": "Open Source",
+    "category": "skill",
+    "synonyms": []
+  },
+  "demo": {
+    "label": "Demo",
+    "category": "skill",
+    "synonyms": []
+  },
+  "innovation": {
+    "label": "Innovation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "agile": {
+    "label": "Agile",
+    "category": "skill",
+    "synonyms": []
+  },
+  "tdd": {
+    "label": "TDD",
+    "category": "skill",
+    "synonyms": []
+  },
+  "ci-cd": {
+    "label": "CI/CD",
+    "category": "skill",
+    "synonyms": []
+  },
+  "leadership": {
+    "label": "Leadership",
+    "category": "skill",
+    "synonyms": []
+  },
+  "terraform": {
+    "label": "Terraform",
+    "category": "skill",
+    "synonyms": []
+  },
+  "sql-server": {
+    "label": "SQL Server",
+    "category": "skill",
+    "synonyms": []
+  },
+  "python": {
+    "label": "Python",
+    "category": "technology",
+    "synonyms": []
+  },
+  "lambda": {
+    "label": "Lambda",
+    "category": "technology",
+    "synonyms": []
+  },
+  "ec2": {
+    "label": "EC2",
+    "category": "technology",
+    "synonyms": []
+  },
+  "flask": {
+    "label": "Flask",
+    "category": "technology",
+    "synonyms": []
+  },
+  "sqlalchemy": {
+    "label": "SQLAlchemy",
+    "category": "technology",
+    "synonyms": []
+  },
+  "financial-reporting": {
+    "label": "Financial Reporting",
+    "category": "skill",
+    "synonyms": []
+  },
+  "dashboards": {
+    "label": "Dashboards",
+    "category": "skill",
+    "synonyms": []
+  },
+  "reporting": {
+    "label": "Reporting",
+    "category": "skill",
+    "synonyms": []
+  },
+  "business-intelligence": {
+    "label": "Business Intelligence",
+    "category": "skill",
+    "synonyms": []
+  },
+  "error-tracking": {
+    "label": "Error Tracking",
+    "category": "skill",
+    "synonyms": []
+  },
+  "microservices": {
+    "label": "Microservices",
+    "category": "skill",
+    "synonyms": []
+  },
+  "apis": {
+    "label": "APIs",
+    "category": "skill",
+    "synonyms": []
+  },
+  "financial-origination": {
+    "label": "Financial Origination",
+    "category": "skill",
+    "synonyms": []
+  },
+  "servicing": {
+    "label": "Servicing",
+    "category": "skill",
+    "synonyms": []
+  },
+  "modular": {
+    "label": "Modular",
+    "category": "skill",
+    "synonyms": []
+  },
+  "scalable": {
+    "label": "Scalable",
+    "category": "skill",
+    "synonyms": []
+  },
+  "deployments": {
+    "label": "Deployments",
+    "category": "skill",
+    "synonyms": []
+  },
+  "rollback-automation": {
+    "label": "Rollback Automation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "event-driven": {
+    "label": "Event-driven",
+    "category": "skill",
+    "synonyms": []
+  },
+  "integrations": {
+    "label": "Integrations",
+    "category": "skill",
+    "synonyms": []
+  },
+  "payroll": {
+    "label": "Payroll",
+    "category": "skill",
+    "synonyms": []
+  },
+  "payment-systems": {
+    "label": "Payment Systems",
+    "category": "skill",
+    "synonyms": []
+  },
+  "high-volume": {
+    "label": "High-volume",
+    "category": "skill",
+    "synonyms": []
+  },
+  "transaction-processing": {
+    "label": "Transaction Processing",
+    "category": "skill",
+    "synonyms": []
+  },
+  "encryption": {
+    "label": "Encryption",
+    "category": "skill",
+    "synonyms": []
+  },
+  "security": {
+    "label": "Security",
+    "category": "skill",
+    "synonyms": []
+  },
+  "aes-256": {
+    "label": "AES-256",
+    "category": "skill",
+    "synonyms": []
+  },
+  "keeper-security-manager": {
+    "label": "Keeper Security Manager",
+    "category": "skill",
+    "synonyms": []
+  },
+  "data-protection": {
+    "label": "Data Protection",
+    "category": "skill",
+    "synonyms": []
+  },
+  "compliance": {
+    "label": "Compliance",
+    "category": "skill",
+    "synonyms": []
+  },
+  "mentoring": {
+    "label": "Mentoring",
+    "category": "skill",
+    "synonyms": []
+  },
+  "development-standards": {
+    "label": "Development Standards",
+    "category": "skill",
+    "synonyms": []
+  },
+  "code-reviews": {
+    "label": "Code Reviews",
+    "category": "skill",
+    "synonyms": []
+  },
+  "unit-testing": {
+    "label": "Unit Testing",
+    "category": "skill",
+    "synonyms": []
+  },
+  "feature-decomposition": {
+    "label": "Feature Decomposition",
+    "category": "skill",
+    "synonyms": []
+  },
+  "c": {
+    "label": "C++",
+    "category": "technology",
+    "synonyms": []
+  },
+  "aws-iot": {
+    "label": "AWS IoT",
+    "category": "technology",
+    "synonyms": []
+  },
+  "hardware-integration": {
+    "label": "Hardware Integration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "real-time-data": {
+    "label": "Real-time Data",
+    "category": "skill",
+    "synonyms": []
+  },
+  "control-systems": {
+    "label": "Control Systems",
+    "category": "skill",
+    "synonyms": []
+  },
+  "event-driven-microservices": {
+    "label": "Event-driven Microservices",
+    "category": "skill",
+    "synonyms": []
+  },
+  "can-bus": {
+    "label": "CAN Bus",
+    "category": "skill",
+    "synonyms": []
+  },
+  "linux": {
+    "label": "Linux",
+    "category": "skill",
+    "synonyms": []
+  },
+  "embedded-integration": {
+    "label": "Embedded Integration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "secure-file-transfer": {
+    "label": "Secure File Transfer",
+    "category": "skill",
+    "synonyms": []
+  },
+  "telemetry": {
+    "label": "Telemetry",
+    "category": "skill",
+    "synonyms": []
+  },
+  "ecu-data-logging": {
+    "label": "ECU Data Logging",
+    "category": "skill",
+    "synonyms": []
+  },
+  "key-management": {
+    "label": "Key Management",
+    "category": "skill",
+    "synonyms": []
+  },
+  "ota-security": {
+    "label": "OTA Security",
+    "category": "skill",
+    "synonyms": []
+  },
+  "modular-design": {
+    "label": "Modular Design",
+    "category": "skill",
+    "synonyms": []
+  },
+  "autosar": {
+    "label": "AUTOSAR",
+    "category": "skill",
+    "synonyms": []
+  },
+  "component-design": {
+    "label": "Component Design",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cloud-modernization": {
+    "label": "Cloud Modernization",
+    "category": "skill",
+    "synonyms": []
+  },
+  "agile-transformation": {
+    "label": "Agile Transformation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "devops": {
+    "label": "DevOps",
+    "category": "skill",
+    "synonyms": []
+  },
+  "architecture-governance": {
+    "label": "Architecture Governance",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cloud-architecture": {
+    "label": "Cloud Architecture",
+    "category": "skill",
+    "synonyms": []
+  },
+  "node-js": {
+    "label": "Node.js",
+    "category": "skill",
+    "synonyms": []
+  },
+  "devops-coaching": {
+    "label": "DevOps Coaching",
+    "category": "skill",
+    "synonyms": []
+  },
+  "api-integration": {
+    "label": "API Integration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cloud-migration": {
+    "label": "Cloud Migration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "agile-leadership": {
+    "label": "Agile Leadership",
+    "category": "skill",
+    "synonyms": []
+  },
+  "full-stack-development": {
+    "label": "Full-Stack Development",
+    "category": "skill",
+    "synonyms": []
+  },
+  "saas-integration": {
+    "label": "SaaS Integration",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cloud-transformation": {
+    "label": "Cloud Transformation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "infrastructure-modernization": {
+    "label": "Infrastructure Modernization",
+    "category": "skill",
+    "synonyms": []
+  },
+  "devops-leadership": {
+    "label": "DevOps Leadership",
+    "category": "skill",
+    "synonyms": []
+  },
+  "aws-ec2": {
+    "label": "AWS EC2",
+    "category": "skill",
+    "synonyms": []
+  },
+  "strategic-planning": {
+    "label": "Strategic Planning",
+    "category": "skill",
+    "synonyms": []
+  },
+  "enterprise-architecture": {
+    "label": "Enterprise Architecture",
+    "category": "skill",
+    "synonyms": []
+  },
+  "erp-modernization": {
+    "label": "ERP Modernization",
+    "category": "skill",
+    "synonyms": []
+  },
+  "cross-functional-leadership": {
+    "label": "Cross-Functional Leadership",
+    "category": "skill",
+    "synonyms": []
+  },
+  "continuous-improvement": {
+    "label": "Continuous Improvement",
+    "category": "skill",
+    "synonyms": []
+  },
+  "microsoft-dynamics-ax": {
+    "label": "Microsoft Dynamics AX",
+    "category": "skill",
+    "synonyms": []
+  },
+  "embedded-systems": {
+    "label": "Embedded Systems",
+    "category": "skill",
+    "synonyms": []
+  },
+  "vehicle-diagnostics": {
+    "label": "Vehicle Diagnostics",
+    "category": "skill",
+    "synonyms": []
+  },
+  "data-driven-architecture": {
+    "label": "Data-Driven Architecture",
+    "category": "skill",
+    "synonyms": []
+  },
+  "ecm-communication": {
+    "label": "ECM Communication",
+    "category": "skill",
+    "synonyms": []
+  },
+  "j1850": {
+    "label": "J1850",
+    "category": "skill",
+    "synonyms": []
+  },
+  "j1939": {
+    "label": "J1939",
+    "category": "skill",
+    "synonyms": []
+  },
+  "can": {
+    "label": "CAN",
+    "category": "skill",
+    "synonyms": []
+  },
+  "iso-protocols": {
+    "label": "ISO Protocols",
+    "category": "skill",
+    "synonyms": []
+  },
+  "c-c": {
+    "label": "C/C++",
+    "category": "skill",
+    "synonyms": []
+  },
+  "automotive-innovation": {
+    "label": "Automotive Innovation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "qa-automation": {
+    "label": "QA Automation",
+    "category": "skill",
+    "synonyms": []
+  },
+  "performance-testing": {
+    "label": "Performance Testing",
+    "category": "skill",
+    "synonyms": []
+  },
+  "e2e-frameworks": {
+    "label": "E2E Frameworks",
+    "category": "skill",
+    "synonyms": []
+  },
+  "enterprise-software": {
+    "label": "Enterprise Software",
+    "category": "skill",
+    "synonyms": []
+  },
+  "automotive-and-healthcare-clients": {
+    "label": "Automotive and Healthcare Clients",
+    "category": "skill",
+    "synonyms": []
+  },
+  "azure-devops": {
+    "label": "Azure DevOps",
+    "category": "skill",
+    "synonyms": []
+  },
+  "sonarqube": {
+    "label": "SonarQube",
+    "category": "skill",
+    "synonyms": []
+  },
+  "eslint": {
+    "label": "ESLint",
+    "category": "skill",
+    "synonyms": []
+  },
+  "dynatrace": {
+    "label": "Dynatrace",
+    "category": "skill",
+    "synonyms": []
+  },
+  "spring-boot": {
+    "label": "Spring Boot",
+    "category": "skill",
+    "synonyms": []
+  },
+  "angular": {
+    "label": "Angular",
+    "category": "skill",
+    "synonyms": []
+  },
+  "aws-lambda": {
+    "label": "AWS Lambda",
+    "category": "skill",
+    "synonyms": []
+  },
+  "api-gateway": {
+    "label": "API Gateway",
+    "category": "skill",
+    "synonyms": []
+  },
+  "github-actions": {
+    "label": "GitHub Actions",
+    "category": "skill",
+    "synonyms": []
+  },
+  "keepersecurity": {
+    "label": "KeeperSecurity",
+    "category": "skill",
+    "synonyms": []
+  },
+  "fastapi": {
+    "label": "FastAPI",
+    "category": "technology",
+    "synonyms": []
+  },
+  "postgresql": {
+    "label": "PostgreSQL",
+    "category": "technology",
+    "synonyms": []
+  },
+  "opensearch": {
+    "label": "OpenSearch",
+    "category": "technology",
+    "synonyms": []
+  },
+  "rag": {
+    "label": "RAG",
+    "category": "technology",
+    "synonyms": []
+  }
+}

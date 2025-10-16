@@ -1,6 +1,6 @@
 {
   "name": "Sidney Jones",
-  "title": "Lead Software Engineer — AI",
+  "title": "Lead Software Engineer \u2014 AI",
   "contact": {
     "email": "sjones@bpmsoftwaresolutions.com",
     "phone": "(248) 802-1847"
@@ -25,70 +25,935 @@
   ],
   "experience": [
     {
-      "employer": "Edward Jones",
-      "role": "Senior Application Architect / Platform Team Delivery Lead",
-      "dates": "2021–2024",
-      "location": "Remote",
+      "employer": "BPM Software Solutions",
+      "role": "Principle Consultant",
+      "dates": "2017 \u2013 2021",
+      "location": "West Bloomfield, MI",
       "bullets": [
         {
-          "text": "Led modernization of Online Access platform by decomposing monoliths into microservices and micro-frontends and introducing FastAPI/Java services to support RAG-enabled features.",
-          "tags": ["Microservices","FastAPI","Java","RAG","LLM","Architecture"]
+          "text": "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management.",
+          "tags": [
+            "Automation",
+            "Python",
+            "C++",
+            "Real-time Data"
+          ]
         },
         {
-          "text": "Established CI/CD pipelines and release practices (feature flags, short-lived branches) across 13 teams using GitHub Actions and Jenkins to enable rapid, safe delivery of AI-enabled services.",
-          "tags": ["CI/CD","GitHub Actions","Jenkins","Feature Flags","Delivery"]
+          "text": "ClaimChoice Hub: Architected and delivered cloud-native TPA integration platform that migrated workflows from .NET to Java, streamlined eligibility, payroll, and claims processing, and reduced manual overhead to support client scalability.",
+          "tags": [
+            "AWS",
+            "ETL",
+            "Microservices",
+            "Event-driven"
+          ]
         },
         {
-          "text": "Standardized observability and monitoring for AI inference and data pipelines using CloudWatch and Dynatrace, reducing mean-time-to-detect for regressions in production ML features.",
-          "tags": ["CloudWatch","Dynatrace","Observability","Monitoring","ML"]
-        }
-      ]
-    },
-    {
-      "employer": "Daugherty – Cox Communications",
-      "role": "Platform Architect – Cloud Infrastructure & Automation",
-      "dates": "2023–2024",
-      "location": "",
-      "bullets": [
-        {
-          "text": "Architected and deployed Terraform-based IaC modules and GitHub Actions workflows for API Gateway and Lambda microservices, enabling reproducible environments and zero-drift infrastructure.",
-          "tags": ["Terraform","GitHub Actions","AWS Lambda","API Gateway","IaC"]
+          "text": "Tiding Health (Healthcare SaaS Platform): Devised and executed high-traffic member portals, admin consoles, and claims integration hub serving more than 3M users.",
+          "tags": [
+            "Linux",
+            "Secure File Transfer",
+            "Telemetry",
+            "ECU Data Logging"
+          ]
         },
         {
-          "text": "Implemented automated IaC validation, security scanning, and rollback strategies to ensure safe deployments of data-processing and model-serving stacks.",
-          "tags": ["Security","IaC Validation","Rollback","DevSecOps"]
+          "text": "RenderX (AI-Driven Orchestration Platform): Established self-documenting, JSON-based plugin architecture powered by proprietary MusicalConductor event orchestration engine.",
+          "tags": [
+            "AI",
+            "Encryption",
+            "AES-256",
+            "Key Management"
+          ]
+        },
+        {
+          "text": "AI & Automation Leadership: Deployed AI-powered RPA bots for healthcare and real estate clients, incorporating LLMs for intelligent decision-making (e.g., ARV analysis, property workflows).",
+          "tags": [
+            "Modular",
+            "Modular Design",
+            "AUTOSAR",
+            "Component Design"
+          ]
+        },
+        {
+          "text": "Safe Fleet (Cloud Architecture & Enterprise Integrations): Architected unified BI platform on Microsoft Azure, integrating multiple ERP systems and enabling consolidated reporting that supported $60M acquisition.",
+          "tags": [
+            "Python",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Developed RenderX Plugins Demo to demonstrate platform extensibility, attracting open-source contributors and positioning RenderX as innovation leader.",
+          "tags": [
+            "Dashboards",
+            "CAN"
+          ]
+        },
+        {
+          "text": "Improved delivery speed and reliability by leading Agile team of six and implementing TDD and CI/CD pipelines with Jenkins, Docker, and Kubernetes.",
+          "tags": [
+            "Integration",
+            "BI",
+            "Reporting"
+          ]
+        },
+        {
+          "text": "Elevated automation pipelines, merging cloud architecture with AI by fine-tuning custom LLMs and AI agents.",
+          "tags": [
+            ".NET",
+            "Integration",
+            "BI",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Designed and executed network monitoring application to oversee IT compliance across hundreds of servers in multi-datacenter environments, spanning on-premises, Microsoft Azure, and AWS. Collaborated with cross-functional teams, including developers, business analysts, and infrastructure specialists, to ensure high-quality solution delivery.",
+          "tags": [
+            "AWS",
+            "Linux",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Amplified month-end closing productivity by 300% through creation of web-based application integrating CRM, LMS, and ERP systems.",
+          "tags": [
+            "Deployments"
+          ]
+        },
+        {
+          "text": "Deployed wealth management platform, consolidating IRA, mutual fund, and investment data into Salesforce, significantly streamlining client reporting, enhancing financial tracking, and empowering advisors with accurate portfolio insights.",
+          "tags": [
+            "Microservices",
+            "C++"
+          ]
+        },
+        {
+          "text": "Directed multiple development teams in redesigning and deploying scrap yard information management system across 25 US locations, enhancing operational efficiency and standardization. Partnered with executives and stakeholders to evaluate emerging technologies, balancing innovation with risk, cost, and scalability.",
+          "tags": [
+            "Orchestration",
+            "Modular",
+            "AUTOSAR"
+          ]
+        },
+        {
+          "text": "Upgraded eight ERP subsystems using MVVM design pattern, successfully unifying five locations under single application and streamlining business processes.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Redeveloped server room and transitioned corporate infrastructure to hybrid cloud on AWS EC2, reducing IT costs by $250K annually by partnering with network team and external IT vendors.",
+          "tags": [
+            "Architecture",
+            "Integration",
+            "Scale",
+            "Modular"
+          ]
+        },
+        {
+          "text": "Created web-based product mapping tool to automate integration of acquired companies, accelerating onboarding and expansion in landscape supplies industry. Defined ITIL practices, enterprise change management processes, and application support strategies aligned with company growth objectives in coordination with CIO and CFO. Led and mentored team of offshore developers to support and sustain ERP business layers in C# for more than three years.",
+          "tags": [
+            "BI",
+            "Linux"
+          ]
+        },
+        {
+          "text": "Built and maintained full-stack functionality for proprietary ERP system supporting order entry, invoicing, shipping, product maintenance, inventory, and accounting across 400+ stores in the US and Canada.",
+          "tags": [
+            "AWS",
+            "Jenkins",
+            "Docker",
+            "BI"
+          ]
+        },
+        {
+          "text": "Devised and implemented Wells Fargo Level III\u2013certified credit card processing microservices, securely handling $1M+ in daily settlements and generating $500K in annual cost savings.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Served as Lead Architect, overseeing ERP migration to Microsoft Dynamics AX 2012 R2, delivering new enterprise solutions for procurement, marketing, and accounting modules.",
+          "tags": [
+            "Integration"
+          ]
         }
       ]
     },
     {
       "employer": "BPM Software Solutions",
-      "role": "Principal Consultant / Senior Software Architect",
-      "dates": "2017–2021",
+      "role": "Principle Consultant",
+      "dates": "2017 \u00e2\u20ac\u201c 2021",
       "location": "West Bloomfield, MI",
       "bullets": [
         {
-          "text": "Designed and deployed production ML orchestration and automation pipelines that integrated LLMs into business workflows, using Python, AWS Lambda, and serverless components for scalable inference.",
-          "tags": ["Python","LLM","AWS Lambda","Orchestration","Serverless"]
+          "text": "Designed and implemented distributed financial reporting and automation systems using Python, AWS, and SQL, integrating multiple ERP data sources into unified dashboards.",
+          "tags": [
+            "Automation",
+            "Python",
+            "C++",
+            "Real-time Data"
+          ]
         },
         {
-          "text": "Built ETL and data pipelines to generate embeddings and maintain searchable vector stores for RAG applications, integrating with OpenSearch and Postgres-based metadata layers.",
-          "tags": ["ETL","Embeddings","OpenSearch","PostgreSQL","Vector Search"]
+          "text": "Built ETL pipelines and automated reporting systems on AWS using CloudWatch, Lambda, and EC2, providing real-time business intelligence and error tracking.",
+          "tags": [
+            "AWS",
+            "ETL",
+            "Microservices",
+            "Event-driven"
+          ]
         },
         {
-          "text": "Integrated LLMs into dev workflows to automate code generation and validation, and created guardrails for safe production usage (rate-limiting, token monitoring, prompt validation).",
-          "tags": ["LLM","Dev Tools","Safety","Monitoring","Prompt Engineering"]
+          "text": "Developed microservices-based APIs to support financial origination and servicing platforms, leveraging Flask and SQLAlchemy ORM for modular, scalable code.",
+          "tags": [
+            "Linux",
+            "Secure File Transfer",
+            "Telemetry",
+            "ECU Data Logging"
+          ]
+        },
+        {
+          "text": "Implemented CI/CD pipelines with Jenkins and Docker, ensuring seamless deployments and rollback automation.",
+          "tags": [
+            "AI",
+            "Encryption",
+            "AES-256",
+            "Key Management"
+          ]
+        },
+        {
+          "text": "Engineered event-driven integrations between payroll, claims, and payment systems, supporting high-volume transaction processing.",
+          "tags": [
+            "Modular",
+            "Modular Design",
+            "AUTOSAR",
+            "Component Design"
+          ]
+        },
+        {
+          "text": "Developed encryption and security workflows for financial data using AES-256 and Keeper Security Manager, ensuring data protection and regulatory compliance.",
+          "tags": [
+            "Python",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Mentored junior developers and established development standards for code reviews, unit testing, and feature decomposition.",
+          "tags": [
+            "Dashboards",
+            "CAN"
+          ]
+        },
+        {
+          "text": "Developed Python-based backend integrations for wealth management systems consolidating IRA, mutual fund, and investment data into Salesforce.",
+          "tags": [
+            "Integration",
+            "BI",
+            "Reporting"
+          ]
+        },
+        {
+          "text": "Built automated month-end reporting pipelines using AWS Lambda, S3, and SQL to streamline financial operations.",
+          "tags": [
+            ".NET",
+            "Integration",
+            "BI",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Created network monitoring tools for IT compliance using Python and AWS, spanning multi-datacenter environments.",
+          "tags": [
+            "AWS",
+            "Linux",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Designed web-based applications integrating CRM, LMS, and ERP systems, increasing month-end closing productivity by 300%.",
+          "tags": [
+            "Deployments"
+          ]
+        },
+        {
+          "text": "Collaborated with cross-functional teams to improve deployment speed and observability through CI/CD and containerization best practices.",
+          "tags": [
+            "Microservices",
+            "C++"
+          ]
+        },
+        {
+          "text": "Directed multi-site rollout of Python- and .NET-based information systems across 25 US locations, improving operational efficiency.",
+          "tags": [
+            "Orchestration",
+            "Modular",
+            "AUTOSAR"
+          ]
+        },
+        {
+          "text": "Designed hybrid AWS cloud infrastructure, reducing annual IT costs by  through automation and EC2 migration.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Modernized ERP subsystems using MVVM and microservices, integrating financial and inventory data across regions.",
+          "tags": [
+            "Architecture",
+            "Integration",
+            "Scale",
+            "Modular"
+          ]
+        },
+        {
+          "text": "Led DevOps transition with Docker, enabling continuous delivery pipelines for internal business applications.",
+          "tags": [
+            "BI",
+            "Linux"
+          ]
+        },
+        {
+          "text": "Partnered with stakeholders to balance modernization initiatives with business goals and cost constraints.",
+          "tags": [
+            "AWS",
+            "Jenkins",
+            "Docker",
+            "BI"
+          ]
+        },
+        {
+          "text": "Architected and maintained enterprise-scale ERP system supporting 400+ retail locations in the US and Canada.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Developed Python- and C#-based financial microservices for Wells Fargo Level IIIcertified credit card processing, handling + daily transactions.",
+          "tags": [
+            "Integration"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Principle Consultant",
+      "dates": "Aug 2017 - Nov 2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {
+          "text": "Architected Python and C++ modules for automation pipelines integrating with hardware-triggered sensors and real-time data streams.",
+          "tags": [
+            "Automation",
+            "Python",
+            "C++",
+            "Real-time Data"
+          ]
+        },
+        {
+          "text": "Developed ETL and control systems using event-driven microservices and AWS IoT to mirror vehicle communication systems (CAN-style event buses).",
+          "tags": [
+            "AWS",
+            "ETL",
+            "Microservices",
+            "Event-driven"
+          ]
+        },
+        {
+          "text": "Integrated Linux-based agents for secure file transfer and telemetry processingconceptually similar to embedded ECU data logging.",
+          "tags": [
+            "Linux",
+            "Secure File Transfer",
+            "Telemetry",
+            "ECU Data Logging"
+          ]
+        },
+        {
+          "text": "Implemented encryption and key management protocols (AES-256) equivalent to secure OTA (Over-the-Air) data handling in vehicles.",
+          "tags": [
+            "AI",
+            "Encryption",
+            "AES-256",
+            "Key Management"
+          ]
+        },
+        {
+          "text": "Mentored engineers in modular design patterns analogous to AUTOSAR component design.",
+          "tags": [
+            "Modular",
+            "Modular Design",
+            "AUTOSAR",
+            "Component Design"
+          ]
+        },
+        {
+          "text": "Developed cross-platform diagnostics and monitoring utilities in C#, Python, and shell scripting, handling multi-datacenter (multi-ECU-like) telemetry.",
+          "tags": [
+            "Python",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Built network health monitoring dashboards akin to embedded diagnostics over CAN/Ethernet.",
+          "tags": [
+            "Dashboards",
+            "CAN"
+          ]
+        },
+        {
+          "text": "Delivered real-time reporting and data-integration software supporting critical decision systems with automotive-grade reliability.",
+          "tags": [
+            "Integration",
+            "BI",
+            "Reporting"
+          ]
+        },
+        {
+          "text": "Led modernization of legacy ERP control systems using .NET and C++, focusing on modular reusability and hardware integration across multiple facilities.",
+          "tags": [
+            ".NET",
+            "Integration",
+            "BI",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Transitioned infrastructure to hybrid AWS/Linux environments, embedding power-mode control logic and telemetry akin to ECU energy-state transitions.",
+          "tags": [
+            "AWS",
+            "Linux",
+            "Telemetry"
+          ]
+        },
+        {
+          "text": "Coordinated with hardware and operations teams to synchronize software deployments with real-world system behaviors.",
+          "tags": [
+            "Deployments"
+          ]
+        },
+        {
+          "text": "Designed Level-III certified payment-processing microservices in C# and C++, managing low-latency transaction routing comparable to embedded communication frameworks.",
+          "tags": [
+            "Microservices",
+            "C++"
+          ]
+        },
+        {
+          "text": "Implemented modular service orchestration similar to AUTOSAR layers for procurement and inventory systems.",
+          "tags": [
+            "Orchestration",
+            "Modular",
+            "AUTOSAR"
+          ]
+        },
+        {
+          "text": "Performed root-cause debugging across hardware interfaces and databasesexperience directly applicable to embedded diagnostics and SoC troubleshooting.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Led modernization of a large-scale distributed platform using service-oriented architecture, emphasizing modular integration similar to AUTOSAR stack decomposition.",
+          "tags": [
+            "Architecture",
+            "Integration",
+            "Scale",
+            "Modular"
+          ]
+        },
+        {
+          "text": "Implemented system-level observability and diagnostics frameworks comparable to SoC monitoring in QNX/Linux environments.",
+          "tags": [
+            "BI",
+            "Linux"
+          ]
+        },
+        {
+          "text": "Designed and optimized CI/CD pipelines for cross-compiled binaries, using Jenkins, Docker, and AWS EC2, integrating automated static code analysis (SonarQube).",
+          "tags": [
+            "AWS",
+            "Jenkins",
+            "Docker",
+            "BI"
+          ]
+        },
+        {
+          "text": "Collaborated across firmware, API, and UI teams to resolve communication-layer defects, using root-cause analysis techniques parallel to vehicle-bus debugging.",
+          "tags": [
+            "Automation",
+            "Hardware Integration",
+            "Real-time Data",
+            "ETL"
+          ]
+        },
+        {
+          "text": "Drove test-driven development and continuous integration practices to achieve embedded-grade quality standards.",
+          "tags": [
+            "Integration"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Edward Jones",
+      "role": "Senior Application Architect / Platform Team Delivery Lead",
+      "dates": "2021\u20132024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of Edward Jones\u2019 enterprise *Online Access* platform, **transitioning from legacy monoliths to microservices and micro-frontends** using **Java, Python, and AWS**.",
+          "tags": [
+            "AWS",
+            "Java",
+            "ERP",
+            "Python"
+          ]
+        },
+        {
+          "text": "Directed **cross-functional teams (web, mobile, API, mainframe)** across multiple delivery trains, implementing **continuous delivery pipelines** that reduced release time by 50%.",
+          "tags": [
+            "AI",
+            "BI"
+          ]
+        },
+        {
+          "text": "Established **technical delivery governance** \u2014 code quality metrics, automation standards, and DevOps maturity assessments across 13 Agile teams.",
+          "tags": [
+            "Automation",
+            "Agile",
+            "DevOps"
+          ]
+        },
+        {
+          "text": "Championed **architecture alignment and technical debt reduction**, driving standardization across cloud environments and improving developer velocity.",
+          "tags": [
+            "Architecture",
+            "Cloud"
+          ]
+        },
+        {
+          "text": "Partnered with **product and platform leadership** to define modernization OKRs, resulting in measurable improvements in throughput, reliability, and built-in quality.",
+          "tags": [
+            "BI",
+            "Leadership"
+          ]
+        },
+        {
+          "text": "Mentored technical leads and engineering managers, fostering a culture of collaboration, continuous improvement, and architectural integrity.",
+          "tags": [
+            "Continuous Improvement"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "2017\u20132021",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Spearheaded **cloud-first modernization initiatives** for financial and healthcare clients, transitioning legacy ERP and reporting systems to **Azure and AWS** platforms.",
+          "tags": [
+            "AWS",
+            "Azure",
+            "Cloud",
+            "Healthcare"
+          ]
+        },
+        {
+          "text": "Designed and implemented **scalable, distributed architectures** using **Python, Node.js, React, and serverless components**, aligning engineering outcomes with business KPIs.",
+          "tags": [
+            "React",
+            "Architecture",
+            "Python",
+            "Scalable"
+          ]
+        },
+        {
+          "text": "Built and led **multi-team engineering environments**, implementing **Agile/DevOps practices** (continuous testing, containerization, and IaC via Terraform).",
+          "tags": [
+            "AI",
+            "Agile",
+            "Terraform",
+            "DevOps"
+          ]
+        },
+        {
+          "text": "Established **software delivery playbooks** and reusable CI/CD modules that accelerated project onboarding and reduced deployment friction.",
+          "tags": [
+            "CI/CD",
+            "CI/CD"
+          ]
+        },
+        {
+          "text": "Championed **team growth through mentorship**, establishing technical workshops and upskilling programs on modern stacks and security-by-design principles.",
+          "tags": [
+            "Security"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Interactive Business Solutions",
+      "role": "Senior Software Engineering Consultant",
+      "dates": "2016\u20132017",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
+          "tags": [
+            "Integration",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
+          "tags": [
+            "AWS",
+            "Architecture",
+            "Cloud",
+            "APIs"
+          ]
+        },
+        {
+          "text": "Mentored developers in Agile story decomposition, code review, and sprint execution practices.",
+          "tags": [
+            "Agile"
+          ]
+        },
+        {
+          "text": "Engineered multi-system integrations (CRM, LMS, ERP) that increased month-end productivity 300 %.",
+          "tags": [
+            "Integration",
+            "ERP",
+            "Integrations"
+          ]
+        },
+        {
+          "text": "Built AWS-hosted CI/CD workflows for financial reporting systems, evolving toward trunk-based branching for faster client deliverables.",
+          "tags": [
+            "AWS",
+            "CI/CD",
+            "Financial Reporting",
+            "Reporting"
+          ]
+        },
+        {
+          "text": "Mentored developers on automation and continuous testing practices to maintain production quality at speed.",
+          "tags": [
+            "AI",
+            "Automation"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Soave Enterprises",
+      "role": "Technology Manager / Software Architect",
+      "dates": "2015\u20132016",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
+          "tags": [
+            "AWS",
+            "Architecture",
+            "Cloud",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Introduced **DevOps and CI/CD pipelines**, automating release workflows and infrastructure provisioning.",
+          "tags": [
+            "CI/CD",
+            "DevOps",
+            "CI/CD"
+          ]
+        },
+        {
+          "text": "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability.",
+          "tags": [
+            "BI",
+            "Innovation"
+          ]
+        },
+        {
+          "text": "Directed modernization of enterprise infrastructure across 25 U.S. locations, migrating to hybrid AWS EC2 cloud.",
+          "tags": [
+            "AWS",
+            "Cloud",
+            "ERP",
+            "EC2"
+          ]
+        },
+        {
+          "text": "Introduced DevOps automation and early CI/CD pipelines, establishing repeatable build/test/deploy flows.",
+          "tags": [
+            "Automation",
+            "CI/CD",
+            "DevOps",
+            "CI/CD"
+          ]
+        },
+        {
+          "text": "Laid the groundwork for trunk-based development by implementing shared mainline branching and continuous integration for distributed teams.",
+          "tags": [
+            "AI",
+            "Integration"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010\u20132015",
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
+          "tags": [
+            "AI",
+            "Scale",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
+          "tags": [
+            "Modular",
+            "Microsoft Dynamics AX",
+            "Microsoft Dynamics AX"
+          ]
+        },
+        {
+          "text": "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects.",
+          "tags": [
+            "TDD",
+            "Code Reviews"
+          ]
+        },
+        {
+          "text": "Led modernization of proprietary ERP system used by 400+ retail stores.",
+          "tags": [
+            "AI",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Introduced automated build pipelines, unit-test enforcement, and continuous integration, paving the cultural path toward trunk-based development long before mainstream adoption.",
+          "tags": [
+            "AI",
+            "Integration"
+          ]
+        },
+        {
+          "text": "Oversaw transition to Microsoft Dynamics AX 2012 R2, incorporating modular architecture and early DevOps principles.",
+          "tags": [
+            "Architecture",
+            "Modular",
+            "DevOps",
+            "Microsoft Dynamics AX"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Snap-On Technologies",
+      "role": "Senior Software Engineer",
+      "dates": "2000 \u2013 2006",
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Invented a data-driven orchestration framework for ECM communication on vehicle networks, enabling adaptive protocol handling across J1850-VPW, PWM, J1939, CAN/GM LAN, and ISO standards.",
+          "tags": [
+            "Orchestration",
+            "ECM Communication",
+            "J1850",
+            "J1939"
+          ]
+        },
+        {
+          "text": "Designed a dynamic diagnostic communication module capable of learning and adapting to new OEM protocols without reengineering core components.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ]
+        },
+        {
+          "text": "Developed calibration and service applications used by ISUZU, Harley-Davidson, Freightliner, Detroit Diesel, Mac, Eaton, and Penske, improving diagnostic accuracy and time-to-market for new vehicle platforms.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ]
+        },
+        {
+          "text": "Collaborated with embedded firmware engineers and field technicians to validate communication layers over the 9-pin Deutsch vehicle interface and OBD-II connectors.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ]
         }
       ]
     },
     {
       "employer": "Compuware",
       "role": "Senior Software Developer",
-      "dates": "2006 – 2010",
+      "dates": "2006 \u2013 2010",
       "location": "Detroit, MI",
       "bullets": [
         {
-          "text": "Built enterprise-grade QA automation and performance testing frameworks used to validate large-scale distributed systems and support continuous delivery efforts.",
-          "tags": ["QA Automation","Performance Testing","DevOps","Test Automation"]
+          "text": "Developed enterprise QA automation and load-testing frameworks (QALoad, QADirector) for large-scale clients including Ford, GM, Blue Cross Blue Shield, and EDS, improving reliability and scalability of distributed systems.",
+          "tags": [
+            "Scale",
+            "Automation",
+            "BI",
+            "ERP"
+          ]
+        },
+        {
+          "text": "Engineered E2E test automation frameworks in C++ and Java, integrating performance testing directly into early DevOps pipelines.",
+          "tags": [
+            "Java",
+            "Automation",
+            "C++",
+            "DevOps"
+          ]
+        },
+        {
+          "text": "Collaborated with product and QA teams to design automated defect-tracking systems, optimizing regression cycles and standardizing test execution across enterprise environments.",
+          "tags": [
+            "ERP"
+          ]
+        },
+        {
+          "text": "Contributed to internal tooling for performance benchmarking, which later influenced commercial QA product lines adopted globally.",
+          "tags": [
+            "QA Automation",
+            "Performance Testing",
+            "E2E Frameworks",
+            "DevOps"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "CGI \u2013 Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead \u2013 Digital Client Experience",
+      "dates": "2021\u20132024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of the Online Access platform, transitioning from monolithic architecture to cloud-native microservices and micro-frontends using Java, Spring Boot, and Angular.",
+          "tags": [
+            "Java",
+            "Architecture",
+            "Cloud",
+            "Microservices"
+          ]
+        },
+        {
+          "text": "Drove CI/CD platform maturity, evolving Azure DevOps pipelines into trunk-based development workflows supporting 13 Agile teams across web, API, mobile, and mainframe domains.",
+          "tags": [
+            "Azure",
+            "AI",
+            "BI",
+            "Agile"
+          ]
+        },
+        {
+          "text": "Implemented feature-flag release strategies, short-lived branches, and automated test gates, enabling independent deployments and 50 % faster release cycles.",
+          "tags": [
+            "Deployments"
+          ]
+        },
+        {
+          "text": "Instituted Delivery Excellence workshops on value-stream mapping, continuous integration health checks, and test-driven development.",
+          "tags": [
+            "Integration"
+          ]
+        },
+        {
+          "text": "Partnered with engineering managers to standardize observability (Dynatrace, Splunk) and delivery governance across trains.",
+          "tags": [
+            "AI",
+            "BI",
+            "Dynatrace"
+          ]
+        }
+      ]
+    },
+    {
+      "employer": "Daugherty \u2013 Cox Communications",
+      "role": "Platform Architect \u2013 Cloud Infrastructure & Automation",
+      "dates": "2023\u20132024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Architected and deployed CI/CD pipelines in GitHub Actions for API Gateway and AWS Lambda microservices using Terraform-based IaC modules.",
+          "tags": [
+            "AWS",
+            "CI/CD",
+            "Terraform",
+            "Lambda"
+          ]
+        },
+        {
+          "text": "Transitioned teams from manual staging branches to trunk-based continuous integration, integrating linting, IaC validation, and security scans into the mainline workflow.",
+          "tags": [
+            "AI",
+            "Integration",
+            "Security",
+            "CAN"
+          ]
+        },
+        {
+          "text": "Designed rollback workflows leveraging Terraform state management for fault-tolerant releases.",
+          "tags": [
+            "Terraform",
+            "RAG"
+          ]
+        },
+        {
+          "text": "Orchestrated KeeperSecurity-managed key rotation and encryption automation through Bitbucket pipelines to enforce DevSecOps standards.",
+          "tags": [
+            "Automation",
+            "BI",
+            "Encryption",
+            "Security"
+          ]
+        },
+        {
+          "text": "Reduced deployment friction across environments and achieved 100 % parity between staging and production builds.",
+          "tags": [
+            "AWS Lambda",
+            "API Gateway",
+            "Terraform",
+            "GitHub Actions"
+          ]
         }
       ]
     }
