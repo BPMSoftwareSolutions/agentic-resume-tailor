@@ -83,12 +83,32 @@ class HybridResumeProcessor:
         """
 
         def get_date_tuple(exp: Dict[str, Any]) -> tuple:
-            """Extract (end_year, start_year) from dates field for sorting."""
+            """Extract (end_year, end_month, start_year, start_month) from dates or month/year fields for sorting."""
+            # First, try to use explicit month/year fields if available
+            if "end_year" in exp and "start_year" in exp:
+                end_year = exp.get("end_year", 0)
+                end_month = exp.get("end_month", "December")
+                start_year = exp.get("start_year", 0)
+                start_month = exp.get("start_month", "January")
+
+                # Convert month names to numbers for sorting
+                month_map = {
+                    "January": 1, "February": 2, "March": 3, "April": 4,
+                    "May": 5, "June": 6, "July": 7, "August": 8,
+                    "September": 9, "October": 10, "November": 11, "December": 12
+                }
+                end_month_num = month_map.get(end_month, 12)
+                start_month_num = month_map.get(start_month, 1)
+
+                return (end_year, end_month_num, start_year, start_month_num)
+
+            # Fall back to parsing the dates string
             dates = exp.get("dates", "")
 
             # Handle "Present" or current job
             if "Present" in dates or "Current" in dates:
                 end_year = 9999  # Put current jobs at the top
+                end_month = 12
                 # Try to get start year
                 parts = dates.replace("–", "-").replace("—", "-").split("-")
                 if len(parts) >= 1:
@@ -96,7 +116,8 @@ class HybridResumeProcessor:
                     start_year = int(start_str) if start_str else 0
                 else:
                     start_year = 0
-                return (end_year, start_year)
+                start_month = 1
+                return (end_year, end_month, start_year, start_month)
 
             # Split by dash/hyphen to get start and end dates
             parts = dates.replace("–", "-").replace("—", "-").split("-")
@@ -109,10 +130,10 @@ class HybridResumeProcessor:
                 start_str = "".join(filter(str.isdigit, parts[0].strip()))[:4]
                 start_year = int(start_str) if start_str else 0
 
-                return (end_year, start_year)
+                return (end_year, 12, start_year, 1)
 
-            # If we can't parse it, return (0, 0) to put it at the end
-            return (0, 0)
+            # If we can't parse it, return (0, 0, 0, 0) to put it at the end
+            return (0, 0, 0, 0)
 
         # Sort by end year descending, then start year descending
         # This ensures most recent jobs come first, and if end dates match, most recent start date wins
@@ -271,6 +292,28 @@ class HybridResumeProcessor:
       </div>
     </section>"""
 
+    def _format_date_range(self, job: Dict[str, Any]) -> str:
+        """
+        Format date range from month/year fields or dates string.
+
+        Args:
+            job: Experience dictionary
+
+        Returns:
+            Formatted date string (e.g., "January 2021 – December 2024")
+        """
+        # If explicit month/year fields exist, use them
+        if "start_month" in job and "start_year" in job:
+            start_month = job.get("start_month", "January")
+            start_year = job.get("start_year", "")
+            end_month = job.get("end_month", "December")
+            end_year = job.get("end_year", "")
+
+            return f"{start_month} {start_year} – {end_month} {end_year}"
+
+        # Fall back to dates field
+        return job.get("dates", "")
+
     def _generate_experience_html(self) -> str:
         """
         Generate experience section with bullets and tags.
@@ -298,7 +341,7 @@ class HybridResumeProcessor:
         for idx, job in enumerate(experience):
             employer = job.get("employer", "")
             location = job.get("location", "")
-            dates = job.get("dates", "")
+            dates = self._format_date_range(job)  # Use formatted date range
             role = job.get("role", "")
             bullets = job.get("bullets", [])
 

@@ -4,6 +4,10 @@
     "employer": "BPM Software Solutions",
     "role": "Principle Consultant",
     "dates": "2017 – 2021",
+    "start_month": "January",
+    "start_year": 2017,
+    "end_month": "December",
+    "end_year": 2021,
     "location": "West Bloomfield, MI",
     "bullets": [
       "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management.",
