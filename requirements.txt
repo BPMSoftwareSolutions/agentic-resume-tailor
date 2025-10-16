@@ -10,5 +10,6 @@ pytest-flask
 pytest-cov
 pytest-html
 openai
+anthropic>=0.25.0
 python-dotenv
 tiktoken>=0.5.0

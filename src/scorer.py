@@ -1,7 +1,8 @@
-from typing import List, Dict
 import re
+from typing import Dict, List
 
-def score_bullets(bullets:List[Dict], keywords:List[str])->List[Dict]:
+
+def score_bullets(bullets: List[Dict], keywords: List[str]) -> List[Dict]:
     def score(b):
         text = b.get("text", "").lower()
         tags = [t.lower() for t in b.get("tags", [])]
@@ -20,20 +21,22 @@ def score_bullets(bullets:List[Dict], keywords:List[str])->List[Dict]:
 
         # Bonus for quantified results (numbers, percentages, time savings)
         quantified_bonus = 0
-        if re.search(r'\d+%', text):  # percentage
+        if re.search(r"\d+%", text):  # percentage
             quantified_bonus += 1.0
-        if re.search(r'\d+[xX]', text):  # multiplier like "2x"
+        if re.search(r"\d+[xX]", text):  # multiplier like "2x"
             quantified_bonus += 1.0
-        if re.search(r'from .+ to .+', text):  # improvement range
+        if re.search(r"from .+ to .+", text):  # improvement range
             quantified_bonus += 0.5
-        if re.search(r'\d+\s*(hour|day|week|month|year|team)', text):  # time/scale
+        if re.search(r"\d+\s*(hour|day|week|month|year|team)", text):  # time/scale
             quantified_bonus += 0.5
 
         # Slight length bonus for complete, detailed statements
         length_bonus = 0.3 if len(text) > 70 else 0
 
         # Combined score: text matches are weighted highest
-        total_score = (text_hits * 2.0) + (tag_hits * 1.0) + quantified_bonus + length_bonus
+        total_score = (
+            (text_hits * 2.0) + (tag_hits * 1.0) + quantified_bonus + length_bonus
+        )
 
         return total_score
 

@@ -1,24 +1,30 @@
-import json, argparse, sys, os
-from jinja2 import Template
-from jd_parser import extract_keywords
-from scorer import score_bullets
-from rewriter import rewrite_star
-from jd_fetcher import ingest_jd
+import argparse
+import json
+import os
+import sys
 from pathlib import Path
 
+from jinja2 import Template
+
+from jd_fetcher import ingest_jd
+from jd_parser import extract_keywords
+from rewriter import rewrite_star
+from scorer import score_bullets
+
 # Fix Windows console encoding for emoji support
-if sys.platform == 'win32':
+if sys.platform == "win32":
     try:
         # Set console to UTF-8 mode
-        os.system('chcp 65001 > nul')
+        os.system("chcp 65001 > nul")
         # Reconfigure stdout/stderr to use UTF-8
-        if hasattr(sys.stdout, 'reconfigure'):
-            sys.stdout.reconfigure(encoding='utf-8')
-        if hasattr(sys.stderr, 'reconfigure'):
-            sys.stderr.reconfigure(encoding='utf-8')
+        if hasattr(sys.stdout, "reconfigure"):
+            sys.stdout.reconfigure(encoding="utf-8")
+        if hasattr(sys.stderr, "reconfigure"):
+            sys.stderr.reconfigure(encoding="utf-8")
     except Exception:
         # If reconfiguration fails, continue without emoji support
         pass
+
 
 def load_resume_index(data_dir: Path):
     """Load the resume index file."""
@@ -26,7 +32,7 @@ def load_resume_index(data_dir: Path):
     if not index_file.exists():
         raise FileNotFoundError(f"Resume index not found: {index_file}")
 
-    with open(index_file, 'r', encoding='utf-8') as f:
+    with open(index_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -66,7 +72,7 @@ def load_resume(path_or_identifier):
     # Check if it's a file path
     path = Path(path_or_identifier)
     if path.exists() and path.is_file():
-        return json.loads(path.read_text(encoding='utf-8'))
+        return json.loads(path.read_text(encoding="utf-8"))
 
     # Otherwise, try to find by identifier
     data_dir = Path("data")
@@ -87,14 +93,13 @@ def load_resume(path_or_identifier):
             raise FileNotFoundError(f"Resume file not found: {resume_file}")
 
         print(f"📂 Found resume: {resume_meta['name']}")
-        return json.loads(resume_file.read_text(encoding='utf-8'))
+        return json.loads(resume_file.read_text(encoding="utf-8"))
 
     except FileNotFoundError:
         raise
     except Exception as e:
-        raise FileNotFoundError(
-            f"Could not load resume '{path_or_identifier}': {e}"
-        )
+        raise FileNotFoundError(f"Could not load resume '{path_or_identifier}': {e}")
+
 
 def select_and_rewrite(experience, keywords, per_job=3):
     tailored = []
@@ -104,21 +109,23 @@ def select_and_rewrite(experience, keywords, per_job=3):
         tailored.append({**job, "selected_bullets": rewritten})
     return tailored
 
+
 def render_markdown(data, template_path, out_path):
-    tpl = Template(Path(template_path).read_text(encoding='utf-8'))
+    tpl = Template(Path(template_path).read_text(encoding="utf-8"))
     md = tpl.render(**data)
-    Path(out_path).write_text(md, encoding='utf-8')
+    Path(out_path).write_text(md, encoding="utf-8")
     return out_path
 
-def generate_html_resume(data, out_path, theme='professional'):
+
+def generate_html_resume(data, out_path, theme="professional"):
     """Generate HTML resume using hybrid approach."""
-    from hybrid_resume_processor import HybridResumeProcessor
     from hybrid_css_generator import HybridCSSGenerator
     from hybrid_html_assembler import HybridHTMLAssembler
+    from hybrid_resume_processor import HybridResumeProcessor
 
     # Save tailored data to temp JSON
-    temp_json = out_path.replace('.html', '_temp.json')
-    Path(temp_json).write_text(json.dumps(data, indent=2), encoding='utf-8')
+    temp_json = out_path.replace(".html", "_temp.json")
+    Path(temp_json).write_text(json.dumps(data, indent=2), encoding="utf-8")
 
     # Generate HTML
     processor = HybridResumeProcessor(temp_json, theme)
@@ -128,7 +135,7 @@ def generate_html_resume(data, out_path, theme='professional'):
     css = css_generator.generate_css()
 
     assembler = HybridHTMLAssembler(theme)
-    resume_name = data.get('name', 'Resume')
+    resume_name = data.get("name", "Resume")
     complete_html = assembler.assemble_html(html_content, css, resume_name)
 
     assembler.save_html(complete_html, out_path)
@@ -144,7 +151,7 @@ def generate_docx_from_html(html_path, docx_path=None):
     from docx_resume_exporter import DOCXResumeExporter
 
     if docx_path is None:
-        docx_path = html_path.replace('.html', '.docx')
+        docx_path = html_path.replace(".html", ".docx")
 
     exporter = DOCXResumeExporter()
     success = exporter.export_to_docx(html_path, docx_path)
@@ -181,25 +188,40 @@ def generate_jd_summary(jd_text, keywords):
 
     return summary
 
+
 def main():
     ap = argparse.ArgumentParser(
-        description='Tailor resume to job description with keyword extraction and rewriting'
+        description="Tailor resume to job description with keyword extraction and rewriting"
     )
-    ap.add_argument("--resume", default="data/master_resume.json",
-                   help='Resume file path OR resume name/company identifier (e.g., "Ford", "Master Resume")')
-    ap.add_argument("--jd", required=True,
-                   help='Path to job description file or URL')
-    ap.add_argument("--template", default="templates/resume.md.j2",
-                   help='Path to Jinja2 template (for markdown format)')
-    ap.add_argument("--out", required=True,
-                   help='Output file path')
-    ap.add_argument("--format", choices=['markdown', 'html'], default='markdown',
-                   help='Output format: markdown or html (default: markdown)')
-    ap.add_argument("--theme", choices=['professional', 'modern', 'executive', 'creative'],
-                   default='professional',
-                   help='HTML theme (only used with --format html)')
-    ap.add_argument("--docx", action='store_true',
-                   help='Also generate DOCX file (only works with HTML format)')
+    ap.add_argument(
+        "--resume",
+        default="data/master_resume.json",
+        help='Resume file path OR resume name/company identifier (e.g., "Ford", "Master Resume")',
+    )
+    ap.add_argument("--jd", required=True, help="Path to job description file or URL")
+    ap.add_argument(
+        "--template",
+        default="templates/resume.md.j2",
+        help="Path to Jinja2 template (for markdown format)",
+    )
+    ap.add_argument("--out", required=True, help="Output file path")
+    ap.add_argument(
+        "--format",
+        choices=["markdown", "html"],
+        default="markdown",
+        help="Output format: markdown or html (default: markdown)",
+    )
+    ap.add_argument(
+        "--theme",
+        choices=["professional", "modern", "executive", "creative"],
+        default="professional",
+        help="HTML theme (only used with --format html)",
+    )
+    ap.add_argument(
+        "--docx",
+        action="store_true",
+        help="Also generate DOCX file (only works with HTML format)",
+    )
     args = ap.parse_args()
 
     # Ingest JD (supports URL or local file)
@@ -220,7 +242,7 @@ def main():
     data["experience"] = select_and_rewrite(data["experience"], keywords)
 
     # Generate output
-    if args.format == 'html':
+    if args.format == "html":
         print(f"🎨 Generating HTML resume with '{args.theme}' theme...")
         generate_html_resume(data, args.out, args.theme)
         print(f"✅ Tailored HTML resume written to {args.out}")
@@ -239,19 +261,21 @@ def main():
             print("⚠️  Warning: --docx flag only works with --format html")
 
     # Display summary
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("📊 JOB DESCRIPTION ANALYSIS")
-    print("="*60)
+    print("=" * 60)
     print(f"\n🎯 Top Keywords ({len(keywords[:12])}):")
     print(f"   {', '.join(keywords[:12])}")
 
     summary = generate_jd_summary(jd_text, keywords)
     print(f"\n💡 Summary:")
     print(f"   {summary}")
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
 
     return 0
 
+
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())

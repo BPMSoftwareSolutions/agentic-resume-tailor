@@ -47,6 +47,30 @@
       "location": "Remote",
       "created_at": "2025-10-12T10:32:03.226709",
       "updated_at": "2025-10-12T10:32:03.228719"
+    },
+    {
+      "id": "db28ab51-4295-4c14-87f9-5f0acaf473ac",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-16T09:56:00.052638",
+      "updated_at": "2025-10-16T09:56:00.059723"
+    },
+    {
+      "id": "c0b437b6-b131-48db-a95c-14c2036c8476",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-16T10:03:59.251555",
+      "updated_at": "2025-10-16T10:03:59.254297"
+    },
+    {
+      "id": "9ae448e5-79fb-49e0-8141-e3892eb6b9f5",
+      "title": "Senior Software Engineer",
+      "company": "Tech Company",
+      "location": "Remote",
+      "created_at": "2025-10-16T10:13:44.910928",
+      "updated_at": "2025-10-16T10:13:44.914359"
     }
   ]
 }

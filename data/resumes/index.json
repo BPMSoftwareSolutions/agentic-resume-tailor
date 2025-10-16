@@ -134,6 +134,87 @@
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Master Resume"
+    },
+    {
+      "id": "7079d744-953b-4965-9fe9-41fd05a04242",
+      "name": "Test Resume",
+      "created_at": "2025-10-16T09:56:00.010420",
+      "updated_at": "2025-10-16T09:56:00.010420",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "89127421-9a20-4e9d-a1aa-7fe652761abf",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-16T09:56:00.039681",
+      "updated_at": "2025-10-16T09:56:00.039681",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "61cfc0b0-9a78-4fe3-b786-697449a073e7",
+      "name": "Base Resume",
+      "created_at": "2025-10-16T09:56:00.062635",
+      "updated_at": "2025-10-16T09:56:00.062635",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
+    },
+    {
+      "id": "8c5cf601-4f73-446f-bb01-aeb285ccd17f",
+      "name": "Test Resume",
+      "created_at": "2025-10-16T10:03:59.238677",
+      "updated_at": "2025-10-16T10:03:59.238677",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "b80cbc5a-e0d6-4ba4-bbb0-6463127d9159",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-16T10:03:59.247586",
+      "updated_at": "2025-10-16T10:03:59.247586",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "93986e26-6ee4-4c98-9a5c-98d9f3edd922",
+      "name": "Base Resume",
+      "created_at": "2025-10-16T10:03:59.255400",
+      "updated_at": "2025-10-16T10:03:59.255400",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
+    },
+    {
+      "id": "709e413f-8569-4ef8-8fba-ceb1a418e8e3",
+      "name": "Test Resume",
+      "created_at": "2025-10-16T10:13:44.896324",
+      "updated_at": "2025-10-16T10:13:44.896324",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Test description"
+    },
+    {
+      "id": "4ef0d90e-8385-4651-bc68-e9f8973a753d",
+      "name": "Export Test Resume",
+      "created_at": "2025-10-16T10:13:44.906051",
+      "updated_at": "2025-10-16T10:13:44.906051",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Resume for export testing"
+    },
+    {
+      "id": "2f3ebb17-c78d-48cb-9ee4-1cb0167bc5f1",
+      "name": "Base Resume",
+      "created_at": "2025-10-16T10:13:44.914914",
+      "updated_at": "2025-10-16T10:13:44.914914",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": ""
     }
   ]
 }

@@ -7,13 +7,12 @@ This module provides parsers for various resume-related operations:
 - nl_command_parser: Parse natural language commands for CRUD operations
 """
 
-from .job_posting_parser import JobPostingParser
 from .experience_parser import ExperienceParser
+from .job_posting_parser import JobPostingParser
 from .nl_command_parser import NLCommandParser
 
 __all__ = [
-    'JobPostingParser',
-    'ExperienceParser',
-    'NLCommandParser',
+    "JobPostingParser",
+    "ExperienceParser",
+    "NLCommandParser",
 ]
-

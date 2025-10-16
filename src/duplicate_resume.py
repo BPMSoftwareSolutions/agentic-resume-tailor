@@ -8,10 +8,10 @@ It follows the same patterns as CRUD scripts for consistency.
 Usage:
     # Duplicate by resume name
     python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
-    
+
     # Duplicate by resume ID
     python src/duplicate_resume.py --resume-id "d474d761-18f2-48ab-99b5-9f30c54f75b2" --new-name "New Resume Name"
-    
+
     # Duplicate with description
     python src/duplicate_resume.py --resume "Ford" --new-name "New Resume" --description "Tailored for X position"
 
@@ -27,12 +27,7 @@ from typing import Optional
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import shared utilities from CRUD
-from src.crud import (
-    print_success,
-    print_error,
-    print_info
-)
-
+from src.crud import print_error, print_info, print_success
 # Import Resume model
 from src.models.resume import Resume
 
@@ -42,34 +37,34 @@ def duplicate_resume(
     source_identifier: Optional[str] = None,
     source_id: Optional[str] = None,
     new_name: str = "",
-    description: str = ""
+    description: str = "",
 ) -> bool:
     """
     Duplicate a resume.
-    
+
     Args:
         data_dir: Data directory path
         source_identifier: Source resume name or company identifier (optional)
         source_id: Source resume UUID (optional)
         new_name: Name for the duplicated resume
         description: Optional description for the new resume
-        
+
     Returns:
         True if successful, False otherwise
-        
+
     Raises:
         ValueError: If neither identifier nor source_id provided
         FileNotFoundError: If source resume not found
     """
     if not source_identifier and not source_id:
         raise ValueError("Either source identifier or source_id must be provided")
-    
+
     if not new_name:
         raise ValueError("New name must be provided")
-    
+
     # Initialize Resume model
     resume_model = Resume(data_dir)
-    
+
     # Find source resume
     if source_id:
         print_info(f"Using resume ID: {source_id}")
@@ -83,24 +78,24 @@ def duplicate_resume(
         all_resumes = resume_model.list_all()
         source_id = None
         identifier_lower = source_identifier.lower()
-        
+
         for resume in all_resumes:
             name = resume.name.lower()
             if identifier_lower in name or name in identifier_lower:
                 source_id = resume.id
                 print_info(f"Found resume: {resume.name} (ID: {source_id})")
                 break
-        
+
         if not source_id:
             raise FileNotFoundError(f"No resume found matching '{source_identifier}'")
-    
+
     # Duplicate the resume
     print_info(f"Duplicating resume...")
     new_metadata = resume_model.duplicate(source_id, new_name)
-    
+
     if not new_metadata:
         raise RuntimeError("Failed to duplicate resume")
-    
+
     # Update description if provided
     if description:
         resume_model.update_metadata(new_metadata.id, description=description)
@@ -137,54 +132,45 @@ Resume Identification:
   - Use --resume with name (e.g., "Ford", "Master Resume")
   - Use --resume-id with UUID for direct lookup
   - Name matching is case-insensitive and supports partial matches
-        """
+        """,
     )
-    
+
     # Resume identification
     resume_group = parser.add_mutually_exclusive_group(required=True)
     resume_group.add_argument(
         "--resume",
-        help="Resume name or company identifier (e.g., 'Ford', 'Master Resume')"
+        help="Resume name or company identifier (e.g., 'Ford', 'Master Resume')",
     )
-    resume_group.add_argument(
-        "--resume-id",
-        help="Resume UUID for direct lookup"
-    )
-    
+    resume_group.add_argument("--resume-id", help="Resume UUID for direct lookup")
+
     # Required arguments
     parser.add_argument(
-        "--new-name",
-        required=True,
-        help="Name for the duplicated resume"
+        "--new-name", required=True, help="Name for the duplicated resume"
     )
-    
+
     # Optional arguments
     parser.add_argument(
-        "--description",
-        default="",
-        help="Optional description for the new resume"
+        "--description", default="", help="Optional description for the new resume"
     )
-    
+
     parser.add_argument(
-        "--data-dir",
-        default="data",
-        help="Data directory path (default: data)"
+        "--data-dir", default="data", help="Data directory path (default: data)"
     )
-    
+
     args = parser.parse_args()
-    
+
     try:
         data_dir = Path(args.data_dir)
-        
+
         # Duplicate the resume
         new_metadata = duplicate_resume(
             data_dir=data_dir,
             source_identifier=args.resume,
             source_id=args.resume_id,
             new_name=args.new_name,
-            description=args.description
+            description=args.description,
         )
-        
+
         # Print success message
         print()
         print_success("Successfully duplicated resume!")
@@ -193,9 +179,9 @@ Resume Identification:
         if new_metadata.description:
             print_info(f"   Description: {new_metadata.description}")
         print()
-        
+
         sys.exit(0)
-        
+
     except FileNotFoundError as e:
         print_error(str(e))
         sys.exit(2)
@@ -205,10 +191,10 @@ Resume Identification:
     except Exception as e:
         print_error(f"Unexpected error: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 
 
 if __name__ == "__main__":
     main()
-

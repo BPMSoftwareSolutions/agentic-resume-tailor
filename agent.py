@@ -16,17 +16,20 @@ import json
 import subprocess
 from pathlib import Path
 from typing import List, Dict, Any, Optional
-from openai import OpenAI
 
-# Import agent modules for result analysis and token management
+# Import agent modules for result analysis, token management, and LLM providers
 try:
     from src.agent.result_analyzer import ResultAnalyzer
     from src.agent.token_manager import TokenManager
+    from src.agent.llm_provider import LLMProvider, OpenAIProvider, ClaudeProvider
+    from src.agent.model_registry import get_default_model, format_model_info
 except ImportError:
     # Fallback if running from different directory
     sys.path.insert(0, str(Path(__file__).parent))
     from src.agent.result_analyzer import ResultAnalyzer
     from src.agent.token_manager import TokenManager
+    from src.agent.llm_provider import LLMProvider, OpenAIProvider, ClaudeProvider
+    from src.agent.model_registry import get_default_model, format_model_info
 
 # Fix Windows console encoding for emoji support
 if sys.platform == 'win32':
@@ -589,37 +592,62 @@ Would you like me to:
 Available themes: professional, modern, executive, creative
 """
 
-    def __init__(self, memory_file: str = "memory.json", model: str = "gpt-4",
-                 auto_execute: bool = True, confirm_execution: bool = True):
+    def __init__(self, memory_file: str = "memory.json",
+                 provider: str = "openai",
+                 model: Optional[str] = None,
+                 auto_execute: bool = True,
+                 confirm_execution: bool = True):
         """
         Initialize the agent.
 
         Args:
             memory_file: Path to memory JSON file
-            model: OpenAI model to use
+            provider: LLM provider ('openai' or 'claude')
+            model: Model name (if None, uses provider default)
             auto_execute: Whether to auto-execute commands from agent responses
             confirm_execution: Whether to ask for confirmation before executing
 
         Raises:
-            ValueError: If OPENAI_API_KEY is not set
+            ValueError: If required API key is not set
         """
-        self.api_key = os.getenv("OPENAI_API_KEY")
-        if not self.api_key:
-            raise ValueError(
-                "OPENAI_API_KEY environment variable is required. "
-                "Please set it in your environment or .env file."
-            )
+        self.provider_name = provider
+
+        # Get default model if not specified
+        if model is None:
+            model = get_default_model(provider)
+            if model is None:
+                model = "gpt-4" if provider == "openai" else "claude-3-5-sonnet-20241022"
 
         self.model = model
         self.auto_execute = auto_execute
         self.confirm_execution = confirm_execution
-        self.client = OpenAI(api_key=self.api_key)
+
+        # Initialize appropriate LLM provider
+        if provider == 'openai':
+            api_key = os.getenv("OPENAI_API_KEY")
+            if not api_key:
+                raise ValueError(
+                    "OPENAI_API_KEY environment variable is required. "
+                    "Please set it in your environment or .env file."
+                )
+            self.llm_provider = OpenAIProvider(api_key, model)
+        elif provider == 'claude':
+            api_key = os.getenv("CLAUDE_API_KEY")
+            if not api_key:
+                raise ValueError(
+                    "CLAUDE_API_KEY environment variable is required. "
+                    "Please set it in your environment or .env file."
+                )
+            self.llm_provider = ClaudeProvider(api_key, model)
+        else:
+            raise ValueError(f"Unknown provider: {provider}. Supported providers: 'openai', 'claude'")
+
         self.memory_manager = MemoryManager(memory_file)
         self.command_executor = CommandExecutor()
 
         # Initialize result analyzer and token manager (Issue #24)
         self.result_analyzer = ResultAnalyzer()
-        self.token_manager = TokenManager(model=model)
+        self.token_manager = TokenManager(provider=provider, model=model)
 
         # Load existing memory
         self.memory_manager.load()
@@ -631,6 +659,10 @@ Available themes: professional, modern, executive, creative
                 "role": "system",
                 "content": self.SYSTEM_PROMPT
             })
+
+        # Print model info
+        model_info = format_model_info(provider, model)
+        print(f"🤖 AI Agent initialized with {model_info}")
     
     def process_message(self, user_input: str) -> str:
         """
@@ -673,16 +705,15 @@ Available themes: professional, modern, executive, creative
 
             return response
 
-        # Regular message - send to OpenAI
+        # Regular message - send to LLM provider
         self.memory_manager.add_message("user", user_input)
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
+            # Use the LLM provider abstraction
+            assistant_message = self.llm_provider.chat_completion(
                 messages=self.memory_manager.get_messages()
             )
 
-            assistant_message = response.choices[0].message.content
             self.memory_manager.add_message("assistant", assistant_message)
             self.memory_manager.save()
 
@@ -869,28 +900,40 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Local AI Agent with OpenAI integration",
+        description="Local AI Agent with Multi-Provider LLM Support",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Run with default settings (auto-execute with confirmation)
+  # Run with default settings (OpenAI GPT-4)
   python agent.py
+
+  # Use Claude 3.5 Sonnet
+  python agent.py --provider claude --model claude-3-5-sonnet-20241022
+
+  # Use Claude 3.5 Haiku (faster, cheaper)
+  python agent.py --provider claude --model claude-3-5-haiku-20241022
+
+  # Use GPT-4 Turbo
+  python agent.py --provider openai --model gpt-4-turbo
 
   # Disable auto-execution
   python agent.py --no-auto-execute
 
   # Auto-execute without confirmation
   python agent.py --no-confirm
-
-  # Use a different model
-  python agent.py --model gpt-4-turbo
         """
     )
 
     parser.add_argument(
+        "--provider",
+        default=os.getenv("AI_PROVIDER", "openai"),
+        choices=['openai', 'claude'],
+        help="AI provider to use (default: openai or AI_PROVIDER env var)"
+    )
+    parser.add_argument(
         "--model",
-        default=os.getenv("OPENAI_MODEL", "gpt-4"),
-        help="OpenAI model to use (default: gpt-4 or OPENAI_MODEL env var)"
+        default=None,
+        help="Model to use (default: provider-specific default from env or registry)"
     )
     parser.add_argument(
         "--memory",
@@ -920,10 +963,18 @@ Examples:
 
     args = parser.parse_args()
 
+    # Get model from environment if not specified
+    if args.model is None:
+        if args.provider == 'openai':
+            args.model = os.getenv("OPENAI_MODEL")
+        elif args.provider == 'claude':
+            args.model = os.getenv("CLAUDE_MODEL")
+
     try:
         # Initialize and run agent
         agent = Agent(
             memory_file=args.memory,
+            provider=args.provider,
             model=args.model,
             auto_execute=args.auto_execute,
             confirm_execution=args.confirm_execution
@@ -932,11 +983,17 @@ Examples:
 
     except ValueError as e:
         print(f"❌ Configuration Error: {e}")
-        print("\nPlease set your OPENAI_API_KEY environment variable:")
-        print("  export OPENAI_API_KEY='your-api-key-here'")
+        if 'OPENAI_API_KEY' in str(e):
+            print("\nPlease set your OPENAI_API_KEY environment variable:")
+            print("  export OPENAI_API_KEY='your-api-key-here'")
+        elif 'CLAUDE_API_KEY' in str(e):
+            print("\nPlease set your CLAUDE_API_KEY environment variable:")
+            print("  export CLAUDE_API_KEY='your-api-key-here'")
         sys.exit(1)
     except Exception as e:
         print(f"❌ Unexpected Error: {e}")
+        import traceback
+        traceback.print_exc()
         sys.exit(1)
 
 
