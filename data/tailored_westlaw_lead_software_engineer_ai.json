@@ -127,6 +127,22 @@
         { "text": "Collaborated across dev, QA, and product teams to institutionalize continuous testing culture that predated modern CI/CD adoption." }
       ],
       "tags": ["QA Automation","Performance Testing","E2E Frameworks","C++","Java","DevOps","Continuous Testing","Scalability","Enterprise Software","Agile Practices"]
+    },
+
+    {
+      "employer": "ParTech, Inc.",
+      "role": "Software Engineer – Vehicle Diagnostics & Embedded Systems",
+      "dates": "2002 – 2005",
+      "location": "Troy, MI",
+      "bullets": [
+        { "text": "Developed next-generation diagnostic tools for OEM clients including Harley-Davidson, Isuzu, and Penske, enabling technicians to analyze, calibrate, and service vehicles through dynamic data interfaces." },
+        { "text": "Engineered data-driven diagnostic frameworks in C and C++ for multiple communication protocols (J1850, J1939, CAN, ISO 9141), ensuring real-time vehicle data acquisition and cross-platform compatibility." },
+        { "text": "Designed modular ECM communication libraries capable of detecting and adapting to new OEM protocols without re-engineering the core stack — a precursor to today's plugin and microservice architectures." },
+        { "text": "Collaborated with firmware and field engineering teams to validate tool accuracy and performance across diverse vehicle ECUs, integrating live telemetry capture and automated fault detection." },
+        { "text": "Implemented early test-automation suites for calibration and service modules, reducing regression time and establishing repeatable quality benchmarks adopted across client programs." },
+        { "text": "Authored internal documentation and training materials to standardize diagnostic protocol handling, accelerating onboarding for new engineers and OEM partners." }
+      ],
+      "tags": ["C","C++","Embedded Systems","Vehicle Diagnostics","ECM Communication","CAN","J1850","J1939","ISO Protocols","Automation Testing","Telemetry","Data-Driven Architecture","Automotive Engineering","Cross-Functional Collaboration"]
     }
   ],
 
