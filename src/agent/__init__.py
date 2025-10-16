@@ -6,5 +6,4 @@ Related to GitHub Issue #24
 from .result_analyzer import ResultAnalyzer
 from .token_manager import TokenManager
 
-__all__ = ['ResultAnalyzer', 'TokenManager']
-
+__all__ = ["ResultAnalyzer", "TokenManager"]

@@ -10,10 +10,10 @@ Data is stored in JSON at project `data/experiences.json` by default.
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass, asdict, field
-from pathlib import Path
-from typing import List, Optional, Dict, Any
 import uuid
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -49,7 +49,11 @@ class Experience:
 
 class ExperienceLog:
     def __init__(self, path: Optional[Path] = None):
-        self.path = Path(path) if path else Path(__file__).parent.parent / "data" / "experiences.json"
+        self.path = (
+            Path(path)
+            if path
+            else Path(__file__).parent.parent / "data" / "experiences.json"
+        )
         self._experiences: List[Experience] = []
         self.load()
 
@@ -69,7 +73,9 @@ class ExperienceLog:
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.path, "w", encoding="utf-8") as f:
-            json.dump([asdict(e) for e in self._experiences], f, indent=2, ensure_ascii=False)
+            json.dump(
+                [asdict(e) for e in self._experiences], f, indent=2, ensure_ascii=False
+            )
 
     def list(self) -> List[Experience]:
         return list(self._experiences)
@@ -101,7 +107,9 @@ class ExperienceLog:
                 continue
 
             # also search bullets, technologies, techniques, principles
-            text_fields = " ".join(e.bullets + e.technologies + e.techniques + e.principles)
+            text_fields = " ".join(
+                e.bullets + e.technologies + e.techniques + e.principles
+            )
             if skill_lower in text_fields.lower():
                 matches.append(e)
 
@@ -109,7 +117,11 @@ class ExperienceLog:
 
     def find_by_technology(self, tech: str) -> List[Experience]:
         tech_lower = tech.lower()
-        return [e for e in self._experiences if any(tech_lower == t.lower() for t in e.technologies)]
+        return [
+            e
+            for e in self._experiences
+            if any(tech_lower == t.lower() for t in e.technologies)
+        ]
 
     def to_json(self) -> List[Dict[str, Any]]:
         return [asdict(e) for e in self._experiences]

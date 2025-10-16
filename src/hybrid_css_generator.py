@@ -7,30 +7,36 @@ including layout, typography, colors, and print styles.
 
 import json
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 
 class HybridCSSGenerator:
     """
     Generate CSS from theme configuration.
     """
-    
+
     def __init__(self, theme: str = "creative"):
         """
         Initialize the CSS generator.
-        
+
         Args:
             theme: Theme name (professional, modern, executive, creative)
         """
         self.theme = theme
         self.theme_config = self._load_theme_config(theme)
-    
+
     def _load_theme_config(self, theme: str) -> Dict[str, Any]:
         """Load theme configuration."""
-        theme_path = Path(__file__).parent.parent / 'config' / 'resume_themes' / theme / 'theme.json'
-        with open(theme_path, 'r', encoding='utf-8') as f:
+        theme_path = (
+            Path(__file__).parent.parent
+            / "config"
+            / "resume_themes"
+            / theme
+            / "theme.json"
+        )
+        with open(theme_path, "r", encoding="utf-8") as f:
             return json.load(f)
-    
+
     def generate_css(self) -> str:
         """
         Generate CSS with:
@@ -41,30 +47,30 @@ class HybridCSSGenerator:
         - Print styles (@media print)
         """
         css_parts = []
-        
+
         # Base styles
         css_parts.append(self._generate_base_css())
-        
+
         # Layout styles
         css_parts.append(self._generate_layout_css())
-        
+
         # Typography styles
         css_parts.append(self._generate_typography_css())
-        
+
         # Component styles
         css_parts.append(self._generate_component_css())
-        
+
         # Print styles
         css_parts.append(self._generate_print_css())
-        
-        return '\n\n'.join(css_parts)
-    
+
+        return "\n\n".join(css_parts)
+
     def _generate_base_css(self) -> str:
         """Generate base CSS reset and page setup."""
-        colors = self.theme_config['colors']
-        typo = self.theme_config['typography']
-        
-        return f'''/* Base Styles */
+        colors = self.theme_config["colors"]
+        typo = self.theme_config["typography"]
+
+        return f"""/* Base Styles */
 * {{
   margin: 0;
   padding: 0;
@@ -83,21 +89,21 @@ body {{
   margin: 0 auto;
   background: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}}'''
-    
+}}"""
+
     def _generate_layout_css(self) -> str:
         """
         Generate layout CSS using CSS Grid/Flexbox.
-        
+
         Key classes:
         - .resume-container { width: 1200px; margin: 0 auto; }
         - .two-column { display: grid; grid-template-columns: 1fr 1fr; }
         - .experience-header { display: flex; justify-content: space-between; }
         """
-        layout = self.theme_config['layout']
-        colors = self.theme_config['colors']
-        
-        return f'''/* Layout Styles */
+        layout = self.theme_config["layout"]
+        colors = self.theme_config["colors"]
+
+        return f"""/* Layout Styles */
 .header {{
   position: relative;
   height: {layout['header']['height']}px;
@@ -151,20 +157,20 @@ body {{
 
 .experience-right {{
   text-align: right;
-}}'''
-    
+}}"""
+
     def _generate_typography_css(self) -> str:
         """
         Generate typography CSS from theme.typography.
-        
+
         Maps theme config to CSS:
         - theme.typography.name.size → .personal-info h1 { font-size: 38px; }
         - theme.typography.body.color → .bullet-text { color: #1f2937; }
         """
-        typo = self.theme_config['typography']
-        colors = self.theme_config['colors']
-        
-        return f'''/* Typography Styles */
+        typo = self.theme_config["typography"]
+        colors = self.theme_config["colors"]
+
+        return f"""/* Typography Styles */
 .personal-info h1 {{
   font-size: {typo['name']['size']}px;
   font-weight: {typo['name']['weight']};
@@ -212,14 +218,14 @@ body {{
   font-size: {typo['small']['size']}px;
   color: {colors['headerTextLight']};
   margin-bottom: 5px;
-}}'''
-    
+}}"""
+
     def _generate_component_css(self) -> str:
         """Generate component-specific CSS."""
-        colors = self.theme_config['colors']
-        typo = self.theme_config['typography']
-        
-        return f'''/* Component Styles */
+        colors = self.theme_config["colors"]
+        typo = self.theme_config["typography"]
+
+        return f"""/* Component Styles */
 .contact-info {{
   margin-top: 20px;
 }}
@@ -351,19 +357,19 @@ body {{
   left: 0;
   color: {colors['primary']};
   font-weight: bold;
-}}'''
-    
+}}"""
+
     def _generate_print_css(self) -> str:
         """
         Generate print-specific CSS.
-        
+
         @media print {
           @page { margin: 0; size: A4; }
           body { margin: 0; padding: 0; }
           .resume-container { box-shadow: none; }
         }
         """
-        return '''/* Print Styles */
+        return """/* Print Styles */
 @media print {
   @page {
     margin: 0;
@@ -388,5 +394,4 @@ body {{
   .experience-item {
     page-break-inside: avoid;
   }
-}'''
-
+}"""

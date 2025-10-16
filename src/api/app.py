@@ -1,4 +1,5 @@
 from typing import Any, Dict, List, Tuple
+
 """
 Flask API for Resume Editor Web Interface
 
@@ -41,14 +42,14 @@ Related to GitHub Issues #2, #6, #12, and #24
 """
 
 import json
+import os
 import shutil
 import sys
-import os
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 
 # Add src to path for imports
@@ -56,9 +57,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 # Add root to path for agent import
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from models.resume import Resume, ResumeMetadata
+from agent import Agent, CommandExecutor, MemoryManager
 from models.job_listing import JobListing
-from agent import Agent, MemoryManager, CommandExecutor
+from models.resume import Resume, ResumeMetadata
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -84,55 +85,55 @@ command_executor = CommandExecutor()
 
 # Command whitelist for security (Issue #12, #17, #19, #27)
 ALLOWED_COMMAND_PREFIXES = [
-    'python src/tailor.py',
-    'python src/update_resume_experience.py',
-    'python src/duplicate_resume.py',  # Issue #19: Resume duplication
+    "python src/tailor.py",
+    "python src/update_resume_experience.py",
+    "python src/duplicate_resume.py",  # Issue #19: Resume duplication
     # CRUD scripts (Issue #17)
-    'python src/crud/basic_info.py',
-    'python src/crud/summary.py',
-    'python src/crud/technical_skills.py',
-    'python src/crud/expertise.py',
-    'python src/crud/achievements.py',
-    'python src/crud/education.py',
-    'python src/crud/certifications.py',
-    'python src/crud/experience.py',
+    "python src/crud/basic_info.py",
+    "python src/crud/summary.py",
+    "python src/crud/technical_skills.py",
+    "python src/crud/expertise.py",
+    "python src/crud/achievements.py",
+    "python src/crud/education.py",
+    "python src/crud/certifications.py",
+    "python src/crud/experience.py",
     # Orchestrator and parsers (Issue #27: Phase 2)
-    'python src/orchestrator/resume_matcher.py',
-    'python src/orchestrator/crud_orchestrator.py',
-    'python src/parsers/job_posting_parser.py',
-    'python src/parsers/experience_parser.py',
-    'python src/parsers/nl_command_parser.py',
+    "python src/orchestrator/resume_matcher.py",
+    "python src/orchestrator/crud_orchestrator.py",
+    "python src/parsers/job_posting_parser.py",
+    "python src/parsers/experience_parser.py",
+    "python src/parsers/nl_command_parser.py",
     # Utility scripts for listing and formatting
-    'python src/utils/list_resumes.py',
-    'python src/utils/list_job_listings.py',
+    "python src/utils/list_resumes.py",
+    "python src/utils/list_job_listings.py",
     # Testing and utilities
-    'python -m pytest',
-    'python -m json.tool',
+    "python -m pytest",
+    "python -m json.tool",
     # Git commands
-    'git status',
-    'git log',
-    'git diff',
+    "git status",
+    "git log",
+    "git diff",
     # File system commands
-    'ls',
-    'dir',
-    'pwd',
-    'echo',
-    'cat',
-    'type'  # Windows equivalent of cat
+    "ls",
+    "dir",
+    "pwd",
+    "echo",
+    "cat",
+    "type",  # Windows equivalent of cat
 ]
 
 # Dangerous command patterns to block
 BLOCKED_COMMAND_PATTERNS = [
-    'rm -rf',
-    'del /f /s /q',
-    'format c:',  # More specific - block disk format commands
-    'format d:',
-    'dd if=',
-    'mkfs',
-    '> /dev/',
-    'chmod 777',
-    'sudo',
-    'su ',
+    "rm -rf",
+    "del /f /s /q",
+    "format c:",  # More specific - block disk format commands
+    "format d:",
+    "dd if=",
+    "mkfs",
+    "> /dev/",
+    "chmod 777",
+    "sudo",
+    "su ",
 ]
 
 
@@ -145,7 +146,7 @@ def get_agent_instance():
                 memory_file=str(AGENT_MEMORY_FILE),
                 model=os.getenv("OPENAI_MODEL", "gpt-4"),
                 auto_execute=True,
-                confirm_execution=False  # No confirmation in web UI
+                confirm_execution=False,  # No confirmation in web UI
             )
         except ValueError as e:
             # OPENAI_API_KEY not set
@@ -187,7 +188,10 @@ def validate_command_security(command: str) -> Tuple[bool, str]:
             break
 
     if not is_allowed:
-        return False, "Command not in whitelist. Only specific commands are allowed for security."
+        return (
+            False,
+            "Command not in whitelist. Only specific commands are allowed for security.",
+        )
 
     return True, ""
 
@@ -195,21 +199,21 @@ def validate_command_security(command: str) -> Tuple[bool, str]:
 def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
     """
     Validate the structure of resume JSON data.
-    
+
     Args:
         data: Resume data dictionary
-        
+
     Returns:
         Tuple of (is_valid, list_of_errors)
     """
     errors = []
-    
+
     # Required top-level fields
     required_fields = ["name", "title", "location", "contact", "summary"]
     for field in required_fields:
         if field not in data:
             errors.append(f"Missing required field: {field}")
-    
+
     # Validate contact structure
     if "contact" in data:
         contact = data["contact"]
@@ -220,7 +224,7 @@ def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
                 errors.append("Missing 'email' in contact")
             if "phone" not in contact:
                 errors.append("Missing 'phone' in contact")
-    
+
     # Validate experience array
     if "experience" in data:
         if not isinstance(data["experience"], list):
@@ -230,15 +234,15 @@ def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
                 if not isinstance(exp, dict):
                     errors.append(f"Experience entry {idx} must be an object")
                     continue
-                
+
                 exp_required = ["employer", "role", "dates", "bullets"]
                 for field in exp_required:
                     if field not in exp:
                         errors.append(f"Experience entry {idx} missing '{field}'")
-                
+
                 if "bullets" in exp and not isinstance(exp["bullets"], list):
                     errors.append(f"Experience entry {idx} 'bullets' must be an array")
-    
+
     # Validate education array
     if "education" in data:
         if not isinstance(data["education"], list):
@@ -248,50 +252,50 @@ def validate_resume_structure(data: Dict[str, Any]) -> Tuple[bool, List[str]]:
                 if not isinstance(edu, dict):
                     errors.append(f"Education entry {idx} must be an object")
                     continue
-                
+
                 edu_required = ["institution", "degree"]
                 for field in edu_required:
                     if field not in edu:
                         errors.append(f"Education entry {idx} missing '{field}'")
-    
+
     # Validate certifications array if present
     if "certifications" in data:
         if not isinstance(data["certifications"], list):
             errors.append("'certifications' must be an array")
-    
+
     return len(errors) == 0, errors
 
 
-@app.route('/api/health', methods=['GET'])
+@app.route("/api/health", methods=["GET"])
 def health_check():
     """Health check endpoint."""
     return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
 
-@app.route('/api/resume', methods=['GET'])
+@app.route("/api/resume", methods=["GET"])
 def get_resume():
     """
     Get the current resume data.
-    
+
     Returns:
         JSON response with resume data or error
     """
     try:
         if not RESUME_FILE.exists():
             return jsonify({"error": "Resume file not found"}), 404
-        
-        with open(RESUME_FILE, 'r', encoding='utf-8') as f:
+
+        with open(RESUME_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
+
         return jsonify({"success": True, "data": data})
-    
+
     except json.JSONDecodeError as e:
         return jsonify({"error": f"Invalid JSON in resume file: {str(e)}"}), 500
     except Exception as e:
         return jsonify({"error": f"Failed to read resume: {str(e)}"}), 500
 
 
-@app.route('/api/resume', methods=['PUT'])
+@app.route("/api/resume", methods=["PUT"])
 def update_resume():
     """
     Update the resume data.
@@ -317,14 +321,16 @@ def update_resume():
         backup_path = create_backup()
 
         # Write updated data
-        with open(RESUME_FILE, 'w', encoding='utf-8') as f:
+        with open(RESUME_FILE, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
-        return jsonify({
-            "success": True,
-            "message": "Resume updated successfully",
-            "backup": str(backup_path.name)
-        })
+        return jsonify(
+            {
+                "success": True,
+                "message": "Resume updated successfully",
+                "backup": str(backup_path.name),
+            }
+        )
 
     except (json.JSONDecodeError, ValueError) as e:
         return jsonify({"error": "No data provided or invalid JSON"}), 400
@@ -332,7 +338,7 @@ def update_resume():
         return jsonify({"error": f"Failed to update resume: {str(e)}"}), 500
 
 
-@app.route('/api/resume/validate', methods=['POST'])
+@app.route("/api/resume/validate", methods=["POST"])
 def validate_resume():
     """
     Validate resume JSON structure without saving.
@@ -350,10 +356,7 @@ def validate_resume():
 
         is_valid, errors = validate_resume_structure(data)
 
-        return jsonify({
-            "valid": is_valid,
-            "errors": errors
-        })
+        return jsonify({"valid": is_valid, "errors": errors})
 
     except (json.JSONDecodeError, ValueError) as e:
         return jsonify({"error": "No data provided or invalid JSON"}), 400
@@ -364,120 +367,130 @@ def validate_resume():
 def create_backup() -> Path:
     """
     Create a backup of the current resume file.
-    
+
     Returns:
         Path to the backup file
     """
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_filename = f"master_resume_backup_{timestamp}.json"
     backup_path = BACKUP_DIR / backup_filename
-    
+
     shutil.copy2(RESUME_FILE, backup_path)
-    
+
     return backup_path
 
 
-@app.route('/api/resume/backup', methods=['POST'])
+@app.route("/api/resume/backup", methods=["POST"])
 def backup_resume():
     """
     Create a manual backup of the current resume.
-    
+
     Returns:
         JSON response with backup file information
     """
     try:
         backup_path = create_backup()
-        
-        return jsonify({
-            "success": True,
-            "message": "Backup created successfully",
-            "backup": str(backup_path.name),
-            "timestamp": datetime.now().isoformat()
-        })
-    
+
+        return jsonify(
+            {
+                "success": True,
+                "message": "Backup created successfully",
+                "backup": str(backup_path.name),
+                "timestamp": datetime.now().isoformat(),
+            }
+        )
+
     except Exception as e:
         return jsonify({"error": f"Failed to create backup: {str(e)}"}), 500
 
 
-@app.route('/api/resume/backups', methods=['GET'])
+@app.route("/api/resume/backups", methods=["GET"])
 def list_backups():
     """
     List all available backup files.
-    
+
     Returns:
         JSON response with list of backup files
     """
     try:
         backups = []
-        
-        for backup_file in sorted(BACKUP_DIR.glob("master_resume_backup_*.json"), reverse=True):
+
+        for backup_file in sorted(
+            BACKUP_DIR.glob("master_resume_backup_*.json"), reverse=True
+        ):
             stat = backup_file.stat()
-            backups.append({
-                "filename": backup_file.name,
-                "size": stat.st_size,
-                "created": datetime.fromtimestamp(stat.st_mtime).isoformat()
-            })
-        
-        return jsonify({
-            "success": True,
-            "backups": backups
-        })
-    
+            backups.append(
+                {
+                    "filename": backup_file.name,
+                    "size": stat.st_size,
+                    "created": datetime.fromtimestamp(stat.st_mtime).isoformat(),
+                }
+            )
+
+        return jsonify({"success": True, "backups": backups})
+
     except Exception as e:
         return jsonify({"error": f"Failed to list backups: {str(e)}"}), 500
 
 
-@app.route('/api/resume/restore', methods=['POST'])
+@app.route("/api/resume/restore", methods=["POST"])
 def restore_backup():
     """
     Restore resume from a backup file.
-    
+
     Request body should contain:
         {"filename": "backup_filename.json"}
-    
+
     Returns:
         JSON response with success status or error
     """
     try:
         data = request.get_json()
-        
+
         if not data or "filename" not in data:
             return jsonify({"error": "Backup filename not provided"}), 400
-        
+
         backup_filename = data["filename"]
         backup_path = BACKUP_DIR / backup_filename
-        
+
         if not backup_path.exists():
             return jsonify({"error": "Backup file not found"}), 404
-        
+
         # Validate backup file before restoring
-        with open(backup_path, 'r', encoding='utf-8') as f:
+        with open(backup_path, "r", encoding="utf-8") as f:
             backup_data = json.load(f)
-        
+
         is_valid, errors = validate_resume_structure(backup_data)
         if not is_valid:
-            return jsonify({"error": "Backup file has invalid structure", "details": errors}), 400
-        
+            return (
+                jsonify(
+                    {"error": "Backup file has invalid structure", "details": errors}
+                ),
+                400,
+            )
+
         # Create backup of current file before restoring
         current_backup = create_backup()
-        
+
         # Restore from backup
         shutil.copy2(backup_path, RESUME_FILE)
-        
-        return jsonify({
-            "success": True,
-            "message": "Resume restored successfully",
-            "restored_from": backup_filename,
-            "current_backup": str(current_backup.name)
-        })
-    
+
+        return jsonify(
+            {
+                "success": True,
+                "message": "Resume restored successfully",
+                "restored_from": backup_filename,
+                "current_backup": str(current_backup.name),
+            }
+        )
+
     except json.JSONDecodeError as e:
         return jsonify({"error": f"Invalid JSON in backup file: {str(e)}"}), 400
     except Exception as e:
         return jsonify({"error": f"Failed to restore backup: {str(e)}"}), 500
 
 
-@app.route('/api/resume/docx', methods=['GET', 'POST'])
+@app.route("/api/resume/docx", methods=["GET", "POST"])
 def generate_docx():
     """
     Generate and return the resume DOCX file for download.
@@ -501,58 +514,82 @@ def generate_docx():
     import traceback
 
     # Paths
-    generate_script = BASE_DIR / 'src' / 'generate_hybrid_resume.py'
+    generate_script = BASE_DIR / "src" / "generate_hybrid_resume.py"
 
     # Determine which resume to use
-    if request.method == 'POST':
+    if request.method == "POST":
         data = request.get_json() or {}
-        resume_id = data.get('resume_id')
-        resume_path = data.get('resume_path')
+        resume_id = data.get("resume_id")
+        resume_path = data.get("resume_path")
 
         if resume_id:
             # Use resume ID to get the resume file
-            resume_json_path = DATA_DIR / 'resumes' / f'{resume_id}.json'
+            resume_json_path = DATA_DIR / "resumes" / f"{resume_id}.json"
             if not resume_json_path.exists():
-                return jsonify({'error': f'Resume with ID {resume_id} not found'}), 404
+                return jsonify({"error": f"Resume with ID {resume_id} not found"}), 404
         elif resume_path:
             # Use provided path
             resume_json_path = Path(resume_path)
             if not resume_json_path.is_absolute():
                 resume_json_path = DATA_DIR / resume_path
             if not resume_json_path.exists():
-                return jsonify({'error': f'Resume file not found at {resume_path}'}), 404
+                return (
+                    jsonify({"error": f"Resume file not found at {resume_path}"}),
+                    404,
+                )
         else:
             # Default to master resume
-            resume_json_path = DATA_DIR / 'master_resume.json'
+            resume_json_path = DATA_DIR / "master_resume.json"
     else:
         # GET request - use master resume for backward compatibility
-        resume_json_path = DATA_DIR / 'master_resume.json'
+        resume_json_path = DATA_DIR / "master_resume.json"
 
     # Create unique output paths to avoid conflicts
     import uuid
+
     unique_id = str(uuid.uuid4())[:8]
-    output_html_path = DATA_DIR / f'resume_{unique_id}.html'
-    docx_path = DATA_DIR / f'resume_{unique_id}.docx'
+    output_html_path = DATA_DIR / f"resume_{unique_id}.html"
+    docx_path = DATA_DIR / f"resume_{unique_id}.docx"
 
     # Generate HTML and DOCX from resume JSON
     try:
-        result = subprocess.run([
-            sys.executable,
-            str(generate_script),
-            '--input', str(resume_json_path),
-            '--output', str(output_html_path),
-            '--docx'
-        ], capture_output=True, text=True)
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(generate_script),
+                "--input",
+                str(resume_json_path),
+                "--output",
+                str(output_html_path),
+                "--docx",
+            ],
+            capture_output=True,
+            text=True,
+        )
 
         if result.returncode != 0:
-            return jsonify({'error': f'Failed to generate DOCX: {result.stderr or result.stdout}'}), 500
+            return (
+                jsonify(
+                    {
+                        "error": f"Failed to generate DOCX: {result.stderr or result.stdout}"
+                    }
+                ),
+                500,
+            )
 
         # The DOCX file should be created alongside the HTML file
         if not docx_path.exists():
-            return jsonify({'error': f'DOCX file was not created at {docx_path}. Output: {result.stdout}'}), 500
+            return (
+                jsonify(
+                    {
+                        "error": f"DOCX file was not created at {docx_path}. Output: {result.stdout}"
+                    }
+                ),
+                500,
+            )
 
         # Send file and clean up after
-        response = send_file(docx_path, as_attachment=True, download_name='resume.docx')
+        response = send_file(docx_path, as_attachment=True, download_name="resume.docx")
 
         # Clean up temporary files
         @response.call_on_close
@@ -568,15 +605,16 @@ def generate_docx():
         return response
 
     except Exception as e:
-        error_msg = f'Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}'
-        return jsonify({'error': error_msg}), 500
+        error_msg = f"Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}"
+        return jsonify({"error": error_msg}), 500
 
 
 # ============================================================================
 # Multi-Resume API Endpoints (Issue #6)
 # ============================================================================
 
-@app.route('/api/resumes', methods=['GET'])
+
+@app.route("/api/resumes", methods=["GET"])
 def list_resumes():
     """
     List all resumes.
@@ -586,15 +624,12 @@ def list_resumes():
     """
     try:
         resumes = resume_model.list_all()
-        return jsonify({
-            "success": True,
-            "resumes": [r.to_dict() for r in resumes]
-        })
+        return jsonify({"success": True, "resumes": [r.to_dict() for r in resumes]})
     except Exception as e:
         return jsonify({"error": f"Failed to list resumes: {str(e)}"}), 500
 
 
-@app.route('/api/resumes', methods=['POST'])
+@app.route("/api/resumes", methods=["POST"])
 def create_resume():
     """
     Create a new resume.
@@ -634,23 +669,25 @@ def create_resume():
 
         # Create resume
         metadata = resume_model.create(
-            data=data,
-            name=name,
-            job_listing_id=job_listing_id,
-            description=description
+            data=data, name=name, job_listing_id=job_listing_id, description=description
         )
 
-        return jsonify({
-            "success": True,
-            "message": "Resume created successfully",
-            "resume": metadata.to_dict()
-        }), 201
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "message": "Resume created successfully",
+                    "resume": metadata.to_dict(),
+                }
+            ),
+            201,
+        )
 
     except Exception as e:
         return jsonify({"error": f"Failed to create resume: {str(e)}"}), 500
 
 
-@app.route('/api/resumes/<resume_id>', methods=['GET'])
+@app.route("/api/resumes/<resume_id>", methods=["GET"])
 def get_resume_by_id(resume_id: str):
     """
     Get a specific resume by ID.
@@ -667,16 +704,13 @@ def get_resume_by_id(resume_id: str):
         if not data:
             return jsonify({"error": "Resume not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "data": data
-        })
+        return jsonify({"success": True, "data": data})
 
     except Exception as e:
         return jsonify({"error": f"Failed to get resume: {str(e)}"}), 500
 
 
-@app.route('/api/resumes/<resume_id>', methods=['PUT'])
+@app.route("/api/resumes/<resume_id>", methods=["PUT"])
 def update_resume_by_id(resume_id: str):
     """
     Update a specific resume.
@@ -725,16 +759,13 @@ def update_resume_by_id(resume_id: str):
         if metadata_updates:
             resume_model.update_metadata(resume_id, **metadata_updates)
 
-        return jsonify({
-            "success": True,
-            "message": "Resume updated successfully"
-        })
+        return jsonify({"success": True, "message": "Resume updated successfully"})
 
     except Exception as e:
         return jsonify({"error": f"Failed to update resume: {str(e)}"}), 500
 
 
-@app.route('/api/resumes/<resume_id>', methods=['DELETE'])
+@app.route("/api/resumes/<resume_id>", methods=["DELETE"])
 def delete_resume_by_id(resume_id: str):
     """
     Delete a specific resume.
@@ -751,16 +782,13 @@ def delete_resume_by_id(resume_id: str):
         if not success:
             return jsonify({"error": "Resume not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "message": "Resume deleted successfully"
-        })
+        return jsonify({"success": True, "message": "Resume deleted successfully"})
 
     except Exception as e:
         return jsonify({"error": f"Failed to delete resume: {str(e)}"}), 500
 
 
-@app.route('/api/resumes/<resume_id>/duplicate', methods=['POST'])
+@app.route("/api/resumes/<resume_id>/duplicate", methods=["POST"])
 def duplicate_resume(resume_id: str):
     """
     Duplicate a resume.
@@ -789,17 +817,22 @@ def duplicate_resume(resume_id: str):
         if not metadata:
             return jsonify({"error": "Source resume not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "message": "Resume duplicated successfully",
-            "resume": metadata.to_dict()
-        }), 201
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "message": "Resume duplicated successfully",
+                    "resume": metadata.to_dict(),
+                }
+            ),
+            201,
+        )
 
     except Exception as e:
         return jsonify({"error": f"Failed to duplicate resume: {str(e)}"}), 500
 
 
-@app.route('/api/resumes/<resume_id>/tailor', methods=['POST'])
+@app.route("/api/resumes/<resume_id>/tailor", methods=["POST"])
 def tailor_resume(resume_id: str):
     """
     Tailor a resume to a job listing.
@@ -852,8 +885,7 @@ def tailor_resume(resume_id: str):
         tailored_data = source_data.copy()
         if "experience" in tailored_data:
             tailored_data["experience"] = select_and_rewrite(
-                tailored_data["experience"],
-                keywords
+                tailored_data["experience"], keywords
             )
 
         # Create new tailored resume
@@ -861,29 +893,41 @@ def tailor_resume(resume_id: str):
             data=tailored_data,
             name=new_resume_name,
             job_listing_id=job_listing_id,
-            description=f"Tailored for {job_listing.get('title', 'Unknown')} at {job_listing.get('company', 'Unknown')}"
+            description=f"Tailored for {job_listing.get('title', 'Unknown')} at {job_listing.get('company', 'Unknown')}",
         )
 
-        return jsonify({
-            "success": True,
-            "message": "Resume tailored successfully",
-            "resume": metadata.to_dict(),
-            "keywords_used": keywords[:10]  # Return first 10 keywords
-        }), 201
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "message": "Resume tailored successfully",
+                    "resume": metadata.to_dict(),
+                    "keywords_used": keywords[:10],  # Return first 10 keywords
+                }
+            ),
+            201,
+        )
 
     except Exception as e:
         import traceback
-        return jsonify({
-            "error": f"Failed to tailor resume: {str(e)}",
-            "traceback": traceback.format_exc()
-        }), 500
+
+        return (
+            jsonify(
+                {
+                    "error": f"Failed to tailor resume: {str(e)}",
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
 
 
 # ============================================================================
 # Job Listing API Endpoints (Issue #6)
 # ============================================================================
 
-@app.route('/api/job-listings', methods=['GET'])
+
+@app.route("/api/job-listings", methods=["GET"])
 def list_job_listings():
     """
     List all job listings.
@@ -893,15 +937,12 @@ def list_job_listings():
     """
     try:
         job_listings = job_listing_model.list_all()
-        return jsonify({
-            "success": True,
-            "job_listings": job_listings
-        })
+        return jsonify({"success": True, "job_listings": job_listings})
     except Exception as e:
         return jsonify({"error": f"Failed to list job listings: {str(e)}"}), 500
 
 
-@app.route('/api/job-listings', methods=['POST'])
+@app.route("/api/job-listings", methods=["POST"])
 def create_job_listing():
     """
     Create a new job listing.
@@ -945,23 +986,28 @@ def create_job_listing():
             description=description,
             url=body.get("url"),
             location=body.get("location"),
-            salary_range=body.get("salary_range")
+            salary_range=body.get("salary_range"),
         )
 
         # Extract keywords automatically
         job_listing_model.extract_keywords(job_data["id"])
 
-        return jsonify({
-            "success": True,
-            "message": "Job listing created successfully",
-            "job_listing": job_data
-        }), 201
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "message": "Job listing created successfully",
+                    "job_listing": job_data,
+                }
+            ),
+            201,
+        )
 
     except Exception as e:
         return jsonify({"error": f"Failed to create job listing: {str(e)}"}), 500
 
 
-@app.route('/api/job-listings/<job_id>', methods=['GET'])
+@app.route("/api/job-listings/<job_id>", methods=["GET"])
 def get_job_listing(job_id: str):
     """
     Get a specific job listing by ID.
@@ -978,16 +1024,13 @@ def get_job_listing(job_id: str):
         if not job_data:
             return jsonify({"error": "Job listing not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "job_listing": job_data
-        })
+        return jsonify({"success": True, "job_listing": job_data})
 
     except Exception as e:
         return jsonify({"error": f"Failed to get job listing: {str(e)}"}), 500
 
 
-@app.route('/api/job-listings/<job_id>', methods=['PUT'])
+@app.route("/api/job-listings/<job_id>", methods=["PUT"])
 def update_job_listing(job_id: str):
     """
     Update a specific job listing.
@@ -1011,16 +1054,13 @@ def update_job_listing(job_id: str):
         if not success:
             return jsonify({"error": "Job listing not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "message": "Job listing updated successfully"
-        })
+        return jsonify({"success": True, "message": "Job listing updated successfully"})
 
     except Exception as e:
         return jsonify({"error": f"Failed to update job listing: {str(e)}"}), 500
 
 
-@app.route('/api/job-listings/<job_id>', methods=['DELETE'])
+@app.route("/api/job-listings/<job_id>", methods=["DELETE"])
 def delete_job_listing(job_id: str):
     """
     Delete a specific job listing.
@@ -1037,16 +1077,13 @@ def delete_job_listing(job_id: str):
         if not success:
             return jsonify({"error": "Job listing not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "message": "Job listing deleted successfully"
-        })
+        return jsonify({"success": True, "message": "Job listing deleted successfully"})
 
     except Exception as e:
         return jsonify({"error": f"Failed to delete job listing: {str(e)}"}), 500
 
 
-@app.route('/api/job-listings/<job_id>/extract-keywords', methods=['POST'])
+@app.route("/api/job-listings/<job_id>/extract-keywords", methods=["POST"])
 def extract_job_keywords(job_id: str):
     """
     Extract keywords from job listing description.
@@ -1063,10 +1100,7 @@ def extract_job_keywords(job_id: str):
         if keywords is None:
             return jsonify({"error": "Job listing not found"}), 404
 
-        return jsonify({
-            "success": True,
-            "keywords": keywords
-        })
+        return jsonify({"success": True, "keywords": keywords})
 
     except Exception as e:
         return jsonify({"error": f"Failed to extract keywords: {str(e)}"}), 500
@@ -1076,7 +1110,8 @@ def extract_job_keywords(job_id: str):
 # Agent Integration API Endpoints (Issue #12)
 # ============================================================================
 
-@app.route('/api/agent/chat', methods=['POST'])
+
+@app.route("/api/agent/chat", methods=["POST"])
 def agent_chat():
     """
     Send a message to the AI agent and get a response.
@@ -1092,10 +1127,10 @@ def agent_chat():
     try:
         data = request.get_json()
 
-        if not data or 'message' not in data:
+        if not data or "message" not in data:
             return jsonify({"error": "Missing 'message' in request body"}), 400
 
-        message = data['message'].strip()
+        message = data["message"].strip()
 
         if not message:
             return jsonify({"error": "Message cannot be empty"}), 400
@@ -1103,9 +1138,14 @@ def agent_chat():
         # Get agent instance
         agent = get_agent_instance()
         if agent is None:
-            return jsonify({
-                "error": "Agent not configured. Please set OPENAI_API_KEY environment variable."
-            }), 500
+            return (
+                jsonify(
+                    {
+                        "error": "Agent not configured. Please set OPENAI_API_KEY environment variable."
+                    }
+                ),
+                500,
+            )
 
         # Check if it's a command and validate security
         if command_executor.is_command(message):
@@ -1113,24 +1153,26 @@ def agent_chat():
             is_valid, error_msg = validate_command_security(command)
 
             if not is_valid:
-                return jsonify({
-                    "success": False,
-                    "error": f"Command blocked for security: {error_msg}"
-                }), 403
+                return (
+                    jsonify(
+                        {
+                            "success": False,
+                            "error": f"Command blocked for security: {error_msg}",
+                        }
+                    ),
+                    403,
+                )
 
         # Process message through agent
         response = agent.process_message(message)
 
-        return jsonify({
-            "success": True,
-            "response": response
-        })
+        return jsonify({"success": True, "response": response})
 
     except Exception as e:
         return jsonify({"error": f"Failed to process message: {str(e)}"}), 500
 
 
-@app.route('/api/agent/memory', methods=['GET'])
+@app.route("/api/agent/memory", methods=["GET"])
 def get_agent_memory():
     """
     Get the agent's conversation memory.
@@ -1142,16 +1184,13 @@ def get_agent_memory():
         memory = get_memory_manager()
         messages = memory.get_messages()
 
-        return jsonify({
-            "success": True,
-            "messages": messages
-        })
+        return jsonify({"success": True, "messages": messages})
 
     except Exception as e:
         return jsonify({"error": f"Failed to retrieve memory: {str(e)}"}), 500
 
 
-@app.route('/api/agent/memory/clear', methods=['POST'])
+@app.route("/api/agent/memory/clear", methods=["POST"])
 def clear_agent_memory():
     """
     Clear the agent's conversation memory.
@@ -1168,16 +1207,15 @@ def clear_agent_memory():
         global agent_instance
         agent_instance = None
 
-        return jsonify({
-            "success": True,
-            "message": "Agent memory cleared successfully"
-        })
+        return jsonify(
+            {"success": True, "message": "Agent memory cleared successfully"}
+        )
 
     except Exception as e:
         return jsonify({"error": f"Failed to clear memory: {str(e)}"}), 500
 
 
-@app.route('/api/agent/memory/stats', methods=['GET'])
+@app.route("/api/agent/memory/stats", methods=["GET"])
 def get_agent_memory_stats():
     """
     Get agent memory usage statistics (Issue #24).
@@ -1198,20 +1236,22 @@ def get_agent_memory_stats():
     try:
         agent = get_agent_instance()
         if agent is None:
-            return jsonify({"error": "Agent not initialized. OPENAI_API_KEY may not be set."}), 500
+            return (
+                jsonify(
+                    {"error": "Agent not initialized. OPENAI_API_KEY may not be set."}
+                ),
+                500,
+            )
 
         stats = agent.get_memory_stats()
 
-        return jsonify({
-            "success": True,
-            "stats": stats
-        })
+        return jsonify({"success": True, "stats": stats})
 
     except Exception as e:
         return jsonify({"error": f"Failed to get memory stats: {str(e)}"}), 500
 
 
-@app.route('/api/agent/validate-command', methods=['POST'])
+@app.route("/api/agent/validate-command", methods=["POST"])
 def validate_command():
     """
     Validate a command for security before execution.
@@ -1227,10 +1267,10 @@ def validate_command():
     try:
         data = request.get_json()
 
-        if not data or 'command' not in data:
+        if not data or "command" not in data:
             return jsonify({"error": "Missing 'command' in request body"}), 400
 
-        command = data['command'].strip()
+        command = data["command"].strip()
 
         if not command:
             return jsonify({"error": "Command cannot be empty"}), 400
@@ -1238,20 +1278,13 @@ def validate_command():
         is_valid, error_msg = validate_command_security(command)
 
         if not is_valid:
-            return jsonify({
-                "valid": False,
-                "error": error_msg
-            }), 403
+            return jsonify({"valid": False, "error": error_msg}), 403
 
-        return jsonify({
-            "valid": True,
-            "message": "Command is allowed"
-        })
+        return jsonify({"valid": True, "message": "Command is allowed"})
 
     except Exception as e:
         return jsonify({"error": f"Failed to validate command: {str(e)}"}), 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
-
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)

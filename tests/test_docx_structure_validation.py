@@ -2,29 +2,37 @@
 Comprehensive DOCX structure validation tests.
 These tests validate that generated DOCX files match the structure of the original template.
 """
-import sys
-from pathlib import Path
-import tempfile
+
 import os
+import sys
+import tempfile
+from pathlib import Path
 
 # Add src to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 import unittest
+
 from docx import Document
-from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.shared import Inches, Pt
 
 
 class TestDocxStructureValidation(unittest.TestCase):
     """Test that generated DOCX matches the original template structure."""
-    
+
     def setUp(self):
         """Load the generated output and reference template."""
         # Use the generated baseline for testing
-        self.output_path = Path(__file__).parent.parent / "out" / "test_generated_baseline.docx"
+        self.output_path = (
+            Path(__file__).parent.parent / "out" / "test_generated_baseline.docx"
+        )
         # Use the original template as reference
-        self.reference_path = Path(__file__).parent.parent / "out" / "Sidney Jones Resume - Solution Architect Leader.docx"
+        self.reference_path = (
+            Path(__file__).parent.parent
+            / "out"
+            / "Sidney Jones Resume - Solution Architect Leader.docx"
+        )
 
         if not self.output_path.exists():
             self.skipTest(f"Output file not found: {self.output_path}")
@@ -34,7 +42,7 @@ class TestDocxStructureValidation(unittest.TestCase):
 
         self.output_doc = Document(str(self.output_path))
         self.reference_doc = Document(str(self.reference_path))
-    
+
     def test_document_has_expected_sections(self):
         """Document should have at least one section."""
         out_sections = len(self.output_doc.sections)
@@ -42,7 +50,7 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertGreaterEqual(
             out_sections,
             1,
-            f"Document should have at least 1 section, found {out_sections}"
+            f"Document should have at least 1 section, found {out_sections}",
         )
 
     def test_has_expected_number_of_tables(self):
@@ -52,7 +60,7 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertEqual(
             7,
             out_tables,
-            f"Expected 7 tables (header, tech prof header, tech prof content, areas header, areas content, career header, education header), found {out_tables}"
+            f"Expected 7 tables (header, tech prof header, tech prof content, areas header, areas content, career header, education header), found {out_tables}",
         )
 
     def test_table_0_is_header_with_name_and_contact(self):
@@ -65,13 +73,13 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertEqual(
             len(header_table.rows),
             1,
-            f"Header table should have 1 row, found {len(header_table.rows)}"
+            f"Header table should have 1 row, found {len(header_table.rows)}",
         )
 
         self.assertEqual(
             len(header_table.columns),
             2,
-            f"Header table should have 2 columns, found {len(header_table.columns)}"
+            f"Header table should have 2 columns, found {len(header_table.columns)}",
         )
 
     def test_table_1_is_technical_proficiencies_header(self):
@@ -84,13 +92,13 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertEqual(
             len(table.rows),
             2,
-            f"Technical Proficiencies header should have 2 rows, found {len(table.rows)}"
+            f"Technical Proficiencies header should have 2 rows, found {len(table.rows)}",
         )
 
         self.assertEqual(
             len(table.columns),
             3,
-            f"Technical Proficiencies header should have 3 columns, found {len(table.columns)}"
+            f"Technical Proficiencies header should have 3 columns, found {len(table.columns)}",
         )
 
     def test_table_2_is_technical_proficiencies_content(self):
@@ -103,32 +111,32 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertEqual(
             len(table.rows),
             8,
-            f"Technical Proficiencies content should have 8 rows, found {len(table.rows)}"
+            f"Technical Proficiencies content should have 8 rows, found {len(table.rows)}",
         )
 
         self.assertEqual(
             len(table.columns),
             2,
-            f"Technical Proficiencies content should have 2 columns, found {len(table.columns)}"
+            f"Technical Proficiencies content should have 2 columns, found {len(table.columns)}",
         )
-    
+
     def test_header_table_contains_name(self):
         """First table (header) should contain the name 'Sidney Jones'."""
         if len(self.output_doc.tables) == 0:
             self.fail("Output document has no tables")
-        
+
         header_table = self.output_doc.tables[0]
         header_text = ""
         for row in header_table.rows:
             for cell in row.cells:
                 header_text += cell.text + " "
-        
+
         self.assertIn(
             "Sidney Jones",
             header_text,
-            f"Name 'Sidney Jones' not found in header table. Found: {header_text[:200]}"
+            f"Name 'Sidney Jones' not found in header table. Found: {header_text[:200]}",
         )
-    
+
     def test_header_table_contains_contact_info(self):
         """First table (header) should contain contact information."""
         if len(self.output_doc.tables) == 0:
@@ -143,15 +151,15 @@ class TestDocxStructureValidation(unittest.TestCase):
         # Check for email (should contain an @ symbol and domain)
         self.assertTrue(
             "@" in header_text and (".com" in header_text or ".org" in header_text),
-            f"Email not found in header table. Found: {header_text[:200]}"
+            f"Email not found in header table. Found: {header_text[:200]}",
         )
 
         # Check for phone (should contain digits)
         self.assertTrue(
             "248" in header_text and "802" in header_text,
-            f"Phone not found in header table. Found: {header_text[:200]}"
+            f"Phone not found in header table. Found: {header_text[:200]}",
         )
-    
+
     def test_technical_proficiencies_section_exists(self):
         """Document should have a 'Technical Proficiencies' section."""
         all_text = ""
@@ -159,13 +167,13 @@ class TestDocxStructureValidation(unittest.TestCase):
             for row in table.rows:
                 for cell in row.cells:
                     all_text += cell.text + " "
-        
+
         self.assertIn(
             "Technical Proficiencies",
             all_text,
-            "Technical Proficiencies section not found"
+            "Technical Proficiencies section not found",
         )
-    
+
     def test_areas_of_expertise_section_exists(self):
         """Document should have an 'Areas of Expertise' section."""
         all_text = ""
@@ -173,13 +181,11 @@ class TestDocxStructureValidation(unittest.TestCase):
             for row in table.rows:
                 for cell in row.cells:
                     all_text += cell.text + " "
-        
+
         self.assertIn(
-            "Areas of Expertise",
-            all_text,
-            "Areas of Expertise section not found"
+            "Areas of Expertise", all_text, "Areas of Expertise section not found"
         )
-    
+
     def test_career_experience_section_exists(self):
         """Document should have a 'Career Experience' section."""
         all_text = ""
@@ -187,13 +193,11 @@ class TestDocxStructureValidation(unittest.TestCase):
             for row in table.rows:
                 for cell in row.cells:
                     all_text += cell.text + " "
-        
+
         self.assertIn(
-            "Career Experience",
-            all_text,
-            "Career Experience section not found"
+            "Career Experience", all_text, "Career Experience section not found"
         )
-    
+
     def test_education_section_exists(self):
         """Document should have an 'Education & Professional Development' section."""
         all_text = ""
@@ -201,13 +205,9 @@ class TestDocxStructureValidation(unittest.TestCase):
             for row in table.rows:
                 for cell in row.cells:
                     all_text += cell.text + " "
-        
-        self.assertIn(
-            "Education",
-            all_text,
-            "Education section not found"
-        )
-    
+
+        self.assertIn("Education", all_text, "Education section not found")
+
     def test_job_titles_present(self):
         """Document should contain key job titles from the resume."""
         all_text = ""
@@ -225,7 +225,7 @@ class TestDocxStructureValidation(unittest.TestCase):
             "BPM Software Solutions",
             "Interactive Business Solutions",
             "Soare Enterprises",
-            "John Deere Landscapes"
+            "John Deere Landscapes",
         ]
 
         found_titles = [title for title in job_titles if title in all_text]
@@ -233,9 +233,9 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertGreater(
             len(found_titles),
             0,
-            f"No job titles found in document. Expected one of: {job_titles}. Found text: {all_text[:500]}"
+            f"No job titles found in document. Expected one of: {job_titles}. Found text: {all_text[:500]}",
         )
-    
+
     def test_visual_formatting_preserved(self):
         """Check that visual formatting elements are preserved."""
         # This is a basic check - we verify that the document has styled content
@@ -253,8 +253,7 @@ class TestDocxStructureValidation(unittest.TestCase):
                                 has_colored_text = True
 
         self.assertTrue(
-            has_bold,
-            "No bold text found - formatting may not be preserved"
+            has_bold, "No bold text found - formatting may not be preserved"
         )
 
     def test_technical_proficiencies_data_populated(self):
@@ -275,7 +274,7 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertGreaterEqual(
             rows_with_content,
             4,
-            f"Technical proficiencies table should have at least 4 rows with content, found {rows_with_content}"
+            f"Technical proficiencies table should have at least 4 rows with content, found {rows_with_content}",
         )
 
     def test_areas_of_expertise_data_populated(self):
@@ -295,7 +294,7 @@ class TestDocxStructureValidation(unittest.TestCase):
 
         self.assertTrue(
             has_content,
-            "Areas of expertise table appears to be empty or has minimal content"
+            "Areas of expertise table appears to be empty or has minimal content",
         )
 
     def test_experience_bullets_present(self):
@@ -307,7 +306,14 @@ class TestDocxStructureValidation(unittest.TestCase):
         for para in self.output_doc.paragraphs:
             text = para.text.strip()
             # Look for company names or role indicators
-            if any(company in text for company in ["BPM Software Solutions", "Interactive Business Solutions", "Soare Enterprises"]):
+            if any(
+                company in text
+                for company in [
+                    "BPM Software Solutions",
+                    "Interactive Business Solutions",
+                    "Soare Enterprises",
+                ]
+            ):
                 found_experience_section = True
             # Count non-empty paragraphs after finding experience section
             if found_experience_section and text and len(text) > 20:
@@ -316,9 +322,9 @@ class TestDocxStructureValidation(unittest.TestCase):
         self.assertGreater(
             experience_paras,
             5,
-            f"Expected at least 5 experience paragraphs, found {experience_paras}"
+            f"Expected at least 5 experience paragraphs, found {experience_paras}",
         )
-    
+
     def test_document_not_empty(self):
         """Output document should not be empty."""
         total_text = ""
@@ -326,17 +332,16 @@ class TestDocxStructureValidation(unittest.TestCase):
             for row in table.rows:
                 for cell in row.cells:
                     total_text += cell.text
-        
+
         for para in self.output_doc.paragraphs:
             total_text += para.text
-        
+
         self.assertGreater(
             len(total_text.strip()),
             100,
-            f"Document appears to be empty or too short. Length: {len(total_text)}"
+            f"Document appears to be empty or too short. Length: {len(total_text)}",
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
-

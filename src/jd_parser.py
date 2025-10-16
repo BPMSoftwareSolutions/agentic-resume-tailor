@@ -1,22 +1,79 @@
-import re, json
+import json
+import re
 from collections import Counter
 from typing import List
 
 DEFAULT_SKILLS = [
-    "ci/cd","github actions","azure devops","jenkins","terraform","kubernetes",
-    "python","c#","observability","dynatrace","splunk","microservices","testing","mentoring",
-    "aws","azure","secrets","security","rbac","encryption","docker","ansible","prometheus",
-    "grafana","elasticsearch","redis","postgresql","mongodb","react","angular","vue",
-    "node.js","typescript","javascript","java","golang","rust","ruby","php",
-    "machine learning","artificial intelligence","data science","agile","scrum","kanban",
-    "rest api","graphql","grpc","oauth","jwt","ssl","tls","vpc","s3","ec2","lambda",
-    "cloudformation","helm","istio","service mesh","api gateway","load balancer"
+    "ci/cd",
+    "github actions",
+    "azure devops",
+    "jenkins",
+    "terraform",
+    "kubernetes",
+    "python",
+    "c#",
+    "observability",
+    "dynatrace",
+    "splunk",
+    "microservices",
+    "testing",
+    "mentoring",
+    "aws",
+    "azure",
+    "secrets",
+    "security",
+    "rbac",
+    "encryption",
+    "docker",
+    "ansible",
+    "prometheus",
+    "grafana",
+    "elasticsearch",
+    "redis",
+    "postgresql",
+    "mongodb",
+    "react",
+    "angular",
+    "vue",
+    "node.js",
+    "typescript",
+    "javascript",
+    "java",
+    "golang",
+    "rust",
+    "ruby",
+    "php",
+    "machine learning",
+    "artificial intelligence",
+    "data science",
+    "agile",
+    "scrum",
+    "kanban",
+    "rest api",
+    "graphql",
+    "grpc",
+    "oauth",
+    "jwt",
+    "ssl",
+    "tls",
+    "vpc",
+    "s3",
+    "ec2",
+    "lambda",
+    "cloudformation",
+    "helm",
+    "istio",
+    "service mesh",
+    "api gateway",
+    "load balancer",
 ]
 
-def normalize(txt:str)->str:
-    return re.sub(r"[^a-z0-9+/# ]+"," ",txt.lower())
 
-def extract_keywords(jd_text:str, extra:List[str]=None)->List[str]:
+def normalize(txt: str) -> str:
+    return re.sub(r"[^a-z0-9+/# ]+", " ", txt.lower())
+
+
+def extract_keywords(jd_text: str, extra: List[str] = None) -> List[str]:
     text = normalize(jd_text)
     tokens = text.split()
 
@@ -32,8 +89,10 @@ def extract_keywords(jd_text:str, extra:List[str]=None)->List[str]:
             found.append(s)
 
     # Extract bigrams and trigrams for technical phrases
-    bigrams = [f"{tokens[i]} {tokens[i+1]}" for i in range(len(tokens)-1)]
-    trigrams = [f"{tokens[i]} {tokens[i+1]} {tokens[i+2]}" for i in range(len(tokens)-2)]
+    bigrams = [f"{tokens[i]} {tokens[i+1]}" for i in range(len(tokens) - 1)]
+    trigrams = [
+        f"{tokens[i]} {tokens[i+1]} {tokens[i+2]}" for i in range(len(tokens) - 2)
+    ]
 
     # Count bigrams and trigrams
     bigram_counts = Counter(bigrams).most_common(10)
@@ -51,6 +110,6 @@ def extract_keywords(jd_text:str, extra:List[str]=None)->List[str]:
     # Add top frequent single tokens by heuristic length
     long_tokens = [t for t in tokens if len(t) > 4]
     counts = Counter(long_tokens).most_common(20)
-    found += [w for w,_ in counts if w not in found]
+    found += [w for w, _ in counts if w not in found]
 
     return list(dict.fromkeys(found))  # dedupe, keep order

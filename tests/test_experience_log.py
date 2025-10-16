@@ -1,6 +1,6 @@
+import json
 import sys
 import tempfile
-import json
 from pathlib import Path
 from pathlib import Path as _P
 
@@ -9,7 +9,7 @@ ROOT = _P(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from src.experience_log import ExperienceLog, Experience
+from src.experience_log import Experience, ExperienceLog
 
 
 def test_add_and_persist(tmp_path: Path):

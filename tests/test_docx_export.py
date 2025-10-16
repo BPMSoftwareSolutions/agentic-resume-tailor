@@ -3,16 +3,18 @@ Tests for DOCX export functionality with multi-resume support.
 Related to GitHub Issue #6
 """
 
-import pytest
 import json
 from pathlib import Path
+
+import pytest
+
 from src.api.app import app
 
 
 @pytest.fixture
 def client():
     """Create a test client for the Flask app."""
-    app.config['TESTING'] = True
+    app.config["TESTING"] = True
     with app.test_client() as client:
         yield client
 
@@ -24,30 +26,24 @@ def sample_resume_data():
         "name": "John Doe",
         "title": "Software Engineer",
         "location": "San Francisco, CA",
-        "contact": {
-            "email": "john@example.com",
-            "phone": "555-1234"
-        },
+        "contact": {"email": "john@example.com", "phone": "555-1234"},
         "summary": "Experienced software engineer",
         "experience": [
             {
                 "employer": "Tech Corp",
                 "role": "Senior Engineer",
                 "dates": "2020-Present",
-                "bullets": [
-                    "Built scalable systems",
-                    "Led team of 5 engineers"
-                ]
+                "bullets": ["Built scalable systems", "Led team of 5 engineers"],
             }
         ],
         "education": [
             {
                 "institution": "University of Tech",
                 "degree": "BS Computer Science",
-                "dates": "2016-2020"
+                "dates": "2016-2020",
             }
         ],
-        "skills": ["Python", "JavaScript", "AWS"]
+        "skills": ["Python", "JavaScript", "AWS"],
     }
 
 
@@ -61,60 +57,60 @@ class TestDocxExport:
         # In a real test, we'd mock the subprocess call
         pass  # Placeholder - requires mocking subprocess
 
-    def test_export_specific_resume_post(self, client, tmp_path, sample_resume_data, monkeypatch):
+    def test_export_specific_resume_post(
+        self, client, tmp_path, sample_resume_data, monkeypatch
+    ):
         """Test exporting a specific resume using POST request with resume_id."""
         # Create a test resume first
         response = client.post(
-            '/api/resumes',
-            data=json.dumps({
-                'name': 'Test Resume',
-                'description': 'Test description',
-                'data': sample_resume_data
-            }),
-            content_type='application/json'
+            "/api/resumes",
+            data=json.dumps(
+                {
+                    "name": "Test Resume",
+                    "description": "Test description",
+                    "data": sample_resume_data,
+                }
+            ),
+            content_type="application/json",
         )
-        
+
         assert response.status_code == 201
         result = json.loads(response.data)
-        resume_id = result['resume']['id']
+        resume_id = result["resume"]["id"]
 
         # Note: Full test would require mocking subprocess.run
         # For now, we just verify the endpoint accepts the request
         # In production, you'd mock the DOCX generation
-        
+
         # Verify the resume was created
         assert resume_id is not None
-        assert result['resume']['name'] == 'Test Resume'
+        assert result["resume"]["name"] == "Test Resume"
 
     def test_export_nonexistent_resume(self, client):
         """Test exporting a resume that doesn't exist."""
         response = client.post(
-            '/api/resume/docx',
-            data=json.dumps({
-                'resume_id': 'nonexistent-id'
-            }),
-            content_type='application/json'
+            "/api/resume/docx",
+            data=json.dumps({"resume_id": "nonexistent-id"}),
+            content_type="application/json",
         )
-        
+
         assert response.status_code == 404
         result = json.loads(response.data)
-        assert 'error' in result
-        assert 'not found' in result['error'].lower()
+        assert "error" in result
+        assert "not found" in result["error"].lower()
 
     def test_export_with_invalid_path(self, client):
         """Test exporting with an invalid resume path."""
         response = client.post(
-            '/api/resume/docx',
-            data=json.dumps({
-                'resume_path': 'invalid/path/to/resume.json'
-            }),
-            content_type='application/json'
+            "/api/resume/docx",
+            data=json.dumps({"resume_path": "invalid/path/to/resume.json"}),
+            content_type="application/json",
         )
-        
+
         assert response.status_code == 404
         result = json.loads(response.data)
-        assert 'error' in result
-        assert 'not found' in result['error'].lower()
+        assert "error" in result
+        assert "not found" in result["error"].lower()
 
     def test_export_defaults_to_master_on_empty_post(self, client):
         """Test that POST with empty body defaults to master resume."""
@@ -131,18 +127,20 @@ class TestDocxExportIntegration:
         """Test creating a resume and then exporting it."""
         # Create resume
         create_response = client.post(
-            '/api/resumes',
-            data=json.dumps({
-                'name': 'Export Test Resume',
-                'description': 'Resume for export testing',
-                'data': sample_resume_data
-            }),
-            content_type='application/json'
+            "/api/resumes",
+            data=json.dumps(
+                {
+                    "name": "Export Test Resume",
+                    "description": "Resume for export testing",
+                    "data": sample_resume_data,
+                }
+            ),
+            content_type="application/json",
         )
-        
+
         assert create_response.status_code == 201
         resume_data = json.loads(create_response.data)
-        resume_id = resume_data['resume']['id']
+        resume_id = resume_data["resume"]["id"]
 
         # Verify we can request export (actual generation would be mocked)
         # In a real test environment, you'd mock subprocess.run
@@ -152,33 +150,32 @@ class TestDocxExportIntegration:
         """Test tailoring a resume and then exporting it."""
         # Create a job listing
         job_response = client.post(
-            '/api/job-listings',
-            data=json.dumps({
-                'title': 'Senior Software Engineer',
-                'company': 'Tech Company',
-                'description': 'Looking for Python expert with AWS experience',
-                'location': 'Remote'
-            }),
-            content_type='application/json'
+            "/api/job-listings",
+            data=json.dumps(
+                {
+                    "title": "Senior Software Engineer",
+                    "company": "Tech Company",
+                    "description": "Looking for Python expert with AWS experience",
+                    "location": "Remote",
+                }
+            ),
+            content_type="application/json",
         )
-        
+
         assert job_response.status_code == 201
         job_data = json.loads(job_response.data)
-        job_id = job_data['job_listing']['id']
+        job_id = job_data["job_listing"]["id"]
 
         # Create a resume
         resume_response = client.post(
-            '/api/resumes',
-            data=json.dumps({
-                'name': 'Base Resume',
-                'data': sample_resume_data
-            }),
-            content_type='application/json'
+            "/api/resumes",
+            data=json.dumps({"name": "Base Resume", "data": sample_resume_data}),
+            content_type="application/json",
         )
-        
+
         assert resume_response.status_code == 201
         resume_data = json.loads(resume_response.data)
-        resume_id = resume_data['resume']['id']
+        resume_id = resume_data["resume"]["id"]
 
         # Tailor the resume (this would use actual tailoring logic)
         # Note: This might fail if tailoring dependencies aren't available
@@ -189,6 +186,5 @@ class TestDocxExportIntegration:
         assert job_id is not None
 
 
-if __name__ == '__main__':
-    pytest.main([__file__, '-v'])
-
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])

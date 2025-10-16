@@ -5,27 +5,29 @@ This module combines HTML structure, CSS, and SVG graphics into a
 complete, self-contained HTML document.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 
 class HybridHTMLAssembler:
     """
     Assemble complete HTML document from components.
     """
-    
+
     def __init__(self, theme: str = "creative"):
         """
         Initialize the HTML assembler.
-        
+
         Args:
             theme: Theme name (professional, modern, executive, creative)
         """
         self.theme = theme
-    
-    def assemble_html(self, html_content: str, css: str, resume_name: str = "Resume") -> str:
+
+    def assemble_html(
+        self, html_content: str, css: str, resume_name: str = "Resume"
+    ) -> str:
         """
         Create complete HTML document.
-        
+
         Structure:
         <!DOCTYPE html>
         <html lang="en">
@@ -40,16 +42,16 @@ class HybridHTMLAssembler:
           </div>
         </body>
         </html>
-        
+
         Args:
             html_content: Generated HTML content from HybridResumeProcessor
             css: Generated CSS from HybridCSSGenerator
             resume_name: Name for the document title
-            
+
         Returns:
             Complete HTML document as string
         """
-        return f'''<!DOCTYPE html>
+        return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -67,24 +69,23 @@ class HybridHTMLAssembler:
 {html_content}
   </div>
 </body>
-</html>'''
-    
+</html>"""
+
     def save_html(self, html: str, output_path: str) -> bool:
         """
         Save HTML document to file.
-        
+
         Args:
             html: Complete HTML document
             output_path: Path for output file
-            
+
         Returns:
             True if successful, False otherwise
         """
         try:
-            with open(output_path, 'w', encoding='utf-8') as f:
+            with open(output_path, "w", encoding="utf-8") as f:
                 f.write(html)
             return True
         except Exception as e:
             print(f"Error saving HTML: {e}")
             return False
-
