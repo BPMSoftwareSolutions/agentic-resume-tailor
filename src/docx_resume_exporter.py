@@ -304,23 +304,23 @@ class DOCXResumeExporter:
 
                                 p = doc.add_paragraph(bullet_text, style="List Bullet")
 
-                                # Extract tags
-                                tags_elem = bullet_item.find(class_="tags")
-                                if tags_elem:
-                                    tag_elements = tags_elem.find_all(class_="tag")
-                                    if tag_elements:
-                                        tags_text = " | ".join(
-                                            [
-                                                tag.get_text().strip()
-                                                for tag in tag_elements
-                                            ]
-                                        )
-                                        p = doc.add_paragraph(f"Tags: {tags_text}")
-                                        run = p.runs[0]
-                                        run.font.size = Pt(9)
-                                        run.font.color.rgb = RGBColor(
-                                            124, 58, 237
-                                        )  # Purple
+                        # Extract experience-level tags (after all bullets)
+                        tags_elem = exp_item.find(class_="tags")
+                        if tags_elem:
+                            tag_elements = tags_elem.find_all(class_="tag")
+                            if tag_elements:
+                                tags_text = " | ".join(
+                                    [
+                                        tag.get_text().strip()
+                                        for tag in tag_elements
+                                    ]
+                                )
+                                p = doc.add_paragraph(f"Tags: {tags_text}")
+                                run = p.runs[0]
+                                run.font.size = Pt(9)
+                                run.font.color.rgb = RGBColor(
+                                    124, 58, 237
+                                )  # Purple
 
                         # Add spacing between experience items
                         doc.add_paragraph()

@@ -1,0 +1,491 @@
+{
+  "name": "Sidney Jones",
+  "title": "Lead Software Engineer — AI",
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "location": "West Bloomfield, MI",
+  "summary": "Senior engineering leader focused on building production-grade AI platforms and services. Track record delivering scalable backend systems, LLM integration and orchestration, retrieval-augmented applications, and CI/CD-driven delivery on AWS. Experienced with Python, FastAPI, Postgres, Terraform, and observability to drive safe, performant ML-enabled features into production.",
+  "technical_proficiencies": {
+    "ai": "LLMs (OpenAI/Anthropic), Retrieval Augmented Generation (RAG), embeddings, vector search (OpenSearch/Elasticsearch), prompt engineering, model fine-tuning",
+    "cloud": "AWS (Lambda, ECS, EKS, S3, CloudWatch), Terraform, serverless, VPCs, IAM",
+    "databases": "PostgreSQL, MySQL, DynamoDB",
+    "devops": "GitHub Actions, Jenkins, CI/CD, Docker, Kubernetes, Terraform, observability (CloudWatch, Dynatrace)",
+    "languages": "Python, Java, Node.js",
+    "web": "FastAPI, REST, GraphQL"
+  },
+  "areas_of_expertise": [
+    "AI Platform Development",
+    "LLM Integration & Orchestration",
+    "Retrieval Systems & Vector Search",
+    "Backend Architecture & APIs",
+    "Infrastructure as Code & DevOps",
+    "Scalable Data Pipelines"
+  ],
+  "experience": [
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "Aug 2017 - Nov 2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {
+          "text": "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management.",
+          "tags": [
+            "Automation",
+            "Python",
+            "C++",
+            "Real-time Data"
+          ],
+          "_score": 192.0
+        },
+        {
+          "text": "Built ETL pipelines and automated reporting systems on AWS using CloudWatch, Lambda, and EC2, providing real-time business intelligence and error tracking.",
+          "tags": [
+            "AWS",
+            "ETL",
+            "Microservices",
+            "Event-driven"
+          ],
+          "_score": 75.0
+        },
+        {
+          "text": "Developed microservices-based APIs to support financial origination and servicing platforms, leveraging Flask and SQLAlchemy ORM for modular, scalable code.",
+          "tags": [
+            "Linux",
+            "Secure File Transfer",
+            "Telemetry",
+            "ECU Data Logging"
+          ],
+          "_score": 74.0
+        },
+        {
+          "text": "Engineered event-driven integrations between payroll, claims, and payment systems, supporting high-volume transaction processing.",
+          "tags": [
+            "Modular",
+            "Modular Design",
+            "AUTOSAR",
+            "Component Design"
+          ],
+          "_score": 66.0
+        }
+      ]
+    },
+    {
+      "employer": "Edward Jones",
+      "role": "Senior Application Architect / Platform Team Delivery Lead",
+      "dates": "2021–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of Edward Jones’ enterprise *Online Access* platform, **transitioning from legacy monoliths to microservices and micro-frontends** using **Java, Python, and AWS**.",
+          "tags": [
+            "AWS",
+            "Java",
+            "ERP",
+            "Python"
+          ],
+          "_score": 43.0
+        },
+        {
+          "text": "Established **technical delivery governance** — code quality metrics, automation standards, and DevOps maturity assessments across 13 Agile teams.",
+          "tags": [
+            "Automation",
+            "Agile",
+            "DevOps"
+          ],
+          "_score": 35.5
+        },
+        {
+          "text": "Partnered with **product and platform leadership** to define modernization OKRs, resulting in measurable improvements in throughput, reliability, and built-in quality.",
+          "tags": [
+            "BI",
+            "Leadership"
+          ],
+          "_score": 33.0
+        },
+        {
+          "text": "Directed **cross-functional teams (web, mobile, API, mainframe)** across multiple delivery trains, implementing **continuous delivery pipelines** that reduced release time by 50%.",
+          "tags": [
+            "AI",
+            "BI"
+          ],
+          "_score": 27.0
+        }
+      ]
+    },
+    {
+      "employer": "Interactive Business Solutions",
+      "role": "Senior Software Engineering Consultant",
+      "dates": "2016–2017",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
+          "tags": [
+            "AWS",
+            "Architecture",
+            "Cloud",
+            "APIs"
+          ],
+          "_score": 52.0
+        },
+        {
+          "text": "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
+          "tags": [
+            "Integration",
+            "ERP"
+          ],
+          "_score": 36.0
+        },
+        {
+          "text": "Built AWS-hosted CI/CD workflows for financial reporting systems, evolving toward trunk-based branching for faster client deliverables.",
+          "tags": [
+            "AWS",
+            "CI/CD",
+            "Financial Reporting",
+            "Reporting"
+          ],
+          "_score": 23.0
+        },
+        {
+          "text": "Mentored developers on automation and continuous testing practices to maintain production quality at speed.",
+          "tags": [
+            "AI",
+            "Automation"
+          ],
+          "_score": 21.0
+        }
+      ]
+    },
+    {
+      "employer": "Soave Enterprises",
+      "role": "Technology Manager / Software Architect",
+      "dates": "2015–2016",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
+          "tags": [
+            "AWS",
+            "Architecture",
+            "Cloud",
+            "ERP"
+          ],
+          "_score": 44.0
+        },
+        {
+          "text": "Directed modernization of enterprise infrastructure across 25 U.S. locations, migrating to hybrid AWS EC2 cloud.",
+          "tags": [
+            "AWS",
+            "Cloud",
+            "ERP",
+            "EC2"
+          ],
+          "_score": 37.0
+        },
+        {
+          "text": "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability.",
+          "tags": [
+            "BI",
+            "Innovation"
+          ],
+          "_score": 21.0
+        },
+        {
+          "text": "Introduced DevOps automation and early CI/CD pipelines, establishing repeatable build/test/deploy flows.",
+          "tags": [
+            "Automation",
+            "CI/CD",
+            "DevOps",
+            "CI/CD"
+          ],
+          "_score": 21.0
+        }
+      ]
+    },
+    {
+      "employer": "John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010–2015",
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects.",
+          "tags": [
+            "TDD",
+            "Code Reviews"
+          ],
+          "_score": 33.0
+        },
+        {
+          "text": "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
+          "tags": [
+            "AI",
+            "Scale",
+            "ERP"
+          ],
+          "_score": 29.5
+        },
+        {
+          "text": "Oversaw transition to Microsoft Dynamics AX 2012 R2, incorporating modular architecture and early DevOps principles.",
+          "tags": [
+            "Architecture",
+            "Modular",
+            "DevOps",
+            "Microsoft Dynamics AX"
+          ],
+          "_score": 29.0
+        },
+        {
+          "text": "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
+          "tags": [
+            "Modular",
+            "Microsoft Dynamics AX",
+            "Microsoft Dynamics AX"
+          ],
+          "_score": 24.5
+        }
+      ]
+    },
+    {
+      "employer": "Snap-On Technologies",
+      "role": "Senior Software Engineer",
+      "dates": "2000 – 2006",
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Invented a data-driven orchestration framework for ECM communication on vehicle networks, enabling adaptive protocol handling across J1850-VPW, PWM, J1939, CAN/GM LAN, and ISO standards.",
+          "tags": [
+            "Orchestration",
+            "ECM Communication",
+            "J1850",
+            "J1939"
+          ],
+          "_score": 58.0
+        },
+        {
+          "text": "Designed a dynamic diagnostic communication module capable of learning and adapting to new OEM protocols without reengineering core components.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ],
+          "_score": 27.0
+        },
+        {
+          "text": "Developed calibration and service applications used by ISUZU, Harley-Davidson, Freightliner, Detroit Diesel, Mac, Eaton, and Penske, improving diagnostic accuracy and time-to-market for new vehicle platforms.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ],
+          "_score": 21.0
+        },
+        {
+          "text": "Collaborated with embedded firmware engineers and field technicians to validate communication layers over the 9-pin Deutsch vehicle interface and OBD-II connectors.",
+          "tags": [
+            "Embedded Systems",
+            "Vehicle Diagnostics",
+            "Data-Driven Architecture",
+            "ECM Communication"
+          ],
+          "_score": 21.0
+        }
+      ]
+    },
+    {
+      "employer": "Compuware",
+      "role": "Senior Software Developer",
+      "dates": "2006 – 2010",
+      "location": "Detroit, MI",
+      "bullets": [
+        {
+          "text": "Engineered E2E test automation frameworks in C++ and Java, integrating performance testing directly into early DevOps pipelines.",
+          "tags": [
+            "Java",
+            "Automation",
+            "C++",
+            "DevOps"
+          ],
+          "_score": 46.0
+        },
+        {
+          "text": "Developed enterprise QA automation and load-testing frameworks (QALoad, QADirector) for large-scale clients including Ford, GM, Blue Cross Blue Shield, and EDS, improving reliability and scalability of distributed systems.",
+          "tags": [
+            "Scale",
+            "Automation",
+            "BI",
+            "ERP"
+          ],
+          "_score": 43.0
+        },
+        {
+          "text": "Collaborated with product and QA teams to design automated defect-tracking systems, optimizing regression cycles and standardizing test execution across enterprise environments.",
+          "tags": [
+            "ERP"
+          ],
+          "_score": 33.5
+        },
+        {
+          "text": "Contributed to internal tooling for performance benchmarking, which later influenced commercial QA product lines adopted globally.",
+          "tags": [
+            "QA Automation",
+            "Performance Testing",
+            "E2E Frameworks",
+            "DevOps"
+          ],
+          "_score": 6.0
+        }
+      ]
+    },
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead – Digital Client Experience",
+      "dates": "2021–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Led modernization of the Online Access platform, transitioning from monolithic architecture to cloud-native microservices and micro-frontends using Java, Spring Boot, and Angular.",
+          "tags": [
+            "Java",
+            "Architecture",
+            "Cloud",
+            "Microservices"
+          ],
+          "_score": 48.0
+        },
+        {
+          "text": "Drove CI/CD platform maturity, evolving Azure DevOps pipelines into trunk-based development workflows supporting 13 Agile teams across web, API, mobile, and mainframe domains.",
+          "tags": [
+            "Azure",
+            "AI",
+            "BI",
+            "Agile"
+          ],
+          "_score": 47.0
+        },
+        {
+          "text": "Partnered with engineering managers to standardize observability (Dynatrace, Splunk) and delivery governance across trains.",
+          "tags": [
+            "AI",
+            "BI",
+            "Dynatrace"
+          ],
+          "_score": 38.5
+        },
+        {
+          "text": "Instituted Delivery Excellence workshops on value-stream mapping, continuous integration health checks, and test-driven development.",
+          "tags": [
+            "Integration"
+          ],
+          "_score": 24.5
+        }
+      ]
+    },
+    {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "2023–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Architected and deployed CI/CD pipelines in GitHub Actions for API Gateway and AWS Lambda microservices using Terraform-based IaC modules.",
+          "tags": [
+            "AWS",
+            "CI/CD",
+            "Terraform",
+            "Lambda"
+          ],
+          "_score": 52.0
+        },
+        {
+          "text": "Orchestrated KeeperSecurity-managed key rotation and encryption automation through Bitbucket pipelines to enforce DevSecOps standards.",
+          "tags": [
+            "Automation",
+            "BI",
+            "Encryption",
+            "Security"
+          ],
+          "_score": 46.0
+        },
+        {
+          "text": "Transitioned teams from manual staging branches to trunk-based continuous integration, integrating linting, IaC validation, and security scans into the mainline workflow.",
+          "tags": [
+            "AI",
+            "Integration",
+            "Security",
+            "CAN"
+          ],
+          "_score": 32.0
+        },
+        {
+          "text": "Designed rollback workflows leveraging Terraform state management for fault-tolerant releases.",
+          "tags": [
+            "Terraform",
+            "RAG"
+          ],
+          "_score": 21.0
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": ""
+    }
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ]
+}

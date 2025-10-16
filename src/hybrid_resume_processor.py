@@ -328,25 +328,26 @@ class HybridResumeProcessor:
 
             # Generate bullets
             for bullet_idx, bullet in enumerate(bullets):
-                bullet_text = bullet.get("text", "")
-                tags = bullet.get("tags", [])
+                # Support bullets as either dicts (with text and optional tags)
+                # or plain strings.
+                if isinstance(bullet, dict):
+                    bullet_text = bullet.get("text", "") or ""
+                else:
+                    bullet_text = str(bullet)
 
-                exp_html.append(
-                    f'        <div class="bullet-item" data-bullet="{bullet_idx}">'
-                )
-                exp_html.append(
-                    f'          <div class="bullet-text">{bullet_text}</div>'
-                )
+                exp_html.append(f'        <div class="bullet-item" data-bullet="{bullet_idx}">')
+                exp_html.append(f'          <div class="bullet-text">{bullet_text}</div>')
+                exp_html.append("        </div>")
 
-                if tags:
-                    exp_html.append('          <div class="tags">')
-                    for tag in tags:
-                        tag_id = self._sanitize_id(tag)
-                        exp_html.append(
-                            f'            <span class="tag" data-tag="{tag_id}">{tag}</span>'
-                        )
-                    exp_html.append("          </div>")
-
+            # Add experience-level tags after all bullets
+            emp_tags = job.get("tags", []) or []
+            if emp_tags:
+                exp_html.append('        <div class="tags">')
+                for tag in emp_tags:
+                    tag_id = self._sanitize_id(tag)
+                    exp_html.append(
+                        f'          <span class="tag" data-tag="{tag_id}">{tag}</span>'
+                    )
                 exp_html.append("        </div>")
 
             exp_html.append("      </div>")
