@@ -143,6 +143,22 @@
         { "text": "Authored internal documentation and training materials to standardize diagnostic protocol handling, accelerating onboarding for new engineers and OEM partners." }
       ],
       "tags": ["C","C++","Embedded Systems","Vehicle Diagnostics","ECM Communication","CAN","J1850","J1939","ISO Protocols","Automation Testing","Telemetry","Data-Driven Architecture","Automotive Engineering","Cross-Functional Collaboration"]
+    },
+
+    {
+      "employer": "Nexiq Technologies (formerly MPSI)",
+      "role": "Junior Software Developer – Vehicle Communications & Diagnostics",
+      "dates": "1999 – 2002",
+      "location": "Troy, MI",
+      "bullets": [
+        { "text": "Contributed to the development of embedded diagnostic software and communication utilities for heavy-duty and automotive OEMs including GM, Freightliner, and Detroit Diesel, forming the basis of what became Nexiq's flagship USB Link diagnostic interface." },
+        { "text": "Developed C++ modules for ECM/TCM communication supporting multiple transport layers (J1850 VPW, PWM, CAN, ISO 9141, and J1939) used in early vehicle network testing tools." },
+        { "text": "Assisted in implementing protocol parsers, data loggers, and error-code interpreters, enabling real-time fault detection and calibration analysis across multiple vehicle control modules." },
+        { "text": "Collaborated with senior firmware engineers to integrate embedded serial communication stacks and perform bench validation using oscilloscopes, breakout boxes, and early CAN analyzers." },
+        { "text": "Supported initial automation of test workflows through batch scripting and unit harnesses, reducing manual regression validation time by over 30%." },
+        { "text": "Documented diagnostic APIs and assisted in preparing SDK materials for OEM and aftermarket developers." }
+      ],
+      "tags": ["C++","C","Embedded Systems","Automotive Diagnostics","ECM/TCM Communication","J1850","J1939","CAN Bus","ISO 9141","Serial Communication","Protocol Parsers","Automation Testing"]
     }
   ],
 
