@@ -1,0 +1,104 @@
+{
+  "name": "Sidney Jones",
+  "title": "Lead Software Engineer — AI",
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "location": "West Bloomfield, MI",
+  "summary": "Senior engineering leader focused on building production-grade AI platforms and services. Track record delivering scalable backend systems, LLM integration and orchestration, retrieval-augmented applications, and CI/CD-driven delivery on AWS. Experienced with Python, FastAPI, Postgres, Terraform, and observability to drive safe, performant ML-enabled features into production.",
+  "technical_proficiencies": {
+    "ai": "LLMs (OpenAI/Anthropic), Retrieval Augmented Generation (RAG), embeddings, vector search (OpenSearch/Elasticsearch), prompt engineering, model fine-tuning",
+    "cloud": "AWS (Lambda, ECS, EKS, S3, CloudWatch), Terraform, serverless, VPCs, IAM",
+    "databases": "PostgreSQL, MySQL, DynamoDB",
+    "devops": "GitHub Actions, Jenkins, CI/CD, Docker, Kubernetes, Terraform, observability (CloudWatch, Dynatrace)",
+    "languages": "Python, Java, Node.js",
+    "web": "FastAPI, REST, GraphQL"
+  },
+  "areas_of_expertise": [
+    "AI Platform Development",
+    "LLM Integration & Orchestration",
+    "Retrieval Systems & Vector Search",
+    "Backend Architecture & APIs",
+    "Infrastructure as Code & DevOps",
+    "Scalable Data Pipelines"
+  ],
+  "experience": [
+    {
+      "employer": "Edward Jones",
+      "role": "Senior Application Architect / Platform Team Delivery Lead",
+      "dates": "2021–2024",
+      "location": "Remote",
+      "bullets": [
+        {
+          "text": "Led modernization of Online Access platform by decomposing monoliths into microservices and micro-frontends and introducing FastAPI/Java services to support RAG-enabled features.",
+          "tags": ["Microservices","FastAPI","Java","RAG","LLM","Architecture"]
+        },
+        {
+          "text": "Established CI/CD pipelines and release practices (feature flags, short-lived branches) across 13 teams using GitHub Actions and Jenkins to enable rapid, safe delivery of AI-enabled services.",
+          "tags": ["CI/CD","GitHub Actions","Jenkins","Feature Flags","Delivery"]
+        },
+        {
+          "text": "Standardized observability and monitoring for AI inference and data pipelines using CloudWatch and Dynatrace, reducing mean-time-to-detect for regressions in production ML features.",
+          "tags": ["CloudWatch","Dynatrace","Observability","Monitoring","ML"]
+        }
+      ]
+    },
+    {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "2023–2024",
+      "location": "",
+      "bullets": [
+        {
+          "text": "Architected and deployed Terraform-based IaC modules and GitHub Actions workflows for API Gateway and Lambda microservices, enabling reproducible environments and zero-drift infrastructure.",
+          "tags": ["Terraform","GitHub Actions","AWS Lambda","API Gateway","IaC"]
+        },
+        {
+          "text": "Implemented automated IaC validation, security scanning, and rollback strategies to ensure safe deployments of data-processing and model-serving stacks.",
+          "tags": ["Security","IaC Validation","Rollback","DevSecOps"]
+        }
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Principal Consultant / Senior Software Architect",
+      "dates": "2017–2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {
+          "text": "Designed and deployed production ML orchestration and automation pipelines that integrated LLMs into business workflows, using Python, AWS Lambda, and serverless components for scalable inference.",
+          "tags": ["Python","LLM","AWS Lambda","Orchestration","Serverless"]
+        },
+        {
+          "text": "Built ETL and data pipelines to generate embeddings and maintain searchable vector stores for RAG applications, integrating with OpenSearch and Postgres-based metadata layers.",
+          "tags": ["ETL","Embeddings","OpenSearch","PostgreSQL","Vector Search"]
+        },
+        {
+          "text": "Integrated LLMs into dev workflows to automate code generation and validation, and created guardrails for safe production usage (rate-limiting, token monitoring, prompt validation).",
+          "tags": ["LLM","Dev Tools","Safety","Monitoring","Prompt Engineering"]
+        }
+      ]
+    },
+    {
+      "employer": "Compuware",
+      "role": "Senior Software Developer",
+      "dates": "2006 – 2010",
+      "location": "Detroit, MI",
+      "bullets": [
+        {
+          "text": "Built enterprise-grade QA automation and performance testing frameworks used to validate large-scale distributed systems and support continuous delivery efforts.",
+          "tags": ["QA Automation","Performance Testing","DevOps","Test Automation"]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    }
+  ]
+}

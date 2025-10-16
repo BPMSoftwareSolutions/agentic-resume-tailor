@@ -29,7 +29,12 @@
       "Bolstered team capabilities as well as strengthened built-in quality by introducing cross-training workshops for Web/API and Mobile automation testing.",
       "Provided leadership coaching for engineering managers and trained RTEs, scrum masters, and managers on Jira dashboard development for improved visibility.",
       "Reengineered release train processes, cutting delivery timelines by 50% and enabling 13 teams to deploy independently with higher quality.",
-      "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines."
+      "Restructured platform team into specialized sub-teams, minimizing delivery complexity and accelerating timelines.",
+      "Spearheaded cloud-first modernization initiatives across finance, healthcare, and analytics clients, transitioning legacy systems to Azure and AWS.",
+      "Implemented Jenkins + Kubernetes-driven CI/CD pipelines that matured into trunk-based delivery for ETL, BI, and automation workloads.",
+      "Established CI/CD governance playbooks and reusable pipeline modules, embedding security, observability, and rollback automation.",
+      "Mentored engineers on short-lived branch strategies, feature toggles, and continuous merge practices, improving delivery reliability by 40 %.",
+      "Architected unified BI platform on Azure integrating multiple ERP systems; automation raised enterprise valuation by $60 M in 18 months."
     ],
     "skills": [
       "SFTP",
@@ -65,7 +70,15 @@
       "Agile",
       "TDD",
       "CI/CD",
-      "Leadership"
+      "Leadership",
+      "Azure Functions",
+      "Terraform",
+      "Jenkins",
+      "Docker",
+      "Kubernetes",
+      "SQL Server",
+      "Python",
+      "React"
     ],
     "technologies": [
       "SQL",
@@ -305,14 +318,18 @@
     "bullets": [
       "Directed technical design and delivery for enterprise integration projects linking **CRM, LMS, and ERP platforms**, resulting in 300% improvement in processing efficiency.",
       "Designed **web-based financial and compliance solutions** integrating with **AWS** and **Salesforce APIs**, setting early standards for secure, cloud-ready architectures.",
-      "Mentored developers in Agile story decomposition, code review, and sprint execution practices."
+      "Mentored developers in Agile story decomposition, code review, and sprint execution practices.",
+      "Engineered multi-system integrations (CRM, LMS, ERP) that increased month-end productivity 300 %.",
+      "Built AWS-hosted CI/CD workflows for financial reporting systems, evolving toward trunk-based branching for faster client deliverables.",
+      "Mentored developers on automation and continuous testing practices to maintain production quality at speed."
     ],
     "skills": [
       "API Integration",
       "Cloud Migration",
       "Agile Leadership",
       "Full-Stack Development",
-      "SaaS Integration"
+      "SaaS Integration",
+      "CI/CD"
     ],
     "technologies": [],
     "techniques": [],
@@ -328,14 +345,19 @@
     "bullets": [
       "Modernized enterprise infrastructure across 25 U.S. facilities, implementing **hybrid-cloud architecture on AWS EC2** to replace aging on-prem systems.",
       "Introduced **DevOps and CI/CD pipelines**, automating release workflows and infrastructure provisioning.",
-      "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability."
+      "Partnered with executive stakeholders to develop modernization roadmaps balancing innovation, cost, and scalability.",
+      "Directed modernization of enterprise infrastructure across 25 U.S. locations, migrating to hybrid AWS EC2 cloud.",
+      "Introduced DevOps automation and early CI/CD pipelines, establishing repeatable build/test/deploy flows.",
+      "Laid the groundwork for trunk-based development by implementing shared mainline branching and continuous integration for distributed teams."
     ],
     "skills": [
       "Cloud Transformation",
       "Infrastructure Modernization",
       "DevOps Leadership",
       "AWS EC2",
-      "Strategic Planning"
+      "Strategic Planning",
+      "DevOps",
+      "CI/CD"
     ],
     "technologies": [],
     "techniques": [],
@@ -351,14 +373,19 @@
     "bullets": [
       "Led development and modernization of enterprise-scale ERP systems supporting over 400 retail sites in North America.",
       "Oversaw migration to **Microsoft Dynamics AX**, integrating modular components for procurement, finance, and logistics.",
-      "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects."
+      "Introduced **engineering governance standards**, code reviews, and TDD practices that improved quality and reduced production defects.",
+      "Led modernization of proprietary ERP system used by 400+ retail stores.",
+      "Introduced automated build pipelines, unit-test enforcement, and continuous integration, paving the cultural path toward trunk-based development long before mainstream adoption.",
+      "Oversaw transition to Microsoft Dynamics AX 2012 R2, incorporating modular architecture and early DevOps principles."
     ],
     "skills": [
       "Enterprise Architecture",
       "ERP Modernization",
       "TDD",
       "Cross-Functional Leadership",
-      "Continuous Improvement"
+      "Continuous Improvement",
+      "Microsoft Dynamics AX",
+      "CI/CD"
     ],
     "technologies": [],
     "techniques": [],
@@ -420,5 +447,60 @@
     "techniques": [],
     "principles": [],
     "notes": "Imported from user-provided snippets"
+  },
+  {
+    "id": "1d1930ab-4a43-46f5-8748-eb9311b7be67",
+    "employer": "CGI – Daugherty / Edward Jones",
+    "role": "Principal Consultant / Platform Team Delivery Lead – Digital Client Experience",
+    "dates": "2021–2024",
+    "location": "",
+    "bullets": [
+      "Led modernization of the Online Access platform, transitioning from monolithic architecture to cloud-native microservices and micro-frontends using Java, Spring Boot, and Angular.",
+      "Drove CI/CD platform maturity, evolving Azure DevOps pipelines into trunk-based development workflows supporting 13 Agile teams across web, API, mobile, and mainframe domains.",
+      "Implemented feature-flag release strategies, short-lived branches, and automated test gates, enabling independent deployments and 50 % faster release cycles.",
+      "Instituted Delivery Excellence workshops on value-stream mapping, continuous integration health checks, and test-driven development.",
+      "Partnered with engineering managers to standardize observability (Dynatrace, Splunk) and delivery governance across trains."
+    ],
+    "skills": [
+      "Azure DevOps",
+      "Terraform",
+      "Jenkins",
+      "SonarQube",
+      "ESLint",
+      "Dynatrace",
+      "Spring Boot",
+      "Angular",
+      "SQL Server"
+    ],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from user-provided entries"
+  },
+  {
+    "id": "1ff0286e-68d3-43f6-929f-30c4ea3bc936",
+    "employer": "Daugherty – Cox Communications",
+    "role": "Platform Architect – Cloud Infrastructure & Automation",
+    "dates": "2023–2024",
+    "location": "",
+    "bullets": [
+      "Architected and deployed CI/CD pipelines in GitHub Actions for API Gateway and AWS Lambda microservices using Terraform-based IaC modules.",
+      "Transitioned teams from manual staging branches to trunk-based continuous integration, integrating linting, IaC validation, and security scans into the mainline workflow.",
+      "Designed rollback workflows leveraging Terraform state management for fault-tolerant releases.",
+      "Orchestrated KeeperSecurity-managed key rotation and encryption automation through Bitbucket pipelines to enforce DevSecOps standards.",
+      "Reduced deployment friction across environments and achieved 100 % parity between staging and production builds."
+    ],
+    "skills": [
+      "AWS Lambda",
+      "API Gateway",
+      "Terraform",
+      "GitHub Actions",
+      "Python",
+      "KeeperSecurity"
+    ],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from user-provided entries"
   }
 ]
