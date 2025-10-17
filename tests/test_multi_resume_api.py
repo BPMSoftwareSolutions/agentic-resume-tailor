@@ -73,7 +73,7 @@ class TestResumeAPI:
     def test_create_resume(self, client, sample_resume_data):
         """Test POST /api/resumes."""
         payload = {
-            "name": "Test Resume",
+            "name": "Test Resume API Create",
             "data": sample_resume_data,
             "description": "Test description",
         }
@@ -89,7 +89,7 @@ class TestResumeAPI:
         data = json.loads(response.data)
         assert data["success"] is True
         assert "resume" in data
-        assert data["resume"]["name"] == "Test Resume"
+        assert data["resume"]["name"] == "Test Resume API Create"
 
         # Cleanup
         resume_id = data["resume"]["id"]
@@ -110,7 +110,7 @@ class TestResumeAPI:
     def test_get_resume(self, client, sample_resume_data):
         """Test GET /api/resumes/<id>."""
         # Create a resume first
-        metadata = resume_model.create(data=sample_resume_data, name="Test Resume")
+        metadata = resume_model.create(data=sample_resume_data, name="Test Resume API Get")
 
         # Get the resume
         response = client.get(f"/api/resumes/{metadata.id}")
@@ -131,13 +131,13 @@ class TestResumeAPI:
     def test_update_resume(self, client, sample_resume_data):
         """Test PUT /api/resumes/<id>."""
         # Create a resume first
-        metadata = resume_model.create(data=sample_resume_data, name="Test Resume")
+        metadata = resume_model.create(data=sample_resume_data, name="Test Resume API Update")
 
         # Update the resume
         updated_data = sample_resume_data.copy()
         updated_data["title"] = "Senior Software Engineer"
 
-        payload = {"data": updated_data, "name": "Updated Resume"}
+        payload = {"data": updated_data, "name": "Updated Resume API"}
 
         response = client.put(
             f"/api/resumes/{metadata.id}",
@@ -159,7 +159,7 @@ class TestResumeAPI:
     def test_delete_resume(self, client, sample_resume_data):
         """Test DELETE /api/resumes/<id>."""
         # Create a resume first
-        metadata = resume_model.create(data=sample_resume_data, name="Test Resume")
+        metadata = resume_model.create(data=sample_resume_data, name="Test Resume API Delete")
 
         # Delete the resume
         response = client.delete(f"/api/resumes/{metadata.id}")

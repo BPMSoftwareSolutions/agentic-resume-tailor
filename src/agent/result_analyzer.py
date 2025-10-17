@@ -79,8 +79,8 @@ class ResultAnalyzer:
         # Extract key information
         extracted_info = self._extract_information(output, error)
 
-        # Generate formatted message
-        message = self._format_message(actual_status, output, error, extracted_info)
+        # Generate formatted message (pass command for context-aware truncation)
+        message = self._format_message(actual_status, output, error, extracted_info, command)
 
         # Generate suggestions
         suggestions = self._generate_suggestions(command, actual_status, extracted_info)
@@ -155,7 +155,7 @@ class ResultAnalyzer:
         return extracted
 
     def _format_message(
-        self, status: str, output: str, error: str, extracted_info: Dict[str, Any]
+        self, status: str, output: str, error: str, extracted_info: Dict[str, Any], command: str = ""
     ) -> str:
         """
         Format a user-friendly message based on the analysis.
@@ -165,10 +165,25 @@ class ResultAnalyzer:
             output: Standard output
             error: Standard error
             extracted_info: Extracted information dictionary
+            command: The command that was executed (for context-aware truncation)
 
         Returns:
             Formatted message string
         """
+        # Determine if this is a list/display command that should show full output
+        is_list_command = any(pattern in command.lower() for pattern in [
+            'list_resumes.py',
+            'list_job_listings.py',
+            'list_experiences.py',
+            '--list',
+            '--show',
+            '--format simple',
+            '--format json',
+        ])
+
+        # Use larger limit for list commands, smaller for others
+        max_output_length = 10000 if is_list_command else 500
+
         if status == "success":
             message = "✅ Command executed successfully\n\n"
 
@@ -176,9 +191,9 @@ class ResultAnalyzer:
             if extracted_info:
                 message += self._format_extracted_info(extracted_info)
 
-            # Add relevant output (first 500 chars)
+            # Add relevant output
             if output:
-                clean_output = output.strip()[:500]
+                clean_output = output.strip()[:max_output_length]
                 if clean_output:
                     message += f"\n{clean_output}"
 
@@ -187,16 +202,16 @@ class ResultAnalyzer:
 
             # Add error details
             if error:
-                clean_error = error.strip()[:500]
+                clean_error = error.strip()[:max_output_length]
                 message += f"[ERROR] {clean_error}\n"
             elif output:
-                clean_output = output.strip()[:500]
+                clean_output = output.strip()[:max_output_length]
                 message += f"{clean_output}\n"
 
         else:  # warning
             message = "⚠️  Command completed with warnings\n\n"
             if output:
-                message += output.strip()[:500]
+                message += output.strip()[:max_output_length]
 
         return message
 

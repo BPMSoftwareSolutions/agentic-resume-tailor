@@ -167,12 +167,43 @@ class TestResultAnalyzer:
         }
 
         message = self.analyzer._format_message(
-            "success", "Operation completed", "", extracted_info
+            "success", "Operation completed", "", extracted_info, "python src/duplicate_resume.py"
         )
 
         assert "abc-123" in message
         assert "Test_Resume" in message
         assert "5" in message
+
+    def test_list_command_full_output(self):
+        """Test that list commands show full output without truncation."""
+        # Create a long output that would be truncated with 500 char limit
+        long_output = "\n".join([f"Resume {i}: {'x' * 100}" for i in range(1, 15)])
+
+        # Test with list_resumes.py command
+        message = self.analyzer._format_message(
+            "success", long_output, "", {}, "python src/utils/list_resumes.py"
+        )
+
+        # Should contain most of the output (10000 char limit for list commands)
+        assert len(message) > 1000
+        assert "Resume 1:" in message
+        assert "Resume 14:" in message
+
+    def test_non_list_command_truncation(self):
+        """Test that non-list commands still truncate output."""
+        # Create a long output
+        long_output = "\n".join([f"Line {i}: {'x' * 100}" for i in range(1, 15)])
+
+        # Test with non-list command
+        message = self.analyzer._format_message(
+            "success", long_output, "", {}, "python some_other_script.py"
+        )
+
+        # Should be truncated to ~500 chars
+        assert len(message) < 1000
+        assert "Line 1:" in message
+        # Later lines should not be present
+        assert "Line 14:" not in message
 
     def test_multiple_success_indicators(self):
         """Test detection of multiple success indicators."""

@@ -179,28 +179,49 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5 class="mb-0">
-                                <i class="bi bi-chat-dots"></i> AI Agent Chat
-                            </h5>
-                            <small class="memory-stats">
-                                <span id="messageCount">0</span> messages in memory
-                            </small>
-                            <div class="token-usage mt-2">
-                                <span id="tokenCount">0/8192 tokens (0%)</span>
-                                <div class="token-bar">
-                                    <div class="token-bar-fill" id="tokenBarFill" style="width: 0%"></div>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="mb-0">
+                                    <i class="bi bi-chat-dots"></i> AI Agent Chat
+                                </h5>
+                                <small class="memory-stats">
+                                    <span id="messageCount">0</span> messages in memory
+                                </small>
+                                <div class="token-usage mt-2">
+                                    <span id="tokenCount">0/8192 tokens (0%)</span>
+                                    <div class="token-bar">
+                                        <div class="token-bar-fill" id="tokenBarFill" style="width: 0%"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button class="btn btn-sm btn-outline-secondary me-2" id="viewMemoryBtn">
-                                <i class="bi bi-clock-history"></i> View History
-                            </button>
-                            <button class="btn btn-sm btn-outline-danger" id="clearMemoryBtn">
-                                <i class="bi bi-trash"></i> Clear Memory
-                            </button>
+                            <div class="text-end">
+                                <!-- Agent Selection -->
+                                <div class="mb-2">
+                                    <label for="agentProvider" class="form-label mb-1" style="font-size: 0.85em;">
+                                        <i class="bi bi-robot"></i> Agent Provider
+                                    </label>
+                                    <select class="form-select form-select-sm" id="agentProvider" style="width: 150px;">
+                                        <option value="">Loading...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <label for="agentModel" class="form-label mb-1" style="font-size: 0.85em;">
+                                        <i class="bi bi-gear"></i> Model
+                                    </label>
+                                    <select class="form-select form-select-sm" id="agentModel" style="width: 150px;">
+                                        <option value="">Loading...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-2">
+                                    <button class="btn btn-sm btn-outline-secondary me-2" id="viewMemoryBtn">
+                                        <i class="bi bi-clock-history"></i> View History
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" id="clearMemoryBtn">
+                                        <i class="bi bi-trash"></i> Clear Memory
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-body">

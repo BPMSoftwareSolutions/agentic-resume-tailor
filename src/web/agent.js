@@ -10,6 +10,9 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // Global state
 let messageHistory = [];
+let availableAgents = {};
+let selectedProvider = 'openai';
+let selectedModel = 'gpt-4';
 
 // Initialize application
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,12 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function initializeApp() {
     try {
+        // Load available agents
+        await loadAvailableAgents();
+
         // Load existing memory
         await loadMemory();
-        
+
         // Setup event listeners
         setupEventListeners();
-        
+
         showAlert('Agent interface loaded successfully!', 'success', 3000);
     } catch (error) {
         console.error('Failed to initialize agent interface:', error);
@@ -34,19 +40,120 @@ async function initializeApp() {
 function setupEventListeners() {
     // Send button
     document.getElementById('sendBtn').addEventListener('click', sendMessage);
-    
+
     // Enter key in input
     document.getElementById('chatInput').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             sendMessage();
         }
     });
-    
+
     // Clear memory button
     document.getElementById('clearMemoryBtn').addEventListener('click', clearMemory);
-    
+
     // View memory button
     document.getElementById('viewMemoryBtn').addEventListener('click', viewMemory);
+
+    // Agent provider selection
+    document.getElementById('agentProvider').addEventListener('change', onProviderChange);
+
+    // Agent model selection
+    document.getElementById('agentModel').addEventListener('change', onModelChange);
+}
+
+/**
+ * Load available agents from API
+ */
+async function loadAvailableAgents() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/agents`);
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            availableAgents = data.agents;
+            populateProviderDropdown();
+        } else {
+            console.error('Failed to load agents:', data.error);
+            showAlert('Failed to load available agents', 'warning');
+        }
+    } catch (error) {
+        console.error('Failed to load agents:', error);
+        showAlert('Failed to load available agents. Check if API server is running.', 'warning');
+    }
+}
+
+/**
+ * Populate provider dropdown with available providers
+ */
+function populateProviderDropdown() {
+    const providerSelect = document.getElementById('agentProvider');
+    providerSelect.innerHTML = '';
+
+    for (const provider in availableAgents) {
+        const option = document.createElement('option');
+        option.value = provider;
+        option.textContent = availableAgents[provider].name;
+        providerSelect.appendChild(option);
+    }
+
+    // Set default provider
+    providerSelect.value = selectedProvider;
+    populateModelDropdown();
+}
+
+/**
+ * Populate model dropdown based on selected provider
+ */
+function populateModelDropdown() {
+    const providerSelect = document.getElementById('agentProvider');
+    const modelSelect = document.getElementById('agentModel');
+    const provider = providerSelect.value;
+
+    modelSelect.innerHTML = '';
+
+    if (availableAgents[provider]) {
+        const models = availableAgents[provider].models;
+        for (const modelId in models) {
+            const model = models[modelId];
+            const option = document.createElement('option');
+            option.value = modelId;
+            option.textContent = `${model.name} (${model.context_window.toLocaleString()} tokens)`;
+            option.title = model.description;
+            modelSelect.appendChild(option);
+        }
+    }
+
+    // Set default model for provider
+    if (selectedProvider === provider && selectedModel) {
+        modelSelect.value = selectedModel;
+    } else {
+        // Select first model as default
+        if (modelSelect.options.length > 0) {
+            modelSelect.value = modelSelect.options[0].value;
+            selectedModel = modelSelect.value;
+        }
+    }
+}
+
+/**
+ * Handle provider change
+ */
+function onProviderChange() {
+    const providerSelect = document.getElementById('agentProvider');
+    selectedProvider = providerSelect.value;
+    populateModelDropdown();
+    showAlert(`Switched to ${availableAgents[selectedProvider].name}`, 'info', 2000);
+}
+
+/**
+ * Handle model change
+ */
+function onModelChange() {
+    const modelSelect = document.getElementById('agentModel');
+    selectedModel = modelSelect.value;
+    const provider = document.getElementById('agentProvider').value;
+    const modelInfo = availableAgents[provider].models[selectedModel];
+    showAlert(`Selected ${modelInfo.name}`, 'info', 2000);
 }
 
 async function sendMessage() {
@@ -67,13 +174,17 @@ async function sendMessage() {
     showTypingIndicator(true);
 
     try {
-        // Send to API
+        // Send to API with selected provider and model
         const response = await fetch(`${API_BASE_URL}/agent/chat`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ message })
+            body: JSON.stringify({
+                message,
+                provider: selectedProvider,
+                model: selectedModel
+            })
         });
 
         const data = await response.json();
@@ -134,7 +245,11 @@ async function autoExecuteCommand(command) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ message: `run: ${command}` })
+            body: JSON.stringify({
+                message: `run: ${command}`,
+                provider: selectedProvider,
+                model: selectedModel
+            })
         });
 
         const data = await response.json();

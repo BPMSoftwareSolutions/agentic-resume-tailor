@@ -70,13 +70,42 @@ MODEL_REGISTRY: Dict[str, Dict[str, Dict[str, Any]]] = {
         },
     },
     "claude": {
+        # Current Claude 4.x models (preferred)
+        "claude-haiku-4-5-20251001": {
+            "name": "Claude Haiku 4.5",
+            "context_window": 200000,
+            "cost_per_1k_input": 0.002,
+            "cost_per_1k_output": 0.008,
+            "provider": "claude",
+            "description": "Claude 4.5 Haiku - fast and efficient",
+            "max_output_tokens": 8192,
+        },
+        "claude-sonnet-4-5-20250929": {
+            "name": "Claude Sonnet 4.5",
+            "context_window": 200000,
+            "cost_per_1k_input": 0.004,
+            "cost_per_1k_output": 0.016,
+            "provider": "claude",
+            "description": "Claude 4.5 Sonnet - balanced capability",
+            "max_output_tokens": 8192,
+        },
+        "claude-opus-4-1-20250805": {
+            "name": "Claude Opus 4.1",
+            "context_window": 200000,
+            "cost_per_1k_input": 0.01,
+            "cost_per_1k_output": 0.04,
+            "provider": "claude",
+            "description": "Claude 4.1 Opus - highest capability",
+            "max_output_tokens": 8192,
+        },
+        # Keep 3.x entries for backward compatibility but mark as deprecated in code paths
         "claude-3-5-sonnet-20241022": {
             "name": "Claude 3.5 Sonnet",
             "context_window": 200000,
             "cost_per_1k_input": 0.003,
             "cost_per_1k_output": 0.015,
             "provider": "claude",
-            "description": "Most intelligent Claude model, best for complex tasks",
+            "description": "Claude 3.5 Sonnet (deprecated)",
             "max_output_tokens": 8192,
         },
         "claude-3-5-haiku-20241022": {
@@ -85,7 +114,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, Dict[str, Any]]] = {
             "cost_per_1k_input": 0.001,
             "cost_per_1k_output": 0.005,
             "provider": "claude",
-            "description": "Fastest and most compact Claude model",
+            "description": "Claude 3.5 Haiku (deprecated)",
             "max_output_tokens": 8192,
         },
         "claude-3-opus-20240229": {
@@ -94,7 +123,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, Dict[str, Any]]] = {
             "cost_per_1k_input": 0.015,
             "cost_per_1k_output": 0.075,
             "provider": "claude",
-            "description": "Most powerful Claude 3 model for highly complex tasks",
+            "description": "Claude 3 Opus (deprecated)",
             "max_output_tokens": 4096,
         },
         "claude-3-sonnet-20240229": {
@@ -103,7 +132,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, Dict[str, Any]]] = {
             "cost_per_1k_input": 0.003,
             "cost_per_1k_output": 0.015,
             "provider": "claude",
-            "description": "Balanced Claude 3 model for most tasks",
+            "description": "Claude 3 Sonnet (deprecated)",
             "max_output_tokens": 4096,
         },
         "claude-3-haiku-20240307": {
@@ -112,7 +141,7 @@ MODEL_REGISTRY: Dict[str, Dict[str, Dict[str, Any]]] = {
             "cost_per_1k_input": 0.00025,
             "cost_per_1k_output": 0.00125,
             "provider": "claude",
-            "description": "Fastest Claude 3 model for simple tasks",
+            "description": "Claude 3 Haiku (deprecated)",
             "max_output_tokens": 4096,
         },
     },
@@ -170,7 +199,7 @@ def get_default_model(provider: str) -> Optional[str]:
     Returns:
         Default model name or None
     """
-    defaults = {"openai": "gpt-4", "claude": "claude-3-5-sonnet-20241022"}
+    defaults = {"openai": "gpt-4", "claude": "claude-sonnet-4-5-20250929"}
     return defaults.get(provider)
 
 

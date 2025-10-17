@@ -58,6 +58,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from agent import Agent, CommandExecutor, MemoryManager
+from src.agent.model_registry import get_all_models, get_providers, get_model_info, format_model_info
 from models.job_listing import JobListing
 from models.resume import Resume, ResumeMetadata
 
@@ -137,20 +138,42 @@ BLOCKED_COMMAND_PATTERNS = [
 ]
 
 
-def get_agent_instance():
-    """Get or create the agent instance."""
+def get_agent_instance(provider=None, model=None):
+    """
+    Get or create the agent instance.
+
+    Args:
+        provider: Optional provider name ('openai' or 'claude'). Defaults to 'openai'.
+        model: Optional model name. If not provided, uses default for provider.
+
+    Returns:
+        Agent instance or None if initialization fails
+    """
     global agent_instance
-    if agent_instance is None:
-        try:
-            agent_instance = Agent(
-                memory_file=str(AGENT_MEMORY_FILE),
-                model=os.getenv("OPENAI_MODEL", "gpt-4"),
-                auto_execute=True,
-                confirm_execution=False,  # No confirmation in web UI
-            )
-        except ValueError as e:
-            # OPENAI_API_KEY not set
-            return None
+
+    # Use provided provider/model or defaults
+    if provider is None:
+        provider = os.getenv("AGENT_PROVIDER", "openai")
+    if model is None:
+        model = os.getenv("OPENAI_MODEL", "gpt-4") if provider == "openai" else os.getenv("CLAUDE_MODEL", "claude-sonnet-4-5-20250929")
+
+    # If agent instance exists and matches requested provider/model, return it
+    if agent_instance is not None:
+        # For now, we'll create a new instance if provider/model differs
+        # In a production system, you might want to cache multiple instances
+        pass
+
+    try:
+        agent_instance = Agent(
+            memory_file=str(AGENT_MEMORY_FILE),
+            provider=provider,
+            model=model,
+            auto_execute=True,
+            confirm_execution=False,  # No confirmation in web UI
+        )
+    except ValueError as e:
+        # API key not set for provider
+        return None
     return agent_instance
 
 
@@ -668,9 +691,13 @@ def create_resume():
             return jsonify({"error": "Validation failed", "details": errors}), 400
 
         # Create resume
-        metadata = resume_model.create(
-            data=data, name=name, job_listing_id=job_listing_id, description=description
-        )
+        try:
+            metadata = resume_model.create(
+                data=data, name=name, job_listing_id=job_listing_id, description=description
+            )
+        except ValueError as e:
+            # Handle duplicate name error
+            return jsonify({"error": str(e)}), 409
 
         return (
             jsonify(
@@ -683,6 +710,8 @@ def create_resume():
             201,
         )
 
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 409
     except Exception as e:
         return jsonify({"error": f"Failed to create resume: {str(e)}"}), 500
 
@@ -1111,6 +1140,41 @@ def extract_job_keywords(job_id: str):
 # ============================================================================
 
 
+@app.route("/api/agents", methods=["GET"])
+def list_agents():
+    """
+    List all available AI agents (providers and models).
+
+    Returns:
+        JSON response with available providers and their models
+    """
+    try:
+        providers_list = get_providers()
+        agents = {}
+
+        for provider in providers_list:
+            models = get_all_models(provider)
+            agents[provider] = {
+                "name": provider.capitalize(),
+                "models": {}
+            }
+
+            for model_id, model_info in models.items():
+                agents[provider]["models"][model_id] = {
+                    "name": model_info.get("name", model_id),
+                    "description": model_info.get("description", ""),
+                    "context_window": model_info.get("context_window", 0),
+                    "max_output_tokens": model_info.get("max_output_tokens", 0),
+                    "cost_per_1k_input": model_info.get("cost_per_1k_input", 0),
+                    "cost_per_1k_output": model_info.get("cost_per_1k_output", 0),
+                }
+
+        return jsonify({"success": True, "agents": agents})
+
+    except Exception as e:
+        return jsonify({"error": f"Failed to list agents: {str(e)}"}), 500
+
+
 @app.route("/api/agent/chat", methods=["POST"])
 def agent_chat():
     """
@@ -1118,7 +1182,9 @@ def agent_chat():
 
     Request Body:
         {
-            "message": "User message or command"
+            "message": "User message or command",
+            "provider": "openai" or "claude" (optional, defaults to openai),
+            "model": "model-name" (optional, uses default for provider if not specified)
         }
 
     Returns:
@@ -1135,13 +1201,18 @@ def agent_chat():
         if not message:
             return jsonify({"error": "Message cannot be empty"}), 400
 
-        # Get agent instance
-        agent = get_agent_instance()
+        # Get optional provider and model from request
+        provider = data.get("provider", "openai")
+        model = data.get("model")
+
+        # Get agent instance with specified provider/model
+        agent = get_agent_instance(provider=provider, model=model)
         if agent is None:
+            provider_key = "OPENAI_API_KEY" if provider == "openai" else "CLAUDE_API_KEY"
             return (
                 jsonify(
                     {
-                        "error": "Agent not configured. Please set OPENAI_API_KEY environment variable."
+                        "error": f"Agent not configured. Please set {provider_key} environment variable."
                     }
                 ),
                 500,
@@ -1284,6 +1355,13 @@ def validate_command():
 
     except Exception as e:
         return jsonify({"error": f"Failed to validate command: {str(e)}"}), 500
+
+
+@app.route("/src/web/<path:filename>")
+def serve_web_files(filename):
+    """Serve web UI files."""
+    web_dir = BASE_DIR / "src" / "web"
+    return send_file(web_dir / filename)
 
 
 if __name__ == "__main__":

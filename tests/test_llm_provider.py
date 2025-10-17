@@ -41,7 +41,7 @@ class TestModelRegistry:
     def test_get_default_model_claude(self):
         """Test getting default Claude model."""
         model = get_default_model("claude")
-        assert model == "claude-3-5-sonnet-20241022"
+        assert model == "claude-sonnet-4-5-20250929"
 
     def test_get_model_info_openai(self):
         """Test getting OpenAI model info."""

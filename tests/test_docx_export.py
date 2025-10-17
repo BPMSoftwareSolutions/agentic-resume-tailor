@@ -4,11 +4,13 @@ Related to GitHub Issue #6
 """
 
 import json
+import time
 from pathlib import Path
 
 import pytest
 
 from src.api.app import app
+from src.models.resume import Resume
 
 
 @pytest.fixture
@@ -17,6 +19,12 @@ def client():
     app.config["TESTING"] = True
     with app.test_client() as client:
         yield client
+
+
+@pytest.fixture
+def unique_resume_name():
+    """Generate a unique resume name using timestamp."""
+    return f"Test_Resume_{int(time.time() * 1000)}"
 
 
 @pytest.fixture
@@ -58,7 +66,7 @@ class TestDocxExport:
         pass  # Placeholder - requires mocking subprocess
 
     def test_export_specific_resume_post(
-        self, client, tmp_path, sample_resume_data, monkeypatch
+        self, client, tmp_path, sample_resume_data, monkeypatch, unique_resume_name
     ):
         """Test exporting a specific resume using POST request with resume_id."""
         # Create a test resume first
@@ -66,7 +74,7 @@ class TestDocxExport:
             "/api/resumes",
             data=json.dumps(
                 {
-                    "name": "Test Resume",
+                    "name": unique_resume_name,
                     "description": "Test description",
                     "data": sample_resume_data,
                 }
@@ -84,7 +92,7 @@ class TestDocxExport:
 
         # Verify the resume was created
         assert resume_id is not None
-        assert result["resume"]["name"] == "Test Resume"
+        assert result["resume"]["name"] == unique_resume_name
 
     def test_export_nonexistent_resume(self, client):
         """Test exporting a resume that doesn't exist."""
@@ -123,14 +131,14 @@ class TestDocxExport:
 class TestDocxExportIntegration:
     """Integration tests for DOCX export with full workflow."""
 
-    def test_create_and_export_resume(self, client, sample_resume_data):
+    def test_create_and_export_resume(self, client, sample_resume_data, unique_resume_name):
         """Test creating a resume and then exporting it."""
         # Create resume
         create_response = client.post(
             "/api/resumes",
             data=json.dumps(
                 {
-                    "name": "Export Test Resume",
+                    "name": unique_resume_name,
                     "description": "Resume for export testing",
                     "data": sample_resume_data,
                 }
@@ -146,7 +154,7 @@ class TestDocxExportIntegration:
         # In a real test environment, you'd mock subprocess.run
         assert resume_id is not None
 
-    def test_tailor_and_export_resume(self, client, sample_resume_data):
+    def test_tailor_and_export_resume(self, client, sample_resume_data, unique_resume_name):
         """Test tailoring a resume and then exporting it."""
         # Create a job listing
         job_response = client.post(
@@ -169,7 +177,7 @@ class TestDocxExportIntegration:
         # Create a resume
         resume_response = client.post(
             "/api/resumes",
-            data=json.dumps({"name": "Base Resume", "data": sample_resume_data}),
+            data=json.dumps({"name": unique_resume_name, "data": sample_resume_data}),
             content_type="application/json",
         )
 

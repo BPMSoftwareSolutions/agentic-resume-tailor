@@ -16,8 +16,24 @@ Examples:
 
 import argparse
 import json
+import os
+import sys
 from datetime import datetime
 from pathlib import Path
+
+# Fix Windows console encoding for emoji support
+if sys.platform == 'win32':
+    try:
+        # Set console to UTF-8 mode
+        os.system('chcp 65001 > nul')
+        # Reconfigure stdout/stderr to use UTF-8
+        if hasattr(sys.stdout, 'reconfigure'):
+            sys.stdout.reconfigure(encoding='utf-8')
+        if hasattr(sys.stderr, 'reconfigure'):
+            sys.stderr.reconfigure(encoding='utf-8')
+    except Exception:
+        # If reconfiguration fails, continue without emoji support
+        pass
 
 
 def load_resume_index():
