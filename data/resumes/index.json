@@ -161,6 +161,15 @@
       "job_listing_id": null,
       "is_master": false,
       "description": ""
+    },
+    {
+      "id": "tailored_westlaw_lead_software_engineer_ai",
+      "name": "Tailored Westlaw Resume",
+      "created_at": "2025-10-16T20:38:32.773760",
+      "updated_at": "2025-10-16T20:38:32.773760",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Tailored resume for Westlaw (Lead Software Engineer, AI) Final"
     }
   ]
 }
