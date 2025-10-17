@@ -616,7 +616,7 @@ Available themes: professional, modern, executive, creative
         if model is None:
             model = get_default_model(provider)
             if model is None:
-                model = "gpt-4" if provider == "openai" else "claude-3-5-sonnet-20241022"
+                model = "gpt-4" if provider == "openai" else "claude-sonnet-4-5-20250929"
 
         self.model = model
         self.auto_execute = auto_execute
@@ -632,12 +632,26 @@ Available themes: professional, modern, executive, creative
                 )
             self.llm_provider = OpenAIProvider(api_key, model)
         elif provider == 'claude':
-            api_key = os.getenv("CLAUDE_API_KEY")
+            # Accept either CLAUDE_API_KEY or ANTHROPIC_API_KEY for convenience
+            api_key = os.getenv("CLAUDE_API_KEY") or os.getenv("ANTHROPIC_API_KEY")
             if not api_key:
                 raise ValueError(
-                    "CLAUDE_API_KEY environment variable is required. "
+                    "CLAUDE_API_KEY or ANTHROPIC_API_KEY environment variable is required. "
                     "Please set it in your environment or .env file."
                 )
+
+            # Validate requested model against registry and fall back to default if unknown
+            try:
+                from src.agent.model_registry import get_all_models
+                claude_models = get_all_models('claude')
+                if model not in claude_models:
+                    default_model = get_default_model('claude') or list(claude_models.keys())[0]
+                    print(f"⚠️  Requested Claude model '{model}' not found in registry. Falling back to default: {default_model}")
+                    model = default_model
+            except Exception:
+                # If registry check fails, continue with provided model
+                pass
+
             self.llm_provider = ClaudeProvider(api_key, model)
         else:
             raise ValueError(f"Unknown provider: {provider}. Supported providers: 'openai', 'claude'")
@@ -751,7 +765,8 @@ Available themes: professional, modern, executive, creative
             return assistant_message
 
         except Exception as e:
-            error_msg = f"❌ Error communicating with OpenAI: {str(e)}"
+            # Include provider name in the error message (better clarity)
+            error_msg = f"❌ Error communicating with {self.provider_name}: {str(e)}"
             print(error_msg)
             return error_msg
     

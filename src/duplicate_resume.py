@@ -91,7 +91,11 @@ def duplicate_resume(
 
     # Duplicate the resume
     print_info(f"Duplicating resume...")
-    new_metadata = resume_model.duplicate(source_id, new_name)
+    try:
+        new_metadata = resume_model.duplicate(source_id, new_name)
+    except ValueError as e:
+        # Handle duplicate name error
+        raise ValueError(str(e))
 
     if not new_metadata:
         raise RuntimeError("Failed to duplicate resume")
@@ -187,6 +191,10 @@ Resume Identification:
         sys.exit(2)
     except ValueError as e:
         print_error(str(e))
+        print_info("\n💡 Tip: Use a unique name for the new resume. You can include:")
+        print_info("   - Company name (e.g., 'Ford', 'GM')")
+        print_info("   - Position title (e.g., 'Senior Engineer', 'Manager')")
+        print_info("   - Date or version (e.g., 'v2', '2025-01')")
         sys.exit(3)
     except Exception as e:
         print_error(f"Unexpected error: {e}")

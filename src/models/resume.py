@@ -97,6 +97,23 @@ class Resume:
         """Get path to resume file."""
         return self.resumes_dir / f"{resume_id}.json"
 
+    def _name_exists(self, name: str, exclude_id: Optional[str] = None) -> bool:
+        """
+        Check if a resume with the given name already exists.
+
+        Args:
+            name: Resume name to check
+            exclude_id: Optional resume ID to exclude from check (for updates)
+
+        Returns:
+            True if name exists, False otherwise
+        """
+        index = self._load_index()
+        for resume in index["resumes"]:
+            if resume["id"] != exclude_id and resume["name"].lower() == name.lower():
+                return True
+        return False
+
     def list_all(self) -> List[ResumeMetadata]:
         """
         List all resumes.
@@ -143,7 +160,14 @@ class Resume:
 
         Returns:
             Resume metadata
+
+        Raises:
+            ValueError: If a resume with the same name already exists
         """
+        # Check for duplicate name
+        if self._name_exists(name):
+            raise ValueError(f"A resume with the name '{name}' already exists. Please use a different name.")
+
         resume_id = str(uuid.uuid4())
         now = datetime.now().isoformat()
 
@@ -211,11 +235,20 @@ class Resume:
 
         Returns:
             True if successful, False if resume not found
+
+        Raises:
+            ValueError: If updating name to a name that already exists
         """
         index = self._load_index()
 
         for resume in index["resumes"]:
             if resume["id"] == resume_id:
+                # Check for duplicate name if updating name
+                if "name" in kwargs:
+                    new_name = kwargs["name"]
+                    if self._name_exists(new_name, exclude_id=resume_id):
+                        raise ValueError(f"A resume with the name '{new_name}' already exists. Please use a different name.")
+
                 # Update allowed fields
                 for key in ["name", "job_listing_id", "description"]:
                     if key in kwargs:
