@@ -26,5 +26,69 @@
   {
     "role": "assistant",
     "content": "✅ Command executed successfully\n\n[INFO]    Items processed: 51\n========================================================================================================================\n📋 RESUME LIST (9 total)\n========================================================================================================================\n#   Resume Name                                    Master   Updated           Description                             \n------------------------------------------------------------------------------------------------------------------------\n1   Base Resume                                             2025-10-16 13:51                                          \n2   Export Test Resume                                      2025-10-16 13:51  Resume for export testing               \n3   Test Resume                                             2025-10-16 13:51  Test description                        \n4   Tailored_Westlaw_Lead_Software_Engineer_AI              2025-10-16 11:20  Tailored resume for Westlaw (Lead Sof...\n5   Test_Resume_For_Issue_19                                2025-10-12 13:28  Duplicated from Master Resume           \n6   Sidney_Jones_Senior_Software_Engineer_Ford              2025-10-12 10:42  Duplicated from Sidney_Jones_Senior_S...\n7   Sidney_Jones_Senior_Software_Engineer_GM                2025-10-12 08:48  Duplicated from Sidney_Jones_Senior_S...\n8   Sidney_Jones_Senior_Software_Engineer_Credibly          2025-10-11 20:15  Duplicated from Master Resume           \n9   Master Resume                                  ✓        2025-10-11 19:44  Primary resume containing all experie...\n========================================================================================================================\n\n📊 Summary:\n   • Master Resumes: 1\n   • Tailored Resumes: 8\n   • Total: 9\n\n💡 What would you like to do next?\n   1. Review the output\n   2. Run related commands\n   3. Check the results\n"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
   }
 ]
