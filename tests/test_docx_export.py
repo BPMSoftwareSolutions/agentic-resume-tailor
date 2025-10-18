@@ -31,18 +31,13 @@ def client(temp_data_dir, monkeypatch):
     Yields:
         FlaskClient: Test client for the Flask app
     """
-    # Import the app module
-    from api import app as app_module
-    from models.resume import Resume
-    from models.job_listing import JobListing
-
-    # Store original values
-    original_data_dir = app_module.DATA_DIR
-    original_resume_model = app_module.resume_model
-    original_job_listing_model = app_module.job_listing_model
+    # Import the app module - use the same path as the app import at the top of this file
+    import src.api.app as app_module
+    from src.models.resume import Resume as ResumeModel
+    from src.models.job_listing import JobListing
 
     # Create new models with temporary directory
-    new_resume_model = Resume(temp_data_dir)
+    new_resume_model = ResumeModel(temp_data_dir)
     new_job_listing_model = JobListing(temp_data_dir)
 
     # Patch the app module

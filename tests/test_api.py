@@ -56,6 +56,7 @@ def temp_data_dir(tmp_path, monkeypatch):
         json.dump(test_resume, f, indent=2)
 
     # Patch the paths in the app module using monkeypatch
+    # Note: We patch the 'app' module directly because that's how it's imported in this file
     import app as app_module
 
     monkeypatch.setattr(app_module, "RESUME_FILE", resume_file)
