@@ -210,3 +210,12 @@ __marimo__/
 /.vs
 /out
 /.bak
+
+# Generated resume files (test artifacts)
+data/resume_*.html
+data/resume_*.docx
+data/resume_*.pdf
+resume_output/
+*.html
+*.docx
+*.pdf
