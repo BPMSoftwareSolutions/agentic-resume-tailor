@@ -22,15 +22,7 @@ from app import app, validate_resume_structure
 
 
 @pytest.fixture
-def client():
-    """Create a test client for the Flask app."""
-    app.config["TESTING"] = True
-    with app.test_client() as client:
-        yield client
-
-
-@pytest.fixture
-def temp_data_dir(tmp_path):
+def temp_data_dir(tmp_path, monkeypatch):
     """Create a temporary data directory with test resume file."""
     # Create temp directories
     data_dir = tmp_path / "data"
@@ -63,14 +55,11 @@ def temp_data_dir(tmp_path):
     with open(resume_file, "w") as f:
         json.dump(test_resume, f, indent=2)
 
-    # Patch the paths in the app module
+    # Patch the paths in the app module using monkeypatch
     import app as app_module
 
-    original_resume_file = app_module.RESUME_FILE
-    original_backup_dir = app_module.BACKUP_DIR
-
-    app_module.RESUME_FILE = resume_file
-    app_module.BACKUP_DIR = backup_dir
+    monkeypatch.setattr(app_module, "RESUME_FILE", resume_file)
+    monkeypatch.setattr(app_module, "BACKUP_DIR", backup_dir)
 
     yield {
         "data_dir": data_dir,
@@ -79,9 +68,24 @@ def temp_data_dir(tmp_path):
         "test_resume": test_resume,
     }
 
-    # Restore original paths
-    app_module.RESUME_FILE = original_resume_file
-    app_module.BACKUP_DIR = original_backup_dir
+
+@pytest.fixture
+def client(temp_data_dir):
+    """
+    Create a test client for the Flask app with isolated data directory.
+
+    This fixture depends on temp_data_dir to ensure the app module is
+    patched with isolated paths before creating the test client.
+
+    Args:
+        temp_data_dir: Temporary data directory fixture
+
+    Yields:
+        FlaskClient: Test client for the Flask app
+    """
+    app.config["TESTING"] = True
+    with app.test_client() as test_client:
+        yield test_client
 
 
 class TestHealthEndpoint:
