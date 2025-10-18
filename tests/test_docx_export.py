@@ -4,7 +4,7 @@ Related to GitHub Issue #6
 """
 
 import json
-import time
+import sys
 from pathlib import Path
 
 import pytest
@@ -12,19 +12,47 @@ import pytest
 from src.api.app import app
 from src.models.resume import Resume
 
+# Add src to path
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
 
 @pytest.fixture
-def client():
-    """Create a test client for the Flask app."""
+def client(temp_data_dir, monkeypatch):
+    """
+    Create a test client for the Flask app with isolated data directory.
+
+    This fixture patches the app's DATA_DIR to use a temporary directory,
+    ensuring that all test data is isolated and cleaned up after each test.
+
+    Args:
+        temp_data_dir: Temporary directory fixture from conftest.py
+        monkeypatch: pytest monkeypatch fixture
+
+    Yields:
+        FlaskClient: Test client for the Flask app
+    """
+    # Import the app module
+    from api import app as app_module
+    from models.resume import Resume
+    from models.job_listing import JobListing
+
+    # Store original values
+    original_data_dir = app_module.DATA_DIR
+    original_resume_model = app_module.resume_model
+    original_job_listing_model = app_module.job_listing_model
+
+    # Create new models with temporary directory
+    new_resume_model = Resume(temp_data_dir)
+    new_job_listing_model = JobListing(temp_data_dir)
+
+    # Patch the app module
+    monkeypatch.setattr(app_module, "DATA_DIR", temp_data_dir)
+    monkeypatch.setattr(app_module, "resume_model", new_resume_model)
+    monkeypatch.setattr(app_module, "job_listing_model", new_job_listing_model)
+
     app.config["TESTING"] = True
-    with app.test_client() as client:
-        yield client
-
-
-@pytest.fixture
-def unique_resume_name():
-    """Generate a unique resume name using timestamp."""
-    return f"Test_Resume_{int(time.time() * 1000)}"
+    with app.test_client() as test_client:
+        yield test_client
 
 
 @pytest.fixture
