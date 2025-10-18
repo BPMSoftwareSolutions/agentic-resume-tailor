@@ -108,8 +108,9 @@ class TestResumeAPI:
     def test_get_resume(self, client, sample_resume_data, unique_resume_name):
         """Test GET /api/resumes/<id>."""
         # Create a resume first using the API
-        from api.app import resume_model
-        metadata = resume_model.create(data=sample_resume_data, name=unique_resume_name)
+        # Use the patched resume_model from the app module
+        import api.app as app_module
+        metadata = app_module.resume_model.create(data=sample_resume_data, name=unique_resume_name)
 
         # Get the resume
         response = client.get(f"/api/resumes/{metadata.id}")
@@ -129,8 +130,9 @@ class TestResumeAPI:
     def test_update_resume(self, client, sample_resume_data, unique_resume_name):
         """Test PUT /api/resumes/<id>."""
         # Create a resume first using the API
-        from api.app import resume_model
-        metadata = resume_model.create(data=sample_resume_data, name=unique_resume_name)
+        # Use the patched resume_model from the app module
+        import api.app as app_module
+        metadata = app_module.resume_model.create(data=sample_resume_data, name=unique_resume_name)
 
         # Update the resume
         updated_data = sample_resume_data.copy()
@@ -149,7 +151,7 @@ class TestResumeAPI:
         assert data["success"] is True
 
         # Verify update
-        resume_data = resume_model.get(metadata.id)
+        resume_data = app_module.resume_model.get(metadata.id)
         assert resume_data["title"] == "Senior Software Engineer"
 
         # Note: Cleanup is automatic via temp_data_dir fixture
@@ -157,8 +159,9 @@ class TestResumeAPI:
     def test_delete_resume(self, client, sample_resume_data, unique_resume_name):
         """Test DELETE /api/resumes/<id>."""
         # Create a resume first using the API
-        from api.app import resume_model
-        metadata = resume_model.create(data=sample_resume_data, name=unique_resume_name)
+        # Use the patched resume_model from the app module
+        import api.app as app_module
+        metadata = app_module.resume_model.create(data=sample_resume_data, name=unique_resume_name)
 
         # Delete the resume
         response = client.delete(f"/api/resumes/{metadata.id}")
@@ -168,14 +171,15 @@ class TestResumeAPI:
         assert data["success"] is True
 
         # Verify deletion
-        resume_data = resume_model.get(metadata.id)
+        resume_data = app_module.resume_model.get(metadata.id)
         assert resume_data is None
 
     def test_duplicate_resume(self, client, sample_resume_data, unique_resume_name):
         """Test POST /api/resumes/<id>/duplicate."""
         # Create a resume first using the API
-        from api.app import resume_model
-        metadata = resume_model.create(data=sample_resume_data, name=unique_resume_name)
+        # Use the patched resume_model from the app module
+        import api.app as app_module
+        metadata = app_module.resume_model.create(data=sample_resume_data, name=unique_resume_name)
 
         # Duplicate the resume
         payload = {"name": f"{unique_resume_name}_Duplicate"}
