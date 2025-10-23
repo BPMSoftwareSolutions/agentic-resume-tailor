@@ -10,7 +10,11 @@
     "end_year": 2021,
     "location": "West Bloomfield, MI",
     "bullets": [
-      "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management.",
+      "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems.",
+      "Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring.",
+      "Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity.",
+      "Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration.",
+      "Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management.",
       "ClaimChoice Hub: Architected and delivered cloud-native TPA integration platform that migrated workflows from .NET to Java, streamlined eligibility, payroll, and claims processing, and reduced manual overhead to support client scalability.",
       "Tiding Health (Healthcare SaaS Platform): Devised and executed high-traffic member portals, admin consoles, and claims integration hub serving more than 3M users.",
       "RenderX (AI-Driven Orchestration Platform): Established self-documenting, JSON-based plugin architecture powered by proprietary MusicalConductor event orchestration engine.",
@@ -310,7 +314,8 @@
       "Designed and implemented **scalable, distributed architectures** using **Python, Node.js, React, and serverless components**, aligning engineering outcomes with business KPIs.",
       "Built and led **multi-team engineering environments**, implementing **Agile/DevOps practices** (continuous testing, containerization, and IaC via Terraform).",
       "Established **software delivery playbooks** and reusable CI/CD modules that accelerated project onboarding and reduced deployment friction.",
-      "Championed **team growth through mentorship**, establishing technical workshops and upskilling programs on modern stacks and security-by-design principles."
+      "Championed **team growth through mentorship**, establishing technical workshops and upskilling programs on modern stacks and security-by-design principles.",
+      "Developed secure SFTP services, ETL pipelines, and SQL-driven automation to enable seamless integrations with Paylocity and third-party systems. Engineered Voice of Customer (VOC) AI application to analyze sentiment from customer interviews, while deploying AWS CloudWatch dashboards for performance monitoring. Created automated financial workflows using Azure Functions, SQL, and Selenium RPA to synchronize eligibility and payroll data with Paylocity. Integrated LLM technology to automate data access layer generation, enhance code validation, and optimize UI/UX orchestration. Built e-commerce solutions (React, NodeJS, AWS EC2/NoSQL) with Stripe and PayPal integrations, including admin portals for inventory and content management."
     ],
     "skills": [
       "Leadership",

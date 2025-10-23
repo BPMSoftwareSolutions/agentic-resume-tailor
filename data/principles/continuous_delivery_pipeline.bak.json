@@ -1,0 +1,691 @@
+{
+  "pipeline": {
+    "name": "Continuous Delivery Pipeline",
+    "aspects": [
+      {
+        "name": "Continuous Exploration",
+        "index": 1,
+        "key_activities": [
+          {
+            "name": "Hypothesize",
+            "best_practices": [
+              {
+                "name": "Lean startup thinking",
+                "label": "CDP-Lean-startup-thinking",
+                "description": "Defining Minimum Marketable Feature (MMFs) and/or Minimum Viable Products (MVPs) helps evaluate hypotheses quickly before making too much investment. Both MMFs and MVPs represent the smallest thing that can be built to evaluate whether the hypothesis is valid.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Python + Streamlit + OpenAI API",
+                    "context": "Rapid hypothesis validation through AI-driven prototyping"
+                  }
+                ]
+              },
+              {
+                "name": "Innovation Accounting",
+                "label": "CDP-Innovation-Accounting",
+                "description": "Evaluating hypotheses requires different metrics than those used to measure end-state working solutions. Innovation Accounting focuses on how to measure the intermediate and predictive business outcomes of a hypothesis both during initial incremental solution development and evaluation of the MVP.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Power BI + AWS Redshift + Airflow",
+                    "context": "KPI dashboards for incremental hypothesis tracking"
+                  }
+                ]
+              }
+            ],
+            "index": 1
+          },
+          {
+            "name": "Collaborate and research",
+            "best_practices": [
+              {
+                "name": "Collaboration and Research Around Customer Needs",
+                "label": "CDP-Collaboration-and-Research-Around-Customer-Needs",
+                "description": "To create a compelling and differentiated vision, Product Management facilitates a continuous and collaborative process, soliciting input from a diverse group of stakeholders\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Miro + Notion + Microsoft Teams",
+                    "context": "Cross-team discovery workshops and customer mapping"
+                  }
+                ]
+              },
+              {
+                "name": "Primary market research",
+                "label": "CDP-Primary-market-research",
+                "description": "Product Management develops additional insights through primary market research, including surveys, focus groups, questionnaires, and competitive analysis for customer understanding.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Qualtrics + Google Forms + Pandas",
+                    "context": "Survey automation and response analytics"
+                  }
+                ]
+              },
+              {
+                "name": "Gemba walks",
+                "label": "CDP-Gemba-walks",
+                "description": "An experiential form of primary market research, a Gemba walk (‘Gemba’ is the place where the work is performed [2]) is a process in which the product team observes how stakeholders execute the steps and specific activities in their operational value streams to better identify opportunities for relentless improvement.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "GoPro + Miro + Loom",
+                    "context": "Visual documentation and operational insights"
+                  }
+                ]
+              },
+              {
+                "name": "Customer Visits",
+                "label": "CDP-Customer-Visits",
+                "description": "There’s no substitute for first-person observation of the daily activities of the people doing the work. Whether structured or informal, Product Managers and Product Owners are responsible for understanding how people use systems in actual work environments. They can’t do that at their desk, so there is no substitute for “getting outside the building” and observing users in their specific Solution Context.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Zoom + HubSpot CRM + Figma",
+                    "context": "Remote user observation and feedback loop integration"
+                  }
+                ]
+              },
+              {
+                "name": "Secondary market research",
+                "label": "CDP-Secondary-market-research",
+                "description": "To broaden their thinking, Product Management uses various secondary market research techniques to develop a comprehensive understanding of the customers and markets they’re serving. Staying abreast of market/industry trends is a critical outcome of secondary market research.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Lean UX thinking",
+                "label": "CDP-Lean-UX-thinking",
+                "description": "Lean UX is a collaborative process of working with stakeholders to define Minimum Marketable Features (MMFs) and validate them quickly with customers.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Understanding the problem space",
+                "label": "CDP-Understanding-the-problem-space",
+                "description": "Conducting research enables the organization to further refine its processes and create artifacts that clearly express its emerging understanding of the problem space\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Developing personas to focus design",
+                "label": "CDP-Developing-personas-to-focus-design",
+                "description": "Informed by research, Personas help the organization understand the target customer.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Building empathy for the user",
+                "label": "CDP-Building-empathy-for-the-user",
+                "description": "Empathy maps ensure that the team is considering the full needs of the user and how these needs may be evolving through successive releases.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Designing the customer experience",
+                "label": "CDP-Designing-the-customer-experience",
+                "description": "Journey maps provide the design link between the operational value stream and the customer’s experience.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 2
+          },
+          {
+            "name": "Architect",
+            "best_practices": [
+              {
+                "name": "Architecting for releasability",
+                "label": "CDP-Architecting-for-releasability",
+                "description": "Different parts of the solution require different release strategies. The solution must be designed to enable various incremental release strategies and shift them over time based on business demand.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Architecting for testability",
+                "label": "CDP-Architecting-for-testability",
+                "description": "Systems that can’t be easily tested can’t be readily changed. Systems designed and architected in a modular way enable continuous testing.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Python + PyTest + GitHub Actions",
+                    "context": "Decoupled modules with automated testing in CI"
+                  }
+                ]
+              },
+              {
+                "name": "Separating deployment and release",
+                "label": "CDP-Separating-deployment-and-release",
+                "description": "In order to continuously deploy, the ability to release may need to be separate from the work of deploying to production. This requires architectural enablers that will allow functionality to be in production but hidden from Customers.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Architecting for operations",
+                "label": "CDP-Architecting-for-operations",
+                "description": "Operational needs must be considered. Build telemetry and logging capabilities into every application and the solution as a whole. Allow services to be downgraded or even removed in times of high loads or in response to incidents. Build capabilities for fast recovery and fix-forward.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Threat modeling",
+                "label": "CDP-Threat-modeling",
+                "description": "Information security considerations should start early, identifying threats to proposed architecture, infrastructure, and applications. And record important security requirements as Non-Functional Requirements to influence backlogs.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "OWASP Threat Dragon + GitHub Security + Trivy",
+                    "context": "Shift-left security visualization and vulnerability detection"
+                  }
+                ]
+              }
+            ],
+            "index": 3
+          },
+          {
+            "name": "Synthesize",
+            "best_practices": [
+              {
+                "name": "Creating the solution vision",
+                "label": "CDP-Creating-the-solution-vision",
+                "description": "The vision serves as the cornerstone for teams to understand the why for the features being developed.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Miro + Figma + ChatGPT",
+                    "context": "Collaborative ideation and generative design sessions"
+                  }
+                ]
+              },
+              {
+                "name": "Maintaining the solution roadmap",
+                "label": "CDP-Maintaining-the-solution-roadmap",
+                "description": "The solution roadmap provides a view into the near future for the ART. It helps Product Management prioritize the work, enables System Architects to prioritize the runway, and provides visibility for Business Owners.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Defining a backlog of clearly written features",
+                "label": "CDP-Defining-a-backlog-of-clearly-written-features",
+                "description": "Clearly defining features that fit in a PI is critical for ARTs to align on what is needed and for teams to be able to plan. The backlog also reflects important security requirements.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Behavior-driven development (BDD)",
+                "label": "CDP-BDD",
+                "description": "BDD fosters collaboration between Product Management, Product Owners, and Agile Teams, which clarifies requirements by adding acceptance criteria.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Python + Behave + Gherkin",
+                    "context": "Specification by example for shared understanding"
+                  }
+                ]
+              },
+              {
+                "name": "Economic prioritization",
+                "label": "CDP-Economic-prioritization",
+                "description": "Features must be prioritized for development to be effective. The budget guardrails of capacity allocation, investment horizons, and continuous Business Owners engagement are critical in prioritization.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "PI Planning",
+                "label": "CDP-PI-Planning",
+                "description": "This is the culmination of the exploration work as the ART comes together to plan the next PI and gain alignment on what should be done in the next program increment.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Jira + Miro + Slack",
+                    "context": "Collaborative PI event planning and dependency mapping"
+                  }
+                ]
+              }
+            ],
+            "index": 4
+          }
+        ]
+      },
+      {
+        "name": "Continuous Integration",
+        "index": 2,
+        "key_activities": [
+          {
+            "name": "Develop",
+            "best_practices": [
+              {
+                "name": "Breaking features into stories",
+                "label": "CDP-Breaking-features-into-stories",
+                "description": "Splitting features into stories enables continuous delivery via small batches and smooth integration. This may include creating user story maps to ensure that workflows are designed to meet customer needs.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Behavior-driven development (BDD)",
+                "label": "CDP-BDD",
+                "description": "BDD is a process Product Owners and teams use to more thoroughly understand requirements and improve quality by creating acceptance criteria and acceptance tests, and often automating them, before the code is even written. BDD works with TDD\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Test-driven development (TDD)",
+                "label": "CDP-TDD",
+                "description": "TDD involves writing the unit test first, then building the minimal code needed to pass the test. This leads to better design, higher quality, and increased productivity. TDD works with BDD and is more fully described here. Version control – Effective version control allows teams to recover quickly from problems and to improve quality by making sure the right components are integrated together. Aggregating assets under version control is a leading indicator of continuous integration maturity.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Version control",
+                "label": "CDP-Version-control",
+                "description": "Effective version control allows teams to recover quickly from problems and to improve quality by making sure the right components are integrated together. Aggregating assets under version control is a leading indicator of continuous integration maturity.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Built-in quality",
+                "label": "CDP-Built-in-quality",
+                "description": "Built-In Quality prescribes practices around flow, architecture & design quality, code quality, system quality, and release quality.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Application telemetry",
+                "label": "CDP-Application-telemetry",
+                "description": "Application telemetry is the primary mechanism that acquires and then uses application data to help determine the results of relevant hypotheses.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Threat modeling",
+                "label": "CDP-Threat-modeling",
+                "description": "In addition to the threat modeling done in the Architect activity of continuous exploration, attention should be given during system design to possible vulnerabilities that may be introduced into the system.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Continuous Integration",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Python + FastAPI + GitHub Actions",
+                    "context": "Used for backend microservices and API pipelines with automated testing and deployment."
+                  },
+                  {
+                    "stack": "Java + Spring Boot + Jenkins",
+                    "context": "Common enterprise CI setup for monolithic and microservice Java systems."
+                  },
+                  {
+                    "stack": "Node.js + Docker + AWS CodePipeline",
+                    "context": "Used in full-stack JavaScript applications and cloud-native pipelines."
+                  },
+                  {
+                    "stack": ".NET Core + Azure DevOps + Terraform",
+                    "context": "Typical Microsoft ecosystem CI/CD workflow with Infrastructure-as-Code."
+                  },
+                  {
+                    "stack": "Go + Kubernetes + ArgoCD",
+                    "context": "Modern lightweight build/deploy pipeline for distributed services."
+                  }
+                ]
+              },
+              {
+                "name": "Test Automation",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Python + PyTest + Selenium",
+                    "context": "Used for functional and browser automation tests."
+                  },
+                  {
+                    "stack": "JavaScript + Cypress + GitHub Actions",
+                    "context": "Modern UI testing framework for CI pipelines."
+                  },
+                  {
+                    "stack": "Java + JUnit + Jenkins",
+                    "context": "Classic test automation combination in enterprise Java systems."
+                  },
+                  {
+                    "stack": "C# + NUnit + Azure Pipelines",
+                    "context": "Used in Microsoft-based QA automation setups."
+                  },
+                  {
+                    "stack": "Playwright + Docker + GitLab CI",
+                    "context": "Cross-browser testing with containerized runners."
+                  }
+                ]
+              }
+            ],
+            "index": 5
+          },
+          {
+            "name": "Build",
+            "best_practices": [
+              {
+                "name": "Continuous code integration",
+                "label": "CDP-Continuous-code-integration",
+                "description": "Code commit should automatically trigger compilation and testing of changes. Ideally, this happens on each commit but should happen at least several times a day.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Build and test automation",
+                "label": "CDP-Build-and-test-automation",
+                "description": "The compilation process should be automated and include unit- and story-level tests to verify the change. These tests often use test doubles to replicate other parts of the systems and enable fast builds.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Trunk-based development",
+                "label": "CDP-Trunk-based-development",
+                "description": "Long-lived branches must be avoided. Teams should merge back as quickly as they can, at least once per day, and all teams should work off a single trunk.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Gated commit",
+                "label": "CDP-Gated-commit",
+                "description": "Committing to a single trunk is risky, as broken changes can impact many teams. This is why only the changes that have been validated through the build and test process are merged into the trunk.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Application security",
+                "label": "CDP-Application-security",
+                "description": "Code analysis tools inspect the code and third-party packages for known vulnerabilities.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 6
+          },
+          {
+            "name": "Test end-to-end",
+            "best_practices": [
+              {
+                "name": "Test and production environment congruity",
+                "label": "CDP-Test-and-production-environment-congruity",
+                "description": "Environment congruity assures that testing exercises the solution as it would behave in front of live users and decreases the probability that defects will escape into production.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Test automation",
+                "label": "CDP-Test-automation",
+                "description": "Many types of tests need to be run: functional testing, integration testing, regression testing, etc. The Agile Testing article details a testing matrix of what can and should be automated.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Test data management",
+                "label": "CDP-Test-data-management",
+                "description": "To create stability, tests must be consistent and realistic, replicating production as much as possible, and under source control.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Service virtualization",
+                "label": "CDP-Service-virtualization",
+                "description": "Different kinds of testing require different environments. Service virtualizations allow teams to simulate a production environment without the costs and effort associated with creating and managing real environments.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Testing non-functional requirements (NFRs)",
+                "label": "CDP-Testing-non-functional-requirements-(NFRs)",
+                "description": "System attributes such as security, reliability, performance, maintainability, scalability, and usability must also be thoroughly tested.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Continuous integration and suppliers",
+                "label": "CDP-Continuous-integration-and-suppliers",
+                "description": "Suppliers bring unique contributions that can have a significant impact on lead-time and value delivery. Their work must be continuously integrated as well. It helps to adopt a shared integration cadence and establish objective evaluation milestones.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 7
+          },
+          {
+            "name": "Stage",
+            "best_practices": [
+              {
+                "name": "Maintain a staging environment",
+                "label": "CDP-Maintain-a-staging-environment",
+                "description": "A staging environment, which matches production provides the place for such validation.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Blue/Green deployment",
+                "label": "CDP-Blue/Green-deployment",
+                "description": "The blue/green pattern involves two environments–live (production) and idle (staging). Changes flow continuously to the idle environment where they are staged until ready to deploy to production. At that point, a switch is flipped (a load balancer is updated for example), and the idle environment becomes the live environment, while the previous live environment becomes the new idle environment. This enables continuous delivery, zero-downtime deployment, and fast recovery from failures.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Kubernetes + Argo Rollouts + NGINX/ALB",
+                    "context": "Blue/green via Service/Ingress switch or target group shift."
+                  },
+                  {
+                    "stack": "AWS ALB Target Groups + Auto Scaling",
+                    "context": "Route cutover between blue/green ASGs with health checks."
+                  },
+                  {
+                    "stack": "Spinnaker + GCP/GKE",
+                    "context": "Managed blue/green strategies with automated rollbacks."
+                  },
+                  {
+                    "stack": "Azure App Service Slots + Traffic %",
+                    "context": "Stage swaps with pre-swap validation and traffic redirection."
+                  },
+                  {
+                    "stack": "Nomad + Fabio/LB + Consul",
+                    "context": "HashiCorp stack for service discovery and LB-based switch."
+                  }
+                ]
+              },
+              {
+                "name": "System demo",
+                "label": "CDP-System-demo",
+                "description": "This is the event where stakeholders evaluate a solution’s readiness to be deployed to production.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/",
+                "top_tech_stacks": [
+                  {
+                    "stack": "Kubernetes + Ephemeral Namespaces + Helmfile",
+                    "context": "On-demand demo envs spun up per PI/feature branch."
+                  },
+                  {
+                    "stack": "GitHub Actions + Vercel/Netlify",
+                    "context": "Auto preview deployments for web frontends reviewed in demos."
+                  },
+                  {
+                    "stack": "Heroku Review Apps + Postgres",
+                    "context": "One-click demo apps per PR with seeded data."
+                  },
+                  {
+                    "stack": "Azure Static Web Apps + Functions",
+                    "context": "Frontend+API demo slots with auth and staging domains."
+                  },
+                  {
+                    "stack": "Render/Cloud Run + PR Deploys",
+                    "context": "Ephemeral demo services with automatic teardown."
+                  }
+                ]
+              }
+            ],
+            "index": 8
+          }
+        ]
+      },
+      {
+        "name": "Continuous Deployment",
+        "index": 3,
+        "key_activities": [
+          {
+            "name": "Deploy",
+            "best_practices": [
+              {
+                "name": "Dark launches",
+                "label": "CDP-Dark-launches",
+                "description": "the ability to deploy to a production environment without releasing the functionality to end users\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Feature toggles",
+                "label": "CDP-Feature-toggles",
+                "description": "a technique to facilitate dark launches by implementing toggles in the code, which enables switching between old and new functionality\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Deployment automation",
+                "label": "CDP-Deployment-automation",
+                "description": "the ability to deploy a tested solution automatically from check-in to production\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Selective deployment",
+                "label": "CDP-Selective-deployment",
+                "description": "the ability to deploy to specific production environments and not others based on criteria such as geography, user role, etc.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Self-service deployment",
+                "label": "CDP-Self-service-deployment",
+                "description": "when automation deployment is not fully implemented, self-service deployment allows a single command to take solutions from staging to production\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Version control",
+                "label": "CDP-Version-control",
+                "description": "maintaining environments under version control enables fast deployment and fast recovery\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Blue/Green deployment",
+                "label": "CDP-Blue/Green-deployment",
+                "description": "a technique that permits on-demand switching between staging and production environments\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 9
+          },
+          {
+            "name": "Verify",
+            "best_practices": [
+              {
+                "name": "Production testing",
+                "label": "CDP-Production-testing",
+                "description": "the ability to test solutions in production when they are still ‘dark’\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Test automation",
+                "label": "CDP-Test-automation",
+                "description": "the ability to test repeatedly via automation\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Test data management",
+                "label": "CDP-Test-data-management",
+                "description": "managing the test data in version control to create consistency in automatic testing\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Testing non-functional requirements (NFRs)",
+                "label": "CDP-Testing-non-functional-requirements-(NFRs)",
+                "description": "system attributes such as security, reliability, performance, maintainability, scalability, and usability must also be thoroughly tested before release\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 10
+          },
+          {
+            "name": "Monitor",
+            "best_practices": [
+              {
+                "name": "Full-stack telemetry",
+                "label": "CDP-Full-stack-telemetry",
+                "description": "the ability to monitor for problems across the full stack that a system covers\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Visual displays",
+                "label": "CDP-Visual-displays",
+                "description": "tools that display automated measurements\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Federated monitoring",
+                "label": "CDP-Federated-monitoring",
+                "description": "consolidated monitoring across applications in the solution that creates a holistic view of problems and performance\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 11
+          },
+          {
+            "name": "Respond",
+            "best_practices": [
+              {
+                "name": "Proactive detection",
+                "label": "CDP-Proactive-detection",
+                "description": "a practice for proactively creating faults in the solution to identify potential problems and situations before they occur\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Cross-team collaboration",
+                "label": "CDP-Cross-team-collaboration",
+                "description": "a mindset of cooperation across the Value Stream to identify and solve problems as they arise\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Session replay",
+                "label": "CDP-Session-replay",
+                "description": "the ability to replay end-user sessions to research incidents and identify problems\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Rollback and fix forward",
+                "label": "CDP-Rollback-and-fix-forward",
+                "description": "the ability to both rollback a solution quickly to a previous environment, or to fix a problem quickly through the pipeline without the need to rollback\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Immutable infrastructure",
+                "label": "CDP-Immutable-infrastructure",
+                "description": "this concept recommends that teams never change the elements of the production environment in an uncontrolled manner, but instead manage infrastructure changes through the Continuous Delivery Pipeline\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Version control",
+                "label": "CDP-Version-control",
+                "description": "environments should be maintained under version control in order to rollback quickly\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 12
+          }
+        ]
+      },
+      {
+        "name": "Release on Demand",
+        "index": 4,
+        "key_activities": [
+          {
+            "name": "Release",
+            "best_practices": [
+              {
+                "name": "Dark launches",
+                "label": "CDP-Dark-launches",
+                "description": "This provides the ability to deploy to a production environment without releasing the functionality to end users.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Feature toggles",
+                "label": "CDP-Feature-toggles",
+                "description": "This is a technique to facilitate dark launches by implementing toggles in the code, which enables switching between old and new functionality.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Canary releases",
+                "label": "CDP-Canary-releases",
+                "description": "These provide a mechanism for releasing the solution to a specific Customer segment and measuring the results, before expanding and releasing to more customers.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Decoupled release elements",
+                "label": "CDP-Decoupled-release-elements",
+                "description": "This technique identifies specific release elements, each of which can be released independently. Even simple solutions will have multiple release elements, each operating with different release strategies, as Figure 3 illustrates.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 13
+          },
+          {
+            "name": "Stabilize",
+            "best_practices": [
+              {
+                "name": "Cross-team collaboration",
+                "label": "CDP-Cross-team-collaboration",
+                "description": "A mindset of cooperation across the Value Stream to identify and solve problems as they arise is crucial. This involves building Agile Release Trains that can operate the solution, as well as develop it.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Failover/disaster recovery",
+                "label": "CDP-Failover/disaster-recovery",
+                "description": "Failures will occur. It’s vital to develop a failover mechanism to allow service to resume quickly, or even avoid service interruption. Disaster recovery must be planned, architected into the service, and practiced.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Continuous security monitoring",
+                "label": "CDP-Continuous-security-monitoring",
+                "description": "Security as code and penetration testing focus on preventing known vulnerabilities from getting to production. But it’s also important to test services continuously for newly discovered and reported vulnerabilities and to detect intrusions and attacks on services and infrastructure.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Architect for operations",
+                "label": "CDP-Architect-for-operations",
+                "description": "Operational needs must be considered. High loads, security attacks, and responding to incidents motivate a range of options from downgrading or removing services to adding capacity. Telemetry and logging capabilities enable organizations to better understand and further tune their architecture to meet actual usage patterns.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Monitor non-functional requirements (NFRs)",
+                "label": "CDP-Monitor-non-functional-requirements-(NFRs)",
+                "description": "To avoid service disruptions, system attributes such as reliability, performance, maintainability, scalability, and usability must be continuously monitored.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 14
+          },
+          {
+            "name": "Measure",
+            "best_practices": [
+              {
+                "name": "Application telemetry",
+                "label": "CDP-Application-telemetry",
+                "description": "Application telemetry is the primary mechanism used to track and measure data usage against the hypothesis.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Innovation Accounting",
+                "label": "CDP-Innovation-Accounting",
+                "description": "Evaluating a hypothesis requires different metrics than those used to measure end-state working solutions. Innovation Accounting focuses on how to measure the intermediate and predictive business outcomes of the hypothesis during initial incremental solution development and evaluation of the Minimum Viable Product (MVP).\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 15
+          },
+          {
+            "name": "Learn",
+            "best_practices": [
+              {
+                "name": "Lean startup thinking",
+                "label": "CDP-Lean-startup-thinking",
+                "description": "As MVPs are evaluated, hypothesis are proved or refuted. When hypotheses are refuted, the organization must decide if efforts should continue, should work stop, or should the new Epics with new hypotheses be formed to evaluate different approaches to the same strategy?\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Value stream mapping",
+                "label": "CDP-Value-stream-mapping",
+                "description": "An essential tool to improve the flow of value across the pipeline is value stream mapping. This tool provides the visibility needed to identify bottlenecks and problem areas to flow, as well as design a future state and create Enablers to improve the pipeline.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              },
+              {
+                "name": "Relentless improvement",
+                "label": "CDP-Relentless-improvement",
+                "description": "The flow of work can always be improved. This mindset is part of the SAFe House of Lean and is crucial to achieving results.\n\n© Scaled Agile, Inc.\nInclude this copyright notice with the copied content.\n\nRead the FAQs on how to use SAFe content and trademarks here:\nhttps://www.scaledagile.com/about/about-us/permissions-faq/\nExplore Training at:\nhttps://www.scaledagile.com/training/calendar/"
+              }
+            ],
+            "index": 16
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "generated_at": "2025-10-22T19:32:25.722500Z",
+    "source_file": "Continuous Delivery Pipeline (CDP).csv",
+    "model_type": "hierarchical_tree",
+    "columns_detected": [
+      "aspect",
+      "aspect_index",
+      "key_activity",
+      "key_activity_index",
+      "best_practice",
+      "best_practice_label",
+      "description"
+    ]
+  }
+}

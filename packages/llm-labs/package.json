@@ -1,0 +1,66 @@
+{
+  "name": "@bpm/llm-labs",
+  "version": "1.0.0",
+  "description": "LLM training and fine-tuning lab for experimenting with different training strategies and model optimization techniques",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./pretraining": {
+      "import": "./dist/strategies/pretraining.js",
+      "types": "./dist/strategies/pretraining.d.ts"
+    },
+    "./fine-tuning": {
+      "import": "./dist/strategies/fine-tuning.js",
+      "types": "./dist/strategies/fine-tuning.d.ts"
+    },
+    "./rlhf": {
+      "import": "./dist/strategies/rlhf.js",
+      "types": "./dist/strategies/rlhf.d.ts"
+    },
+    "./rag": {
+      "import": "./dist/strategies/rag.js",
+      "types": "./dist/strategies/rag.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "llm",
+    "training",
+    "fine-tuning",
+    "rlhf",
+    "rag",
+    "pretraining",
+    "ai",
+    "machine-learning"
+  ],
+  "author": "BPM Software Solutions",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.5",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.6.3",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
+

@@ -10,6 +10,8 @@ from jd_fetcher import ingest_jd
 from jd_parser import extract_keywords
 from rewriter import rewrite_star
 from scorer import score_bullets
+from rag.retriever import Retriever
+from rag.rag_indexer import RAGIndexer
 
 # Fix Windows console encoding for emoji support
 if sys.platform == "win32":
@@ -101,12 +103,48 @@ def load_resume(path_or_identifier):
         raise FileNotFoundError(f"Could not load resume '{path_or_identifier}': {e}")
 
 
-def select_and_rewrite(experience, keywords, per_job=3):
+def retrieve_rag_context(keywords, vector_store_path, top_k=5):
+    """
+    Retrieve relevant experiences from RAG vector store based on keywords.
+
+    Args:
+        keywords: List of keywords from job description
+        vector_store_path: Path to vector store
+        top_k: Number of results per keyword
+
+    Returns:
+        Dictionary with retrieved context
+    """
+    try:
+        retriever = Retriever(vector_store_path)
+        rag_context = {}
+
+        for keyword in keywords[:10]:  # Use top 10 keywords
+            result = retriever.retrieve(keyword, top_k=top_k)
+            rag_context[keyword] = result
+
+        return {
+            "success": True,
+            "context": rag_context,
+            "keywords_searched": keywords[:10],
+        }
+    except Exception as e:
+        print(f"⚠️  RAG retrieval failed: {e}")
+        return {"success": False, "error": str(e)}
+
+
+def select_and_rewrite(experience, keywords, per_job=3, rag_context=None):
     tailored = []
     for job in experience:
         top = score_bullets(job["bullets"], keywords)[:per_job]
         rewritten = [rewrite_star(b["text"]) for b in top]
-        tailored.append({**job, "selected_bullets": rewritten})
+        job_data = {**job, "selected_bullets": rewritten}
+
+        # Add RAG context if available
+        if rag_context and rag_context.get("success"):
+            job_data["rag_context"] = rag_context.get("context", {})
+
+        tailored.append(job_data)
     return tailored
 
 
@@ -222,6 +260,16 @@ def main():
         action="store_true",
         help="Also generate DOCX file (only works with HTML format)",
     )
+    ap.add_argument(
+        "--use-rag",
+        action="store_true",
+        help="Use RAG to retrieve relevant experiences from vector store",
+    )
+    ap.add_argument(
+        "--vector-store",
+        default="data/rag/vector_store.json",
+        help="Path to RAG vector store (default: data/rag/vector_store.json)",
+    )
     args = ap.parse_args()
 
     # Ingest JD (supports URL or local file)
@@ -236,10 +284,24 @@ def main():
     print("🔍 Extracting keywords...")
     keywords = extract_keywords(jd_text)
 
+    # Retrieve RAG context if requested
+    rag_context = None
+    if args.use_rag:
+        print("🧠 Retrieving relevant experiences from RAG...")
+        if Path(args.vector_store).exists():
+            rag_context = retrieve_rag_context(keywords, args.vector_store)
+            if rag_context.get("success"):
+                print(f"✅ Retrieved RAG context for {len(rag_context.get('context', {}))} keywords")
+            else:
+                print(f"⚠️  RAG retrieval failed: {rag_context.get('error')}")
+        else:
+            print(f"⚠️  Vector store not found at {args.vector_store}")
+            print("   Run: python -m src.rag.rag_indexer to create vector store")
+
     # Load and tailor resume
     print("📝 Tailoring resume...")
     data = load_resume(args.resume)
-    data["experience"] = select_and_rewrite(data["experience"], keywords)
+    data["experience"] = select_and_rewrite(data["experience"], keywords, rag_context=rag_context)
 
     # Generate output
     if args.format == "html":
