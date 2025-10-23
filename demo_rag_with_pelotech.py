@@ -231,6 +231,49 @@ def demo_comparison():
     print("     • Improved relevance ranking")
 
 
+def demo_hybrid_resume_generation():
+    """Demonstrate hybrid resume generation with RAG integration."""
+    print_section("STEP 6: Hybrid Resume Generation with RAG Integration")
+
+    print("🎨 Demonstrating RAG-enhanced hybrid resume generation...")
+    print("\n  This showcases the integration of Phase 1 RAG Upgrade into the hybrid")
+    print("  resume generator pipeline for production-ready tailored resumes.")
+
+    # Check if master resume exists
+    master_resume_path = Path("data/master_resume.json")
+    if not master_resume_path.exists():
+        print(f"\n⚠️  Master resume not found: {master_resume_path}")
+        print("   Skipping hybrid resume generation demo")
+        return
+
+    # Check if job description exists
+    jd_path = Path("data/job_listings/pelotech-senior-software-engineer.md")
+    if not jd_path.exists():
+        print(f"\n⚠️  Job description not found: {jd_path}")
+        print("   Skipping hybrid resume generation demo")
+        return
+
+    print("\n📋 Available generation options:")
+    print("   1. Basic HTML generation (no RAG):")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --theme creative")
+    print("\n   2. Basic HTML + DOCX generation:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --theme creative --docx")
+    print("\n   3. RAG-enhanced HTML generation:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag")
+    print("\n   4. RAG-enhanced HTML + DOCX generation:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --docx")
+    print("\n   5. RAG + LLM rewriting:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --use-llm-rewriting")
+    print("\n   6. RAG + LLM rewriting + DOCX:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --use-llm-rewriting --docx")
+    print("\n   7. All themes with RAG:")
+    print("      python src/generate_hybrid_resume.py --all-themes --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag")
+    print("\n   8. All themes with RAG + DOCX:")
+    print("      python src/generate_hybrid_resume.py --all-themes --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --docx")
+
+    print("\n✅ Hybrid resume generation is now RAG-enabled with DOCX export support!")
+
+
 def main():
     """Run all demos."""
     try:
@@ -249,17 +292,23 @@ def main():
         # Step 5: Comparison
         demo_comparison()
 
+        # Step 6: Hybrid Resume Generation
+        demo_hybrid_resume_generation()
+
         print_section("DEMO COMPLETE")
-        print("✅ Phase 1 RAG Upgrade demonstration finished successfully!")
+        print("✅ Phase 1 RAG Upgrade + Hybrid Integration demonstration finished successfully!")
         print("\n  � Next steps:")
         print("     1. Tailor resume with RAG:")
         print("        python src/tailor.py --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --out output.json")
         print("\n     2. Tailor with LLM rewriting:")
         print("        python src/tailor.py --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --use-llm-rewriting --out output.json")
-        print("\n     3. Check generated files:")
+        print("\n     3. Generate HTML resume with RAG:")
+        print("        python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag")
+        print("\n     4. Check generated files:")
         print("        • data/rag/vector_store.json - Indexed documents")
         print("        • data/rag/faiss_index.bin - FAISS index")
         print("        • data/rag/experience_chunks.json - Chunked documents")
+        print("        • out/resume.html - Generated HTML resume")
 
     except Exception as e:
         print(f"\n❌ Error: {e}")

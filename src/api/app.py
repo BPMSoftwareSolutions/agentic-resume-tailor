@@ -864,7 +864,7 @@ def duplicate_resume(resume_id: str):
 @app.route("/api/resumes/<resume_id>/tailor", methods=["POST"])
 def tailor_resume(resume_id: str):
     """
-    Tailor a resume to a job listing.
+    Tailor a resume to a job listing with optional RAG and LLM rewriting.
 
     Args:
         resume_id: Resume ID to tailor
@@ -872,11 +872,14 @@ def tailor_resume(resume_id: str):
     Request body:
         {
             "job_listing_id": "Job listing ID",
-            "new_resume_name": "Name for tailored resume"
+            "new_resume_name": "Name for tailored resume",
+            "use_rag": false,
+            "use_llm_rewriting": false,
+            "vector_store": "data/rag/vector_store.json"
         }
 
     Returns:
-        JSON response with tailored resume metadata
+        JSON response with tailored resume metadata and RAG context if enabled
     """
     try:
         body = request.get_json(force=True)
@@ -886,6 +889,9 @@ def tailor_resume(resume_id: str):
 
         job_listing_id = body.get("job_listing_id")
         new_resume_name = body.get("new_resume_name")
+        use_rag = body.get("use_rag", False)
+        use_llm_rewriting = body.get("use_llm_rewriting", False)
+        vector_store_path = body.get("vector_store", "data/rag/vector_store.json")
 
         if not job_listing_id:
             return jsonify({"error": "Job listing ID is required"}), 400
@@ -908,13 +914,35 @@ def tailor_resume(resume_id: str):
         if not keywords:
             keywords = job_listing_model.extract_keywords(job_listing_id)
 
+        # Retrieve RAG context if requested
+        rag_context = None
+        if use_rag:
+            from tailor import retrieve_rag_context
+
+            vector_store = BASE_DIR / vector_store_path
+            if vector_store.exists():
+                rag_context = retrieve_rag_context(keywords, str(vector_store))
+                if rag_context.get("success"):
+                    print(
+                        f"✅ Retrieved RAG context for {len(rag_context.get('context', {}))} keywords"
+                    )
+                else:
+                    print(f"⚠️  RAG retrieval failed: {rag_context.get('error')}")
+                    rag_context = None
+            else:
+                print(f"⚠️  Vector store not found at {vector_store_path}")
+                rag_context = None
+
         # Tailor the resume using existing logic
         from tailor import select_and_rewrite
 
         tailored_data = source_data.copy()
         if "experience" in tailored_data:
             tailored_data["experience"] = select_and_rewrite(
-                tailored_data["experience"], keywords
+                tailored_data["experience"],
+                keywords,
+                rag_context=rag_context,
+                use_llm_rewriting=use_llm_rewriting,
             )
 
         # Create new tailored resume
@@ -925,17 +953,26 @@ def tailor_resume(resume_id: str):
             description=f"Tailored for {job_listing.get('title', 'Unknown')} at {job_listing.get('company', 'Unknown')}",
         )
 
-        return (
-            jsonify(
-                {
-                    "success": True,
-                    "message": "Resume tailored successfully",
-                    "resume": metadata.to_dict(),
-                    "keywords_used": keywords[:10],  # Return first 10 keywords
-                }
-            ),
-            201,
-        )
+        response_data = {
+            "success": True,
+            "message": "Resume tailored successfully",
+            "resume": metadata.to_dict(),
+            "keywords_used": keywords[:10],  # Return first 10 keywords
+            "rag_enabled": use_rag,
+            "llm_rewriting_enabled": use_llm_rewriting,
+        }
+
+        # Include RAG context in response if available
+        if rag_context and rag_context.get("success"):
+            response_data["rag_context"] = {
+                "keywords_searched": rag_context.get("keywords_searched", []),
+                "total_documents_retrieved": sum(
+                    len(v.get("documents", []))
+                    for v in rag_context.get("context", {}).values()
+                ),
+            }
+
+        return jsonify(response_data), 201
 
     except Exception as e:
         import traceback
@@ -1355,6 +1392,220 @@ def validate_command():
 
     except Exception as e:
         return jsonify({"error": f"Failed to validate command: {str(e)}"}), 500
+
+
+@app.route("/api/rag/retrieve", methods=["POST"])
+def rag_retrieve():
+    """
+    Retrieve relevant experiences for keywords using RAG.
+
+    Request Body:
+        {
+            "keywords": ["keyword1", "keyword2", ...],
+            "top_k": 5,
+            "vector_store": "data/rag/vector_store.json"
+        }
+
+    Returns:
+        JSON response with retrieved documents and scores
+    """
+    try:
+        data = request.get_json()
+
+        if not data or "keywords" not in data:
+            return jsonify({"error": "Missing 'keywords' in request body"}), 400
+
+        keywords = data.get("keywords", [])
+        top_k = data.get("top_k", 5)
+        vector_store_path = data.get("vector_store", "data/rag/vector_store.json")
+
+        if not keywords:
+            return jsonify({"error": "Keywords list cannot be empty"}), 400
+
+        # Import RAG components
+        from tailor import retrieve_rag_context
+
+        # Resolve vector store path
+        vector_store = BASE_DIR / vector_store_path
+        if not vector_store.exists():
+            return (
+                jsonify(
+                    {
+                        "error": f"Vector store not found at {vector_store_path}",
+                        "hint": "Run: python -m src.rag.rag_indexer to create vector store",
+                    }
+                ),
+                404,
+            )
+
+        # Retrieve RAG context
+        rag_context = retrieve_rag_context(keywords, str(vector_store), top_k=top_k)
+
+        if not rag_context.get("success"):
+            return (
+                jsonify(
+                    {
+                        "error": "RAG retrieval failed",
+                        "details": rag_context.get("error"),
+                    }
+                ),
+                500,
+            )
+
+        return jsonify(
+            {
+                "success": True,
+                "keywords": keywords,
+                "context": rag_context.get("context", {}),
+                "keywords_searched": rag_context.get("keywords_searched", []),
+            }
+        )
+
+    except Exception as e:
+        import traceback
+
+        return (
+            jsonify(
+                {
+                    "error": f"Failed to retrieve RAG context: {str(e)}",
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
+
+
+@app.route("/api/rag/rewrite", methods=["POST"])
+def rag_rewrite():
+    """
+    Rewrite resume bullets using LLM with evidence constraints.
+
+    Request Body:
+        {
+            "bullets": ["bullet1", "bullet2", ...],
+            "evidence": "Evidence text",
+            "requirement": "Job requirement"
+        }
+
+    Returns:
+        JSON response with rewritten bullets
+    """
+    try:
+        data = request.get_json()
+
+        if not data or "bullets" not in data:
+            return jsonify({"error": "Missing 'bullets' in request body"}), 400
+
+        bullets = data.get("bullets", [])
+        evidence = data.get("evidence", "")
+        requirement = data.get("requirement", "job requirement")
+
+        if not bullets:
+            return jsonify({"error": "Bullets list cannot be empty"}), 400
+
+        # Import LLM rewriter
+        from rag.llm_rewriter import LLMRewriter
+
+        try:
+            llm_rewriter = LLMRewriter()
+        except Exception as e:
+            return (
+                jsonify(
+                    {
+                        "error": "LLM rewriter initialization failed",
+                        "details": str(e),
+                        "hint": "Ensure OPENAI_API_KEY is set",
+                    }
+                ),
+                500,
+            )
+
+        # Rewrite bullets
+        rewritten = []
+        for bullet in bullets:
+            if evidence:
+                rewritten_bullet = llm_rewriter.rewrite_with_evidence(
+                    bullet, evidence, requirement
+                )
+            else:
+                # Fall back to regex rewriting if no evidence
+                from rewriter import rewrite_star
+
+                rewritten_bullet = rewrite_star(bullet)
+
+            rewritten.append(rewritten_bullet)
+
+        return jsonify(
+            {
+                "success": True,
+                "original_bullets": bullets,
+                "rewritten_bullets": rewritten,
+                "evidence_used": bool(evidence),
+            }
+        )
+
+    except Exception as e:
+        import traceback
+
+        return (
+            jsonify(
+                {
+                    "error": f"Failed to rewrite bullets: {str(e)}",
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
+
+
+@app.route("/api/rag/index", methods=["POST"])
+def rag_index():
+    """
+    Trigger re-indexing of the RAG vector store.
+
+    Request Body:
+        {
+            "vector_store": "data/rag/vector_store.json"
+        }
+
+    Returns:
+        JSON response with indexing status
+    """
+    try:
+        data = request.get_json() or {}
+        vector_store_path = data.get("vector_store", "data/rag/vector_store.json")
+
+        # Import RAG indexer
+        from rag.rag_indexer import RAGIndexer
+
+        print("🧠 Starting RAG vector store re-indexing...")
+
+        # Create indexer and build index
+        indexer = RAGIndexer(str(BASE_DIR / vector_store_path))
+        indexer.build_index()
+
+        print("✅ RAG vector store re-indexed successfully")
+
+        return jsonify(
+            {
+                "success": True,
+                "message": "RAG vector store re-indexed successfully",
+                "vector_store": vector_store_path,
+            }
+        )
+
+    except Exception as e:
+        import traceback
+
+        return (
+            jsonify(
+                {
+                    "error": f"Failed to re-index RAG vector store: {str(e)}",
+                    "traceback": traceback.format_exc(),
+                }
+            ),
+            500,
+        )
 
 
 @app.route("/src/web/<path:filename>")

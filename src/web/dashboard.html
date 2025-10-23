@@ -218,7 +218,7 @@
 
     <!-- Tailor Resume Modal -->
     <div class="modal fade" id="tailorResumeModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Tailor Resume to Job</h5>
@@ -236,6 +236,38 @@
                         <div class="mb-3">
                             <label for="tailorResumeName" class="form-label">New Resume Name *</label>
                             <input type="text" class="form-control" id="tailorResumeName" required>
+                        </div>
+
+                        <!-- RAG Options Section -->
+                        <div class="card bg-light mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="bi bi-brain"></i> Advanced Options (RAG & LLM)
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="tailorUseRag">
+                                    <label class="form-check-label" for="tailorUseRag">
+                                        <strong>Use RAG Retrieval</strong>
+                                        <small class="d-block text-muted">Retrieve relevant experiences using semantic search</small>
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="tailorUseLlmRewriting" disabled>
+                                    <label class="form-check-label" for="tailorUseLlmRewriting">
+                                        <strong>Use LLM Rewriting</strong>
+                                        <small class="d-block text-muted">Generate compelling bullets with evidence constraints (requires RAG)</small>
+                                    </label>
+                                </div>
+                                <div id="ragContextInfo" class="alert alert-info mt-3" style="display: none;">
+                                    <small>
+                                        <i class="bi bi-info-circle"></i>
+                                        RAG will retrieve relevant experiences from your resume based on job requirements.
+                                        LLM rewriting will enhance bullets with evidence from retrieved experiences.
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
