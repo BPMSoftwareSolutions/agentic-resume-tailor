@@ -50,6 +50,21 @@ function setupEventListeners() {
 
     // Tailor resume button
     document.getElementById('saveTailorBtn').addEventListener('click', tailorResume);
+
+    // RAG options listeners
+    document.getElementById('tailorUseRag').addEventListener('change', (e) => {
+        const llmCheckbox = document.getElementById('tailorUseLlmRewriting');
+        const ragInfo = document.getElementById('ragContextInfo');
+
+        if (e.target.checked) {
+            llmCheckbox.disabled = false;
+            ragInfo.style.display = 'block';
+        } else {
+            llmCheckbox.disabled = true;
+            llmCheckbox.checked = false;
+            ragInfo.style.display = 'none';
+        }
+    });
 }
 
 // ============================================================================
@@ -269,33 +284,59 @@ async function tailorResume() {
         const sourceResumeId = document.getElementById('tailorSourceResumeId').value;
         const jobListingId = document.getElementById('tailorJobListing').value;
         const newResumeName = document.getElementById('tailorResumeName').value.trim();
+        const useRag = document.getElementById('tailorUseRag').checked;
+        const useLlmRewriting = document.getElementById('tailorUseLlmRewriting').checked;
 
         if (!jobListingId || !newResumeName) {
             showAlert('Please fill in all required fields', 'warning');
             return;
         }
 
+        // Show loading indicator
+        const tailorBtn = document.getElementById('saveTailorBtn');
+        const originalText = tailorBtn.innerHTML;
+        tailorBtn.disabled = true;
+        tailorBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Tailoring...';
+
         const response = await fetch(`${API_BASE_URL}/resumes/${sourceResumeId}/tailor`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 job_listing_id: jobListingId,
-                new_resume_name: newResumeName
+                new_resume_name: newResumeName,
+                use_rag: useRag,
+                use_llm_rewriting: useLlmRewriting
             })
         });
 
-        if (!response.ok) throw new Error('Failed to tailor resume');
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to tailor resume');
+        }
+
+        const result = await response.json();
 
         // Close modal and reload
         bootstrap.Modal.getInstance(document.getElementById('tailorResumeModal')).hide();
         document.getElementById('tailorResumeForm').reset();
-        
+
         await loadResumes();
         updateStatistics();
-        showAlert('Resume tailored successfully!', 'success');
+
+        // Show success message with RAG info if applicable
+        let message = 'Resume tailored successfully!';
+        if (result.rag_enabled) {
+            message += ` (RAG: ${result.rag_context?.total_documents_retrieved || 0} documents retrieved)`;
+        }
+        showAlert(message, 'success');
     } catch (error) {
         console.error('Failed to tailor resume:', error);
-        showAlert('Failed to tailor resume. Please try again.', 'danger');
+        showAlert(`Failed to tailor resume: ${error.message}`, 'danger');
+    } finally {
+        // Restore button state
+        const tailorBtn = document.getElementById('saveTailorBtn');
+        tailorBtn.disabled = false;
+        tailorBtn.innerHTML = '<i class="bi bi-magic"></i> Tailor Resume';
     }
 }
 
