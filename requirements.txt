@@ -13,3 +13,5 @@ openai
 anthropic>=0.25.0
 python-dotenv
 tiktoken>=0.5.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.4

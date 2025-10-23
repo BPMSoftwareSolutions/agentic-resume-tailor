@@ -12,6 +12,7 @@ from rewriter import rewrite_star
 from scorer import score_bullets
 from rag.retriever import Retriever
 from rag.rag_indexer import RAGIndexer
+from rag.llm_rewriter import LLMRewriter
 
 # Fix Windows console encoding for emoji support
 if sys.platform == "win32":
@@ -133,11 +134,64 @@ def retrieve_rag_context(keywords, vector_store_path, top_k=5):
         return {"success": False, "error": str(e)}
 
 
-def select_and_rewrite(experience, keywords, per_job=3, rag_context=None):
+def select_and_rewrite(experience, keywords, per_job=3, rag_context=None, use_llm_rewriting=False):
+    """
+    Select and rewrite resume bullets.
+
+    Args:
+        experience: List of experience entries
+        keywords: Keywords from job description
+        per_job: Number of bullets to select per job
+        rag_context: RAG context for evidence-based rewriting
+        use_llm_rewriting: Whether to use LLM for rewriting
+
+    Returns:
+        List of tailored experience entries
+    """
     tailored = []
+    llm_rewriter = None
+
+    if use_llm_rewriting:
+        try:
+            llm_rewriter = LLMRewriter()
+        except Exception as e:
+            print(f"⚠️  LLM rewriter initialization failed: {e}")
+            llm_rewriter = None
+
     for job in experience:
         top = score_bullets(job["bullets"], keywords)[:per_job]
-        rewritten = [rewrite_star(b["text"]) for b in top]
+
+        # Rewrite bullets
+        if use_llm_rewriting and llm_rewriter and rag_context and rag_context.get("success"):
+            # Use LLM rewriting with evidence
+            rewritten = []
+            for bullet in top:
+                bullet_text = bullet["text"]
+                # Get evidence for this bullet from RAG context
+                evidence = ""
+                for keyword in keywords[:3]:  # Use top 3 keywords
+                    if keyword in rag_context.get("context", {}):
+                        docs = rag_context["context"][keyword].get("documents", [])
+                        if docs:
+                            evidence = docs[0].get("content", "")
+                            break
+
+                # Rewrite with evidence
+                if evidence:
+                    rewritten_bullet = llm_rewriter.rewrite_with_evidence(
+                        bullet_text,
+                        evidence,
+                        keywords[0] if keywords else "job requirement"
+                    )
+                else:
+                    # Fall back to regex rewriting if no evidence
+                    rewritten_bullet = rewrite_star(bullet_text)
+
+                rewritten.append(rewritten_bullet)
+        else:
+            # Use regex rewriting
+            rewritten = [rewrite_star(b["text"]) for b in top]
+
         job_data = {**job, "selected_bullets": rewritten}
 
         # Add RAG context if available
@@ -270,6 +324,11 @@ def main():
         default="data/rag/vector_store.json",
         help="Path to RAG vector store (default: data/rag/vector_store.json)",
     )
+    ap.add_argument(
+        "--use-llm-rewriting",
+        action="store_true",
+        help="Use LLM for evidence-constrained bullet rewriting (requires --use-rag)",
+    )
     args = ap.parse_args()
 
     # Ingest JD (supports URL or local file)
@@ -301,7 +360,12 @@ def main():
     # Load and tailor resume
     print("📝 Tailoring resume...")
     data = load_resume(args.resume)
-    data["experience"] = select_and_rewrite(data["experience"], keywords, rag_context=rag_context)
+    data["experience"] = select_and_rewrite(
+        data["experience"],
+        keywords,
+        rag_context=rag_context,
+        use_llm_rewriting=args.use_llm_rewriting
+    )
 
     # Generate output
     if args.format == "html":

@@ -223,8 +223,8 @@ class TestRetriever:
             "metadata": {
                 "embedding_model": "all-MiniLM-L6-v2",
                 "retrieval_top_k": 10,
-                "similarity_threshold": 0.35,
-                "vector_store_type": "local",
+                "similarity_threshold": 0.1,  # Updated for real embeddings
+                "vector_store_type": "faiss",
                 "document_count": 3,
             },
             "documents": [
