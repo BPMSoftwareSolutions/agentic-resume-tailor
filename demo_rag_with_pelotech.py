@@ -256,14 +256,22 @@ def demo_hybrid_resume_generation():
     print("\n📋 Available generation options:")
     print("   1. Basic HTML generation (no RAG):")
     print("      python src/generate_hybrid_resume.py --output out/resume.html --theme creative")
-    print("\n   2. RAG-enhanced HTML generation:")
+    print("\n   2. Basic HTML + DOCX generation:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --theme creative --docx")
+    print("\n   3. RAG-enhanced HTML generation:")
     print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag")
-    print("\n   3. RAG + LLM rewriting:")
+    print("\n   4. RAG-enhanced HTML + DOCX generation:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --docx")
+    print("\n   5. RAG + LLM rewriting:")
     print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --use-llm-rewriting")
-    print("\n   4. All themes with RAG:")
+    print("\n   6. RAG + LLM rewriting + DOCX:")
+    print("      python src/generate_hybrid_resume.py --output out/resume.html --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --use-llm-rewriting --docx")
+    print("\n   7. All themes with RAG:")
     print("      python src/generate_hybrid_resume.py --all-themes --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag")
+    print("\n   8. All themes with RAG + DOCX:")
+    print("      python src/generate_hybrid_resume.py --all-themes --jd data/job_listings/pelotech-senior-software-engineer.md --use-rag --docx")
 
-    print("\n✅ Hybrid resume generation is now RAG-enabled!")
+    print("\n✅ Hybrid resume generation is now RAG-enabled with DOCX export support!")
 
 
 def main():
