@@ -1,0 +1,145 @@
+{
+  "name": "Sidney Jones",
+  "title": "Senior Software Engineer — DevOps & Cloud Infrastructure",
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847",
+    "linkedin": "https://linkedin.com/in/sidneyjones"
+  },
+  "location": "West Bloomfield, MI",
+  "summary": "Hands-on senior software engineer with 20+ years building scalable backend systems and cloud infrastructure. Passionate polyglot proficient in Python, Java, Go, and JavaScript. Deep expertise in Kubernetes, Terraform, and AWS. Track record mentoring engineers, shipping pragmatic solutions, and thriving in ambiguous, fast-moving environments. Strong opinions, loosely held.",
+  "technical_proficiencies": {
+    "core_languages": "Python, Java, JavaScript/TypeScript, Go, C#",
+    "frameworks": "FastAPI, Flask, Spring Boot, Node.js, .NET Core",
+    "cloud_devops": "AWS (Lambda, API Gateway, S3, EC2), Kubernetes, Terraform, GitHub Actions, Jenkins, Docker, ArgoCD",
+    "specializations": "Infrastructure-as-Code, CI/CD Pipelines, DevSecOps, Microservices Architecture, Cloud Modernization"
+  },
+
+  "areas_of_expertise": [
+    "Backend Software Development",
+    "Infrastructure as Code & DevOps",
+    "Kubernetes & Container Orchestration",
+    "Cloud Architecture (AWS, Azure)",
+    "CI/CD Pipeline Design & Automation",
+    "Team Mentoring & Technical Leadership"
+  ],
+
+  "experience": [
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Independent Consultant — DevOps & Cloud Engineering",
+      "dates": "2024–Present",
+      "start_month": "January",
+      "start_year": 2024,
+      "end_month": "Present",
+      "end_year": 2024,
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        { "text": "Architected Infrastructure-as-Code solutions using Terraform for AWS environments, enabling clients to scale from startup to enterprise-grade deployments." },
+        { "text": "Designed and implemented CI/CD pipelines with GitHub Actions and Jenkins, automating build, test, and deployment workflows for multiple teams." },
+        { "text": "Embedded DevSecOps practices including OIDC-based authentication, SBOM generation, and secure secret management across cloud infrastructure." },
+        { "text": "Mentored engineers on cloud-native best practices, Kubernetes deployment patterns, and infrastructure automation." }
+      ],
+      "tags": ["Python","Terraform","AWS","GitHub Actions","Jenkins","DevSecOps","Kubernetes","CI/CD","Mentoring"]
+    },
+
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead",
+      "dates": "2021–2024",
+      "start_month": "November",
+      "start_year": 2021,
+      "end_month": "August",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "bullets": [
+        { "text": "Led 13 Agile teams through cloud modernization, transitioning legacy monoliths to microservices architecture on AWS and Azure." },
+        { "text": "Designed end-to-end CI/CD pipelines with Terraform and Jenkins, enabling 50% faster release cycles across distributed teams." },
+        { "text": "Established trunk-based development and feature-flag deployment strategies, enabling safe, rapid iteration." },
+        { "text": "Mentored platform engineers on continuous delivery, domain-driven design, and pragmatic problem-solving." }
+      ],
+      "tags": ["Python","Java","AWS","Azure","Terraform","Jenkins","CI/CD","Microservices","Leadership","Mentoring"]
+    },
+
+    {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "2021–2024",
+      "start_month": "August",
+      "start_year": 2021,
+      "end_month": "November",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "bullets": [
+        { "text": "Architected scalable backend services in AWS Lambda and API Gateway, handling high-throughput data pipelines." },
+        { "text": "Implemented Terraform-based Infrastructure-as-Code modules for compute, storage, and event infrastructure." },
+        { "text": "Developed GitHub Actions pipelines with automated security scans and IaC validation, achieving 100% environment parity." },
+        { "text": "Collaborated with teams to productize services into deployable APIs and automate deployment cycles." }
+      ],
+      "tags": ["AWS Lambda","API Gateway","Terraform","GitHub Actions","Python","FastAPI","DevSecOps","CI/CD"]
+    },
+
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "2017–2021",
+      "start_month": "July",
+      "start_year": 2017,
+      "end_month": "November",
+      "end_year": 2021,
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        { "text": "Led cloud-first modernization for analytics clients, deploying microservices on AWS and Azure with Kubernetes and Docker." },
+        { "text": "Built backend services (FastAPI, Flask) supporting millions of records per day, optimized via Docker and Kubernetes CI/CD." },
+        { "text": "Implemented Infrastructure-as-Code (Terraform) and automated observability across cloud environments." },
+        { "text": "Mentored engineers on cloud-native patterns, microservice decomposition, and pragmatic architecture decisions." }
+      ],
+      "tags": ["Python","FastAPI","Flask","AWS","Azure","Terraform","Kubernetes","Docker","Leadership"]
+    },
+
+    {
+      "employer": "John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010–2015",
+      "start_month": "January",
+      "start_year": 2010,
+      "end_month": "September",
+      "end_year": 2015,
+      "location": "Troy, MI",
+      "bullets": [
+        { "text": "Architected payment microservices processing $1M+ daily transactions with zero tolerance for failure." },
+        { "text": "Established one of the company's first automated build and test pipelines, introducing CI/CD before it was mainstream." },
+        { "text": "Introduced trunk-based development and continuous integration practices, enabling faster, safer deployments." },
+        { "text": "Mentored distributed teams on code quality, testing, and pragmatic delivery practices." }
+      ],
+      "tags": ["C#",".NET","CI/CD","Microservices","Payment Systems","Leadership","Automation"]
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI"
+    }
+  ],
+
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ]
+}
+
