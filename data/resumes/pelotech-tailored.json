@@ -121,6 +121,11 @@
       "degree": "Bachelor of Technology",
       "institution": "University of Phoenix",
       "location": "Troy, MI"
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC"
     }
   ],
 
@@ -134,6 +139,30 @@
       "date": "Dec 2022",
       "issuer": "SAFe by Scaled Agile, Inc.",
       "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation",
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps",
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management",
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    },
+    {
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations",
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
     },
     {
       "date": "May 2022",
