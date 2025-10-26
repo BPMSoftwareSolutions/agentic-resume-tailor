@@ -63,6 +63,35 @@ def generate_hybrid_resume(
         with open(resume_json_path, 'r', encoding='utf-8') as f:
             resume_data = json.load(f)
 
+        # Load education and certifications from experiences.json
+        experiences_path = Path(resume_json_path).parent / "experiences.json"
+        if experiences_path.exists():
+            with open(experiences_path, 'r', encoding='utf-8') as f:
+                experiences = json.load(f)
+
+            # Extract education entries (id starts with 'edu-')
+            education_entries = [e for e in experiences if e.get('id', '').startswith('edu-')]
+            if education_entries:
+                resume_data['education'] = []
+                for edu in education_entries:
+                    resume_data['education'].append({
+                        'degree': edu.get('role', ''),
+                        'institution': edu.get('employer', ''),
+                        'location': edu.get('location', ''),
+                        'year': edu.get('dates', '')
+                    })
+
+            # Extract certification entries (id starts with 'cert-')
+            cert_entries = [e for e in experiences if e.get('id', '').startswith('cert-')]
+            if cert_entries:
+                resume_data['certifications'] = []
+                for cert in cert_entries:
+                    resume_data['certifications'].append({
+                        'name': cert.get('role', ''),
+                        'issuer': cert.get('employer', ''),
+                        'date': cert.get('dates', '')
+                    })
+
         # Step 1: Apply RAG tailoring if requested
         if use_rag and jd_path:
             print("🧠 Applying RAG-enhanced tailoring...")
