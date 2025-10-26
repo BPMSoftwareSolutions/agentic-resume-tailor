@@ -92,6 +92,38 @@ def generate_hybrid_resume(
                         'date': cert.get('dates', '')
                     })
 
+            # Add tags to experience entries from experiences.json
+            if 'experience' in resume_data:
+                # Create a map of experiences by employer+role for quick lookup
+                exp_map = {}
+                for exp in experiences:
+                    if not exp.get('id', '').startswith(('edu-', 'cert-')):
+                        key = (exp.get('employer', '').lower(), exp.get('role', '').lower())
+                        exp_map[key] = exp
+
+                # Add tags to matching experience entries
+                for resume_exp in resume_data['experience']:
+                    key = (resume_exp.get('employer', '').lower(), resume_exp.get('role', '').lower())
+                    if key in exp_map:
+                        exp_entry = exp_map[key]
+                        # Combine all tag sources
+                        all_tags = []
+                        all_tags.extend(exp_entry.get('skills', []) or [])
+                        all_tags.extend(exp_entry.get('technologies', []) or [])
+                        all_tags.extend(exp_entry.get('techniques', []) or [])
+                        all_tags.extend(exp_entry.get('principles', []) or [])
+
+                        # Remove duplicates while preserving order
+                        seen = set()
+                        unique_tags = []
+                        for tag in all_tags:
+                            if tag and tag.lower() not in seen:
+                                seen.add(tag.lower())
+                                unique_tags.append(tag)
+
+                        if unique_tags:
+                            resume_exp['tags'] = unique_tags
+
         # Step 1: Apply RAG tailoring if requested
         if use_rag and jd_path:
             print("🧠 Applying RAG-enhanced tailoring...")
