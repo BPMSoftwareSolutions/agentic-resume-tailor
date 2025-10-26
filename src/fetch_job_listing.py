@@ -6,6 +6,49 @@ import json
 import uuid
 from datetime import datetime, timezone
 
+from urllib.parse import urlparse, parse_qs, urlunparse
+
+
+def canonicalize_job_url(url: str) -> str:
+    """Return a canonical job URL for known providers (e.g., Indeed).
+
+    - Indeed: convert gnav/redirect URLs with vjk=... to /viewjob?jk=...
+    - Otherwise return original URL
+    """
+    try:
+        parsed = urlparse(url)
+        host = (parsed.netloc or "").lower()
+        query = parse_qs(parsed.query)
+        if "indeed.com" in host:
+            # If there's a vjk param, convert to canonical viewjob URL
+            if "vjk" in query and query["vjk"]:
+                jk = query["vjk"][0]
+                return f"https://www.indeed.com/viewjob?jk={jk}"
+            # If there's a jk param already, ensure canonical path
+            if parsed.path != "/viewjob" and "jk" in query and query["jk"]:
+                jk = query["jk"][0]
+                return f"https://www.indeed.com/viewjob?jk={jk}"
+        return url
+    except Exception:
+        return url
+
+
+def is_file_url(url: str) -> bool:
+    p = urlparse(url)
+    return p.scheme == "file"
+
+
+def read_local_file_from_url(url: str) -> str:
+    p = urlparse(url)
+    # Support relative paths like file://data/job_listings/foo.md
+    local_path = p.path
+    if local_path.startswith("/") and ":" not in local_path:
+        # Windows path fix (strip leading slash)
+        local_path = local_path[1:]
+    if not os.path.exists(local_path):
+        raise FileNotFoundError(f"Local file not found: {local_path}")
+    return local_path
+
 def update_job_listings_index(title, company, location, filepath, output_dir="job_listings"):
     """
     Update the job_listings/index.json file with the new job listing.
@@ -61,8 +104,9 @@ def fetch_job_listing(url, output_dir="job_listings"):
     Fetch a job listing from a URL and save it as a markdown file.
 
     Supports:
-    - Indeed.com job listings
+    - Indeed.com job listings (with URL canonicalization)
     - Generic job listing pages
+    - file:// URLs for local markdown/html (useful for offline testing)
 
     Args:
         url (str): The URL of the job listing
@@ -71,33 +115,83 @@ def fetch_job_listing(url, output_dir="job_listings"):
     Returns:
         str: Path to the saved markdown file
     """
+    # Handle local file URLs (useful for tests/demos)
+    if is_file_url(url):
+        local_path = read_local_file_from_url(url)
+        # Copy file into output_dir with normalized name
+        os.makedirs(output_dir, exist_ok=True)
+        safe_title = os.path.splitext(os.path.basename(local_path))[0]
+        dest_path = os.path.join(output_dir, f"{safe_title}.md")
+        with open(local_path, "r", encoding="utf-8") as src, open(dest_path, "w", encoding="utf-8") as dst:
+            dst.write(src.read())
+        print(f"✓ Loaded local job listing from {local_path}")
+        update_job_listings_index(safe_title, "", "", dest_path, output_dir)
+        return dest_path
+
+    # Canonicalize URL for known providers
+    url = canonicalize_job_url(url)
+
     # Enhanced headers to avoid 403 errors
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/122.0.0.0 Safari/537.36"
+        ),
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.5",
-        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
         "Referer": "https://www.indeed.com/",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
     }
 
+    # First attempt: requests
     try:
-        response = requests.get(url, headers=headers, timeout=10)
+        session = requests.Session()
+        response = session.get(url, headers=headers, timeout=15, allow_redirects=True)
+        if response.status_code in (403, 404):
+            raise requests.exceptions.HTTPError(
+                f"{response.status_code} Error for url: {url}", response=response
+            )
         response.raise_for_status()
+        html_text = response.text
+        source = "requests"
     except requests.exceptions.HTTPError as e:
+        status = getattr(e.response, "status_code", "?")
         print(f"HTTP Error: {e}")
-        print(f"Status Code: {response.status_code}")
-        print("Note: Indeed.com may be blocking automated requests. Try:")
-        print("1. Using a VPN or proxy")
-        print("2. Adding delays between requests")
-        print("3. Using Selenium with a real browser")
-        raise
+        print(f"Status Code: {status}")
+        # Fallback 1: text proxy (r.jina.ai)
+        try:
+            parsed = urlparse(url)
+            proxy_url = f"https://r.jina.ai/http://{parsed.netloc}{parsed.path}"
+            if parsed.query:
+                proxy_url += f"?{parsed.query}"
+            print(f"↪️  Falling back to read-only proxy: {proxy_url}")
+            proxy_resp = requests.get(proxy_url, timeout=15)
+            proxy_resp.raise_for_status()
+            html_text = proxy_resp.text
+            source = "proxy"
+        except Exception as proxy_err:
+            print(f"Proxy fallback failed: {proxy_err}")
+            # Fallback 2: Selenium (if available)
+            try:
+                print("↪️  Attempting Selenium fallback (if installed)...")
+                return fetch_job_listing_selenium(url, output_dir)
+            except Exception as sel_err:
+                print("Selenium fallback unavailable or failed.")
+                print("Install with: pip install selenium webdriver-manager")
+                raise e
     except requests.exceptions.RequestException as e:
         print(f"Request Error: {e}")
         raise
 
-    soup = BeautifulSoup(response.text, "html.parser")
+    # Parse content
+    soup = BeautifulSoup(html_text, "html.parser")
 
     # Try to extract job title
     title_tag = soup.find("h1")
