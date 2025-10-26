@@ -637,5 +637,180 @@
     "techniques": [],
     "principles": [],
     "notes": "Imported from user-provided entries"
+  },
+  {
+    "id": "edu-1",
+    "employer": "University of Phoenix",
+    "role": "Bachelor of Technology",
+    "dates": "",
+    "start_month": "",
+    "start_year": "",
+    "end_month": "",
+    "end_year": "",
+    "location": "Troy, MI",
+    "bullets": [
+      "Completed Bachelor of Technology degree."
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume education section"
+  },
+  {
+    "id": "cert-1",
+    "employer": "SAFe by Scaled Agile, Inc.",
+    "role": "SAFe 5 Certified DevOps Practitioner",
+    "dates": "Jan 2023",
+    "start_month": "January",
+    "start_year": 2023,
+    "end_month": "January",
+    "end_year": 2023,
+    "location": "",
+    "bullets": [
+      "Earned SAFe 5 Certified DevOps Practitioner certification."
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-2",
+    "employer": "SAFe by Scaled Agile, Inc.",
+    "role": "SAFe 5 Certified - Advanced Scrum Master (SASM)",
+    "dates": "Dec 2022",
+    "start_month": "December",
+    "start_year": 2022,
+    "end_month": "December",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned SAFe 5 Certified - Advanced Scrum Master (SASM) certification."
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-3",
+    "employer": "ICAgile",
+    "role": "ICAgile Certified Professional - Agile Team Facilitation",
+    "dates": "Oct 2022",
+    "start_month": "October",
+    "start_year": 2022,
+    "end_month": "October",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned ICAgile Certified Professional - Agile Team Facilitation certification.",
+      "Credential: 182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-4",
+    "employer": "ICAgile",
+    "role": "ICAgile Certified Professional - Foundations of DevOps",
+    "dates": "Oct 2022",
+    "start_month": "October",
+    "start_year": 2022,
+    "end_month": "October",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned ICAgile Certified Professional - Foundations of DevOps certification.",
+      "Credential: 182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-5",
+    "employer": "ICAgile",
+    "role": "Agile Project and Delivery Management",
+    "dates": "Sep 2022",
+    "start_month": "September",
+    "start_year": 2022,
+    "end_month": "September",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned Agile Project and Delivery Management certification.",
+      "Credential: 182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-6",
+    "employer": "ICAgile",
+    "role": "ICAgile Certified Professional - Business Agility Foundations",
+    "dates": "Aug 2022",
+    "start_month": "August",
+    "start_year": 2022,
+    "end_month": "August",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned ICAgile Certified Professional - Business Agility Foundations certification.",
+      "Credential: 182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0"
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "cert-7",
+    "employer": "Scrum.org",
+    "role": "Professional Scrum Master™ I (PSM I)",
+    "dates": "May 2022",
+    "start_month": "May",
+    "start_year": 2022,
+    "end_month": "May",
+    "end_year": 2022,
+    "location": "",
+    "bullets": [
+      "Earned Professional Scrum Master™ I (PSM I) certification."
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume certifications section"
+  },
+  {
+    "id": "edu-2",
+    "employer": "McGraw-Hill",
+    "role": "Software Engineering Certification",
+    "dates": "",
+    "start_month": "",
+    "start_year": "",
+    "end_month": "",
+    "end_year": "",
+    "location": "Washington, DC",
+    "bullets": [
+      "Completed Software Engineering Certification."
+    ],
+    "skills": [],
+    "technologies": [],
+    "techniques": [],
+    "principles": [],
+    "notes": "Imported from master resume education section"
   }
 ]
