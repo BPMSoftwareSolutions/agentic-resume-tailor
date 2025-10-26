@@ -50,6 +50,10 @@ class JobListing:
         """Get path to job listing file."""
         return self.job_listings_dir / f"{job_id}.json"
 
+    def _get_iso_timestamp(self) -> str:
+        """Get current timestamp in ISO 8601 format with Z suffix."""
+        return datetime.now().isoformat() + "Z"
+
     def list_all(self) -> List[Dict[str, Any]]:
         """
         List all job listings.
@@ -102,7 +106,7 @@ class JobListing:
             Job listing metadata
         """
         job_id = str(uuid.uuid4())
-        now = datetime.now().isoformat()
+        now = self._get_iso_timestamp()
 
         # Create job listing data
         job_data = {
@@ -114,6 +118,7 @@ class JobListing:
             "location": location,
             "salary_range": salary_range,
             "keywords": keywords or [],
+            "tailored_resume_ids": [],  # For bidirectional linking
             "created_at": now,
             "updated_at": now,
         }
@@ -124,7 +129,7 @@ class JobListing:
             json.dumps(job_data, indent=2, ensure_ascii=False), encoding="utf-8"
         )
 
-        # Update index
+        # Update index with all fields
         index = self._load_index()
         index["job_listings"].append(
             {
@@ -132,6 +137,8 @@ class JobListing:
                 "title": title,
                 "company": company,
                 "location": location,
+                "url": url,
+                "description": description,
                 "created_at": now,
                 "updated_at": now,
             }
@@ -167,12 +174,13 @@ class JobListing:
             "location",
             "salary_range",
             "keywords",
+            "tailored_resume_ids",
         ]
         for key in allowed_fields:
             if key in kwargs:
                 job_data[key] = kwargs[key]
 
-        job_data["updated_at"] = datetime.now().isoformat()
+        job_data["updated_at"] = self._get_iso_timestamp()
 
         # Save updated data
         job_path.write_text(
@@ -189,7 +197,11 @@ class JobListing:
                     job["company"] = kwargs["company"]
                 if "location" in kwargs:
                     job["location"] = kwargs["location"]
-                job["updated_at"] = datetime.now().isoformat()
+                if "url" in kwargs:
+                    job["url"] = kwargs["url"]
+                if "description" in kwargs:
+                    job["description"] = kwargs["description"]
+                job["updated_at"] = self._get_iso_timestamp()
                 break
         self._save_index(index)
 
@@ -243,3 +255,26 @@ class JobListing:
         self.update(job_id, keywords=keywords)
 
         return keywords
+
+    def add_tailored_resume(self, job_id: str, resume_id: str) -> bool:
+        """
+        Link a tailored resume to this job listing.
+
+        Args:
+            job_id: Job listing ID
+            resume_id: Resume ID to link
+
+        Returns:
+            True if successful, False if job listing not found
+        """
+        job_data = self.get(job_id)
+        if not job_data:
+            return False
+
+        # Add resume ID if not already present
+        tailored_ids = job_data.get("tailored_resume_ids", [])
+        if resume_id not in tailored_ids:
+            tailored_ids.append(resume_id)
+
+        # Update job listing
+        return self.update(job_id, tailored_resume_ids=tailored_ids)

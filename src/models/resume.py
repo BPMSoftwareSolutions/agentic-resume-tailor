@@ -97,6 +97,10 @@ class Resume:
         """Get path to resume file."""
         return self.resumes_dir / f"{resume_id}.json"
 
+    def _get_iso_timestamp(self) -> str:
+        """Get current timestamp in ISO 8601 format with Z suffix."""
+        return datetime.now().isoformat() + "Z"
+
     def _name_exists(self, name: str, exclude_id: Optional[str] = None) -> bool:
         """
         Check if a resume with the given name already exists.
@@ -169,7 +173,7 @@ class Resume:
             raise ValueError(f"A resume with the name '{name}' already exists. Please use a different name.")
 
         resume_id = str(uuid.uuid4())
-        now = datetime.now().isoformat()
+        now = self._get_iso_timestamp()
 
         # Create metadata
         metadata = ResumeMetadata(
@@ -219,7 +223,7 @@ class Resume:
         index = self._load_index()
         for resume in index["resumes"]:
             if resume["id"] == resume_id:
-                resume["updated_at"] = datetime.now().isoformat()
+                resume["updated_at"] = self._get_iso_timestamp()
                 break
         self._save_index(index)
 
@@ -253,7 +257,7 @@ class Resume:
                 for key in ["name", "job_listing_id", "description"]:
                     if key in kwargs:
                         resume[key] = kwargs[key]
-                resume["updated_at"] = datetime.now().isoformat()
+                resume["updated_at"] = self._get_iso_timestamp()
                 self._save_index(index)
                 return True
 

@@ -35,6 +35,7 @@ from tailor import (
 )
 from build_resume_from_experience_log import build_resume_from_experience_log
 from models.resume import Resume
+from models.job_listing import JobListing
 
 
 def tailor_from_url(
@@ -74,7 +75,7 @@ def tailor_from_url(
         print("TAILOR RESUME FROM URL (Using Experience Log)")
         print(f"{'='*80}\n")
 
-        # Step 1: Fetch job listing from URL
+        # Step 1: Fetch job listing from URL and create JobListing entry
         print(f"📥 Fetching job listing from URL...")
         print(f"   URL: {url}")
         jd_filepath = fetch_job_listing(url, output_dir="job_listings")
@@ -89,6 +90,22 @@ def tailor_from_url(
         print("🔍 Extracting keywords from job description...")
         keywords = extract_keywords(jd_text)
         print(f"✅ Found {len(keywords)} keywords: {', '.join(keywords[:5])}...\n")
+
+        # Step 3b: Create JobListing entry with extracted metadata
+        print("📇 Creating job listing entry...")
+        job_listing_model = JobListing(Path(data_dir))
+        # Extract basic metadata from filename or use defaults
+        job_title = Path(jd_filepath).stem or "Job Listing"
+        job_listing_data = job_listing_model.create(
+            title=job_title,
+            company="",  # Will be extracted from job description if available
+            description=jd_text,
+            url=url,
+            location=None,
+            keywords=keywords,
+        )
+        job_listing_id = job_listing_data["id"]
+        print(f"✅ Job listing created with ID: {job_listing_id}\n")
 
         # Step 4: Retrieve RAG context if requested
         rag_context = None
@@ -143,17 +160,24 @@ def tailor_from_url(
                 output_name = Path(output_path).stem
                 resume_name = f"Tailored_{output_name}"
 
-                # Create metadata for the tailored resume
+                # Create metadata for the tailored resume with job_listing_id
                 metadata = resume_model.create(
                     data=resume_data,
                     name=resume_name,
+                    job_listing_id=job_listing_id,  # Link to job listing
                     is_master=False,
                     description=f"Tailored resume for job listing from {url}",
                 )
                 print(f"✅ Tailored resume saved to index")
                 print(f"   ID: {metadata.id}")
                 print(f"   Name: {metadata.name}")
+                print(f"   Job Listing ID: {job_listing_id}")
                 print(f"   Location: data/resumes/{metadata.id}.json\n")
+
+                # Link resume back to job listing (bidirectional)
+                print("🔗 Linking resume to job listing...")
+                job_listing_model.add_tailored_resume(job_listing_id, metadata.id)
+                print(f"✅ Resume linked to job listing\n")
             except Exception as e:
                 print(f"⚠️  Warning: Failed to save to index: {e}\n")
 

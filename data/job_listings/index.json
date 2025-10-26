@@ -6,151 +6,190 @@
       "company": "Credibly",
       "file": "Sr. Software Engineer - at Credibly.md",
       "created_at": "2025-10-11T00:00:00Z",
-      "description": "Senior Software Engineer role focused on Python, AWS, microservices, DynamoDB/MySQL, code review, Agile, mentorship, and financial services applications."
+      "description": "Senior Software Engineer role focused on Python, AWS, microservices, DynamoDB/MySQL, code review, Agile, mentorship, and financial services applications.",
+      "location": "",
+      "url": "",
+      "updated_at": "2025-10-26T12:51:17.988525Z"
     },
     {
       "id": "7c981526-f8ff-40f2-bfd9-18e6c383b9bd",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-11T20:19:36.840810",
-      "updated_at": "2025-10-11T20:19:36.843811"
+      "created_at": "2025-10-11T20:19:36.840810Z",
+      "updated_at": "2025-10-11T20:19:36.843811Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "69493ccc-d957-490f-aafe-56bdc5f4bb51",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-11T20:19:44.369969",
-      "updated_at": "2025-10-11T20:19:44.371970"
+      "created_at": "2025-10-11T20:19:44.369969Z",
+      "updated_at": "2025-10-11T20:19:44.371970Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "e0a972bf-cc03-4720-9f81-187fa5734b4a",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-12T09:10:18.914802",
-      "updated_at": "2025-10-12T09:10:18.920324"
+      "created_at": "2025-10-12T09:10:18.914802Z",
+      "updated_at": "2025-10-12T09:10:18.920324Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "67b7f9dc-c94c-4485-8c5f-7a46346329cf",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-12T10:01:50.211410",
-      "updated_at": "2025-10-12T10:01:50.214412"
+      "created_at": "2025-10-12T10:01:50.211410Z",
+      "updated_at": "2025-10-12T10:01:50.214412Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "d4f85dcb-f612-43c6-a18e-7ea84125e6d0",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-12T10:32:03.226709",
-      "updated_at": "2025-10-12T10:32:03.228719"
+      "created_at": "2025-10-12T10:32:03.226709Z",
+      "updated_at": "2025-10-12T10:32:03.228719Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "db28ab51-4295-4c14-87f9-5f0acaf473ac",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T09:56:00.052638",
-      "updated_at": "2025-10-16T09:56:00.059723"
+      "created_at": "2025-10-16T09:56:00.052638Z",
+      "updated_at": "2025-10-16T09:56:00.059723Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "c0b437b6-b131-48db-a95c-14c2036c8476",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T10:03:59.251555",
-      "updated_at": "2025-10-16T10:03:59.254297"
+      "created_at": "2025-10-16T10:03:59.251555Z",
+      "updated_at": "2025-10-16T10:03:59.254297Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "9ae448e5-79fb-49e0-8141-e3892eb6b9f5",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T10:13:44.910928",
-      "updated_at": "2025-10-16T10:13:44.914359"
+      "created_at": "2025-10-16T10:13:44.910928Z",
+      "updated_at": "2025-10-16T10:13:44.914359Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "a424a31d-76ff-415a-a21d-39af82a3db3c",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T13:51:17.034173",
-      "updated_at": "2025-10-16T13:51:17.036487"
+      "created_at": "2025-10-16T13:51:17.034173Z",
+      "updated_at": "2025-10-16T13:51:17.036487Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "4da7234a-3711-484b-920a-215c9b3bb14e",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:30:34.505271",
-      "updated_at": "2025-10-16T20:30:34.509272"
+      "created_at": "2025-10-16T20:30:34.505271Z",
+      "updated_at": "2025-10-16T20:30:34.509272Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "03f80d61-a1cc-4069-b2aa-9569cdf97c72",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:31:21.435130",
-      "updated_at": "2025-10-16T20:31:21.436130"
+      "created_at": "2025-10-16T20:31:21.435130Z",
+      "updated_at": "2025-10-16T20:31:21.436130Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "701bf8c1-898a-48e7-8efc-2953d69fe778",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:33:46.549138",
-      "updated_at": "2025-10-16T20:33:46.551136"
+      "created_at": "2025-10-16T20:33:46.549138Z",
+      "updated_at": "2025-10-16T20:33:46.551136Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "39f8be19-98f4-46a2-b5b4-4ea47dbe6443",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:36:06.487503",
-      "updated_at": "2025-10-16T20:36:06.488503"
+      "created_at": "2025-10-16T20:36:06.487503Z",
+      "updated_at": "2025-10-16T20:36:06.488503Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "7c279f30-ca95-4231-8b59-2738fc8ab903",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:37:45.529187",
-      "updated_at": "2025-10-16T20:37:45.532186"
+      "created_at": "2025-10-16T20:37:45.529187Z",
+      "updated_at": "2025-10-16T20:37:45.532186Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "e5b19b6a-2e83-44c8-8eab-b88e6a3ad108",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-16T20:38:32.770752",
-      "updated_at": "2025-10-16T20:38:32.772759"
+      "created_at": "2025-10-16T20:38:32.770752Z",
+      "updated_at": "2025-10-16T20:38:32.772759Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "eac03021-5ef9-42f9-bcb6-05dd7afb6718",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-17T08:11:31.476842",
-      "updated_at": "2025-10-17T08:11:31.480960"
+      "created_at": "2025-10-17T08:11:31.476842Z",
+      "updated_at": "2025-10-17T08:11:31.480960Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "ae865abc-0efc-4860-a05a-742ce852251d",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-17T08:18:55.736287",
-      "updated_at": "2025-10-17T08:18:55.739288"
+      "created_at": "2025-10-17T08:18:55.736287Z",
+      "updated_at": "2025-10-17T08:18:55.739288Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "0a41ccb7-1241-457c-8ad4-48d5e8d2f156",
       "title": "Senior Software Engineer",
       "company": "Tech Company",
       "location": "Remote",
-      "created_at": "2025-10-17T08:22:16.917336",
-      "updated_at": "2025-10-17T08:22:16.921336"
+      "created_at": "2025-10-17T08:22:16.917336Z",
+      "updated_at": "2025-10-17T08:22:16.921336Z",
+      "url": "",
+      "description": ""
     },
     {
       "id": "644870ea-db70-49b3-9b1f-a1f4887c3b70",
@@ -159,7 +198,9 @@
       "location": "San Francisco, CA",
       "file": "test_senior_software_engineer.md",
       "created_at": "2025-10-26T15:24:10.294414Z",
-      "description": "Senior Software Engineer at TechCorp Inc. in San Francisco, CA"
+      "description": "Senior Software Engineer at TechCorp Inc. in San Francisco, CA",
+      "url": "",
+      "updated_at": "2025-10-26T12:51:17.992525Z"
     },
     {
       "id": "f85f1032-3990-42d7-99d9-4e68ee0db935",
@@ -168,7 +209,9 @@
       "location": "",
       "file": "Job_Title_Not_Found.md",
       "created_at": "2025-10-26T16:17:37.837917Z",
-      "description": "Job Title Not Found at "
+      "description": "Job Title Not Found at ",
+      "url": "",
+      "updated_at": "2025-10-26T12:51:17.993517Z"
     },
     {
       "id": "ca2db70a-1ead-4def-8309-777b4770db50",
@@ -177,7 +220,9 @@
       "location": "",
       "file": "Job_Title_Not_Found.md",
       "created_at": "2025-10-26T16:35:54.782360Z",
-      "description": "Job Title Not Found at "
+      "description": "Job Title Not Found at ",
+      "url": "",
+      "updated_at": "2025-10-26T12:51:17.993517Z"
     }
   ]
 }

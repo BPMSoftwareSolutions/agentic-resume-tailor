@@ -3,8 +3,8 @@
     {
       "id": "b3013a2a-349a-4080-802c-3bbe6714b576",
       "name": "Master Resume",
-      "created_at": "2025-10-11T19:07:06.199315",
-      "updated_at": "2025-10-11T19:44:36.396864",
+      "created_at": "2025-10-11T19:07:06.199315Z",
+      "updated_at": "2025-10-11T19:44:36.396864Z",
       "job_listing_id": null,
       "is_master": true,
       "description": "Primary resume containing all experience and skills"
@@ -12,8 +12,8 @@
     {
       "id": "a041bd2e-d54b-488f-adda-e4c707d5332d",
       "name": "Sidney_Jones_Senior_Software_Engineer_Credibly",
-      "created_at": "2025-10-11T19:48:18.060995",
-      "updated_at": "2025-10-11T20:15:35.775877",
+      "created_at": "2025-10-11T19:48:18.060995Z",
+      "updated_at": "2025-10-11T20:15:35.775877Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Master Resume"
@@ -21,8 +21,8 @@
     {
       "id": "f3bc0d6d-aea7-4e08-96b8-5fc6b581138b",
       "name": "Sidney_Jones_Senior_Software_Engineer_GM",
-      "created_at": "2025-10-11T20:33:03.638503",
-      "updated_at": "2025-10-12T08:48:08.550840",
+      "created_at": "2025-10-11T20:33:03.638503Z",
+      "updated_at": "2025-10-12T08:48:08.550840Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Sidney_Jones_Senior_Software_Engineer_Credibly"
@@ -30,8 +30,8 @@
     {
       "id": "d474d761-18f2-48ab-99b5-9f30c54f75b2",
       "name": "Sidney_Jones_Senior_Software_Engineer_Ford",
-      "created_at": "2025-10-12T08:49:00.020000",
-      "updated_at": "2025-10-12T10:42:29.757681",
+      "created_at": "2025-10-12T08:49:00.020000Z",
+      "updated_at": "2025-10-12T10:42:29.757681Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Sidney_Jones_Senior_Software_Engineer_GM"
@@ -39,8 +39,8 @@
     {
       "id": "d21f830e-b291-4684-97a9-8ac1e060fb76",
       "name": "Test_Resume_For_Issue_19",
-      "created_at": "2025-10-12T13:28:28.028665",
-      "updated_at": "2025-10-12T13:28:28.028665",
+      "created_at": "2025-10-12T13:28:28.028665Z",
+      "updated_at": "2025-10-12T13:28:28.028665Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Duplicated from Master Resume"
@@ -48,8 +48,8 @@
     {
       "id": "a5b9c2d4-3f6e-4c2e-9f21-1234567890ab",
       "name": "Tailored_Westlaw_Lead_Software_Engineer_AI",
-      "created_at": "2025-10-16T11:20:00.000000",
-      "updated_at": "2025-10-16T11:20:00.000000",
+      "created_at": "2025-10-16T11:20:00.000000Z",
+      "updated_at": "2025-10-16T11:20:00.000000Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Tailored resume for Westlaw (Lead Software Engineer, AI) generated from Experience Log"
@@ -57,8 +57,8 @@
     {
       "id": "9474d761-18f2-48ab-99b5-9f30c54f75b4",
       "name": "Tailored Westlaw Resume",
-      "created_at": "2025-10-16T20:38:32.773760",
-      "updated_at": "2025-10-16T20:38:32.773760",
+      "created_at": "2025-10-16T20:38:32.773760Z",
+      "updated_at": "2025-10-16T20:38:32.773760Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Tailored resume for Westlaw (Lead Software Engineer, AI) Final"
@@ -66,8 +66,8 @@
     {
       "id": "136c188e-659d-49cf-ba0f-983c279e80e7",
       "name": "Tailored_indeed_tailored_resume",
-      "created_at": "2025-10-26T12:36:01.645244",
-      "updated_at": "2025-10-26T12:36:01.645244",
+      "created_at": "2025-10-26T12:36:01.645244Z",
+      "updated_at": "2025-10-26T12:36:01.645244Z",
       "job_listing_id": null,
       "is_master": false,
       "description": "Tailored resume for job listing from https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9"
