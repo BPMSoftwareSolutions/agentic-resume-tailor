@@ -223,6 +223,201 @@
       "description": "Job Title Not Found at ",
       "url": "",
       "updated_at": "2025-10-26T12:51:17.993517Z"
+    },
+    {
+      "id": "eb741daa-78bb-4e6e-8c00-46d0e84484f6",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:03:52.351304Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "c4e96bc8-e92a-4004-92ac-d8caa7da3a73",
+      "title": "Job_Title_Not_Found",
+      "company": "",
+      "location": null,
+      "url": "https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9",
+      "description": "# Job Title Not Found\n\n---\n\nJob description not found.",
+      "created_at": "2025-10-26T13:03:52.366308Z",
+      "updated_at": "2025-10-26T13:03:52.366308Z"
+    },
+    {
+      "id": "aa516918-c988-42de-8c10-9f48b0878e0d",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:07:14.428680Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "f696c26a-1dcb-479d-921e-f0f0e8fb20b4",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:08:32.724441Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "f5d29720-3a09-446f-9dbd-022810ab4bf3",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:09:32.370281Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "317186cc-310d-4723-8b41-9d69c4fdc645",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:10:15.420726Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "df69bbab-300d-4f87-857c-158d26b54c15",
+      "title": "Job_Title_Not_Found",
+      "company": "",
+      "location": null,
+      "url": "https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9",
+      "description": "# Job Title Not Found\n\n---\n\nJob description not found.",
+      "created_at": "2025-10-26T13:10:15.428723Z",
+      "updated_at": "2025-10-26T13:10:15.428723Z"
+    },
+    {
+      "id": "54b3cd9f-4f10-4681-b571-7c8132511806",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:10:16.405467Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "3e279e2a-59b7-427b-82f8-05cc24c6aef2",
+      "title": "Job_Title_Not_Found",
+      "company": "",
+      "location": null,
+      "url": "https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9",
+      "description": "# Job Title Not Found\n\n---\n\nJob description not found.",
+      "created_at": "2025-10-26T13:10:16.409855Z",
+      "updated_at": "2025-10-26T13:10:16.409855Z"
+    },
+    {
+      "id": "352e61b6-93b0-46d6-a685-32ab023835f4",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:11:16.857332Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "0e6e1b30-f856-45d1-8e8b-78e3fc4961c7",
+      "title": "Job_Title_Not_Found",
+      "company": "",
+      "location": null,
+      "url": "https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9",
+      "description": "# Job Title Not Found\n\n---\n\nJob description not found.",
+      "created_at": "2025-10-26T13:11:16.863333Z",
+      "updated_at": "2025-10-26T13:11:16.876334Z"
+    },
+    {
+      "id": "a183696a-de62-4743-9d72-6ed2bb618e09",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:11:43.395703Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "e5d112db-a0b8-446a-8e09-d769cfb5efe3",
+      "title": "Job_Title_Not_Found",
+      "company": "",
+      "location": null,
+      "url": "https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9",
+      "description": "# Job Title Not Found\n\n---\n\nJob description not found.",
+      "created_at": "2025-10-26T13:11:43.420663Z",
+      "updated_at": "2025-10-26T13:11:43.452663Z"
+    },
+    {
+      "id": "f4606ab0-dd7e-4281-a0f7-b2c9204bee62",
+      "title": "Job Title Not Found",
+      "company": "",
+      "location": "",
+      "file": "Job_Title_Not_Found.md",
+      "created_at": "2025-10-26T17:15:39.243358Z",
+      "description": "Job Title Not Found at "
+    },
+    {
+      "id": "ddd73948-7e10-407a-892c-5c310ab87c61",
+      "title": "Ready to take the next step?",
+      "company": "",
+      "location": "",
+      "file": "Ready_to_take_the_next_step_.md",
+      "created_at": "2025-10-26T17:16:17.883643Z",
+      "description": "Ready to take the next step? at "
+    },
+    {
+      "id": "e10eceb4-6a91-4026-92fc-dbd58dd8d6f7",
+      "title": "Ready to take the next step?",
+      "company": "",
+      "location": "",
+      "file": "Ready_to_take_the_next_step_.md",
+      "created_at": "2025-10-26T17:16:51.889464Z",
+      "description": "Ready to take the next step? at "
+    },
+    {
+      "id": "739014e8-3cc2-423a-9a5b-063be47c7915",
+      "title": "Ready to take the next step?",
+      "company": "",
+      "location": "",
+      "file": "Ready_to_take_the_next_step_.md",
+      "created_at": "2025-10-26T17:18:36.880331Z",
+      "description": "Ready to take the next step? at "
+    },
+    {
+      "id": "a9fc6b0e-7f07-4389-ad58-9f2857846d6e",
+      "title": "Request Blocked",
+      "company": "",
+      "location": "",
+      "file": "Request_Blocked.md",
+      "created_at": "2025-10-26T17:19:06.942921Z",
+      "description": "Request Blocked at "
+    },
+    {
+      "id": "b92e9087-f92c-45b1-b0db-d078a178c9cb",
+      "title": "Sr. DevOps Engineer (Azure)",
+      "company": "Company reviews",
+      "location": "11 Relocation Questions To Ask an Employer",
+      "file": "Sr__DevOps_Engineer__Azure_.md",
+      "created_at": "2025-10-26T17:24:22.945020Z",
+      "description": "Sr. DevOps Engineer (Azure) at Company reviews in 11 Relocation Questions To Ask an Employer"
+    },
+    {
+      "id": "effa0ea2-3233-4ce8-adb5-4551daa92272",
+      "title": "Sr. DevOps Engineer (Azure)",
+      "company": "Company reviews",
+      "location": "11 Relocation Questions To Ask an Employer",
+      "file": "Sr__DevOps_Engineer__Azure_.md",
+      "created_at": "2025-10-26T17:24:49.365932Z",
+      "description": "Sr. DevOps Engineer (Azure) at Company reviews in 11 Relocation Questions To Ask an Employer"
+    },
+    {
+      "id": "2ee2467f-f8a9-4485-a389-46a9a5ee7850",
+      "title": "Sr. DevOps Engineer (Azure)",
+      "company": "DevAltus",
+      "location": null,
+      "url": "",
+      "description": "Sr. DevOps Engineer (Azure)- job post\n\nDevAltus\nRemote\n$200,000 - $300,000 a year - Full-time\nDevAltus\nRemote\n$200,000 - $300,000 a year\nProfile insights\nHereâ€™s how the job qualifications align with your profile.\nSkills\n\nvSphere\n\nTerraform\n\nSSO\n+ show more\n\nDo you have experience in vSphere?\n&nbsp;\nJob details\nHereâ€™s how the job details align with your profile.\nPay\n\n$200,000 - $300,000 a year\nJob type\n\nFull-time\n&nbsp;\nBenefits\nPulled from the full job description\n401(k) matching\nPaid time off\nVision insurance\nDental insurance\nLife insurance\n401(k) 6% Match\n&nbsp;\nFull job description\nDevAltus is a cloud-native consultancy delivering secure, scalable, and high-performance infrastructure solutions for enterprise clients. Weâ€™re hiring a Senior Azure DevOps Engineer to lead the design, automation, and optimization of mission-critical systems in Microsoft Azure.\nIf youâ€™re a proactive, senior-level cloud engineer who excels in infrastructure as code, CI/CD automation, and secure cloud architecture, weâ€™d love to hear from you.\nResponsibilities\nArchitect and implement Azure-based infrastructure following Azure Well-Architected Framework principles\nWrite, review, and maintain Bicep or Terraform IaC modules for infrastructure provisioning\nBuild and maintain scalable CI/CD pipelines using GitHub Actions or Azure DevOps Pipelines\nManage Azure-native services including VMs, AKS, ACR, App Services, Storage Accounts, SQL Database, Cosmos DB, Azure AD, Front Door, Application Gateway, Azure Monitor/Log Analytics\nDesign multi-subscription and hub-and-spoke networking topologies using Azure Management Groups, Virtual WAN, Private Link, and RBAC\nDeploy, configure, and manage Palo Alto firewalls in Azure, integrating with ExpressRoute, hybrid connectivity, and secure inter-VNet communications\nLead and support application and infrastructure migrations from on-premises into Azure services (including workloads running on platforms such as vSphere and Pure Storage)\nDebug and optimize Azure RBAC policies, Managed Identity integrations, and inter-service networking (VNets, NSGs, UDRs, Peering)\nMonitor and troubleshoot infrastructure with Azure Monitor, Application Insights, and Dynatrace\nGuide security and compliance practices (Azure AD SSO/SAML, Key Vault encryption, Azure Backup/Recovery Vault, resource tagging, policy enforcement, etc.)\nDocument architecture and processes; support teams across US time zones\nQualifications\nWork Authorization: Must be legally authorized to work in the United States without employer sponsorship.\nLocation Requirement: Must be a resident of the continental United States.\n\n6+ years of hands-on DevOps or Cloud Engineering experience\nDeep knowledge of Azure core services, governance, and architecture patterns\nStrong experience with Bicep or Terraform\nProficiency in container tooling (Docker, AKS, or App Services)\nSolid understanding of Azure AD, RBAC, networking (VNets, NSGs, Palo Alto firewalls, ExpressRoute), and monitoring best practices\nStrong scripting skills in Python, Bash, or PowerShell\nUnderstanding of .NET or Java application stacks\nExcellent communication skills and experience supporting distributed teams\n6+ years of hands-on Azure experience, including production-grade infrastructure and core services\n6+ years of experience in a DevOps or Cloud Engineering role, focusing on CI/CD, automation, and infrastructure as code\nNice to Haves\nExperience with vSphere and Pure Storage in enterprise environments\nFamiliarity with hybrid networking scenarios (VPN, ExpressRoute Global Reach)\nExposure to enterprise compliance frameworks (CIS, NIST) and experience collaborating with SOC/SIEM teams\nKnowledge of QRadar or similar SIEM platforms\nExperience with integration of 3rd party APIs into cloud platforms\nProficiency with Power BI, including building dashboards from Azure service data sources\nExposure to FinOps practices (Azure Cost Management, budgets, and governance for cost optimization)\nCompensation\nW2 Employment: $200-300k annually with full benefits, including:\n401(k) with employer matching 6%\nHealth, dental, and vision insurance\nPaid time off\nLife insurance\n\nAt DevAltus, weâ€™re a boutique consultancy specializing in cloud-native infrastructure, cybersecurity, and intelligent automation. As a Senior Azure DevOps Engineer, youâ€™ll help architect secure, scalable Azure environments for enterprise clients, partnering with a team that values technical excellence, innovation, and ownership.\nWeâ€™re seeking engineers who thrive on solving complex challenges, embrace continuous learning, and take pride in delivering quality at scale. If that sounds like you â€” weâ€™d love to connect.\n\nPlease ensure your resume highlights relevant Azure experience, including Terraform or Bicep, CI/CD pipeline management, and Azure networking or security implementations.\nWe may use artificial intelligence (AI) tools to support parts of the hiring process, such as reviewing applications, analyzing resumes, or assessing responses. These tools assist our recruitment team but do not replace human judgment. Final hiring decisions are ultimately made by humans. If you would like more information about how your data is processed, please contact us.\n",
+      "created_at": "2025-10-26T13:36:22.360518Z",
+      "updated_at": "2025-10-26T13:36:22.369511Z"
     }
   ]
 }

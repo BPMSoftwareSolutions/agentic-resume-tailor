@@ -51,6 +51,9 @@ function setupEventListeners() {
     // Tailor resume button
     document.getElementById('saveTailorBtn').addEventListener('click', tailorResume);
 
+    // Tailor from URL form
+    document.getElementById('tailorFromUrlForm').addEventListener('submit', tailorFromUrl);
+
     // RAG options listeners
     document.getElementById('tailorUseRag').addEventListener('change', (e) => {
         const llmCheckbox = document.getElementById('tailorUseLlmRewriting');
@@ -63,6 +66,17 @@ function setupEventListeners() {
             llmCheckbox.disabled = true;
             llmCheckbox.checked = false;
             ragInfo.style.display = 'none';
+        }
+    });
+
+    // RAG options for tailor from URL
+    document.getElementById('tailorUrlUseRag').addEventListener('change', (e) => {
+        const llmCheckbox = document.getElementById('tailorUrlUseLlm');
+        if (e.target.checked) {
+            llmCheckbox.disabled = false;
+        } else {
+            llmCheckbox.disabled = true;
+            llmCheckbox.checked = false;
         }
     });
 }
@@ -337,6 +351,92 @@ async function tailorResume() {
         const tailorBtn = document.getElementById('saveTailorBtn');
         tailorBtn.disabled = false;
         tailorBtn.innerHTML = '<i class="bi bi-magic"></i> Tailor Resume';
+    }
+}
+
+async function tailorFromUrl(e) {
+    e.preventDefault();
+
+    try {
+        const jobTitle = document.getElementById('jobTitle').value.trim();
+        const jobCompany = document.getElementById('jobCompany').value.trim();
+        const jobDescription = document.getElementById('jobDescription').value.trim();
+        const jobUrl = document.getElementById('jobUrl').value.trim();
+        const theme = document.getElementById('tailorUrlTheme').value;
+        const useRag = document.getElementById('tailorUrlUseRag').checked;
+        const useLlmRewriting = document.getElementById('tailorUrlUseLlm').checked;
+
+        // Validate required fields
+        if (!jobTitle) {
+            showAlert('Please enter a job title', 'warning');
+            return;
+        }
+        if (!jobCompany) {
+            showAlert('Please enter a company name', 'warning');
+            return;
+        }
+        if (!jobDescription) {
+            showAlert('Please paste the job description', 'warning');
+            return;
+        }
+
+        // Show loading state
+        const submitBtn = document.querySelector('#tailorFromUrlForm button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Generating tailored resume...';
+
+        const response = await fetch(`${API_BASE_URL}/tailor-from-job-description`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                job_title: jobTitle,
+                company: jobCompany,
+                job_description: jobDescription,
+                url: jobUrl,
+                theme,
+                use_rag: useRag,
+                use_llm_rewriting: useLlmRewriting
+            })
+        });
+
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.error || 'Failed to tailor resume from job description');
+        }
+
+        const result = await response.json();
+
+        // Reset form
+        document.getElementById('tailorFromUrlForm').reset();
+        document.getElementById('tailorUrlUseLlm').disabled = true;
+        document.getElementById('tailorUrlOptions').style.display = 'none';
+
+        // Reload data
+        await loadResumes();
+        await loadJobListings();
+        updateStatistics();
+
+        // Show success message
+        let message = `✅ Resume "${result.resume.name}" created successfully!`;
+        if (result.job_listing) {
+            message += `\n📋 Job: ${result.job_listing.title}`;
+            if (result.job_listing.company) {
+                message += ` at ${result.job_listing.company}`;
+            }
+            if (result.job_listing.keywords && result.job_listing.keywords.length > 0) {
+                message += `\n🔑 Keywords: ${result.job_listing.keywords.slice(0, 5).join(', ')}...`;
+            }
+        }
+        showAlert(message, 'success', 5000);
+
+    } catch (error) {
+        console.error('Failed to tailor resume from job description:', error);
+        showAlert(`Failed to tailor resume: ${error.message}`, 'danger');
+    } finally {
+        // Restore button state
+        const submitBtn = document.querySelector('#tailorFromUrlForm button[type="submit"]');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="bi bi-lightning-charge"></i> Generate Tailored Resume';
     }
 }
 

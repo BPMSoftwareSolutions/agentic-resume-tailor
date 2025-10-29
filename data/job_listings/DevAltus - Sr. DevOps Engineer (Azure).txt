@@ -1,0 +1,88 @@
+Sr. DevOps Engineer (Azure)- job post
+
+DevAltus
+Remote
+$200,000 - $300,000 a year - Full-time
+DevAltus
+Remote
+$200,000 - $300,000 a year
+Profile insights
+Here’s how the job qualifications align with your profile.
+Skills
+
+vSphere
+
+Terraform
+
+SSO
++ show more
+
+Do you have experience in vSphere?
+&nbsp;
+Job details
+Here’s how the job details align with your profile.
+Pay
+
+$200,000 - $300,000 a year
+Job type
+
+Full-time
+&nbsp;
+Benefits
+Pulled from the full job description
+401(k) matching
+Paid time off
+Vision insurance
+Dental insurance
+Life insurance
+401(k) 6% Match
+&nbsp;
+Full job description
+DevAltus is a cloud-native consultancy delivering secure, scalable, and high-performance infrastructure solutions for enterprise clients. We’re hiring a Senior Azure DevOps Engineer to lead the design, automation, and optimization of mission-critical systems in Microsoft Azure.
+If you’re a proactive, senior-level cloud engineer who excels in infrastructure as code, CI/CD automation, and secure cloud architecture, we’d love to hear from you.
+Responsibilities
+Architect and implement Azure-based infrastructure following Azure Well-Architected Framework principles
+Write, review, and maintain Bicep or Terraform IaC modules for infrastructure provisioning
+Build and maintain scalable CI/CD pipelines using GitHub Actions or Azure DevOps Pipelines
+Manage Azure-native services including VMs, AKS, ACR, App Services, Storage Accounts, SQL Database, Cosmos DB, Azure AD, Front Door, Application Gateway, Azure Monitor/Log Analytics
+Design multi-subscription and hub-and-spoke networking topologies using Azure Management Groups, Virtual WAN, Private Link, and RBAC
+Deploy, configure, and manage Palo Alto firewalls in Azure, integrating with ExpressRoute, hybrid connectivity, and secure inter-VNet communications
+Lead and support application and infrastructure migrations from on-premises into Azure services (including workloads running on platforms such as vSphere and Pure Storage)
+Debug and optimize Azure RBAC policies, Managed Identity integrations, and inter-service networking (VNets, NSGs, UDRs, Peering)
+Monitor and troubleshoot infrastructure with Azure Monitor, Application Insights, and Dynatrace
+Guide security and compliance practices (Azure AD SSO/SAML, Key Vault encryption, Azure Backup/Recovery Vault, resource tagging, policy enforcement, etc.)
+Document architecture and processes; support teams across US time zones
+Qualifications
+Work Authorization: Must be legally authorized to work in the United States without employer sponsorship.
+Location Requirement: Must be a resident of the continental United States.
+
+6+ years of hands-on DevOps or Cloud Engineering experience
+Deep knowledge of Azure core services, governance, and architecture patterns
+Strong experience with Bicep or Terraform
+Proficiency in container tooling (Docker, AKS, or App Services)
+Solid understanding of Azure AD, RBAC, networking (VNets, NSGs, Palo Alto firewalls, ExpressRoute), and monitoring best practices
+Strong scripting skills in Python, Bash, or PowerShell
+Understanding of .NET or Java application stacks
+Excellent communication skills and experience supporting distributed teams
+6+ years of hands-on Azure experience, including production-grade infrastructure and core services
+6+ years of experience in a DevOps or Cloud Engineering role, focusing on CI/CD, automation, and infrastructure as code
+Nice to Haves
+Experience with vSphere and Pure Storage in enterprise environments
+Familiarity with hybrid networking scenarios (VPN, ExpressRoute Global Reach)
+Exposure to enterprise compliance frameworks (CIS, NIST) and experience collaborating with SOC/SIEM teams
+Knowledge of QRadar or similar SIEM platforms
+Experience with integration of 3rd party APIs into cloud platforms
+Proficiency with Power BI, including building dashboards from Azure service data sources
+Exposure to FinOps practices (Azure Cost Management, budgets, and governance for cost optimization)
+Compensation
+W2 Employment: $200-300k annually with full benefits, including:
+401(k) with employer matching 6%
+Health, dental, and vision insurance
+Paid time off
+Life insurance
+
+At DevAltus, we’re a boutique consultancy specializing in cloud-native infrastructure, cybersecurity, and intelligent automation. As a Senior Azure DevOps Engineer, you’ll help architect secure, scalable Azure environments for enterprise clients, partnering with a team that values technical excellence, innovation, and ownership.
+We’re seeking engineers who thrive on solving complex challenges, embrace continuous learning, and take pride in delivering quality at scale. If that sounds like you — we’d love to connect.
+
+Please ensure your resume highlights relevant Azure experience, including Terraform or Bicep, CI/CD pipeline management, and Azure networking or security implementations.
+We may use artificial intelligence (AI) tools to support parts of the hiring process, such as reviewing applications, analyzing resumes, or assessing responses. These tools assist our recruitment team but do not replace human judgment. Final hiring decisions are ultimately made by humans. If you would like more information about how your data is processed, please contact us.

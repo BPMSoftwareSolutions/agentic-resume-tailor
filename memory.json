@@ -90,5 +90,53 @@
   {
     "role": "assistant",
     "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I'm an AI assistant here to help with resume-related tasks and job application automation. How can I assist you today?"
+  },
+  {
+    "role": "user",
+    "content": "Hello, what is your name?"
+  },
+  {
+    "role": "assistant",
+    "content": "Hello! I am an artificial intelligence assistant, programmed to help with resume tailoring and job application tasks. I don't have a personal name, but you can just call me the Resume Assistant. How can I assist you further?"
   }
 ]

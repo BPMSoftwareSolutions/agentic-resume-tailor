@@ -1,0 +1,443 @@
+{
+  "areas_of_expertise": [
+    "AI Platform Development",
+    "LLM Integration & Orchestration",
+    "Retrieval Systems & Vector Search",
+    "Backend Architecture & APIs",
+    "Infrastructure as Code & DevOps"
+  ],
+  "bridge_paragraph": "These early leadership and engineering experiences at Compuware, Soave, and John Deere built my foundation in automated quality, scalable architecture, and continuous integration—skills that now underpin my work in AI-driven software delivery systems.",
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ],
+  "contact": {
+    "email": "sjones.presence@gmail.com",
+    "phone": "(248) 802-1847"
+  },
+  "core_competencies": [
+    "Languages & Frameworks: C#, .NET Core, Python, FastAPI, Java, SQL, JavaScript (React, Node.js)",
+    "Cloud & DevOps: AWS (Lambda, API Gateway, S3), Azure Functions, Docker, Kubernetes, Terraform, Jenkins, GitHub Actions",
+    "Security: AES-256, KeeperSecurity Vault, Role-Based Access Control, DevSecOps, CI/CD Scanning",
+    "Architecture: Scalable Microservices, High-Availability APIs, Event-Driven Systems, Serverless Applications",
+    "Leadership: Mentorship, Cross-Team Collaboration, Continuous Delivery, Agile/SAFe Practitioner"
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": ""
+    }
+  ],
+  "experience": [
+    {
+      "bullets": [
+        {
+          "text": "Architected and deployed AWS Lambda and API Gateway services handling millions of daily transactions for analytics and forecasting systems."
+        },
+        {
+          "text": "Built Terraform-based IaC modules to provision resilient compute, storage, and event infrastructure with automated rollback workflows."
+        },
+        {
+          "text": "Integrated KeeperSecurity-managed AES-256 encryption for secure handling of sensitive data, tokens, and PII, fully aligned with SOC2/NIST DevSecOps standards."
+        },
+        {
+          "text": "Created GitHub Actions CI/CD pipelines with IaC validation, dependency scanning, and environment parity enforcement across staging and production."
+        },
+        {
+          "text": "Mentored teams on secure coding and distributed systems, elevating delivery reliability and release frequency."
+        }
+      ],
+      "dates": "2021–2024",
+      "employer": "Daugherty – Cox Communications",
+      "end_month": "November",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "start_month": "August",
+      "start_year": 2021,
+      "tags": [
+        "AWS",
+        "Terraform",
+        "GitHub Actions",
+        "Python",
+        "FastAPI",
+        "KeeperSecurity",
+        "AES-256",
+        "Docker",
+        "DevSecOps"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Modernized the Online Access platform—migrating from monolith to cloud-native microservices and micro-frontends (Java, Python, AWS)."
+        },
+        {
+          "text": "Drove CI/CD modernization in Azure DevOps with Terraform, automated testing, and trunk-based workflows for 13+ Agile teams."
+        },
+        {
+          "text": "Established observability and alerting via Dynatrace and Splunk, improving uptime and proactive issue detection."
+        },
+        {
+          "text": "Introduced feature-flagged deployments and continuous delivery pipelines, cutting release cycles by 50%."
+        },
+        {
+          "text": "Partnered with product and architecture leads to align modernization OKRs with business outcomes."
+        }
+      ],
+      "dates": "2021–2024",
+      "employer": "CGI – Daugherty / Edward Jones",
+      "end_month": "August",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "role": "Principal Consultant / Platform Team Delivery Lead",
+      "start_month": "November",
+      "start_year": 2021,
+      "tags": [
+        "C#",
+        "Java",
+        "Python",
+        "AWS",
+        "Azure DevOps",
+        "Terraform",
+        "Jenkins",
+        "Microservices",
+        "Feature Flags",
+        "CI/CD"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Designed cloud-first, data-driven applications across AWS & Azure using serverless microservices and secure data APIs."
+        },
+        {
+          "text": "Implemented AES-256 encryption with KeeperSecurity for sensitive financial data (bill rates, payroll, PII) and dynamic key rotation via Bitbucket pipelines."
+        },
+        {
+          "text": "Built event-driven pipelines to process encrypted S3 data securely, leveraging Lambda, FastAPI, and role-based access control."
+        },
+        {
+          "text": "Engineered RPA and ETL automation for healthcare and financial platforms, reducing manual work by 70%."
+        },
+        {
+          "text": "Deployed Dockerized CI/CD pipelines with Jenkins and Kubernetes to ensure reproducible builds and continuous observability."
+        }
+      ],
+      "dates": "2017–2021",
+      "employer": "BPM Software Solutions",
+      "end_month": "November",
+      "end_year": 2021,
+      "location": "West Bloomfield, MI",
+      "role": "Senior Software Architect / Engineering Lead",
+      "start_month": "July",
+      "start_year": 2017,
+      "tags": [
+        "Python",
+        "FastAPI",
+        "Flask",
+        "Terraform",
+        "AES-256",
+        "KeeperSecurity",
+        "AWS",
+        "Azure",
+        "Docker",
+        "Kubernetes",
+        "CI/CD"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Developed web-based financial and compliance applications integrating Salesforce, AWS, and internal data systems."
+        },
+        {
+          "text": "Established CI/CD pipelines with automated testing and trunk-based branching, reducing manual deployment steps by > 60 %."
+        },
+        {
+          "text": "Mentored junior developers on modern DevOps, continuous testing, and microservice decomposition."
+        }
+      ],
+      "dates": "2016–2017",
+      "employer": "Interactive Business Solutions",
+      "end_month": "July",
+      "end_year": 2017,
+      "location": "Troy, MI",
+      "role": "Senior Software Engineering Consultant",
+      "start_month": "October",
+      "start_year": 2016,
+      "tags": [
+        "Python",
+        "AWS",
+        "Salesforce APIs",
+        "CI/CD",
+        "Trunk-Based Development",
+        "Agile Leadership"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Led modernization of the enterprise-scale ERP system supporting 400+ retail sites across North America, establishing one of the company’s first automated build and test pipelines."
+        },
+        {
+          "text": "Introduced continuous integration and unit-test enforcement, paving the way for trunk-based development years before mainstream DevOps adoption."
+        },
+        {
+          "text": "Architected Wells Fargo Level III–certified payment microservices, processing $1 M+ in daily settlements and generating over $500 K in annual savings through secure, low-latency transaction automation."
+        },
+        {
+          "text": "Migrated ERP modules to Microsoft Dynamics AX 2012 R2, modularizing procurement, logistics, and accounting components into independently deployable services."
+        },
+        {
+          "text": "Mentored distributed teams on code quality, release automation, and early CI/CD concepts, cultivating a delivery-first engineering culture."
+        }
+      ],
+      "dates": "2010 – 2015",
+      "employer": "John Deere Landscapes",
+      "end_month": "September",
+      "end_year": 2015,
+      "location": "Troy, MI",
+      "role": "Software Development Lead / Solution Architect",
+      "start_month": "January",
+      "start_year": 2010,
+      "tags": [
+        "C#",
+        ".NET",
+        "Microsoft Dynamics AX",
+        "CI/CD",
+        "Trunk-Based Development",
+        "Payment Systems",
+        "Microservices",
+        "Enterprise Architecture",
+        "Automation Leadership",
+        "TDD",
+        "SQL Server"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Directed modernization of corporate IT across 25 U.S. locations, designing a hybrid AWS EC2 cloud architecture and automating deployments through early DevOps pipelines."
+        },
+        {
+          "text": "Introduced Infrastructure-as-Code and configuration automation for ERP subsystems, enabling consistent builds and reducing release time from days to hours."
+        },
+        {
+          "text": "Unified eight disparate ERP systems using MVVM and service-oriented design, consolidating operations under a single enterprise application."
+        },
+        {
+          "text": "Partnered with network engineering to redesign server infrastructure and implement proactive monitoring, reducing IT costs by $250 K annually."
+        },
+        {
+          "text": "Established branching and integration practices that later evolved into full trunk-based development across distributed teams."
+        }
+      ],
+      "dates": "2015 – 2016",
+      "employer": "Soave Enterprises",
+      "end_month": "October",
+      "end_year": 2016,
+      "location": "Detroit, MI",
+      "role": "Technology Manager / Software Architect",
+      "start_month": "August",
+      "start_year": 2015,
+      "tags": [
+        "AWS EC2",
+        "Hybrid Cloud",
+        "Infrastructure Modernization",
+        "CI/CD",
+        "DevOps",
+        "IaC",
+        "ERP Integration",
+        "Automation",
+        "Agile Leadership",
+        "Cost Optimization"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Engineered enterprise-scale QA automation and load-testing frameworks (QALoad, QADirector) used by clients such as Ford, GM, and Blue Cross, standardizing test execution across distributed systems."
+        },
+        {
+          "text": "Developed E2E automation frameworks in C++ and Java that integrated performance testing directly into the earliest DevOps pipelines."
+        },
+        {
+          "text": "Automated defect-tracking and regression testing processes, increasing release velocity and reliability for large-scale automotive and healthcare platforms."
+        },
+        {
+          "text": "Created internal performance benchmarking utilities that evolved into global commercial QA products, improving observability and continuous feedback for engineering teams."
+        },
+        {
+          "text": "Collaborated across dev, QA, and product teams to institutionalize continuous testing culture that predated modern CI/CD adoption."
+        }
+      ],
+      "dates": "2006 – 2010",
+      "employer": "Compuware",
+      "end_month": "October",
+      "end_year": 2010,
+      "location": "Detroit, MI",
+      "role": "Senior Software Developer",
+      "start_month": "January",
+      "start_year": 2006,
+      "tags": [
+        "QA Automation",
+        "Performance Testing",
+        "E2E Frameworks",
+        "C++",
+        "Java",
+        "DevOps",
+        "Continuous Testing",
+        "Scalability",
+        "Enterprise Software",
+        "Agile Practices"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Developed next-generation diagnostic tools for OEM clients including Harley-Davidson, Isuzu, and Penske, enabling technicians to analyze, calibrate, and service vehicles through dynamic data interfaces."
+        },
+        {
+          "text": "Engineered data-driven diagnostic frameworks in C and C++ for multiple communication protocols (J1850, J1939, CAN, ISO 9141), ensuring real-time vehicle data acquisition and cross-platform compatibility."
+        },
+        {
+          "text": "Designed modular ECM communication libraries capable of detecting and adapting to new OEM protocols without re-engineering the core stack — a precursor to today's plugin and microservice architectures."
+        },
+        {
+          "text": "Collaborated with firmware and field engineering teams to validate tool accuracy and performance across diverse vehicle ECUs, integrating live telemetry capture and automated fault detection."
+        },
+        {
+          "text": "Implemented early test-automation suites for calibration and service modules, reducing regression time and establishing repeatable quality benchmarks adopted across client programs."
+        },
+        {
+          "text": "Authored internal documentation and training materials to standardize diagnostic protocol handling, accelerating onboarding for new engineers and OEM partners."
+        }
+      ],
+      "dates": "2002 – 2005",
+      "employer": "ParTech, Inc.",
+      "end_month": "December",
+      "end_year": 2005,
+      "location": "Troy, MI",
+      "role": "Software Engineer – Vehicle Diagnostics & Embedded Systems",
+      "start_month": "August",
+      "start_year": 2002,
+      "tags": [
+        "C",
+        "C++",
+        "Embedded Systems",
+        "Vehicle Diagnostics",
+        "ECM Communication",
+        "CAN",
+        "J1850",
+        "J1939",
+        "ISO Protocols",
+        "Automation Testing",
+        "Telemetry",
+        "Data-Driven Architecture",
+        "Automotive Engineering",
+        "Cross-Functional Collaboration"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Contributed to the development of embedded diagnostic software and communication utilities for heavy-duty and automotive OEMs including GM, Freightliner, and Detroit Diesel, forming the basis of what became Nexiq's flagship USB Link diagnostic interface."
+        },
+        {
+          "text": "Developed C++ modules for ECM/TCM communication supporting multiple transport layers (J1850 VPW, PWM, CAN, ISO 9141, and J1939) used in early vehicle network testing tools."
+        },
+        {
+          "text": "Assisted in implementing protocol parsers, data loggers, and error-code interpreters, enabling real-time fault detection and calibration analysis across multiple vehicle control modules."
+        },
+        {
+          "text": "Collaborated with senior firmware engineers to integrate embedded serial communication stacks and perform bench validation using oscilloscopes, breakout boxes, and early CAN analyzers."
+        },
+        {
+          "text": "Supported initial automation of test workflows through batch scripting and unit harnesses, reducing manual regression validation time by over 30%."
+        },
+        {
+          "text": "Documented diagnostic APIs and assisted in preparing SDK materials for OEM and aftermarket developers."
+        }
+      ],
+      "dates": "1999 – 2002",
+      "employer": "Nexiq Technologies (formerly MPSI)",
+      "end_month": "August",
+      "end_year": 2002,
+      "location": "Troy, MI",
+      "role": "Junior Software Developer – Vehicle Communications & Diagnostics",
+      "start_month": "May",
+      "start_year": 2000,
+      "tags": [
+        "C++",
+        "C",
+        "Embedded Systems",
+        "Automotive Diagnostics",
+        "ECM/TCM Communication",
+        "J1850",
+        "J1939",
+        "CAN Bus",
+        "ISO 9141",
+        "Serial Communication",
+        "Protocol Parsers",
+        "Automation Testing"
+      ]
+    }
+  ],
+  "location": "West Bloomfield, MI",
+  "name": "Sidney Jones",
+  "summary": "Innovative software engineer and cloud architect with 20+ years of experience building distributed, highly available, and scalable enterprise applications across AWS and Azure. Proven ability to design secure, cloud-native systems using C#, Python, .NET, FastAPI, and Terraform—with deep expertise in DevSecOps, CI/CD automation, and AES-256 key management. Skilled in leading technical teams, mentoring engineers, and embedding high-availability, observability, and automation into every stage of delivery. Passionate about building reliable, mission-critical software that empowers organizations and serves communities.",
+  "technical_proficiencies": {
+    "architecture": "Scalable Microservices, High-Availability APIs, Event-Driven Systems, Serverless Applications",
+    "cloud_devops": "AWS (Lambda, API Gateway, S3), Azure Functions, Docker, Kubernetes, Terraform, Jenkins, GitHub Actions, Azure DevOps",
+    "core_languages": "C#, Python, Java, SQL, JavaScript (React, Node.js)",
+    "frameworks": ".NET Core, FastAPI, Flask, Spring Boot",
+    "security_compliance": "AES-256, KeeperSecurity Vault, Role-Based Access Control, DevSecOps, CI/CD Scanning"
+  },
+  "title": "Lead Software Engineer & Cloud Architect"
+}

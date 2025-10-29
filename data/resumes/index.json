@@ -64,13 +64,58 @@
       "description": "Tailored resume for Westlaw (Lead Software Engineer, AI) Final"
     },
     {
-      "id": "136c188e-659d-49cf-ba0f-983c279e80e7",
-      "name": "Tailored_indeed_tailored_resume",
-      "created_at": "2025-10-26T12:36:01.645244Z",
-      "updated_at": "2025-10-26T12:36:01.645244Z",
+      "id": "4ba313ae-9b5e-401f-b8c5-f790f708405b",
+      "name": "DevAltus - Sr. DevOps Engineer",
+      "created_at": "2025-10-26T13:56:32.166847Z",
+      "updated_at": "2025-10-26T13:56:32.166847Z",
       "job_listing_id": null,
       "is_master": false,
-      "description": "Tailored resume for job listing from https://www.indeed.com/?from=gnav-viewjob&advn=100919326538784&vjk=fcd29f6d7f5168f9"
+      "description": "Duplicated from Tailored Westlaw Resume"
+    },
+    {
+      "id": "d45cb479-cc4f-4933-b883-e2e6e8772e67",
+      "name": "Okta - Senior Software Engineer, AI Agentic Experience",
+      "created_at": "2025-10-26T14:13:49.467700Z",
+      "updated_at": "2025-10-26T14:13:49.467700Z",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from DevAltus - Sr. DevOps Engineer"
+    },
+    {
+      "id": "c7c098f2-06b2-4376-b30b-78dfc0de44c1",
+      "name": "Gifthealth - Software Engineer Senior",
+      "created_at": "2025-10-26T14:29:25.495856Z",
+      "updated_at": "2025-10-26T14:29:25.495856Z",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Okta - Senior Software Engineer, AI Agentic Experience"
+    },
+    {
+      "id": "8905aaa2-510b-4cf2-9825-ee9575304b00",
+      "name": "Avfuel - Solution Lead - Modernization and Pricing",
+      "created_at": "2025-10-26T14:42:49.524065Z",
+      "updated_at": "2025-10-26T14:42:49.524065Z",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Gifthealth - Software Engineer Senior"
+    },
+    {
+      "id": "66399d6e-d78e-4faa-9165-e898481b88cf",
+      "name": "Tyler Technologies - Principal Software Engineer",
+      "created_at": "2025-10-26T15:32:05.068828Z",
+      "updated_at": "2025-10-26T15:39:25.130478Z",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Tailored Westlaw Resume"
+    },
+    {
+      "id": "3f288368-84c3-4de2-b9d3-573719ff6134",
+      "name": "GitHub - Software Engineer II, Marketing Engineering",
+      "created_at": "2025-10-27T18:53:18.079723Z",
+      "updated_at": "2025-10-27T19:14:19.435878",
+      "job_listing_id": null,
+      "is_master": false,
+      "description": "Duplicated from Tailored Westlaw Resume"
     }
   ]
 }

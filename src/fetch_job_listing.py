@@ -104,7 +104,7 @@ def fetch_job_listing(url, output_dir="job_listings"):
     Fetch a job listing from a URL and save it as a markdown file.
 
     Supports:
-    - Indeed.com job listings (with URL canonicalization)
+    - Indeed.com job listings (with URL canonicalization and Cloudflare bypass)
     - Generic job listing pages
     - file:// URLs for local markdown/html (useful for offline testing)
 
@@ -131,64 +131,113 @@ def fetch_job_listing(url, output_dir="job_listings"):
     # Canonicalize URL for known providers
     url = canonicalize_job_url(url)
 
-    # Enhanced headers to avoid 403 errors
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/122.0.0.0 Safari/537.36"
-        ),
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1",
-        "Referer": "https://www.indeed.com/",
-        "Sec-Fetch-Dest": "document",
-        "Sec-Fetch-Mode": "navigate",
-        "Sec-Fetch-Site": "same-origin",
-        "Sec-Fetch-User": "?1",
-    }
-
-    # First attempt: requests
-    try:
-        session = requests.Session()
-        response = session.get(url, headers=headers, timeout=15, allow_redirects=True)
-        if response.status_code in (403, 404):
-            raise requests.exceptions.HTTPError(
-                f"{response.status_code} Error for url: {url}", response=response
-            )
-        response.raise_for_status()
-        html_text = response.text
-        source = "requests"
-    except requests.exceptions.HTTPError as e:
-        status = getattr(e.response, "status_code", "?")
-        print(f"HTTP Error: {e}")
-        print(f"Status Code: {status}")
-        # Fallback 1: text proxy (r.jina.ai)
+    # For Indeed URLs, try to use Flask API endpoint if available
+    if "indeed.com" in url:
+        print("🔓 Attempting to fetch via Flask API endpoint...")
         try:
-            parsed = urlparse(url)
-            proxy_url = f"https://r.jina.ai/http://{parsed.netloc}{parsed.path}"
-            if parsed.query:
-                proxy_url += f"?{parsed.query}"
-            print(f"↪️  Falling back to read-only proxy: {proxy_url}")
-            proxy_resp = requests.get(proxy_url, timeout=15)
-            proxy_resp.raise_for_status()
-            html_text = proxy_resp.text
-            source = "proxy"
-        except Exception as proxy_err:
-            print(f"Proxy fallback failed: {proxy_err}")
-            # Fallback 2: Selenium (if available)
+            import requests
+            api_response = requests.post(
+                "http://localhost:5000/api/fetch-job-content",
+                json={"url": url},
+                timeout=30
+            )
+            if api_response.status_code == 200:
+                data = api_response.json()
+                html_text = data.get("html")
+                source = "flask-api"
+                print(f"✓ Fetched via Flask API ({len(html_text)} bytes)")
+            else:
+                print(f"⚠️  Flask API returned {api_response.status_code}")
+                html_text = None
+                source = None
+        except Exception as e:
+            print(f"⚠️  Flask API not available: {e}")
+            print("Falling back to cloudscraper...")
+            # Fall through to cloudscraper below
+            html_text = None
+            source = None
+    else:
+        html_text = None
+        source = None
+
+    # If Flask API didn't work, try cloudscraper
+    if html_text is None and "indeed.com" in url:
+        print("🔓 Using cloudscraper for Indeed.com...")
+        try:
+            import cloudscraper
+            scraper = cloudscraper.create_scraper()
+            response = scraper.get(url, timeout=15, allow_redirects=True)
+            response.raise_for_status()
+            html_text = response.text
+            source = "cloudscraper"
+            print(f"✓ Fetched with cloudscraper ({len(html_text)} bytes)")
+        except Exception as e:
+            print(f"⚠️  Cloudscraper failed: {e}")
+            print("Falling back to requests...")
+            # Fall through to requests below
+            html_text = None
+            source = None
+
+    # If cloudscraper didn't work, try requests
+    if html_text is None:
+        # Enhanced headers to avoid 403 errors
+        headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/122.0.0.0 Safari/537.36"
+            ),
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+            "Upgrade-Insecure-Requests": "1",
+            "Referer": "https://www.indeed.com/",
+            "Sec-Fetch-Dest": "document",
+            "Sec-Fetch-Mode": "navigate",
+            "Sec-Fetch-Site": "same-origin",
+            "Sec-Fetch-User": "?1",
+        }
+
+        # First attempt: requests
+        try:
+            session = requests.Session()
+            response = session.get(url, headers=headers, timeout=15, allow_redirects=True)
+            if response.status_code in (403, 404):
+                raise requests.exceptions.HTTPError(
+                    f"{response.status_code} Error for url: {url}", response=response
+                )
+            response.raise_for_status()
+            html_text = response.text
+            source = "requests"
+        except requests.exceptions.HTTPError as e:
+            status = getattr(e.response, "status_code", "?")
+            print(f"HTTP Error: {e}")
+            print(f"Status Code: {status}")
+            # Fallback 1: text proxy (r.jina.ai)
             try:
-                print("↪️  Attempting Selenium fallback (if installed)...")
-                return fetch_job_listing_selenium(url, output_dir)
-            except Exception as sel_err:
-                print("Selenium fallback unavailable or failed.")
-                print("Install with: pip install selenium webdriver-manager")
-                raise e
-    except requests.exceptions.RequestException as e:
-        print(f"Request Error: {e}")
-        raise
+                parsed = urlparse(url)
+                proxy_url = f"https://r.jina.ai/http://{parsed.netloc}{parsed.path}"
+                if parsed.query:
+                    proxy_url += f"?{parsed.query}"
+                print(f"↪️  Falling back to read-only proxy: {proxy_url}")
+                proxy_resp = requests.get(proxy_url, timeout=15)
+                proxy_resp.raise_for_status()
+                html_text = proxy_resp.text
+                source = "proxy"
+            except Exception as proxy_err:
+                print(f"Proxy fallback failed: {proxy_err}")
+                # Fallback 2: Selenium (if available)
+                try:
+                    print("↪️  Attempting Selenium fallback (if installed)...")
+                    return fetch_job_listing_selenium(url, output_dir)
+                except Exception as sel_err:
+                    print("Selenium fallback unavailable or failed.")
+                    print("Install with: pip install selenium webdriver-manager")
+                    raise e
+        except requests.exceptions.RequestException as e:
+            print(f"Request Error: {e}")
+            raise
 
     # Parse content
     soup = BeautifulSoup(html_text, "html.parser")
@@ -219,6 +268,15 @@ def fetch_job_listing(url, output_dir="job_listings"):
     if not desc_tag:
         desc_tag = soup.find("div", class_=re.compile("jobsearch-JobComponent-description|description", re.I))
     description = desc_tag.get_text("\n", strip=True) if desc_tag else "Job description not found."
+
+    # If extraction failed (title or description not found), try Selenium
+    if title == "Job Title Not Found" or description == "Job description not found.":
+        print(f"⚠️  Content extraction failed with {source}. Attempting Selenium fallback...")
+        try:
+            return fetch_job_listing_selenium(url, output_dir)
+        except Exception as sel_err:
+            print(f"Selenium fallback failed: {sel_err}")
+            print("Continuing with incomplete data...")
 
     # Prepare markdown content
     md = f"# {title}\n\n"
@@ -266,12 +324,17 @@ def fetch_job_listing_selenium(url, output_dir="job_listings"):
         print("You'll also need to download ChromeDriver from: https://chromedriver.chromium.org/")
         raise
 
-    # Initialize Chrome driver
+    # Initialize Chrome driver with anti-detection measures
     options = webdriver.ChromeOptions()
-    options.add_argument("--start-maximized")
+    options.add_argument("--headless")  # Run in headless mode (no GUI)
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
     options.add_experimental_option('useAutomationExtension', False)
+    options.add_experimental_option("useAutomationExtension", False)
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
 
     driver = webdriver.Chrome(options=options)
 
@@ -283,8 +346,15 @@ def fetch_job_listing_selenium(url, output_dir="job_listings"):
             EC.presence_of_element_located((By.TAG_NAME, "h1"))
         )
 
+        # Wait additional time for dynamic content to load
+        import time
+        time.sleep(3)
+
         # Get page source and parse with BeautifulSoup
         soup = BeautifulSoup(driver.page_source, "html.parser")
+
+        # Debug: print page title to verify we got content
+        print(f"✓ Page loaded. Title: {soup.title.string if soup.title else 'No title'}")
 
         # Extract job information
         title_tag = soup.find("h1")
@@ -300,9 +370,33 @@ def fetch_job_listing_selenium(url, output_dir="job_listings"):
         if location_tag:
             location = location_tag.get_text(strip=True)
 
+        # Try multiple selectors for job description
+        desc_tag = None
+
+        # Try ID-based selectors
         desc_tag = soup.find("div", id=re.compile("jobDescriptionText|jobDescription", re.I))
+
+        # Try class-based selectors
         if not desc_tag:
             desc_tag = soup.find("div", class_=re.compile("jobsearch-JobComponent-description|description", re.I))
+
+        # Try data attributes
+        if not desc_tag:
+            desc_tag = soup.find("div", attrs={"data-testid": re.compile("jobDescription", re.I)})
+
+        # Try article tag (common for job descriptions)
+        if not desc_tag:
+            desc_tag = soup.find("article")
+
+        # Try any div with substantial text content
+        if not desc_tag:
+            all_divs = soup.find_all("div")
+            for div in all_divs:
+                text = div.get_text(strip=True)
+                if len(text) > 500 and any(keyword in text.lower() for keyword in ["experience", "requirement", "skill", "responsibility", "qualif"]):
+                    desc_tag = div
+                    break
+
         description = desc_tag.get_text("\n", strip=True) if desc_tag else "Job description not found."
 
         # Prepare markdown content

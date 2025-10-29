@@ -3,6 +3,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from typing import List
 
 from jinja2 import Template
 
@@ -10,9 +11,9 @@ from jd_fetcher import ingest_jd
 from jd_parser import extract_keywords
 from rewriter import rewrite_star
 from scorer import score_bullets
-from rag.retriever import Retriever
-from rag.rag_indexer import RAGIndexer
-from rag.llm_rewriter import LLMRewriter
+
+# RAG imports are now lazy-loaded in functions that use them
+# This allows the module to be imported even if faiss is not available
 
 # Fix Windows console encoding for emoji support
 if sys.platform == "win32":
@@ -117,6 +118,9 @@ def retrieve_rag_context(keywords, vector_store_path, top_k=5):
         Dictionary with retrieved context
     """
     try:
+        # Lazy import - only import when RAG is actually used
+        from rag.retriever import Retriever
+
         retriever = Retriever(vector_store_path)
         rag_context = {}
 
@@ -153,6 +157,8 @@ def select_and_rewrite(experience, keywords, per_job=3, rag_context=None, use_ll
 
     if use_llm_rewriting:
         try:
+            # Lazy import - only import when LLM rewriting is actually used
+            from rag.llm_rewriter import LLMRewriter
             llm_rewriter = LLMRewriter()
         except Exception as e:
             print(f"⚠️  LLM rewriter initialization failed: {e}")
@@ -161,38 +167,50 @@ def select_and_rewrite(experience, keywords, per_job=3, rag_context=None, use_ll
     for job in experience:
         top = score_bullets(job["bullets"], keywords)[:per_job]
 
-        # Rewrite bullets
+        # Rewrite bullets and normalize structure to replace original bullets
+        rewritten_texts: List[str] = []
         if use_llm_rewriting and llm_rewriter and rag_context and rag_context.get("success"):
             # Use LLM rewriting with evidence
-            rewritten = []
             for bullet in top:
-                bullet_text = bullet["text"]
-                # Get evidence for this bullet from RAG context
+                bullet_text = bullet.get("text", "")
+                # Get evidence for this bullet from RAG context (top-3 keywords)
                 evidence = ""
-                for keyword in keywords[:3]:  # Use top 3 keywords
+                for keyword in keywords[:3]:
                     if keyword in rag_context.get("context", {}):
                         docs = rag_context["context"][keyword].get("documents", [])
                         if docs:
                             evidence = docs[0].get("content", "")
                             break
 
-                # Rewrite with evidence
-                if evidence:
-                    rewritten_bullet = llm_rewriter.rewrite_with_evidence(
-                        bullet_text,
-                        evidence,
-                        keywords[0] if keywords else "job requirement"
+                # Rewrite with evidence (fallback to heuristic)
+                if evidence and llm_rewriter:
+                    rewritten_texts.append(
+                        llm_rewriter.rewrite_with_evidence(
+                            bullet_text,
+                            evidence,
+                            keywords[0] if keywords else "job requirement",
+                        )
                     )
                 else:
-                    # Fall back to regex rewriting if no evidence
-                    rewritten_bullet = rewrite_star(bullet_text)
-
-                rewritten.append(rewritten_bullet)
+                    rewritten_texts.append(rewrite_star(bullet_text))
         else:
             # Use regex rewriting
-            rewritten = [rewrite_star(b["text"]) for b in top]
+            rewritten_texts = [rewrite_star(b.get("text", "")) for b in top]
 
-        job_data = {**job, "selected_bullets": rewritten}
+        # Build normalized bullets preserving original tags (if any)
+        normalized_bullets = []
+        for i, b in enumerate(top):
+            text = rewritten_texts[i] if i < len(rewritten_texts) else b.get("text", "")
+            normalized_bullets.append({
+                "text": text,
+                "tags": b.get("tags", []),
+            })
+
+        # Construct job data without original bullets/selected_bullets field
+        job_data = {k: v for k, v in job.items() if k not in ("bullets", "selected_bullets")}
+        job_data["bullets"] = normalized_bullets
+        # Keep selected_bullets for backward compatibility/testing, but data is normalized
+        job_data["selected_bullets"] = [b.get("text", "") for b in normalized_bullets]
 
         # Add RAG context if available
         if rag_context and rag_context.get("success"):

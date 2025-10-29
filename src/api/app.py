@@ -1172,6 +1172,395 @@ def extract_job_keywords(job_id: str):
         return jsonify({"error": f"Failed to extract keywords: {str(e)}"}), 500
 
 
+@app.route("/api/tailor-from-job-description", methods=["POST"])
+def tailor_from_job_description():
+    """Tailor a resume from raw job description text (for sites that block scraping like Indeed)"""
+    try:
+        from src.tailor import extract_keywords, select_and_rewrite
+        from src.build_resume_from_experience_log import build_resume_from_experience_log
+        from src.models.resume import Resume
+        from src.models.job_listing import JobListing
+        import re
+
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        job_description = body.get("job_description")
+        job_title = body.get("job_title", "Job Listing")
+        company = body.get("company", "")
+        url = body.get("url", "")
+        use_rag = body.get("use_rag", False)
+        use_llm_rewriting = body.get("use_llm_rewriting", False)
+        theme = body.get("theme", "professional")
+
+        if not job_description:
+            return jsonify({"error": "job_description is required"}), 400
+
+        print(f"📋 Processing job description for: {job_title}")
+
+        # Step 1: Extract keywords
+        print("🔍 Extracting keywords...")
+        keywords = extract_keywords(job_description)
+        print(f"✅ Extracted {len(keywords)} keywords")
+
+        # Step 2: Build master resume from experience log
+        print("📄 Building master resume from experience log...")
+        master_resume = build_resume_from_experience_log()
+        candidate_name = master_resume.get("name", "Candidate")
+
+        # Step 3: Auto-generate resume name
+        if company and job_title:
+            new_resume_name = f"{candidate_name} - {job_title} at {company}"
+        elif job_title:
+            new_resume_name = f"{candidate_name} - {job_title}"
+        else:
+            new_resume_name = f"{candidate_name} - Tailored Resume"
+
+        # Ensure unique name
+        resume_model = Resume(DATA_DIR)
+        existing_resumes = resume_model.list_all()
+        base_name = new_resume_name
+        counter = 1
+        existing_names = set()
+        for r in existing_resumes:
+            if hasattr(r, 'name'):
+                existing_names.add(r.name)
+            elif isinstance(r, dict):
+                existing_names.add(r.get("name", ""))
+
+        while new_resume_name in existing_names:
+            new_resume_name = f"{base_name} ({counter})"
+            counter += 1
+
+        print(f"✅ Resume name: {new_resume_name}")
+
+        # Step 4: Tailor bullets based on keywords
+        print("✂️ Tailoring resume bullets...")
+        rag_context = None
+        if use_rag:
+            try:
+                from src.rag.retriever import Retriever
+                print("🧠 Retrieving RAG context...")
+                retriever = Retriever(DATA_DIR / "rag" / "vector_store.json")
+                rag_result = retriever.retrieve_batch(keywords, top_k=5)
+                rag_context = {"success": True, "context": rag_result}
+                print(f"✅ Retrieved RAG context for {len(keywords)} keywords")
+            except Exception as e:
+                print(f"⚠️  RAG retrieval failed: {e}")
+                rag_context = None
+
+        tailored_experience = select_and_rewrite(
+            master_resume.get("experience", []),
+            keywords,
+            rag_context=rag_context,
+            use_llm_rewriting=use_llm_rewriting
+        )
+
+        # Step 5: Create tailored resume data
+        tailored_resume_data = master_resume.copy()
+        tailored_resume_data["experience"] = tailored_experience
+
+        # Step 6: Create job listing entry
+        print("📝 Creating job listing entry...")
+        job_listing_model = JobListing(DATA_DIR)
+        job_listing_result = job_listing_model.create(
+            title=job_title,
+            company=company,
+            description=job_description,
+            url=url,
+            keywords=keywords
+        )
+        # Extract ID if result is an object
+        if hasattr(job_listing_result, 'id'):
+            job_listing_id = job_listing_result.id
+        elif isinstance(job_listing_result, dict):
+            job_listing_id = job_listing_result.get("id")
+        else:
+            job_listing_id = job_listing_result
+        print(f"✅ Job listing created: {job_listing_id}")
+
+        # Step 7: Save tailored resume
+        print("💾 Saving tailored resume...")
+        tailored_metadata = resume_model.create(
+            data=tailored_resume_data,
+            name=new_resume_name,
+            job_listing_id=job_listing_id,
+            is_master=False,
+            description=f"Tailored resume for {job_title} at {company}",
+        )
+
+        # Convert metadata to dict if it's a ResumeMetadata object
+        if hasattr(tailored_metadata, 'to_dict'):
+            tailored_metadata_dict = tailored_metadata.to_dict()
+        else:
+            tailored_metadata_dict = tailored_metadata
+
+        # Step 8: Link resume to job listing (bidirectional)
+        print("🔗 Linking resume and job listing...")
+        job_listing_model.add_tailored_resume(job_listing_id, tailored_metadata_dict["id"])
+
+        print("✅ Resume tailoring complete!")
+
+        return jsonify({
+            "success": True,
+            "message": "Resume tailored successfully from job description",
+            "resume": {
+                "id": tailored_metadata_dict["id"],
+                "name": tailored_metadata_dict["name"],
+                "job_listing_id": job_listing_id
+            },
+            "job_listing": {
+                "id": job_listing_id,
+                "title": job_title,
+                "company": company,
+                "keywords": keywords
+            }
+        }), 201
+
+    except Exception as e:
+        print(f"❌ Error tailoring resume from job description: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": f"Failed to tailor resume: {str(e)}"}), 500
+
+
+@app.route("/api/fetch-job-content", methods=["POST"])
+def fetch_job_content():
+    """Fetch raw job content from a URL using Flask server-side request with Cloudflare bypass"""
+    try:
+        import cloudscraper
+        from urllib.parse import urlparse, parse_qs
+
+        body = request.get_json(force=True)
+        url = body.get("url")
+
+        if not url:
+            return jsonify({"error": "URL is required"}), 400
+
+        print(f"📥 Fetching job content from URL: {url}")
+
+        # Convert redirect URL to canonical /viewjob URL for Indeed
+        parsed = urlparse(url)
+        if "indeed.com" in parsed.netloc:
+            query = parse_qs(parsed.query)
+            if "vjk" in query and query["vjk"]:
+                jk = query["vjk"][0]
+                url = f"https://www.indeed.com/viewjob?jk={jk}"
+                print(f"   Converted to canonical URL: {url}")
+            elif "jk" in query and query["jk"]:
+                jk = query["jk"][0]
+                url = f"https://www.indeed.com/viewjob?jk={jk}"
+                print(f"   Using canonical URL: {url}")
+
+        # Use cloudscraper to bypass Cloudflare
+        print("🔓 Using cloudscraper to bypass Cloudflare...")
+        scraper = cloudscraper.create_scraper()
+        response = scraper.get(url, timeout=15, allow_redirects=True)
+        response.raise_for_status()
+
+        print(f"✅ Successfully fetched content ({len(response.text)} bytes)")
+
+        return jsonify({
+            "success": True,
+            "url": url,
+            "html": response.text,
+            "status_code": response.status_code
+        }), 200
+
+    except Exception as e:
+        print(f"❌ Error fetching job content: {e}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/tailor-from-url", methods=["POST"])
+def tailor_from_url_endpoint():
+    """
+    Tailor a resume from a job URL in one step.
+
+    This endpoint:
+    1. Fetches the job listing from URL
+    2. Extracts company name and job title
+    3. Auto-generates resume name
+    4. Builds resume from experience log
+    5. Creates job listing entry
+    6. Links resume ↔ job bidirectionally
+
+    Request body:
+        {
+            "url": "https://example.com/job",
+            "use_rag": false,
+            "use_llm_rewriting": false,
+            "theme": "professional"
+        }
+
+    Returns:
+        JSON response with tailored resume data and job listing
+    """
+    try:
+        from src.fetch_job_listing import fetch_job_listing
+        from src.tailor import ingest_jd, extract_keywords, select_and_rewrite
+        from src.build_resume_from_experience_log import build_resume_from_experience_log
+        import re
+
+        body = request.get_json(force=True)
+
+        if not body:
+            return jsonify({"error": "No data provided"}), 400
+
+        url = body.get("url")
+        use_rag = body.get("use_rag", False)
+        use_llm_rewriting = body.get("use_llm_rewriting", False)
+        theme = body.get("theme", "professional")
+
+        if not url:
+            return jsonify({"error": "URL is required"}), 400
+
+        # Step 1: Fetch job listing from URL
+        print(f"📥 Fetching job listing from URL: {url}")
+        jd_filepath = fetch_job_listing(url, output_dir="job_listings")
+
+        # Step 2: Parse job description
+        print("📋 Processing job description...")
+        jd_path, jd_text = ingest_jd(jd_filepath)
+
+        # Step 3: Extract keywords
+        print("🔍 Extracting keywords...")
+        keywords = extract_keywords(jd_text)
+
+        # Step 4: Extract company and job title from description or filename
+        print("🏢 Extracting company and job title...")
+        job_title = Path(jd_filepath).stem or "Job Listing"
+        company = ""
+
+        # Try to extract company from job description (look for common patterns)
+        company_match = re.search(r'(?:Company|Employer|Organization):\s*([^\n]+)', jd_text, re.IGNORECASE)
+        if company_match:
+            company = company_match.group(1).strip()
+
+        # Step 5: Auto-generate resume name
+        # Format: "Sidney Jones - Job Title at Company"
+        master_resume = build_resume_from_experience_log()
+        candidate_name = master_resume.get("name", "Candidate")
+
+        if company and job_title:
+            new_resume_name = f"{candidate_name} - {job_title} at {company}"
+        elif job_title:
+            new_resume_name = f"{candidate_name} - {job_title}"
+        else:
+            new_resume_name = f"{candidate_name} - Tailored Resume"
+
+        # Ensure unique name
+        existing_resumes = resume_model.list_all()
+        base_name = new_resume_name
+        counter = 1
+        # Convert ResumeMetadata objects to dicts if needed
+        existing_names = set()
+        for r in existing_resumes:
+            if hasattr(r, 'name'):
+                existing_names.add(r.name)
+            elif isinstance(r, dict):
+                existing_names.add(r.get("name", ""))
+
+        while new_resume_name in existing_names:
+            new_resume_name = f"{base_name} ({counter})"
+            counter += 1
+
+        print(f"📝 Generated resume name: {new_resume_name}")
+
+        # Step 6: Create job listing entry
+        print("📇 Creating job listing entry...")
+        job_listing_data = job_listing_model.create(
+            title=job_title,
+            company=company,
+            description=jd_text,
+            url=url,
+            location=None,
+            keywords=keywords,
+        )
+        job_listing_id = job_listing_data["id"]
+
+        # Step 7: Build tailored resume from experience log
+        print("✂️ Building tailored resume from experience log...")
+
+        # Retrieve RAG context if requested
+        rag_context = None
+        if use_rag:
+            try:
+                from src.rag.retriever import Retriever
+                print("🧠 Retrieving RAG context...")
+                retriever = Retriever(DATA_DIR / "rag" / "vector_store.json")
+                rag_result = retriever.retrieve_batch(keywords, top_k=5)
+                rag_context = {"success": True, "context": rag_result}
+                print(f"✅ Retrieved RAG context for {len(keywords)} keywords")
+            except Exception as e:
+                print(f"⚠️  RAG retrieval failed: {e}")
+                rag_context = None
+
+        # Tailor bullets based on keywords
+        tailored_experience = select_and_rewrite(
+            master_resume.get("experience", []),
+            keywords,
+            rag_context=rag_context,
+            use_llm_rewriting=use_llm_rewriting
+        )
+
+        # Create tailored resume data from master
+        tailored_resume_data = master_resume.copy()
+
+        # Update experience with tailored versions
+        tailored_resume_data["experience"] = tailored_experience
+
+        # Step 8: Save tailored resume
+        print("💾 Saving tailored resume...")
+        tailored_metadata = resume_model.create(
+            data=tailored_resume_data,
+            name=new_resume_name,
+            job_listing_id=job_listing_id,
+            is_master=False,
+            description=f"Tailored resume for {job_title} at {company} from {url}",
+        )
+
+        # Convert metadata to dict if it's a ResumeMetadata object
+        if hasattr(tailored_metadata, 'to_dict'):
+            tailored_metadata_dict = tailored_metadata.to_dict()
+        else:
+            tailored_metadata_dict = tailored_metadata
+
+        # Step 9: Link resume to job listing (bidirectional)
+        print("🔗 Linking resume and job listing...")
+        job_listing_model.add_tailored_resume(job_listing_id, tailored_metadata_dict["id"])
+
+        print("✅ Resume tailored successfully!")
+
+        return jsonify({
+            "success": True,
+            "message": "Resume tailored successfully from URL",
+            "resume": {
+                "id": tailored_metadata_dict["id"],
+                "name": tailored_metadata_dict["name"],
+                "job_listing_id": job_listing_id,
+            },
+            "job_listing": {
+                "id": job_listing_id,
+                "title": job_listing_data["title"],
+                "company": job_listing_data["company"],
+                "url": url,
+                "keywords": keywords,
+            }
+        }), 201
+
+    except Exception as e:
+        import traceback
+        print(f"Error: {str(e)}")
+        print(traceback.format_exc())
+        return jsonify({
+            "error": f"Failed to tailor resume from URL: {str(e)}",
+            "traceback": traceback.format_exc()
+        }), 500
+
+
 # ============================================================================
 # Agent Integration API Endpoints (Issue #12)
 # ============================================================================

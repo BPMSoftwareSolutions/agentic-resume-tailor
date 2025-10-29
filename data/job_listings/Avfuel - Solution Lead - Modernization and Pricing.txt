@@ -1,0 +1,88 @@
+Avfuel - Solution Lead - Modernization and Pricing
+Avfuel Corporation
+3.1
+3.1 out of 5 stars
+47 West Ellsworth Road, Ann Arbor, MI 48108
+Full-time
+Avfuel Corporation
+47 West Ellsworth Road, Ann Arbor, MI 48108
+Profile insights
+Here’s how the job qualifications align with your profile.
+Skills
+
+T-SQL
+
+SOAP
+
+JSON
++ show more
+
+Do you have experience in T-SQL?
+&nbsp;
+Job details
+Here’s how the job details align with your profile.
+Job type
+
+Full-time
+&nbsp;
+Location
+Estimated commute
+45 minutes from 3835 Sunset Blvd
+Job address
+47 West Ellsworth Road, Ann Arbor, MI 48108
+&nbsp;
+Benefits
+Pulled from the full job description
+Pet insurance
+Health insurance
+401(k) matching
+Vision insurance
+Dental insurance
+Life insurance
+Disability insurance
+&nbsp;
+Full job description
+Employment Type: Full Time, Onsite Corporate Office Environment
+Benefits: Medical, Dental, Vision, Paid Vacation, Sick & Holidays; Company paid Life and Disability Insurance; 401k savings plan with employer matching
+Voluntary Benefits: Supplemental Life Insurance, Critical Illness, Accident Coverage, & Pet Insurance
+
+Department: IT
+
+About Avfuel
+
+Avfuel Corporation is a global leader in aviation fuel supply and services. With a 22% U.S. market share and growing international presence, we deliver aviation solutions to FBOs, airports, airlines, cargo operators, corporate flight departments, and military entities worldwide. Technology is at the heart of our success—we build innovative solutions in pricing, tax, integration, and supply chain optimization that keep aviation moving.
+
+Why Join Us?
+
+Drive mission-critical modernization projects that shape the future of global aviation services.
+Be part of a forward-thinking IT organization focused on innovation, scalability, and continuous improvement.
+Collaborate in a culture of respect, professionalism, and growth.
+Lead initiatives that directly impact Avfuel’s customers and global competitiveness.
+Description
+
+We’re seeking a hands-on technical leader to join our IT organization as the Solution Lead – Modernization and Pricing. This role combines enterprise solution architecture with hands-on development, providing the technical leadership Avfuel needs as we modernize core systems and implement next-generation pricing and integration solutions. You will play a critical role in ensuring platform sustainability, scalability, and readiness for global growth.
+
+Responsibilities
+
+Lead modernization of the legacy CRM platform into scalable, object-oriented enterprise solutions while supporting business growth and resolving issues.
+Evaluate, architect, and integrate enterprise off-the-shelf pricing engines and CPQ platforms with business systems.
+Contribute hands-on in C# .NET, SQL Server (T-SQL, PL-SQL), and Oracle, while mentoring senior developers.
+Collaborate with IT leadership, business owners, and external vendors to align technology with corporate strategy.
+Ensure long-term platform sustainability and readiness for global growth.
+Design and deliver solutions that modularize and decouple core business logic into a scalable, service-based framework.
+Other duties as assigned by management.
+Requirements
+
+7+ years of advanced programming experience in an object-oriented language (C++, C#, or Java).
+Strong SQL development skills (any platform; Microsoft SQL Server and Oracle preferred).
+5+ years of experience modernizing legacy applications (CRM platforms, SalesLogix, VBScript, or similar) using object-oriented design.
+Expertise in enterprise pricing engines and CPQ solutions (examples include PriceFX, Vendavo, Oracle CPQ, or similar platforms).
+Solid integration background: APIs, SSIS, MQ/event-driven streaming, SOAP/REST, XML/JSON.
+Excellent communication and collaboration skills to bridge business and technical teams.
+Flexibility and adaptability to the environment: we value specialists who bring depth in their own background, but who are also willing to work with the languages and platforms in place (for example, transitioning between Java, C#, or even legacy VBScript where necessary).
+Bachelor’s or Master’s degree in Computer Science, Engineering, or related field.
+Apply at www.avfuel.com
+
+EEO/AA
+
+https://www.indeed.com/?from=gnav-indapply-SmartApply&advn=2840129823406011&vjk=5ba4db58eebdcea8

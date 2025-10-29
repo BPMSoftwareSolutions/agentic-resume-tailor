@@ -1,0 +1,397 @@
+{
+  "name": "Sidney Jones",
+  "title": "Lead Software Engineer — AI",
+  "contact": {
+    "email": "sjones@bpmsoftwaresolutions.com",
+    "phone": "(248) 802-1847"
+  },
+  "location": "West Bloomfield, MI",
+  "summary": "Senior software engineer with 20+ years designing secure, scalable backend systems and full-stack healthcare applications. Proven success delivering API-driven platforms that automate pharmacy, claims, and eligibility workflows across WLT, CerpassRx, Nomi Health, and Tiding Health. Experienced in Ruby on Rails, Python (FastAPI/Flask), and JavaScript with deep expertise in Postgres, CI/CD, and AES-256 encryption. Passionate about building intuitive, compliant systems that improve patient and provider experiences through automation, integration, and secure data handling.",
+  "core_competencies": [
+    "Backend Development: Ruby on Rails, FastAPI, Flask, Node.js",
+    "Frontend: React, Bootstrap, JavaScript, HTML5, CSS3",
+    "Databases: PostgreSQL, MySQL, DynamoDB",
+    "Cloud & DevOps: AWS (Lambda, API Gateway, S3), Azure DevOps, Terraform, Docker, GitHub Actions",
+    "Security & Compliance: AES-256, KeeperSecurity Vault, HIPAA-aligned data workflows, Role-Based Access Control, Secure API Integrations",
+    "Testing & Quality: RSpec, Minitest, Pytest, Postman, CI/CD validation pipelines"
+  ],
+  "core_strengths": [
+    "AI Agent Tooling & Orchestration Frameworks",
+    "Authentication, Authorization & Role-Based Access Control (OAuth2, OIDC, JWT)",
+    "Developer Experience (DX) & SDK Design",
+    "Secure Infrastructure (AES-256, KeeperSecurity, DevSecOps)",
+    "CI/CD Automation (GitHub Actions, Terraform, Jenkins)",
+    "LLM Integration, Prompt Pipelines, Agent Runtimes",
+    "FastAPI / React / Next.js Full-Stack Development",
+    "Open Source Collaboration & Documentation Excellence"
+  ],
+  "tech_stack": {
+    "languages": "Python, TypeScript, Go, JavaScript, C#, SQL",
+    "frameworks": "FastAPI, Flask, React, Next.js, Spring Boot",
+    "cloud_devops": "AWS (Lambda, API Gateway, S3, DynamoDB), Azure Functions, Terraform, Docker, Kubernetes",
+    "ai_ml": "OpenAI, Anthropic, LangChain, Agentic SDKs, Vector Databases, MLOps Pipelines",
+    "security": "KeeperSecurity (Vault), AES-256, OAuth2, OIDC, RBAC"
+  },
+  "technical_proficiencies": {
+    "cloud_platforms": "Azure, AWS, Azure Functions, AKS, Azure AD, App Services",
+    "devops_automation": "Terraform, Bicep, GitHub Actions, Azure DevOps, Jenkins, Docker, Kubernetes",
+    "infrastructure_security": "RBAC, Palo Alto Firewall Integration, ExpressRoute, Private Link, Managed Identity, KeeperSecurity, AES-256 Encryption",
+    "scripting": "Python, Bash, PowerShell",
+    "monitoring_observability": "Azure Monitor, Dynatrace, Log Analytics, Application Insights",
+    "compliance": "NIST, CIS, SOC/SIEM Integration (QRadar), DevSecOps, FinOps"
+  },
+  "areas_of_expertise": [
+    "AI Platform Development",
+    "LLM Integration & Orchestration",
+    "Retrieval Systems & Vector Search",
+    "Backend Architecture & APIs",
+    "Infrastructure as Code & DevOps"
+  ],
+  "experience": [
+    {
+      "employer": "Daugherty – Cox Communications / ClaimChoice Hub",
+      "role": "Platform Architect – Cloud Infrastructure & Healthcare Automation",
+      "dates": "Aug 2021 – Nov 2024",
+      "start_month": "August",
+      "start_year": 2021,
+      "end_month": "November",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "bullets": [
+        {"text": "Architected ClaimChoice Hub, a secure integration platform connecting CerpassRx, WLT, and Nomi Health systems to automate payroll and claims reconciliation."},
+        {"text": "Built Sensitive Data Service (SDS) for encrypted bill-rate retrieval using AES-256 and KeeperSecurity Vault, enabling HIPAA-compliant decryption via dynamic keys."},
+        {"text": "Deployed serverless APIs (AWS Lambda + API Gateway) and Terraform-based IaC modules to manage compute, storage, and events for healthcare data pipelines."},
+        {"text": "Integrated comprehensive unit and integration testing across microservices, ensuring reliability and auditability."}
+      ],
+      "tags": ["Ruby", "Python", "FastAPI", "AWS", "Terraform", "Postgres", "GitHub Actions", "AES-256"]
+    },
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead – Digital Client Experience",
+      "dates": "Nov 2021 – Aug 2024",
+      "start_month": "November",
+      "start_year": 2021,
+      "end_month": "August",
+      "end_year": 2024,
+      "location": "St. Louis, MO",
+      "bullets": [
+        {"text": "Modernized the enterprise “Online Access” platform, migrating from monolithic architecture to Ruby on Rails and Python microservices in AWS."},
+        {"text": "Developed APIs supporting secure data access and prescription-style notification workflows using Twilio and Stripe integrations."},
+        {"text": "Designed CI/CD pipelines (Terraform + Jenkins) for 13 Agile teams, reducing release time by 50 % while maintaining full test coverage."},
+        {"text": "Implemented observability using Dynatrace and Splunk, enabling proactive resolution of performance and data-integrity issues."}
+      ],
+      "tags": ["Ruby on Rails", "AWS", "Terraform", "JavaScript", "CI/CD", "Agile"]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "Jul 2017 – Nov 2021",
+      "start_month": "July",
+      "start_year": 2017,
+      "end_month": "November",
+      "end_year": 2021,
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {"text": "Engineered HIPAA-grade healthcare integrations for clients such as Tiding Health and Paylocity, automating eligibility, payroll, and billing workflows."},
+        {"text": "Designed and deployed AES-256 encrypted data flows managed via KeeperSecurity, securing PHI and financial data across multiple Lambda services."},
+        {"text": "Developed backend microservices to retrieve and decrypt consultant data on-demand without exposing master encryption keys."},
+        {"text": "Built FastAPI and Ruby APIs with S3-based file storage and dynamic report generation for healthcare clients."},
+        {"text": "Modernized CI/CD with Docker, Kubernetes, and Terraform, implementing automated testing and blue-green rollouts."}
+      ],
+      "tags": ["Python", "Ruby", "FastAPI", "Rails", "Postgres", "AWS", "Terraform", "Docker"]
+    },
+    {
+      "employer": "Interactive Business Solutions",
+      "role": "Senior Software Engineering Consultant",
+      "dates": "2016–2017",
+      "start_month": "October",
+      "start_year": 2016,
+      "end_month": "July",
+      "end_year": 2017,
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Developed web-based financial and compliance applications integrating Salesforce, AWS, and internal data systems."
+        },
+        {
+          "text": "Established CI/CD pipelines with automated testing and trunk-based branching, reducing manual deployment steps by > 60 %."
+        },
+        {
+          "text": "Mentored junior developers on modern DevOps, continuous testing, and microservice decomposition."
+        }
+      ],
+      "tags": [
+        "Python",
+        "AWS",
+        "Salesforce APIs",
+        "CI/CD",
+        "Trunk-Based Development",
+        "Agile Leadership"
+      ]
+    },
+    {
+      "employer": "John Deere Landscapes",
+      "role": "Software Development Lead / Solution Architect",
+      "dates": "2010 – 2015",
+      "start_month": "January",
+      "start_year": 2010,
+      "end_month": "September",
+      "end_year": 2015,
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Led modernization of the enterprise-scale ERP system supporting 400+ retail sites across North America, establishing one of the company’s first automated build and test pipelines."
+        },
+        {
+          "text": "Introduced continuous integration and unit-test enforcement, paving the way for trunk-based development years before mainstream DevOps adoption."
+        },
+        {
+          "text": "Architected Wells Fargo Level III–certified payment microservices, processing $1 M+ in daily settlements and generating over $500 K in annual savings through secure, low-latency transaction automation."
+        },
+        {
+          "text": "Migrated ERP modules to Microsoft Dynamics AX 2012 R2, modularizing procurement, logistics, and accounting components into independently deployable services."
+        },
+        {
+          "text": "Mentored distributed teams on code quality, release automation, and early CI/CD concepts, cultivating a delivery-first engineering culture."
+        }
+      ],
+      "tags": [
+        "C#",
+        ".NET",
+        "Microsoft Dynamics AX",
+        "CI/CD",
+        "Trunk-Based Development",
+        "Payment Systems",
+        "Microservices",
+        "Enterprise Architecture",
+        "Automation Leadership",
+        "TDD",
+        "SQL Server"
+      ]
+    },
+    {
+      "employer": "Soave Enterprises",
+      "role": "Technology Manager / Software Architect",
+      "dates": "2015 – 2016",
+      "start_month": "August",
+      "start_year": 2015,
+      "end_month": "October",
+      "end_year": 2016,
+      "location": "Detroit, MI",
+      "bullets": [
+        {
+          "text": "Directed modernization of corporate IT across 25 U.S. locations, designing a hybrid AWS EC2 cloud architecture and automating deployments through early DevOps pipelines."
+        },
+        {
+          "text": "Introduced Infrastructure-as-Code and configuration automation for ERP subsystems, enabling consistent builds and reducing release time from days to hours."
+        },
+        {
+          "text": "Unified eight disparate ERP systems using MVVM and service-oriented design, consolidating operations under a single enterprise application."
+        },
+        {
+          "text": "Partnered with network engineering to redesign server infrastructure and implement proactive monitoring, reducing IT costs by $250 K annually."
+        },
+        {
+          "text": "Established branching and integration practices that later evolved into full trunk-based development across distributed teams."
+        }
+      ],
+      "tags": [
+        "AWS EC2",
+        "Hybrid Cloud",
+        "Infrastructure Modernization",
+        "CI/CD",
+        "DevOps",
+        "IaC",
+        "ERP Integration",
+        "Automation",
+        "Agile Leadership",
+        "Cost Optimization"
+      ]
+    },
+    {
+      "employer": "Compuware",
+      "role": "Senior Software Developer",
+      "dates": "2006 – 2010",
+      "start_month": "January",
+      "start_year": 2006,
+      "end_month": "October",
+      "end_year": 2010,
+      "location": "Detroit, MI",
+      "bullets": [
+        {
+          "text": "Engineered enterprise-scale QA automation and load-testing frameworks (QALoad, QADirector) used by clients such as Ford, GM, and Blue Cross, standardizing test execution across distributed systems."
+        },
+        {
+          "text": "Developed E2E automation frameworks in C++ and Java that integrated performance testing directly into the earliest DevOps pipelines."
+        },
+        {
+          "text": "Automated defect-tracking and regression testing processes, increasing release velocity and reliability for large-scale automotive and healthcare platforms."
+        },
+        {
+          "text": "Created internal performance benchmarking utilities that evolved into global commercial QA products, improving observability and continuous feedback for engineering teams."
+        },
+        {
+          "text": "Collaborated across dev, QA, and product teams to institutionalize continuous testing culture that predated modern CI/CD adoption."
+        }
+      ],
+      "tags": [
+        "QA Automation",
+        "Performance Testing",
+        "E2E Frameworks",
+        "C++",
+        "Java",
+        "DevOps",
+        "Continuous Testing",
+        "Scalability",
+        "Enterprise Software",
+        "Agile Practices"
+      ]
+    },
+    {
+      "employer": "ParTech, Inc.",
+      "role": "Software Engineer – Vehicle Diagnostics & Embedded Systems",
+      "dates": "2002 – 2005",
+      "start_month": "August",
+      "start_year": 2002,
+      "end_month": "December",
+      "end_year": 2005,
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Developed next-generation diagnostic tools for OEM clients including Harley-Davidson, Isuzu, and Penske, enabling technicians to analyze, calibrate, and service vehicles through dynamic data interfaces."
+        },
+        {
+          "text": "Engineered data-driven diagnostic frameworks in C and C++ for multiple communication protocols (J1850, J1939, CAN, ISO 9141), ensuring real-time vehicle data acquisition and cross-platform compatibility."
+        },
+        {
+          "text": "Designed modular ECM communication libraries capable of detecting and adapting to new OEM protocols without re-engineering the core stack — a precursor to today's plugin and microservice architectures."
+        },
+        {
+          "text": "Collaborated with firmware and field engineering teams to validate tool accuracy and performance across diverse vehicle ECUs, integrating live telemetry capture and automated fault detection."
+        },
+        {
+          "text": "Implemented early test-automation suites for calibration and service modules, reducing regression time and establishing repeatable quality benchmarks adopted across client programs."
+        },
+        {
+          "text": "Authored internal documentation and training materials to standardize diagnostic protocol handling, accelerating onboarding for new engineers and OEM partners."
+        }
+      ],
+      "tags": [
+        "C",
+        "C++",
+        "Embedded Systems",
+        "Vehicle Diagnostics",
+        "ECM Communication",
+        "CAN",
+        "J1850",
+        "J1939",
+        "ISO Protocols",
+        "Automation Testing",
+        "Telemetry",
+        "Data-Driven Architecture",
+        "Automotive Engineering",
+        "Cross-Functional Collaboration"
+      ]
+    },
+    {
+      "employer": "Nexiq Technologies (formerly MPSI)",
+      "role": "Junior Software Developer – Vehicle Communications & Diagnostics",
+      "dates": "1999 – 2002",
+      "start_month": "May",
+      "start_year": 2000,
+      "end_month": "August",
+      "end_year": 2002,
+      "location": "Troy, MI",
+      "bullets": [
+        {
+          "text": "Contributed to the development of embedded diagnostic software and communication utilities for heavy-duty and automotive OEMs including GM, Freightliner, and Detroit Diesel, forming the basis of what became Nexiq's flagship USB Link diagnostic interface."
+        },
+        {
+          "text": "Developed C++ modules for ECM/TCM communication supporting multiple transport layers (J1850 VPW, PWM, CAN, ISO 9141, and J1939) used in early vehicle network testing tools."
+        },
+        {
+          "text": "Assisted in implementing protocol parsers, data loggers, and error-code interpreters, enabling real-time fault detection and calibration analysis across multiple vehicle control modules."
+        },
+        {
+          "text": "Collaborated with senior firmware engineers to integrate embedded serial communication stacks and perform bench validation using oscilloscopes, breakout boxes, and early CAN analyzers."
+        },
+        {
+          "text": "Supported initial automation of test workflows through batch scripting and unit harnesses, reducing manual regression validation time by over 30%."
+        },
+        {
+          "text": "Documented diagnostic APIs and assisted in preparing SDK materials for OEM and aftermarket developers."
+        }
+      ],
+      "tags": [
+        "C++",
+        "C",
+        "Embedded Systems",
+        "Automotive Diagnostics",
+        "ECM/TCM Communication",
+        "J1850",
+        "J1939",
+        "CAN Bus",
+        "ISO 9141",
+        "Serial Communication",
+        "Protocol Parsers",
+        "Automation Testing"
+      ]
+    }
+  ],
+  "bridge_paragraph": "These early leadership and engineering experiences at Compuware, Soave, and John Deere built my foundation in automated quality, scalable architecture, and continuous integration—skills that now underpin my work in AI-driven software delivery systems.",
+  "education": [
+    {
+      "degree": "Bachelor of Technology",
+      "institution": "University of Phoenix",
+      "location": "Troy, MI",
+      "year": ""
+    },
+    {
+      "degree": "Software Engineering Certification",
+      "institution": "McGraw-Hill",
+      "location": "Washington, DC",
+      "year": ""
+    }
+  ],
+  "certifications": [
+    {
+      "date": "Jan 2023",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified DevOps Practitioner"
+    },
+    {
+      "date": "Dec 2022",
+      "issuer": "SAFe by Scaled Agile, Inc.",
+      "name": "SAFe 5 Certified - Advanced Scrum Master (SASM)"
+    },
+    {
+      "credential": "182-34463-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Agile Team Facilitation"
+    },
+    {
+      "credential": "182-34462-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Oct 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Foundations of DevOps"
+    },
+    {
+      "credential": "182-32796-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Sep 2022",
+      "issuer": "ICAgile",
+      "name": "Agile Project and Delivery Management"
+    },
+    {
+      "credential": "182-32794-dd9e9039-7170-4d9b-910d-10ea306b4cb0",
+      "date": "Aug 2022",
+      "issuer": "ICAgile",
+      "name": "ICAgile Certified Professional - Business Agility Foundations"
+    },
+    {
+      "date": "May 2022",
+      "issuer": "Scrum.org",
+      "name": "Professional Scrum Master™ I (PSM I)"
+    }
+  ]
+}

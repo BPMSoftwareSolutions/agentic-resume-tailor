@@ -1,0 +1,70 @@
+Gifthealth - Software Engineer Senior- job post
+Gifthealth
+2.3
+2.3 out of 5 stars
+Columbus, OH 43228•Remote
+$160,000 - $200,000 a year
+Gifthealth
+Columbus, OH 43228•Remote
+$160,000 - $200,000 a year
+Profile insights
+Here’s how the job qualifications align with your profile.
+Skills
+
+Version control
+
+Software testing
+
+Ruby on Rails
++ show more
+
+Do you have experience in Version control?
+&nbsp;
+Job details
+Here’s how the job details align with your profile.
+Pay
+
+$160,000 - $200,000 a year
+&nbsp;
+Benefits
+Pulled from the full job description
+Health insurance
+&nbsp;
+Full job description
+Description:
+About Gifthealth
+
+Gifthealth is on a mission to bring an easier, more affordable pharmacy experience to patients and providers around the country. In less than a year, we have served thousands of patients and are expanding nationally at a rapid pace. Health is our most precious gift. And our team believes it should be a priority, not a privilege. We are Gifthealth.
+
+About the Technology Team
+
+The technology team at Gifthealth is where the innovation happens. We’re responsible for developing and maintaining the software that powers all of our customer and internal facing products. Our software is used by patients, providers, pharmacies, and our own internal staff across the US.
+
+Key Responsibilities
+
+Create innovative solutions to meet our company’s business and technical needs.
+Design, develop, and maintain high-quality software and test suites.
+Work on a highly collaborative and talented development team.
+Troubleshoot system issues and monitor performance.
+Collaborate with clients and cross-functional teams to develop solutions that meet requirements and compliance standards.
+Participate in code reviews and provide feedback to other engineers.
+Requirements:
+Requirements
+
+Strong proficiency in Ruby and Rails (or similar technologies), test suites (ex. minitest), and third party API integrations (ex. Twilio, Stripe, etc.).
+Proficiency in frontend technologies like Bootstrap, CSS, Javascript, etc.
+Proficiency in database technologies like Postgres.
+Experience with software development tools and processes such as Git, pull requests, Agile, etc.
+Strong analytical and problem-solving skills
+Excellent written and verbal communication skills
+Ability to work independently as well as collaboratively with cross-functional teams
+Ability to take abstract business concepts and translate them into technical deliverables.
+At least 5 years of professional software engineering experience.
+What We Offer
+
+Competitive compensation based on experience and performance
+Healthcare benefits covered by Gifthealth
+Highly rewarding role solving real-world challenges for people who depend on access to
+affordable medication
+Generous vacation package
+Flexible working environment and yes...we really mean that

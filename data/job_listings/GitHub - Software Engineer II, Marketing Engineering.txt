@@ -1,0 +1,139 @@
+Software Engineer II, Marketing Engineering 
+United States · 5 hours ago · Over 100 people clicked apply
+Promoted by hirer · Responses managed off LinkedIn
+
+
+ $81K/yr - $214.9K/yr
+Matches your job preferences, minimum pay preference is 200000.
+
+ Remote
+Matches your job preferences, workplace type is Remote.
+
+ Full-time
+Matches your job preferences, job type is Full-time.
+
+Apply
+
+Save
+Save Software Engineer II, Marketing Engineering  at GitHub
+Software Engineer II, Marketing Engineering
+GitHub · United States (Remote)
+
+Apply
+
+Save
+Save Software Engineer II, Marketing Engineering  at GitHub
+Show more options
+Your profile matches some required qualifications
+
+
+Show match details
+
+Tailor my resume
+
+Help me update my profile
+
+Create cover letter
+
+
+BETA
+
+Is this information helpful?
+
+
+
+People you can reach out to
+
+
+
+Colin and others in your network
+
+Show all
+About the job
+About GitHub
+
+As the global home for all developers, GitHub is the complete AI-powered developer platform to build, scale, and deliver secure software. Over 150+ million developers, including more than 90% of the Fortune 100 companies, use GitHub to collaborate and experiment across 420+ million repositories. With all the collaborative features of GitHub, it has never been easier for individuals and teams to write faster, better code.
+
+Locations
+
+In this role you can work from Remote, United States
+
+Overview
+
+GitHub’s Marketing Engineering team empowers GitHub’s marketing organization to drive revenue and global impact by delivering scalable web infrastructure and tools that enable high-quality lead generation, compelling product storytelling, and seamless global launches.
+
+As a Software Engineer II, you’ll help shape the systems and experiences that connect millions of developers and businesses to GitHub. You’ll collaborate across Revenue, Product, Design, and Leadership to build reliable, scalable solutions that power our marketing efforts. Your work will span our core marketing websites, the marketing publishing pipeline that enables partners to quickly reach customers, the lead flow pipeline that connects high-quality leads to revenue teams, and the experimentation and personalization platforms that help us engage the right audiences with the right message. You’ll balance hands-on coding with thoughtful collaboration to ensure our systems are efficient, maintainable, and designed for impact.
+
+This role is ideal for an engineer who thrives in a cross-functional, highly collaborative environment and enjoys working across the stack—from backend services and APIs to frontend interfaces and infrastructure. You’ll have the autonomy to take ownership of projects, contribute to technical discussions, and ship meaningful improvements that directly influence GitHub’s growth.
+
+Responsibilities
+
+Partner with cross-functional teams including Product, Design, and Marketing to define requirements and deliver impactful features. 
+Design and Implement scalable systems primarily using Ruby on Rails, React with TypeScript, and Go, with opportunities to work with Next.js and explore GraphQL. 
+Develop and maintain features within a large monolithic platform while contributing to new services and tooling, with bonus points for experience migrating between monoliths and microservices. 
+Build, test, and deploy high-quality code that improves performance, reliability, and accessibility while ensuring a seamless experience for users. 
+Integrate and extend our web platform with external systems such as headless CMSs, analytics tools, and A/B testing platforms. 
+Own the full software lifecycle, from design through deployment and monitoring, ensuring production reliability and maintainability. 
+Collaborate openly and continuously improve participate in design discussions, code reviews, and retrospectives to evolve our practices and shared codebases. 
+Champion best practices in engineering quality, security, performance, and accessibility.
+
+You’ll work as part of a collaborative and cross-functional team that partners closely with Product Marketing, Design, and Revenue stakeholders to deliver impactful outcomes. Engineers on our team have strong ownership, driving projects end to end, making technical decisions, and directly engaging with partners to understand goals and shape solutions.
+
+We expect engineers to:
+
+ Take initiative in defining and driving work that aligns with shared goals.
+ Communicate proactively with peers and stakeholders.
+ Embrace feedback, collaboration, and continuous learning.
+ Strive for simplicity, scalability, and user-focused solutions.
+
+We believe in empowering engineers to make a meaningful impact and supporting growth through mentorship while celebrating the success of our collective work.
+
+Qualifications
+
+Required Qualifications:
+
+2+ years experience in Software Engineering, Computer Science, or related technical discipline with proven experience maintaining production software coding in languages including, but not limited to, C, C++, C#, Java, JavaScript, Go, Ruby, Rust, or Python
+OR Associate’s Degree in Computer Science, Electrical Engineering, Electronics Engineering, Math, Physics, Computer Engineering, Computer Science, or related field AND 1+ year(s) experience 
+OR Bachelor's Degree in Computer Science or related field 
+OR equivalent experience 
+Preferred Qualifications:
+
+2+ years experience with Ruby on Rails 
+2+ years experience with React 
+2+ years experience with Next.js 
+Prior experience with a headless CMS (content management system) experience is a plus.
+
+Compensation Range
+
+The base salary range for this job is USD $81,000.00 - USD $214,900.00 /Yr.
+
+These pay ranges are intended to cover roles based across the United States. An individual's base pay depends on various factors including geographical location and review of experience, knowledge, skills, abilities of the applicant. At GitHub certain roles are eligible for benefits and additional rewards, including annual bonus and stock. These rewards are allocated based on individual impact in role. In addition, certain roles also have the opportunity to earn sales incentives based on revenue or utilization, depending on the terms of the plan and the employee's role.
+
+GitHub values
+
+Customer-obsessed
+Ship to learn
+Growth mindset
+Own the outcome
+Better together
+Diverse and inclusive
+
+Manager fundamentals
+
+Model
+Coach
+Care
+
+Leadership principles
+
+Create clarity
+Generate energy
+Deliver success
+
+Who We Are
+
+GitHub is the world’s leading AI-powered developer platform with 150 million developers and counting. We’re also home to the biggest open-source community on earth (and 99% of the world’s software has open-source code in its DNA). Many of the apps and programs you use every day are built on GitHub.
+
+Our teams are dreamers, doers, and pioneers, leading the way in AI, driving humanitarian efforts around the globe, and even sending open source to Mars (and beyond!). At GitHub, our goal is to create the space you need to do your best work. We’re remote-first and offer competitive pay, generous learning and growth opportunities, and excellent benefits to support you, wherever you are—because we know that people flourish when they can work on their own terms.
+
+Join us, and let’s change the world, together.
