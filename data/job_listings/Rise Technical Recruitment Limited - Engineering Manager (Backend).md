@@ -1,0 +1,68 @@
+# Rise Technical Recruitment Limited
+
+## Engineering Manager (Backend)
+3.9 out of 5 stars
+Remote
+$200,000 - $250,000 a year - Full-time
+
+Job
+
+Company
+Profile insights
+Here’s how the job qualifications align with your profile.
+Skills
+
+Go
+
+Distributed computing
+
+DevOps
++ show more
+
+Do you have experience in Go?
+&nbsp;
+Job details
+Here’s how the job details align with your profile.
+Pay
+
+$200,000 - $250,000 a year
+Job type
+
+Full-time
+&nbsp;
+Benefits
+Pulled from the full job description
+401(k)
+Stock options
+Unlimited paid time off
+&nbsp;
+Full job description
+Engineering Manager (Backend - Golang)
+$200,000 - $250,000+ Stock Options + Unlimited PTO + 401k + Healthcare	
+
+Remote, United States
+
+Are you a backend-focused Engineering Manager ready to take ownership of complex distributed systems and shape the direction of a fast-growing AI startup?
+
+This is an incredible opportunity to step into a hands-on leadership role at a company that's redefining the future of fashion and retail through cutting-edge AI, 3D, and real-time rendering. Backed by top-tier investors and industry leaders, the company is gearing up for a major global product launch that will transform how millions of users experience fashion online.
+
+Founded five years ago, they've built one of the most advanced photorealistic virtual try-on platforms in the market. Their technology sits at the intersection of computer vision, rendering, and machine learning, and they're now entering a hyper-growth phase where scalable backend systems and strong engineering leadership are absolutely critical.
+
+As Engineering Manager, you'll lead a small team of engineers while remaining close to the code yourself. You'll set the technical direction for a complex Go-based microservices architecture, shape development practices, and collaborate across product, ML, and frontend teams to deliver high-performance systems at scale.
+
+This is a unique chance to join at a pivotal inflection point, where your impact will be felt across the entire product and organization. If you thrive in fast-paced, ambitious environments and love building both systems and teams, this is the role to accelerate your career!
+
+The Role
+
+Lead and mentor engineers while contributing hands-on to high-impact systems and APIs
+Architect and scale Go microservices powering AI, rendering, and data processing pipelines
+Define engineering standards, drive code quality, and implement best practices across distributed systems
+Partner closely with cross-functional teams to deliver performant, reliable, and scalable backend infrastructure
+
+The Person
+
+Strong backend engineering experience with deep expertise in Golang and distributed systems
+Proven track record leading teams or projects in fast-moving startup environments
+Skilled with modern cloud and DevOps technologies including AWS, Docker, Kubernetes, and CI/CD
+Hands-on technical leader comfortable owning architecture while staying close to implementation
+Excited by the intersection of AI, 3D, and real-time systems, and motivated to build at global scale

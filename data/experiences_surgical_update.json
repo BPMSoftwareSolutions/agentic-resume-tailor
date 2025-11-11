@@ -1,0 +1,47 @@
+{
+  "experiences": [
+    {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "Aug 2021 – Nov 2024",
+      "location": "St. Louis, MO",
+      "bullets": [
+        {"text": "Architected Go- and Python-based microservices deployed on AWS Lambda and ECS, powering distributed analytics and content-processing pipelines."},
+        {"text": "Implemented Terraform IaC modules to provision scalable compute, storage, and streaming infrastructure with automated rollback and state locking."},
+        {"text": "Designed multi-region fault-tolerant APIs supporting high availability for customer-facing systems."},
+        {"text": "Integrated AES-256 encryption via KeeperSecurity for PII and tokenized secrets within rendering pipelines."},
+        {"text": "Mentored cross-functional engineers on cloud-native architecture, service ownership, and CI/CD-first delivery."}
+      ],
+      "tags": ["Go", "AWS Lambda", "ECS", "Terraform", "GitHub Actions", "Docker", "FastAPI", "AES-256", "Kubernetes", "DevSecOps"]
+    },
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead",
+      "dates": "Nov 2021 – Aug 2024",
+      "location": "St. Louis, MO",
+      "bullets": [
+        {"text": "Led modernization of the Online Access platform—migrating from legacy monoliths to containerized Go and Python microservices hosted on AWS."},
+        {"text": "Designed distributed caching and routing layers to improve API response times for millions of daily requests."},
+        {"text": "Developed observability standards using Dynatrace, Prometheus, and Splunk for latency tracking and distributed tracing."},
+        {"text": "Introduced short-lived branching, trunk-based workflows, and automated deployment strategies, cutting release cycles by 50%."},
+        {"text": "Championed team adoption of Kubernetes-based environments with infrastructure testing and chaos engineering principles."}
+      ],
+      "tags": ["Go", "Python", "Java", "AWS", "Terraform", "Azure DevOps", "CI/CD", "Kubernetes", "Dynatrace", "Feature Flags"]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "Jul 2017 – Nov 2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {"text": "Built distributed backend services and AI-assisted data pipelines using Go and Python, deployed via Dockerized microservices on AWS and Azure."},
+        {"text": "Designed plugin-driven orchestration system (RenderX) for AI-enabled automation, integrating multiple microservices through message-based routing."},
+        {"text": "Developed real-time data ingestion pipelines and event-streaming services using serverless and containerized compute."},
+        {"text": "Implemented Terraform-driven CI/CD pipelines with predictive monitoring, autoscaling, and distributed caching."},
+        {"text": "Mentored engineers on building low-latency APIs and integrating ML inference endpoints securely into production systems."}
+      ],
+      "tags": ["Go", "Python", "FastAPI", "AWS ECS", "Azure", "Terraform", "Kubernetes", "Docker", "AI Pipelines", "Observability"]
+    }
+  ]
+}
+

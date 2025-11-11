@@ -1,0 +1,55 @@
+Are you interested in using your expertise in software development to build software that helps make communities safer? Would you like to support first responders with cutting-edge solutions used on the front lines of law enforcement, fire rescue, and public safety agencies across the United States? At Tyler Technologies, we are passionate about empowering those who serve our communities, and we are looking for an innovative, talented, and dedicated Lead Software Engineer to join our team.
+ 
+As a Lead Software Engineer, you will be at the forefront of building the next generation of industry-leading Public Safety solutions. You will thrive in a dynamic, fast-paced, and collaborative environment that provides endless opportunities for growth and learning. You’ll be both a technology leader and a hands-on contributor, working closely with teams to build excellence into every stage of the software development lifecycle, from analysis and design to implementation, testing, optimization, and delivery.
+ 
+ 
+Responsibilities:
+ 
+Strategic Leadership
+ 
+•	Collaborate with product and engineering leaders to understand product-level business objectives and align technical strategies within the scope of broader divisional goals.
+•	Work closely with product line leaders to drive the achievement of business outcomes.
+•	Engage in high-level strategic discussions while also contributing to technical execution (80% hands-on coding, 20% strategy).
+ 
+Technical Excellence
+ 
+•	Engage in hands-on coding to develop and deploy distributed, highly available, and scalable enterprise applications, ensuring quality and performance.
+•	Relentlessly pursue opportunities to improve team efficiency and accelerate value delivery through innovative tooling, frameworks, and best practices.
+•	Lead the development of robust software solutions while maintaining high standards for functional and non-functional qualities (defects, performance, stability, security, reliability).
+•	Evaluate and adopt emergent technologies, ensuring alignment with divisional architecture and business strategies.
+ 
+Team Enablement and Growth
+ 
+•	Mentor and coach engineers, providing opportunities for growth and ensuring excellence in software engineering practices.
+•	Take on challenging tasks beyond the team's current capabilities to help them stretch and grow, while contributing your own coding expertise.
+•	Encourage risk-taking and experimentation, while minimizing the impact of failed experiments and maximizing the learning experience.
+•	Increase team autonomy and foster a culture of continuous improvement.
+ 
+Collaboration and Standards
+ 
+•	Work with Enterprise Architecture to maintain and extend technical guidance, standards, and guardrails specific to the product line.
+•	Collaborate with cross-functional teams to ensure that design choices align with business and architecture strategy.
+ 
+Qualifications:
+ 
+•	Technical Expertise: Expert-level understanding of design principles for building and deploying distributed, highly available, and scalable enterprise business applications. Strong hands-on coding experience in C#, .NET Framework, .NET Core, and familiarity with container orchestration technologies (Docker, Kubernetes).
+•	Cloud-Native Architecture: Experience designing and coding fault-tolerant enterprise cloud applications in AWS.
+•	Automation and Agile: Strong background in test automation and experience with continuous integration and delivery using cloud-native toolsets. Familiarity with Agile development frameworks.
+•	Problem-Solving Skills: Proven ability to solve complex problems in a matrixed environment and manage multiple commitments with high-quality deliverables.
+•	Mentorship and Communication: Ability to mentor and guide engineers on technologies, architecture, and best practices. Strong communication skills for both technical and non-technical audiences.
+•	Collaboration and Independence: Ability to work independently and collaboratively across functional groups. Effective in a fast-paced environment with strong planning and organizational skills.
+•	Required to undergo and satisfactorily pass a fingerprint background check in accordance with CJIS requirements.
+ 
+Why Tyler Technologies? At Tyler Technologies, we are committed to making a real impact in our communities. We value innovation, collaboration, and continuous learning. You will have the opportunity to grow your career while developing software that makes a tangible difference in public safety and first responder effectiveness.
+
+
+
+Thank you,
+
+Levi 
+
+Levi Shupe 
+Senior Corporate Recruiter 
+Direct: 913-754-7050 | levi.shupe@tylertech.com 
+www.tylertech.com
+

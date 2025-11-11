@@ -1,0 +1,89 @@
+{
+  "experiences": [
+    {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "Aug 2021 – Nov 2024",
+      "location": "St. Louis, MO",
+      "bullets": [
+        {
+          "text": "Architected Go- and Python-based microservices deployed on AWS Lambda and ECS, powering distributed analytics and content-processing pipelines.",
+          "tags": ["Go", "Python", "AWS Lambda", "ECS", "Microservices"]
+        },
+        {
+          "text": "Implemented Terraform IaC modules to provision scalable compute, storage, and streaming infrastructure with automated rollback and state locking.",
+          "tags": ["Terraform", "IaC", "AWS", "DevOps"]
+        },
+        {
+          "text": "Designed multi-region fault-tolerant APIs supporting high availability for customer-facing systems.",
+          "tags": ["AWS", "High Availability", "API Design", "Fault Tolerance"]
+        },
+        {
+          "text": "Integrated AES-256 encryption via KeeperSecurity for PII and tokenized secrets within rendering pipelines.",
+          "tags": ["Security", "Encryption", "AES-256", "KeeperSecurity"]
+        },
+        {
+          "text": "Mentored cross-functional engineers on cloud-native architecture, service ownership, and CI/CD-first delivery.",
+          "tags": ["Leadership", "Mentorship", "CI/CD", "Cloud Architecture"]
+        }
+      ]
+    },
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead",
+      "dates": "Nov 2021 – Aug 2024",
+      "location": "St. Louis, MO",
+      "bullets": [
+        {
+          "text": "Led modernization of the Online Access platform—migrating from legacy monoliths to containerized Go and Python microservices hosted on AWS.",
+          "tags": ["Go", "Python", "AWS", "Microservices", "Modernization", "Leadership"]
+        },
+        {
+          "text": "Designed distributed caching and routing layers to improve API response times for millions of daily requests.",
+          "tags": ["Caching", "API Design", "Performance", "Distributed Systems"]
+        },
+        {
+          "text": "Developed observability standards using Dynatrace, Prometheus, and Splunk for latency tracking and distributed tracing.",
+          "tags": ["Dynatrace", "Prometheus", "Splunk", "Observability", "Monitoring"]
+        },
+        {
+          "text": "Introduced short-lived branching, trunk-based workflows, and automated deployment strategies, cutting release cycles by 50%.",
+          "tags": ["CI/CD", "DevOps", "Git Workflows", "Automation"]
+        },
+        {
+          "text": "Championed team adoption of Kubernetes-based environments with infrastructure testing and chaos engineering principles.",
+          "tags": ["Kubernetes", "Infrastructure Testing", "Chaos Engineering", "DevOps"]
+        }
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "Jul 2017 – Nov 2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {
+          "text": "Built distributed backend services and AI-assisted data pipelines using Go and Python, deployed via Dockerized microservices on AWS and Azure.",
+          "tags": ["Go", "Python", "Docker", "AWS", "Azure", "Microservices", "AI/ML"]
+        },
+        {
+          "text": "Designed plugin-driven orchestration system (RenderX) for AI-enabled automation, integrating multiple microservices through message-based routing.",
+          "tags": ["Orchestration", "AI/ML", "Message Queues", "System Design", "Leadership"]
+        },
+        {
+          "text": "Developed real-time data ingestion pipelines and event-streaming services using serverless and containerized compute.",
+          "tags": ["Data Pipelines", "Event Streaming", "Serverless", "Real-time Processing"]
+        },
+        {
+          "text": "Implemented Terraform-driven CI/CD pipelines with predictive monitoring, autoscaling, and distributed caching.",
+          "tags": ["Terraform", "CI/CD", "Monitoring", "Autoscaling", "Caching"]
+        },
+        {
+          "text": "Mentored engineers on building low-latency APIs and integrating ML inference endpoints securely into production systems.",
+          "tags": ["Leadership", "Mentorship", "API Design", "ML Integration", "Security"]
+        }
+      ]
+    }
+  ]
+}
+

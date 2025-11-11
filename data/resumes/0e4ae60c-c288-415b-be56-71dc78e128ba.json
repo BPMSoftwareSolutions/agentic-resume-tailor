@@ -53,11 +53,11 @@
     "phone": "(248) 802-1847"
   },
   "core_competencies": [
-    "Languages & Frameworks: C#, .NET Core, Python, FastAPI, Java, SQL, JavaScript (React, Node.js)",
-    "Cloud & DevOps: AWS (Lambda, API Gateway, S3), Azure Functions, Docker, Kubernetes, Terraform, Jenkins, GitHub Actions",
-    "Security: AES-256, KeeperSecurity Vault, Role-Based Access Control, DevSecOps, CI/CD Scanning",
-    "Architecture: Scalable Microservices, High-Availability APIs, Event-Driven Systems, Serverless Applications",
-    "Leadership: Mentorship, Cross-Team Collaboration, Continuous Delivery, Agile/SAFe Practitioner"
+    "Languages & Frameworks: Go, Python, C#, Java, FastAPI, Flask, .NET Core",
+    "Cloud & DevOps: AWS (ECS, Lambda, API Gateway, S3), Azure, Terraform, Docker, Kubernetes, GitHub Actions, Jenkins",
+    "Distributed Systems: Event-Driven Architectures, Message Queues, Streaming Pipelines, Fault Tolerance, Caching",
+    "AI/ML Integration: ML Inference APIs, Data Pipelines, Real-Time Processing, Vector Search, LLM Orchestration",
+    "Leadership: Mentorship, Cross-Functional Collaboration, Continuous Delivery, Agile/SAFe Practitioner"
   ],
   "education": [
     {
@@ -75,11 +75,124 @@
   ],
   "experience": [
     {
+      "employer": "Daugherty – Cox Communications",
+      "role": "Platform Architect – Cloud Infrastructure & Automation",
+      "dates": "Aug 2021 – Nov 2024",
+      "location": "St. Louis, MO",
       "bullets": [
-        { "text": "Focused on strategies to reduce AI compute costs while improving throughput and reliability of cloud-native systems." },
-        { "text": "Prototyped cost-aware orchestration frameworks in AWS Lambda and ECS that right-size compute resources in real time based on workload intensity." },
-        { "text": "Experimented with hardware-aware model batching, caching, and queue-based scheduling, demonstrating up to 40 % reduction in inference cost per transaction." },
-        { "text": "Applied lessons learned to design sustainable AI architectures balancing efficiency, scalability, and fault tolerance for production-grade public-safety environments." }
+        {
+          "text": "Architected Go- and Python-based microservices deployed on AWS Lambda and ECS, powering distributed analytics and content-processing pipelines."
+        },
+        {
+          "text": "Implemented Terraform IaC modules to provision scalable compute, storage, and streaming infrastructure with automated rollback and state locking."
+        },
+        {
+          "text": "Designed multi-region fault-tolerant APIs supporting high availability for customer-facing systems."
+        },
+        {
+          "text": "Integrated AES-256 encryption via KeeperSecurity for PII and tokenized secrets within rendering pipelines."
+        },
+        {
+          "text": "Mentored cross-functional engineers on cloud-native architecture, service ownership, and CI/CD-first delivery."
+        }
+      ],
+      "tags": [
+        "Go",
+        "AWS Lambda",
+        "ECS",
+        "Terraform",
+        "GitHub Actions",
+        "Docker",
+        "FastAPI",
+        "AES-256",
+        "Kubernetes",
+        "DevSecOps"
+      ]
+    },
+    {
+      "employer": "CGI – Daugherty / Edward Jones",
+      "role": "Principal Consultant / Platform Team Delivery Lead",
+      "dates": "Nov 2021 – Aug 2024",
+      "location": "St. Louis, MO",
+      "bullets": [
+        {
+          "text": "Led modernization of the Online Access platform—migrating from legacy monoliths to containerized Go and Python microservices hosted on AWS."
+        },
+        {
+          "text": "Designed distributed caching and routing layers to improve API response times for millions of daily requests."
+        },
+        {
+          "text": "Developed observability standards using Dynatrace, Prometheus, and Splunk for latency tracking and distributed tracing."
+        },
+        {
+          "text": "Introduced short-lived branching, trunk-based workflows, and automated deployment strategies, cutting release cycles by 50%."
+        },
+        {
+          "text": "Championed team adoption of Kubernetes-based environments with infrastructure testing and chaos engineering principles."
+        }
+      ],
+      "tags": [
+        "Go",
+        "Python",
+        "Java",
+        "AWS",
+        "Terraform",
+        "Azure DevOps",
+        "CI/CD",
+        "Kubernetes",
+        "Dynatrace",
+        "Feature Flags"
+      ]
+    },
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Senior Software Architect / Engineering Lead",
+      "dates": "Jul 2017 – Nov 2021",
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {
+          "text": "Built distributed backend services and AI-assisted data pipelines using Go and Python, deployed via Dockerized microservices on AWS and Azure."
+        },
+        {
+          "text": "Designed plugin-driven orchestration system (RenderX) for AI-enabled automation, integrating multiple microservices through message-based routing."
+        },
+        {
+          "text": "Developed real-time data ingestion pipelines and event-streaming services using serverless and containerized compute."
+        },
+        {
+          "text": "Implemented Terraform-driven CI/CD pipelines with predictive monitoring, autoscaling, and distributed caching."
+        },
+        {
+          "text": "Mentored engineers on building low-latency APIs and integrating ML inference endpoints securely into production systems."
+        }
+      ],
+      "tags": [
+        "Go",
+        "Python",
+        "FastAPI",
+        "AWS ECS",
+        "Azure",
+        "Terraform",
+        "Kubernetes",
+        "Docker",
+        "AI Pipelines",
+        "Observability"
+      ]
+    },
+    {
+      "bullets": [
+        {
+          "text": "Focused on strategies to reduce AI compute costs while improving throughput and reliability of cloud-native systems."
+        },
+        {
+          "text": "Prototyped cost-aware orchestration frameworks in AWS Lambda and ECS that right-size compute resources in real time based on workload intensity."
+        },
+        {
+          "text": "Experimented with hardware-aware model batching, caching, and queue-based scheduling, demonstrating up to 40 % reduction in inference cost per transaction."
+        },
+        {
+          "text": "Applied lessons learned to design sustainable AI architectures balancing efficiency, scalability, and fault tolerance for production-grade public-safety environments."
+        }
       ],
       "dates": "2024 – 2025",
       "employer": "Independent Engineering Sabbatical",
@@ -90,86 +203,16 @@
       "start_month": "December",
       "start_year": 2024,
       "tags": [
-        "Python", "AWS Lambda", "ECS", "Terraform", "Kubernetes", "Cost-Aware Orchestration", "Serverless Optimization", "AI Inference Pipelines", "CI/CD", "DevSecOps"
-      ]
-    },
-    {
-      "bullets": [
-        { "text": "Designed and deployed distributed .NET Core and Python microservices in AWS Lambda and ECS to process millions of daily events for analytics and alerting." },
-        { "text": "Implemented Terraform-driven IaC and GitHub Actions CI/CD pipelines with automated validation, linting, and rollback to ensure fault-tolerant deployments." },
-        { "text": "Developed cost-aware scaling policies using CloudWatch metrics, Lambda concurrency tuning, and Terraform modules—reducing compute spend by 27 % while maintaining SLAs." },
-        { "text": "Applied AES-256 encryption and KeeperSecurity Vault for credential management and PII protection, aligned with SOC 2 / CJIS compliance principles." },
-        { "text": "Mentored engineers on secure coding, observability, and container orchestration, enabling faster recovery and consistent release quality." }
-      ],
-      "dates": "August 2021 – November 2024",
-      "employer": "Daugherty – Cox Communications",
-      "end_month": "November",
-      "end_year": 2024,
-      "location": "St. Louis, MO",
-      "role": "Platform Architect – Cloud Infrastructure & Automation",
-      "start_month": "August",
-      "start_year": 2021,
-      "tags": [
-        "C#", ".NET Core", "Python", "AWS Lambda", "ECS", "API Gateway", "Terraform", "GitHub Actions", "Docker", "Kubernetes", "AES-256", "KeeperSecurity", "CI/CD", "DevSecOps", "Cost Optimization"
-      ]
-    },
-    {
-      "bullets": [
-        {
-          "text": "Modernized the Online Access platform—migrating from monolith to cloud-native microservices and micro-frontends (Java, Python, AWS)."
-        },
-        {
-          "text": "Drove CI/CD modernization in Azure DevOps with Terraform, automated testing, and trunk-based workflows for 13+ Agile teams."
-        },
-        {
-          "text": "Established observability and alerting via Dynatrace and Splunk, improving uptime and proactive issue detection."
-        },
-        {
-          "text": "Introduced feature-flagged deployments and continuous delivery pipelines, cutting release cycles by 50%."
-        },
-        {
-          "text": "Partnered with product and architecture leads to align modernization OKRs with business outcomes."
-        }
-      ],
-      "dates": "2021–2024",
-      "employer": "CGI – Daugherty / Edward Jones",
-      "end_month": "August",
-      "end_year": 2024,
-      "location": "St. Louis, MO",
-      "role": "Principal Consultant / Platform Team Delivery Lead",
-      "start_month": "November",
-      "start_year": 2021,
-      "tags": [
-        "C#",
-        "Java",
         "Python",
-        "AWS",
-        "Azure DevOps",
+        "AWS Lambda",
+        "ECS",
         "Terraform",
-        "Jenkins",
-        "Microservices",
-        "Feature Flags",
-        "CI/CD"
-      ]
-    },
-    {
-      "bullets": [
-        { "text": "Architected a real-time public-safety fleet platform on Azure, integrating data from eight ERP systems for unified analytics and reporting." },
-        { "text": "Built event-driven microservices and ETL pipelines using C#, Python, and Azure Functions to deliver predictive maintenance and alert automation." },
-        { "text": "Implemented dynamic compute-pool allocation and load-adaptive scheduling within containerized workloads—cutting idle infrastructure by 35 % across staging and production." },
-        { "text": "Integrated AES-256 encryption, Keeper Vault key rotation, and role-based data access for compliance and operational security." },
-        { "text": "Automated infrastructure provisioning with Terraform and Jenkins, reducing manual ops work by 70 % and ensuring consistent, repeatable builds." }
-      ],
-      "dates": "July 2017 – November 2021",
-      "employer": "BPM Software Solutions",
-      "end_month": "November",
-      "end_year": 2021,
-      "location": "West Bloomfield, MI",
-      "role": "Senior Software Architect / Engineering Lead – Safe Fleet Project",
-      "start_month": "July",
-      "start_year": 2017,
-      "tags": [
-        "C#", ".NET Core", "Python", "Azure", "Azure Functions", "Terraform", "Jenkins", "Docker", "Kubernetes", "AES-256", "KeeperSecurity Vault", "Event-Driven Microservices", "CI/CD", "Predictive Analytics", "Cost Optimization"
+        "Kubernetes",
+        "Cost-Aware Orchestration",
+        "Serverless Optimization",
+        "AI Inference Pipelines",
+        "CI/CD",
+        "DevSecOps"
       ]
     },
     {
@@ -412,7 +455,7 @@
   ],
   "location": "West Bloomfield, MI",
   "name": "Sidney Jones",
-  "summary": "Innovative software engineer and cloud architect with 20+ years of experience building distributed, highly available, and scalable enterprise applications across AWS and Azure. Proven ability to design secure, cloud-native systems using C#, Python, .NET, FastAPI, and Terraform—with deep expertise in DevSecOps, CI/CD automation, and AES-256 key management. Skilled in leading technical teams, mentoring engineers, and embedding high-availability, observability, and automation into every stage of delivery. Passionate about building reliable, mission-critical software that empowers organizations and serves communities.",
+  "summary": "Engineering leader and architect with 20+ years of experience designing scalable, distributed backend systems across AWS and Azure. Proven record of building Go-based microservices, implementing DevOps automation with Terraform, Docker, and Kubernetes, and leading engineering teams delivering high-performance, fault-tolerant systems. Experienced at the intersection of AI/ML, 3D, and real-time processing, applying modern backend design to support next-generation, data-intensive products. Known for building resilient architectures, mentoring engineers, and creating teams that deliver velocity without sacrificing stability or quality.",
   "technical_proficiencies": {
     "architecture": "Scalable Microservices, High-Availability APIs, Event-Driven Systems, Serverless Applications",
     "cloud_devops": "AWS (Lambda, API Gateway, S3), Azure Functions, Docker, Kubernetes, Terraform, Jenkins, GitHub Actions, Azure DevOps",
