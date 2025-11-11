@@ -63,13 +63,17 @@
                     <a href="#certifications" class="list-group-item list-group-item-action" data-section="certifications">
                         <i class="bi bi-award"></i> Certifications
                     </a>
+                        <a href="#surgical-update" class="list-group-item list-group-item-action" data-section="surgical-update">
+                            <i class="bi bi-scissors"></i> Surgical Update
+                        </a>
+
                 </div>
             </div>
 
             <!-- Main Content Area -->
             <div class="col-md-9 col-lg-10">
                 <div id="alertContainer"></div>
-                
+
                 <div id="loadingSpinner" class="text-center my-5">
                     <div class="spinner-border text-primary" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -187,6 +191,44 @@
                             <!-- Will be populated dynamically -->
                         </div>
                     </section>
+                        <!-- Surgical Update Section -->
+                        <section id="surgical-update" class="content-section" style="display: none;">
+                            <h2 class="mb-4">Surgical Update</h2>
+                            <div id="surgResumeWarning"></div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label class="form-label">Markdown (preferred)</label>
+                                        <textarea class="form-control" id="surgMarkdownInput" rows="10" placeholder="### **PROFESSIONAL SUMMARY**\n\nYour summary...\n\n---\n\n### **CORE COMPETENCIES**\n* Category: item1, item2\n\n---\n\n### **RELEVANT EXPERIENCE**\n#### **Employer** | *Role*\n*City, ST | Jan 2020 – Present*\n* Bullet one\n* Bullet two\n\n*Tech:* Go, AWS, Terraform"></textarea>
+                                        <small class="form-text text-muted">Paste the Markdown block and click Preview or Apply. If provided, this will be parsed into experiences and section updates automatically.</small>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label">Experiences JSON (optional; array or {"experiences": [...]})</label>
+                                        <textarea class="form-control" id="surgExperiencesInput" rows="8" placeholder='[{"employer":"BPM Software Solutions","role":"...","dates":"...","location":"...","bullets":[{"text":"..."}],"tags":["Go","AWS"]}]'></textarea>
+                                        <small class="form-text text-muted">Optional. If Markdown is provided above, this JSON is ignored. Only the specified employers will be replaced; all other experiences remain untouched.</small>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Employers to replace (optional)</label>
+                                        <textarea class="form-control" id="surgEmployersInput" rows="2" placeholder="One per line or comma-separated. Leave blank to derive from experiences JSON."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Summary (optional)</label>
+                                        <textarea class="form-control" id="surgSummaryInput" rows="4" placeholder="Paste new Professional Summary here..."></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Core Competencies (optional, one per line)</label>
+                                        <textarea class="form-control" id="surgCoreCompetenciesInput" rows="4" placeholder="Languages &amp; Frameworks: Go, Python&#10;Cloud &amp; DevOps: AWS, Azure, Terraform, Docker, Kubernetes"></textarea>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-outline-primary" id="surgPreviewBtn"><i class="bi bi-eye"></i> Preview</button>
+                                        <button class="btn btn-primary" id="surgApplyBtn"><i class="bi bi-check2-circle"></i> Apply Update</button>
+                                    </div>
+                                    <div id="surgResultArea" class="mt-3"></div>
+                                </div>
+                            </div>
+                        </section>
+
                 </div>
             </div>
         </div>

@@ -228,6 +228,10 @@ def main():
         help="Path to JSON file with new experiences",
     )
     parser.add_argument(
+        "--markdown-file",
+        help="Path to Markdown file with summary/core competencies/experiences",
+    )
+    parser.add_argument(
         "--replace-employers",
         nargs="+",
         help="Employer names to replace (e.g., 'Daugherty – Cox Communications' 'BPM Software Solutions')",
@@ -246,11 +250,8 @@ def main():
     if not args.resume and not args.resume_id:
         parser.error("Either --resume or --resume-id must be provided")
 
-    if not args.experiences_file and not args.updates_file:
-        parser.error("Either --experiences-file or --updates-file must be provided")
-
-    if args.experiences_file and not args.replace_employers:
-        parser.error("--experiences-file requires --replace-employers to specify which employers to replace")
+    if not (args.experiences_file or args.updates_file or args.markdown_file):
+        parser.error("Provide at least one of --experiences-file, --updates-file, or --markdown-file")
 
     try:
         data_dir = Path(args.data_dir)
@@ -278,31 +279,66 @@ def main():
         print(f"\nLoading resume...")
         resume_data = load_resume(data_dir, resume_id)
 
-        # Replace experiences surgically
-        if args.experiences_file and args.replace_employers:
+        # Gather inputs
+        new_experiences: List[Dict[str, Any]] = []
+        updates: Dict[str, Any] = {}
+        derived_employers: List[str] = []
+
+        # From JSON experiences file
+        if args.experiences_file:
             print(f"\nParsing new experiences from: {args.experiences_file}")
             new_experiences = parse_json_experiences(Path(args.experiences_file))
             print(f"Found {len(new_experiences)} new experience entries")
 
-            print(f"\nReplacing experiences for:")
-            for employer in args.replace_employers:
-                print(f"  • {employer}")
+        # From Markdown file
+        if args.markdown_file:
+            md_path = Path(args.markdown_file)
+            if not md_path.exists():
+                raise FileNotFoundError(f"Markdown file not found: {md_path}")
+            print(f"\nParsing markdown from: {md_path}")
+            from src.utils.markdown_resume_parser import parse_surgical_markdown
+            md_text = md_path.read_text(encoding="utf-8")
+            parsed = parse_surgical_markdown(md_text)
+            md_exps = parsed.get("experiences") or []
+            md_updates = parsed.get("updates") or {}
+            if not new_experiences and md_exps:
+                new_experiences = md_exps
+                print(f"Derived {len(new_experiences)} experiences from markdown")
+            # Merge updates (markdown provides defaults; explicit updates file will override)
+            updates.update(md_updates)
+            if not derived_employers:
+                derived_employers = [e.get("employer", "") for e in md_exps if e.get("employer")]
 
-            resume_data = replace_experiences_surgically(
-                resume_data, new_experiences, args.replace_employers
-            )
-            print(f"✓ Experiences replaced surgically")
-
-        # Update other sections
+        # From updates JSON file (overrides markdown updates where overlapping)
         if args.updates_file:
             print(f"\nLoading section updates from: {args.updates_file}")
-            updates = load_updates(Path(args.updates_file))
-            print(f"Updating {len(updates)} sections:")
+            upd_file_data = load_updates(Path(args.updates_file))
+            updates.update(upd_file_data)
+
+        # Determine employers to replace
+        employers_to_replace = args.replace_employers or derived_employers
+        if new_experiences and not employers_to_replace:
+            employers_to_replace = [e.get("employer", "") for e in new_experiences if e.get("employer")]
+
+        # Replace experiences surgically if applicable
+        if new_experiences and employers_to_replace:
+            print(f"\nReplacing experiences for:")
+            for employer in employers_to_replace:
+                print(f"  • {employer}")
+            resume_data = replace_experiences_surgically(
+                resume_data, new_experiences, employers_to_replace
+            )
+            print("✓ Experiences replaced surgically")
+        elif new_experiences and not employers_to_replace:
+            print("Warning: No employers to replace were provided or derived; experiences not applied", file=sys.stderr)
+
+        # Update other sections
+        if updates:
+            print(f"\nUpdating {len(updates)} sections:")
             for section in updates.keys():
                 print(f"  • {section}")
-
             resume_data = update_sections(resume_data, updates)
-            print(f"✓ Sections updated")
+            print("✓ Sections updated")
 
         # Save resume
         print(f"\nSaving resume...")

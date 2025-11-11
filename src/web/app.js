@@ -50,6 +50,10 @@ async function initializeApp() {
         // Load resume data
         await loadResumeData();
 
+        // Update Surgical Update banner
+        refreshSurgicalUpdateUI();
+
+
         // Setup event listeners
         setupEventListeners();
         document.getElementById('generateDocxBtn').addEventListener('click', async () => {
@@ -296,6 +300,13 @@ function setupEventListeners() {
         }
     });
 }
+
+    // Surgical Update buttons
+    const surgPreviewBtn = document.getElementById('surgPreviewBtn');
+    if (surgPreviewBtn) surgPreviewBtn.addEventListener('click', () => callSurgicalUpdate(true));
+    const surgApplyBtn = document.getElementById('surgApplyBtn');
+    if (surgApplyBtn) surgApplyBtn.addEventListener('click', () => callSurgicalUpdate(false));
+
 
 // Navigation
 function navigateToSection(sectionId) {
@@ -858,3 +869,113 @@ function confirmRestore(filename) {
     modal.show();
 }
 
+
+
+// ==============================
+// Surgical Update UI helpers
+// ==============================
+function refreshSurgicalUpdateUI() {
+    const el = document.getElementById('surgResumeWarning');
+    if (!el) return;
+    if (currentResumeId) {
+        let name = currentResumeId;
+        if (window.resumeIndexData && Array.isArray(window.resumeIndexData.resumes)) {
+            const entry = window.resumeIndexData.resumes.find(r => r.id === currentResumeId);
+            if (entry && entry.name) name = entry.name;
+        }
+        el.innerHTML = `<div class="alert alert-secondary"><i class="bi bi-info-circle"></i> Target resume: <strong>${name}</strong> (${currentResumeId})</div>`;
+    } else {
+        el.innerHTML = '<div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> Open this editor with a specific resume (?resume=<id>) to enable Surgical Update.</div>';
+    }
+}
+
+async function callSurgicalUpdate(dryRun = false) {
+    try {
+        const resultArea = document.getElementById('surgResultArea');
+        if (resultArea) resultArea.textContent = '';
+
+        if (!currentResumeId) {
+            showAlert('Please open the editor with a specific resume (?resume=<id>) to use Surgical Update.', 'warning');
+            return;
+        }
+
+        const markdown = (document.getElementById('surgMarkdownInput')?.value || '').trim();
+        const experiencesRaw = (document.getElementById('surgExperiencesInput')?.value || '').trim();
+        const employersRaw = (document.getElementById('surgEmployersInput')?.value || '').trim();
+        const summary = (document.getElementById('surgSummaryInput')?.value || '').trim();
+        const coreRaw = (document.getElementById('surgCoreCompetenciesInput')?.value || '').trim();
+
+        const body = { dry_run: !!dryRun };
+
+        if (markdown) {
+            body.markdown = markdown;
+            // Optional explicit employers override
+            if (employersRaw) {
+                body.replace_employers = employersRaw.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+            }
+        } else if (experiencesRaw) {
+            let parsed;
+            try {
+                parsed = JSON.parse(experiencesRaw);
+            } catch (e) {
+                showAlert('Experiences JSON is invalid: ' + e.message, 'danger');
+                return;
+            }
+            let exps;
+            if (Array.isArray(parsed)) {
+                exps = parsed;
+            } else if (parsed && Array.isArray(parsed.experiences)) {
+                exps = parsed.experiences;
+            } else {
+                showAlert('Experiences JSON must be an array or an object with an "experiences" array.', 'danger');
+                return;
+            }
+            body.experiences = exps;
+
+            let employers = [];
+            if (employersRaw) {
+                employers = employersRaw.split(/\n|,/).map(s => s.trim()).filter(Boolean);
+            } else {
+                employers = exps.map(e => e && e.employer).filter(Boolean);
+            }
+            body.replace_employers = employers;
+        }
+
+        const updates = {};
+        if (summary) updates.summary = summary;
+        if (coreRaw) {
+            const core = coreRaw.split('\n').map(s => s.trim()).filter(Boolean);
+            if (core.length) updates.core_competencies = core;
+        }
+        if (Object.keys(updates).length) body.updates = updates;
+
+        if (!body.experiences && !body.updates && !body.markdown) {
+            showAlert('Provide Markdown and/or Experiences JSON and/or section updates to proceed.', 'warning');
+            return;
+        }
+
+        showAlert(dryRun ? 'Previewing surgical update...' : 'Applying surgical update...', 'info');
+        const resp = await fetch(`${API_BASE_URL}/resumes/${currentResumeId}/surgical-update`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+        const json = await resp.json().catch(() => ({}));
+        if (!resp.ok) throw new Error(json.error || 'Request failed');
+
+        const meta = json.meta || {};
+        const msg = `Replaced: ${(meta.replaced_employers || []).join(', ') || 'none'}; Missing: ${(meta.missing_employers || []).join(', ') || 'none'}; Count: ${meta.total_experience_before} → ${meta.total_experience_after}`;
+        if (resultArea) {
+            resultArea.innerHTML = `<div class="alert alert-${dryRun ? 'info' : 'success'}">${msg}</div>`;
+        }
+        showAlert((dryRun ? 'Preview OK. ' : 'Update applied. ') + msg, 'success', 6000);
+
+        if (!dryRun) {
+            await loadResumeData();
+            renderAllSections();
+            hasUnsavedChanges = false;
+        }
+    } catch (err) {
+        showAlert(`Surgical update failed: ${err.message}`, 'danger');
+    }
+}

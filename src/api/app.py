@@ -1997,6 +1997,173 @@ def rag_index():
         )
 
 
+
+
+@app.route("/api/resumes/<resume_id>/surgical-update", methods=["POST"])
+def surgical_update_resume(resume_id: str):
+    """
+    Surgically update a resume by replacing only specified employers' experiences and/or updating sections.
+
+    Request body accepts any of:
+      - markdown: Raw Markdown text containing PROFESSIONAL SUMMARY, CORE COMPETENCIES, and RELEVANT EXPERIENCE sections
+      - experiences: Array or {"experiences": [...]} (used if provided; otherwise derived from markdown)
+      - replace_employers: Optional list of employer names to replace. If omitted, derived from experiences[].employer
+      - updates: Optional dict of section updates (e.g., {"summary": str, "core_competencies": list|str}); merged with markdown-derived updates
+      - dry_run: Optional bool (default False) to preview without saving
+
+    Returns JSON with success, optional meta (replaced/missing employers, counts), and optionally updated data on dry_run.
+    """
+    try:
+        body = request.get_json(force=True) or {}
+        experiences_input = body.get("experiences")
+        replace_employers = body.get("replace_employers") or []
+        updates = body.get("updates") or {}
+        dry_run = bool(body.get("dry_run", False))
+
+        # Optionally parse Markdown to derive experiences and section updates
+        markdown_input = body.get("markdown") or body.get("markdown_input")
+        if markdown_input:
+            try:
+                from utils.markdown_resume_parser import parse_surgical_markdown
+                parsed = parse_surgical_markdown(str(markdown_input))
+                md_exps = parsed.get("experiences") or []
+                md_updates = parsed.get("updates") or {}
+                if experiences_input is None and md_exps:
+                    experiences_input = md_exps
+                # Merge updates, preferring explicitly provided values
+                if md_updates and not updates:
+                    updates = md_updates
+                elif md_updates and updates:
+                    merged = dict(md_updates)
+                    merged.update(updates)
+                    updates = merged
+                if not replace_employers and md_exps:
+                    replace_employers = [e.get("employer", "") for e in md_exps if e.get("employer")]
+            except Exception as _e:
+                return jsonify({"error": f"Failed to parse markdown: {str(_e)}"}), 400
+
+
+        # Helpers (scoped here to avoid global pollution)
+        def _normalize_employer_name(name: str) -> str:
+            n = (name or "").lower()
+            return n.replace("–", "-").replace("—", "-").replace("−", "-")
+
+        def _ensure_experience_level_tags(exp: Dict[str, Any]) -> Dict[str, Any]:
+            promoted = []
+            for b in (exp.get("bullets") or []):
+                tags = b.get("tags")
+                if isinstance(tags, list):
+                    promoted.extend([str(t) for t in tags])
+            existing = (exp.get("tags") or [])
+            merged, seen = [], set()
+            for t in list(existing) + promoted:
+                if t not in seen:
+                    merged.append(t)
+                    seen.add(t)
+            if merged:
+                exp["tags"] = merged
+            return exp
+
+        def _parse_experiences(inp: Any) -> List[Dict[str, Any]]:
+            if inp is None:
+                return []
+            if isinstance(inp, str):
+                import json as _json
+                parsed = _json.loads(inp)
+            else:
+                parsed = inp
+            if isinstance(parsed, list):
+                return [ _ensure_experience_level_tags(dict(e)) for e in parsed ]
+            if isinstance(parsed, dict) and isinstance(parsed.get("experiences"), list):
+                return [ _ensure_experience_level_tags(dict(e)) for e in parsed["experiences"] ]
+            raise ValueError("'experiences' must be an array or an object containing an 'experiences' array")
+
+        def _select_matching(new_exps: List[Dict[str, Any]], employers: List[str]) -> Tuple[List[Dict[str, Any]], List[str]]:
+            by_emp = { _normalize_employer_name(e.get("employer", "")): e for e in new_exps }
+            selected, missing = [], []
+            for emp in employers:
+                key = _normalize_employer_name(emp)
+                if key in by_emp:
+                    selected.append(_ensure_experience_level_tags(by_emp[key]))
+                else:
+                    missing.append(emp)
+            return selected, missing
+
+        def _replace_surgically(resume: Dict[str, Any], new_exps: List[Dict[str, Any]], employers: List[str]) -> Dict[str, Any]:
+            if "experience" not in resume:
+                resume["experience"] = []
+            targets = { _normalize_employer_name(emp) for emp in employers }
+            kept = [e for e in (resume.get("experience") or []) if _normalize_employer_name(e.get("employer", "")) not in targets]
+            selected, missing = _select_matching(new_exps, employers)
+            resume["experience"] = selected + kept
+            return resume, selected, missing
+
+        def _update_sections(resume: Dict[str, Any], updates_dict: Dict[str, Any]) -> Dict[str, Any]:
+            # Coerce core_competencies to list if a newline string is provided
+            upd = dict(updates_dict or {})
+            core = upd.get("core_competencies")
+            if isinstance(core, str):
+                upd["core_competencies"] = [line.strip() for line in core.splitlines() if line.strip()]
+            for section, val in upd.items():
+                resume[section] = val
+            return resume
+
+        # Load target resume
+        data = resume_model.get(resume_id)
+        if not data:
+            return jsonify({"error": "Resume not found"}), 404
+
+        before_count = len(data.get("experience", []) or [])
+
+        # Apply experiences replacement if provided
+        replaced_employers_effective: List[str] = []
+        missing_employers: List[str] = []
+        if experiences_input is not None:
+            new_exps = _parse_experiences(experiences_input)
+            # Derive employers if not provided
+            if not replace_employers:
+                replace_employers = [e.get("employer", "") for e in new_exps if e.get("employer")]
+            # Deduplicate while preserving order
+            seen = set()
+            employers_clean = []
+            for emp in replace_employers:
+                key = _normalize_employer_name(emp)
+                if key and key not in seen:
+                    employers_clean.append(emp)
+                    seen.add(key)
+            data, selected, missing = _replace_surgically(data, new_exps, employers_clean)
+            replaced_employers_effective = [e.get("employer", "") for e in selected]
+            missing_employers = missing
+
+        # Apply section updates if provided
+        if updates:
+            data = _update_sections(data, updates)
+
+        after_count = len(data.get("experience", []) or [])
+
+        meta = {
+            "replaced_employers": replaced_employers_effective,
+            "missing_employers": missing_employers,
+            "total_experience_before": before_count,
+            "total_experience_after": after_count,
+        }
+
+        if dry_run:
+            return jsonify({"success": True, "dry_run": True, "meta": meta, "updated_preview": data})
+
+        # Persist changes
+        ok = resume_model.update(resume_id, data)
+        if not ok:
+            return jsonify({"error": "Failed to save updated resume"}), 500
+
+        return jsonify({"success": True, "message": "Surgical update applied", "meta": meta})
+
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        import traceback
+        return jsonify({"error": f"Failed to apply surgical update: {str(e)}", "traceback": traceback.format_exc()}), 500
+
 @app.route("/src/web/<path:filename>")
 def serve_web_files(filename):
     """Serve web UI files."""
