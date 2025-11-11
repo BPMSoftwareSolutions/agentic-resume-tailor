@@ -60,3 +60,21 @@ def test_parse_surgical_markdown_multiple_experiences():
     assert [e["employer"] for e in exps] == ["Foo Inc", "Bar LLC"]
     assert "Kubernetes" in exps[1].get("tags", [])
 
+
+
+
+def test_parse_areas_of_expertise_with_bullet_dot_and_wrap():
+    md = (
+        "### **AREAS OF EXPERTISE**\n\n"
+        "Strategic Technology Leadership • Cloud Modernization • AI & Automation • DevSecOps • SOC2 Compliance •\n"
+        "Infrastructure as Code (Terraform) • Organizational Governance • Team Building & Mentorship • Cost Optimization • Process Improvement\n"
+    )
+
+    parsed = parse_surgical_markdown(md)
+    updates = parsed.get("updates", {})
+    aoe = updates.get("areas_of_expertise", [])
+
+    # Should parse into a list including first and last items
+    assert isinstance(aoe, list) and len(aoe) >= 5
+    assert any(item.startswith("Strategic Technology Leadership") for item in aoe)
+    assert any(item == "Process Improvement" for item in aoe)

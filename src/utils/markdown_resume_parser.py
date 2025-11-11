@@ -67,6 +67,7 @@ def parse_surgical_markdown(md_text: str) -> Dict[str, Any]:
     i = 0
     summary_lines: List[str] = []
     core_competencies: List[str] = []
+    areas_of_expertise: List[str] = []
     experiences: List[Dict[str, Any]] = []
 
     def skip_separators(j: int) -> int:
@@ -105,6 +106,37 @@ def parse_surgical_markdown(md_text: str) -> Dict[str, Any]:
                     if text:
                         core_competencies.append(text)
                 i += 1
+            continue
+
+        # AREAS OF EXPERTISE
+        if line.strip().lower().startswith("### ") and "areas of expertise" in line.lower():
+            i += 1
+            i = skip_separators(i)
+            tmp_items: List[str] = []
+            raw_parts: List[str] = []
+            while i < len(lines):
+                if lines[i].strip().lower().startswith("### ") or lines[i].strip() == "---":
+                    break
+                m = _BULLET_RE.match(lines[i])
+                if m:
+                    text = _BULLET_RE.sub("", lines[i])
+                    text = _strip_md_emphasis(text)
+                    if text:
+                        tmp_items.append(text)
+                else:
+                    t = _strip_md_emphasis(lines[i])
+                    if t:
+                        raw_parts.append(t)
+                i += 1
+            # If no explicit bullets captured, split on the '•' delimiter across wrapped lines
+            if not tmp_items and raw_parts:
+                import re as _re
+                joined = " ".join(raw_parts)
+                joined = _re.sub(r"\s+", " ", joined).strip()
+                parts = [p.strip(" •;,-") for p in joined.split("•")]
+                tmp_items = [p for p in parts if p]
+            if tmp_items:
+                areas_of_expertise.extend(tmp_items)
             continue
 
         # RELEVANT EXPERIENCE
@@ -176,6 +208,8 @@ def parse_surgical_markdown(md_text: str) -> Dict[str, Any]:
         updates["summary"] = " ".join(s.strip() for s in summary_lines if s.strip())
     if core_competencies:
         updates["core_competencies"] = core_competencies
+    if areas_of_expertise:
+        updates["areas_of_expertise"] = areas_of_expertise
 
     return {"experiences": experiences, "updates": updates}
 
