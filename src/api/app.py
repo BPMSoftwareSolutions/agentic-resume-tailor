@@ -567,65 +567,61 @@ def generate_docx():
         # GET request - use master resume for backward compatibility
         resume_json_path = DATA_DIR / "master_resume.json"
 
-    # Create unique output paths to avoid conflicts
-    import uuid
+    # Generate HTML and DOCX using a temporary directory to avoid piling up files
+    import tempfile, io
 
-    unique_id = str(uuid.uuid4())[:8]
-    output_html_path = DATA_DIR / f"resume_{unique_id}.html"
-    docx_path = DATA_DIR / f"resume_{unique_id}.docx"
-
-    # Generate HTML and DOCX from resume JSON
     try:
-        result = subprocess.run(
-            [
-                sys.executable,
-                str(generate_script),
-                "--input",
-                str(resume_json_path),
-                "--output",
-                str(output_html_path),
-                "--docx",
-            ],
-            capture_output=True,
-            text=True,
-        )
+        with tempfile.TemporaryDirectory(prefix="resume_export_") as tmpdir:
+            tmpdir_path = Path(tmpdir)
+            output_html_path = tmpdir_path / "resume.html"
+            docx_path = tmpdir_path / "resume.docx"  # generate_hybrid_resume.py derives this from HTML path
 
-        if result.returncode != 0:
-            return (
-                jsonify(
-                    {
-                        "error": f"Failed to generate DOCX: {result.stderr or result.stdout}"
-                    }
-                ),
-                500,
+            # Run generator script
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(generate_script),
+                    "--input",
+                    str(resume_json_path),
+                    "--output",
+                    str(output_html_path),
+                    "--docx",
+                ],
+                capture_output=True,
+                text=True,
             )
 
-        # The DOCX file should be created alongside the HTML file
-        if not docx_path.exists():
-            return (
-                jsonify(
-                    {
-                        "error": f"DOCX file was not created at {docx_path}. Output: {result.stdout}"
-                    }
-                ),
-                500,
+            if result.returncode != 0:
+                return (
+                    jsonify(
+                        {
+                            "error": f"Failed to generate DOCX: {result.stderr or result.stdout}"
+                        }
+                    ),
+                    500,
+                )
+
+            # Ensure DOCX exists
+            if not docx_path.exists():
+                return (
+                    jsonify(
+                        {
+                            "error": f"DOCX file was not created. Output: {result.stdout}"
+                        }
+                    ),
+                    500,
+                )
+
+            # Read DOCX into memory and return
+            docx_bytes = docx_path.read_bytes()
+            memfile = io.BytesIO(docx_bytes)
+            memfile.seek(0)
+            return send_file(
+                memfile,
+                mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                as_attachment=True,
+                download_name="resume.docx",
             )
-
-        # Send file and clean up after
-        response = send_file(docx_path, as_attachment=True, download_name="resume.docx")
-
-        # Clean up temporary files
-        @response.call_on_close
-        def cleanup():
-            try:
-                if output_html_path.exists():
-                    output_html_path.unlink()
-                if docx_path.exists():
-                    docx_path.unlink()
-            except Exception:
-                pass
-
-        return response
 
     except Exception as e:
         error_msg = f"Failed to generate DOCX: {str(e)}\n{traceback.format_exc()}"
