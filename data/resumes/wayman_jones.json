@@ -1,0 +1,148 @@
+{
+  "name": "Wayman Jones",
+  "title": "Junior C#/.NET Developer",
+  "location": "Detroit, MI",
+  "contact": {
+    "availability": "Contact Available Upon Request"
+  },
+  "summary": "Junior C#/.NET Developer with hands-on experience building Windows desktop applications, implementing secure authentication, and developing workflow automation features. Experienced with SQL database read/write operations, debugging .NET apps, and supporting production software used internally. Brings strong attention to detail, reliability, rapid learning, and corporate security discipline from Amazon (risk awareness, documentation, communication).",
+  "core_skills": {
+    "languages_frameworks": "C#, .NET 6+, WPF, XAML, LINQ, SQL, ADO.NET",
+    "tools_tech": "SQL Server, Visual Studio, Git/GitHub, Windows Presentation Foundation, JSON",
+    "developer_strengths": "Debugging, Clean Coding, UI Logic, Problem-Solving, Learning New Technologies"
+  },
+  "technical_proficiencies": {
+    "core_languages": "C#, .NET 6+, WPF, XAML, LINQ, SQL, ADO.NET",
+    "frameworks": ".NET, WPF",
+    "data_access": "SQL Server, ADO.NET, Parameterized Queries",
+    "tools": "Visual Studio, Git, GitHub",
+    "security_compliance": "Role-Based Access Control (application level), Credential Hashing (conceptual), Risk Assessment Awareness",
+    "practices": "Debugging, Clean Code, Basic Repository Patterns, UI State Management"
+  },
+  "areas_of_expertise": [
+    "Windows Desktop Development",
+    "Authentication & Authorization",
+    "SQL CRUD Operations",
+    "Time Tracking Systems",
+    "UI Development (XAML)",
+    "Problem Solving",
+    "Security Awareness"
+  ],
+  "experience": [
+    {
+      "employer": "BPM Software Solutions",
+      "role": "Junior Software Developer",
+      "dates": "Jan 2024 – Jul 2025",
+      "start_month": "January",
+      "start_year": 2024,
+      "end_month": "July",
+      "end_year": 2025,
+      "location": "West Bloomfield, MI",
+      "bullets": [
+        {"text": "Implemented secure multi-user login and authentication in a WPF/.NET application, improving role-based access and user security."},
+        {"text": "Developed clock-in/clock-out tracking features that stored entries in SQL Server, improving employee time tracking accuracy."},
+        {"text": "Created SQL scripts and queries to support data entry, reporting, and validation in Shift Scheduler."},
+        {"text": "Performed debugging, XAML UI updates, and production fixes under guidance of senior engineers."},
+        {"text": "Worked with ADO.NET, interfaces, OOP principles, and basic repository patterns to improve code quality."},
+        {"text": "Collaborated through GitHub using branches, commits, and pull requests."}
+      ],
+      "tags": ["C#", ".NET", "WPF", "XAML", "SQL Server", "ADO.NET", "Git", "Authentication", "Time Tracking", "Junior Developer"]
+    },
+    {
+      "employer": "Amazon Corporate",
+      "role": "Security Associate",
+      "dates": "Jul 2024 – Jul 2025",
+      "start_month": "July",
+      "start_year": 2024,
+      "end_month": "July",
+      "end_year": 2025,
+      "location": "Detroit, MI",
+      "bullets": [
+        {"text": "Conducted security risk assessments for corporate buildings and documented vulnerabilities."},
+        {"text": "Enforced access control procedures and supported employee safety protocols."},
+        {"text": "Produced accurate incident reports and security findings used by management."}
+      ],
+      "tags": ["Security", "Risk Assessment", "Access Control", "Incident Reporting", "Corporate Operations"]
+    },
+    {
+      "employer": "City of Oak Park",
+      "role": "Maintenance Technician",
+      "dates": "Sep 2023 – Jan 2024",
+      "start_month": "September",
+      "start_year": 2023,
+      "end_month": "January",
+      "end_year": 2024,
+      "location": "Oak Park, MI",
+      "bullets": [
+        {"text": "Performed inspections, troubleshooting, and repairs on facility equipment."},
+        {"text": "Demonstrated reliability and attention to detail in supporting city operations."}
+      ],
+      "tags": ["Maintenance", "Troubleshooting", "Reliability", "Operations Support"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Secure Login & User Access System",
+      "tech": ["C#", ".NET 6", "WPF", "SQL Server", "ADO.NET"],
+      "bullets": [
+        {"text": "Built a secure multi-user login system with hashed credentials stored in SQL Server."},
+        {"text": "Implemented role-based authorization and session handling to improve application security."},
+        {"text": "Developed data-access methods for retrieving users and updating account settings."},
+        {"text": "Simplified onboarding by streamlining authentication workflow."}
+      ]
+    },
+    {
+      "name": "Shift Scheduler – Clock In/Out Tracking Module",
+      "tech": ["C#", "WPF", "XAML", "SQL Server"],
+      "bullets": [
+        {"text": "Designed time-tracking module integrated with SQL database."},
+        {"text": "Implemented clock-in/clock-out UI logic, business rules, and data validation."},
+        {"text": "Wrote SQL scripts for inserting, updating, and reporting time entries."},
+        {"text": "Improved reporting accuracy via consistent storage structure."}
+      ]
+    },
+    {
+      "name": "Employee Time Dashboard (Console + SQL CRUD)",
+      "tech": ["C#", ".NET", "SQL Server"],
+      "bullets": [
+        {"text": "Developed console-based CRUD app for time entry management."},
+        {"text": "Implemented Create, Read, Update, Delete operations using parameterized queries."},
+        {"text": "Strengthened understanding of connectivity, error handling, modular code."}
+      ]
+    },
+    {
+      "name": "Inventory Utility Tool (WPF Desktop App)",
+      "tech": ["C#", "WPF", "XAML", "LINQ"],
+      "bullets": [
+        {"text": "Built inventory management tool to load, filter, and update product items."},
+        {"text": "Used LINQ for search, sorting, and real-time UI updates."},
+        {"text": "Practiced basic MVVM-style separation for maintainability."}
+      ]
+    },
+    {
+      "name": "SQL Database Practice Environment",
+      "tech": ["SQL Server", "T-SQL"],
+      "bullets": [
+        {"text": "Created tables, indexes, and stored procedures to strengthen fundamentals."},
+        {"text": "Practiced JOINs, filtering, grouping, aggregates."},
+        {"text": "Simulated business data scenarios for learning."}
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "High School Diploma",
+      "institution": "Cooley High School",
+      "location": "Detroit, MI",
+      "year": ""
+    },
+    {
+      "degree": "Michigan Operations Managers Program",
+      "institution": "(Institution Not Specified)",
+      "location": "Michigan",
+      "year": ""
+    }
+  ],
+  "certifications": [],
+  "references": "Available upon request"
+}

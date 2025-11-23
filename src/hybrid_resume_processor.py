@@ -163,6 +163,9 @@ class HybridResumeProcessor:
         # Generate experience section
         html_parts.append(self._generate_experience_html())
 
+        # Generate projects section
+        html_parts.append(self._generate_projects_html())
+
         # Generate education section
         html_parts.append(self._generate_education_html())
 
@@ -398,6 +401,78 @@ class HybridResumeProcessor:
         exp_html.append("    </section>")
 
         return "\n".join(exp_html)
+
+    def _generate_projects_html(self) -> str:
+        """
+        Generate projects section with tech stack and bullets.
+
+        Structure:
+        <section class="section" data-section="projects">
+          <div class="project-item" data-position="0" data-name="...">
+            <div class="project-header">...</div>
+            <div class="bullet-item" data-bullet="0">
+              <div class="bullet-text">...</div>
+            </div>
+            <div class="tags">
+              <span class="tag" data-tag="...">...</span>
+            </div>
+          </div>
+        </section>
+        """
+        projects = self.resume_data.get("projects", [])
+
+        # If no projects, return empty string
+        if not projects:
+            return ""
+
+        proj_html = ['    <section class="section" data-section="projects">']
+        proj_html.append('      <h2 class="section-heading">PROJECTS</h2>')
+
+        for idx, project in enumerate(projects):
+            name = project.get("name", "")
+            tech = project.get("tech", [])
+            bullets = project.get("bullets", [])
+
+            project_id = self._sanitize_id(name)
+
+            proj_html.append(
+                f'      <div class="project-item" data-position="{idx}" data-name="{project_id}">'
+            )
+            proj_html.append('        <div class="project-header">')
+            proj_html.append(
+                f'          <div class="project-name" data-field="name">{name}</div>'
+            )
+            proj_html.append("        </div>")
+
+            # Generate bullets
+            for bullet_idx, bullet in enumerate(bullets):
+                # Support bullets as either dicts (with text) or plain strings
+                if isinstance(bullet, dict):
+                    bullet_text = bullet.get("text", "") or ""
+                else:
+                    bullet_text = str(bullet)
+
+                proj_html.append(
+                    f'        <div class="bullet-item" data-bullet="{bullet_idx}">'
+                )
+                proj_html.append(f'          <div class="bullet-text">{bullet_text}</div>')
+                proj_html.append("        </div>")
+
+            # Add project-level tech tags
+            if tech:
+                proj_html.append('        <div class="tags">')
+                for tag in tech:
+                    tag_id = self._sanitize_id(tag)
+                    proj_html.append(
+                        f'          <span class="tag" data-tag="{tag_id}">{tag}</span>'
+                    )
+                proj_html.append("        </div>")
+
+            proj_html.append("      </div>")
+
+        proj_html.append("    </section>")
+
+        return "\n".join(proj_html)
 
     def _generate_education_html(self) -> str:
         """

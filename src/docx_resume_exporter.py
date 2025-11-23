@@ -325,6 +325,52 @@ class DOCXResumeExporter:
                         # Add spacing between experience items
                         doc.add_paragraph()
 
+                elif section_type == "projects" or "projects" in section.get(
+                    "class", []
+                ):
+                    # Projects items
+                    project_items = section.find_all(class_="project-item")
+                    for project_item in project_items:
+                        # Project name
+                        name_elem = project_item.find(class_="project-name")
+                        if name_elem:
+                            p = doc.add_paragraph(name_elem.get_text().strip())
+                            run = p.runs[0]
+                            run.font.size = Pt(14)
+                            run.font.bold = True
+
+                        # Bullets
+                        bullet_items = project_item.find_all(class_="bullet-item")
+                        for bullet_item in bullet_items:
+                            bullet_text_elem = bullet_item.find(class_="bullet-text")
+                            if bullet_text_elem:
+                                bullet_text = bullet_text_elem.get_text().strip()
+                                # Remove leading bullet if present
+                                bullet_text = bullet_text.lstrip("•").strip()
+
+                                p = doc.add_paragraph(bullet_text, style="List Bullet")
+
+                        # Extract project-level tags (tech stack)
+                        tags_elem = project_item.find(class_="tags")
+                        if tags_elem:
+                            tag_elements = tags_elem.find_all(class_="tag")
+                            if tag_elements:
+                                tags_text = " | ".join(
+                                    [
+                                        tag.get_text().strip()
+                                        for tag in tag_elements
+                                    ]
+                                )
+                                p = doc.add_paragraph(f"Tech: {tags_text}")
+                                run = p.runs[0]
+                                run.font.size = Pt(9)
+                                run.font.color.rgb = RGBColor(
+                                    124, 58, 237
+                                )  # Purple
+
+                        # Add spacing between projects
+                        doc.add_paragraph()
+
                 elif section_type == "education" or "education" in section.get(
                     "class", []
                 ):
