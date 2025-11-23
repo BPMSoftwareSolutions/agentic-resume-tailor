@@ -4,6 +4,32 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
+## Important update (Nov 2025)
+
+- Single source of truth: the experience log at `data/experiences.json` now drives resume generation. The old `data/master_resume.json` is still supported for compatibility, but generation/tailoring should prefer the experience log path.
+- One-command tailoring from a job URL (recommended):
+
+```bash
+pip install -r requirements.txt
+python src/tailor_from_url.py \
+  --url "https://example.com/job-posting" \
+  --out out/tailored.html \
+  --docx \
+  --theme modern
+```
+
+What this does:
+- Fetches and saves the job listing, updating `data/job_listings/index.json`
+- Builds a fresh resume from the experience log
+- Tailors bullets to the job (optionally with RAG and LLM rewriting)
+- Generates HTML (and DOCX if requested)
+- Saves the tailored resume to `data/resumes/` and links it to the job listing
+
+Key changes and guardrails:
+- Unique resume names are enforced across the system to protect data integrity; attempts to create duplicates will return a clear error. See docs/UNIQUE_RESUME_NAMES.md.
+- The agent and the web UI are integrated; you can now select which AI provider/model to use in the browser. See docs/AGENT_SELECTION.md and docs/AGENT_WEB_INTEGRATION.md.
+- For a deep dive into the new pipeline, see docs/EXPERIENCE_LOG_AS_SOURCE_OF_TRUTH.md and docs/TAILOR_FROM_URL_INTEGRATION.md.
+
 AI‑assisted tooling to customize your resume to a target job description (Phase 1).
 
 ## Features (Phase 1)
@@ -12,7 +38,7 @@ AI‑assisted tooling to customize your resume to a target job description (Phas
 - Select and rewrite the strongest bullets using STAR‑style phrasing.
 - Render a tailored resume using a Jinja2 template to Markdown, HTML, and DOCX.
 - **NEW:** Hybrid HTML/CSS resume generation with multiple professional themes.
-- **NEW:** Web-based resume editor for managing master_resume.json ([Issue #2](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/2))
+- **NEW:** Web-based resume editor for managing resumes ([Issue #2](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/2))
 - **NEW:** Multi-resume support with job listing management and automated tailoring ([Issue #6](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/6))
 - **NEW:** Local AI Agent for interactive automation and command execution ([Issue #8](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/8))
 - **NEW:** AI Agent Web Integration - Chat with the agent directly from your browser ([Issue #12](https://github.com/BPMSoftwareSolutions/agentic-resume-tailor/issues/12))
@@ -266,7 +292,7 @@ See [Auto-Verification & Token Management Documentation](docs/AUTO_VERIFICATION_
 # Duplicate by resume name
 python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Engineering_Manager_Subscription_Billing"
 
-# Duplicate master resume
+# Legacy: duplicate the old master resume (optional)
 python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_NewCo"
 
 # Duplicate with description
@@ -291,14 +317,20 @@ run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Eng
    New Resume ID: a04640bf-d6bb-4d7f-a949-69026acdb212
    New Resume Name: Sidney_Jones_Engineering_Manager_Subscription_Billing
 
-💬 > Duplicate the Master Resume
-🤖 run: python src/duplicate_resume.py --resume "Master Resume" --new-name "Sidney_Jones_Senior_Engineer_Copy"
+💬 > Duplicate the Ford resume
+🤖 run: python src/duplicate_resume.py --resume "Ford" --new-name "Sidney_Jones_Senior_Engineer_Copy"
 ```
 
-**Typical Workflow:**
-1. Duplicate an existing resume (Master Resume or company-specific)
-2. Update specific sections using CRUD scripts (optional)
-3. Tailor to job description using `tailor.py` (optional)
+**Recommended Workflow (Experience Log + From-URL):**
+1. Use `src/tailor_from_url.py` with a job URL to build from `data/experiences.json` and generate HTML/DOCX.
+2. Optionally duplicate an existing resume for manual tweaks.
+3. Optionally use CRUD scripts for precise edits or via the AI agent.
+
+See [Experience Log as Source of Truth](docs/EXPERIENCE_LOG_AS_SOURCE_OF_TRUTH.md) and [Tailor from URL Integration](docs/TAILOR_FROM_URL_INTEGRATION.md).
+
+**Legacy Workflow (JSON-first):**
+1. Duplicate the old master resume or pick an existing resume JSON.
+2. Use `src/tailor.py` or `src/generate_hybrid_resume.py` to render HTML/DOCX.
 
 See [CRUD Operations Documentation](docs/CRUD_OPERATIONS.md) for details.
 
@@ -307,19 +339,19 @@ See [CRUD Operations Documentation](docs/CRUD_OPERATIONS.md) for details.
 # Manage resume data with specialized scripts
 
 # Update basic info
-python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Software Architect"
+python src/crud/basic_info.py --resume "Ford" --update-title "Principal Software Architect"
 
 # Add technical skills
-python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python, Rust"
+python src/crud/technical_skills.py --resume "Ford" --append-to-category "languages" "Python, Rust"
 
 # Add expertise area
-python src/crud/expertise.py --resume "Master Resume" --add "Cloud-Native Architecture"
+python src/crud/expertise.py --resume "Ford" --add "Cloud-Native Architecture"
 
 # Add certification
-python src/crud/certifications.py --resume "Master Resume" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Nov 2025"
+python src/crud/certifications.py --resume "Ford" --add --name "AWS Solutions Architect" --issuer "Amazon" --date "Nov 2025"
 
 # List all operations
-python src/crud/expertise.py --resume "Master Resume" --list
+python src/crud/expertise.py --resume "Ford" --list
 ```
 
 **Features:**
@@ -342,13 +374,13 @@ python src/crud/expertise.py --resume "Master Resume" --list
 **Natural Language Examples (via AI Agent):**
 ```
 💬 > Add Python to my technical skills
-🤖 run: python src/crud/technical_skills.py --resume "Master Resume" --append-to-category "languages" "Python"
+🤖 run: python src/crud/technical_skills.py --resume "Ford" --append-to-category "languages" "Python"
 
 💬 > Update my title to Principal Architect
-🤖 run: python src/crud/basic_info.py --resume "Master Resume" --update-title "Principal Architect"
+🤖 run: python src/crud/basic_info.py --resume "Ford" --update-title "Principal Architect"
 
 💬 > List my certifications
-🤖 run: python src/crud/certifications.py --resume "Master Resume" --list
+🤖 run: python src/crud/certifications.py --resume "Ford" --list
 ```
 
 See [CRUD Operations Documentation](docs/CRUD_OPERATIONS.md) for complete guide.
@@ -375,14 +407,22 @@ python src/api/app.py
 
 See [Resume Editor Documentation](docs/RESUME_EDITOR_WEB_INTERFACE.md) for details.
 
-### Generate Markdown Resume
+### Generate Markdown Resume (Legacy)
+Note: Prefer the one-command from-URL flow via tailor_from_url.py, which builds from the experience log.
+
 ```bash
 pip install -r requirements.txt
 python src/tailor.py --jd data/sample_jd.txt --out out/Sidney_Resume_DEVOPS.md
 python src/export_docx.py --md out/Sidney_Resume_DEVOPS.md --docx out/Sidney_Resume_DEVOPS.docx
 ```
 
-### Generate HTML Resume (NEW!)
+### Generate HTML Resume
+Recommended (experience log + from-URL):
+```bash
+python src/tailor_from_url.py --url "https://example.com/job" --out out/resume.html --theme professional --docx
+```
+
+Legacy options (existing JSON/master_resume):
 ```bash
 # Generate HTML resume with professional theme
 python src/tailor.py --jd data/sample_jd.txt --out out/Sidney_Resume_DEVOPS.html --format html --theme professional
@@ -407,7 +447,7 @@ python src/generate_hybrid_resume.py --input data/master_resume.json --output ou
 
 **Convert to PDF:** Open the HTML file in your browser and use Print → Save as PDF
 
-**DOCX Export:** Requires `pandoc` (preferred) or `pip install python-docx beautifulsoup4 lxml`
+**DOCX Export:** Install pandoc (preferred) or `pip install python-docx beautifulsoup4`. Note: weasyprint is supported for PDF generation only (not DOCX).
 
 ## Documentation
 
@@ -418,10 +458,12 @@ python src/generate_hybrid_resume.py --input data/master_resume.json --output ou
 - **[Hybrid HTML Resume Generation](docs/HYBRID_HTML_RESUME_GENERATION.md)** - Complete guide to HTML resume generation
 - **[Quality Tests Summary](docs/QUALITY_TESTS_GREEN_SUMMARY.md)** - Test suite documentation
 - **[TDD Validation Summary](docs/TDD_VALIDATION_SUMMARY.md)** - TDD approach documentation
+- **[Experience Log as Source of Truth](docs/EXPERIENCE_LOG_AS_SOURCE_OF_TRUTH.md)** - Source-of-truth model and builder (NEW)
+- **[Tailor from URL - Integration Guide](docs/TAILOR_FROM_URL_INTEGRATION.md)** - One-command URL → tailored HTML/DOCX
 
 ## Test Suite
 
-All 159 tests passing ✅
+All 421 tests passing ✅
 
 ```bash
 # Run all tests
@@ -441,7 +483,7 @@ python -m pytest tests/test_comprehensive_quality_suite.py -v
 This project uses GitHub Actions for continuous integration and deployment:
 
 - **Automated Testing**: All tests run automatically on every push and pull request
-- **Multi-Python Support**: Tests run on Python 3.8, 3.9, 3.10, 3.11, and 3.12
+- **Multi-Python Support**: Tests run on Python 3.9, 3.10, 3.11, and 3.12
 - **Code Quality**: Automated linting with flake8, black, and isort
 - **Security Scanning**: Automated security checks with safety and bandit
 - **Coverage Reports**: Test coverage tracking with pytest-cov
