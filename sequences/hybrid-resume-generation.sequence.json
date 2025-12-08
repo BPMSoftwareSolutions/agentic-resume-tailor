@@ -1,0 +1,617 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "domainId": "agentic-resume-tailor",
+  "id": "hybrid-resume-generation",
+  "name": "Hybrid Resume Generation Pipeline",
+  "title": "Generate Professional HTML/DOCX Resume",
+  "description": "Complete workflow for generating professional resumes in HTML and DOCX formats with optional RAG-enhanced tailoring",
+  "purpose": "Transform resume JSON data into polished, themed HTML/DOCX documents ready for job applications",
+  "trigger": "User executes generate_hybrid_resume.py with resume JSON input",
+  "packageName": "agentic-resume-tailor",
+  "kind": "orchestration",
+  "status": "active",
+  "key": "C major",
+  "tempo": 120,
+  "timeSignature": "4/4",
+  "category": "document-generation",
+  "beats": 12,
+  "governance": {
+    "policies": [
+      "input-validation",
+      "data-integrity",
+      "output-quality"
+    ],
+    "metrics": [
+      "generation-success-rate",
+      "processing-time",
+      "theme-consistency"
+    ]
+  },
+  "events": [
+    "resume.data.loaded",
+    "experiences.enriched",
+    "jd.ingested",
+    "jd.keywords.extracted",
+    "rag.context.retrieved",
+    "rag.tailoring.applied",
+    "html.structure.generated",
+    "css.theme.applied",
+    "html.document.assembled",
+    "file.saved",
+    "docx.exported",
+    "generation.complete"
+  ],
+  "userStory": {
+    "persona": "Job Seeker",
+    "goal": "generate a professional, visually appealing resume in HTML and DOCX formats",
+    "benefit": "I can apply to jobs with a polished, tailored resume that stands out"
+  },
+  "persona": "Job Seeker",
+  "businessValue": "Enables rapid creation of professional resumes with consistent branding and formatting across multiple output formats",
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Agentic Resume Tailor Team",
+    "created": "2025-12-07",
+    "tags": [
+      "resume",
+      "generation",
+      "html",
+      "docx",
+      "rag",
+      "tailoring"
+    ]
+  },
+  "movements": [
+    {
+      "id": "mov-1-data-loading",
+      "name": "Data Loading and Enrichment",
+      "description": "Load resume JSON and enrich with experiences, education, and certifications",
+      "number": 1,
+      "tempo": 120,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my complete resume data loaded and enriched from all sources",
+        "benefit": "all my experience, education, and certifications are included in the final resume"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Load Resume JSON",
+          "beat": 1,
+          "event": "resume.data.loaded",
+          "title": "Load Resume Data",
+          "description": "Read and parse the resume JSON file from the specified input path",
+          "dynamics": "f",
+          "timing": "sync",
+          "handler": {
+            "name": "generate_hybrid_resume#load_resume_data",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/generate_hybrid_resume.py",
+            "handlerCapabilities": ["build", "validate"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "load my resume data from JSON",
+            "benefit": "the system has access to all my professional information"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Resume JSON file exists at specified path"],
+              "when": ["The system reads the JSON file"],
+              "then": [
+                "Resume data is successfully parsed",
+                "All required fields are present (name, title, experience)",
+                "Data structure is valid"
+              ]
+            }
+          ],
+          "testFile": "tests/test_integration.py",
+          "testCase": "test_complete_pipeline - resume loading"
+        },
+        {
+          "name": "Enrich with Experiences",
+          "beat": 2,
+          "event": "experiences.enriched",
+          "title": "Load Experience Log Data",
+          "description": "Load experiences.json to enrich resume with education, certifications, and tags",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["resume.data.loaded"],
+          "handler": {
+            "name": "generate_hybrid_resume#enrich_from_experiences",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/generate_hybrid_resume.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my resume enriched with education, certifications, and skill tags",
+            "benefit": "my resume includes all relevant credentials and categorized skills"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["experiences.json exists in data directory"],
+              "when": ["The system loads the experience log"],
+              "then": [
+                "Education entries (id starts with 'edu-') are extracted",
+                "Certification entries (id starts with 'cert-') are extracted",
+                "Experience tags (skills, technologies, techniques, principles) are added",
+                "Duplicate tags are removed while preserving order"
+              ]
+            },
+            {
+              "given": ["experiences.json does not exist"],
+              "when": ["The system attempts to load it"],
+              "then": [
+                "Processing continues without enrichment",
+                "Original resume data is preserved"
+              ]
+            }
+          ],
+          "testFile": "tests/test_experience_log.py",
+          "testCase": "Experience log enrichment"
+        }
+      ]
+    },
+    {
+      "id": "mov-2-rag-tailoring",
+      "name": "RAG-Enhanced Tailoring (Optional)",
+      "description": "Apply RAG-based tailoring to customize resume for specific job description",
+      "number": 2,
+      "tempo": 100,
+      "errorHandling": "continue",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my resume automatically tailored to match a specific job description",
+        "benefit": "my resume highlights the most relevant experience and skills for the job"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Ingest Job Description",
+          "beat": 3,
+          "event": "jd.ingested",
+          "title": "Fetch or Load Job Description",
+          "description": "Load JD from local file or fetch from URL, then save to job_listings directory",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["experiences.enriched"],
+          "handler": {
+            "name": "jd_fetcher#ingest_jd",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/jd_fetcher.py",
+            "handlerCapabilities": ["build", "validate"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have the job description loaded from URL or local file",
+            "benefit": "the system can access the JD content for keyword extraction and tailoring"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["JD source is a URL"],
+              "when": ["The system fetches the JD"],
+              "then": [
+                "HTML is downloaded with proper user-agent headers",
+                "HTML is parsed to extract text content",
+                "Extracted text is validated (minimum 100 characters)",
+                "JD is saved to data/job_listings/ directory with slug filename",
+                "File path and content are returned"
+              ]
+            },
+            {
+              "given": ["JD source is a local file path"],
+              "when": ["The system loads the file"],
+              "then": [
+                "File existence is verified",
+                "File content is read with UTF-8 encoding",
+                "If not in job_listings/ directory, file is copied there",
+                "File path and content are returned"
+              ]
+            }
+          ],
+          "testFile": "tests/test_jd_fetcher.py",
+          "testCase": "test_ingest_jd"
+        },
+        {
+          "name": "Extract JD Keywords",
+          "beat": 4,
+          "event": "jd.keywords.extracted",
+          "title": "Extract Job Description Keywords",
+          "description": "Parse job description and extract relevant keywords and skills",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["jd.ingested"],
+          "handler": {
+            "name": "jd_parser#extract_keywords",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/jd_parser.py",
+            "handlerCapabilities": ["validate"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have keywords extracted from the job description",
+            "benefit": "the system knows what skills and experience to emphasize"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Job description file is provided via --jd flag", "RAG is enabled via --use-rag flag"],
+              "when": ["The system parses the job description"],
+              "then": [
+                "Keywords are extracted and normalized (lowercase)",
+                "Technical terms are identified",
+                "Skills and requirements are cataloged"
+              ]
+            }
+          ],
+          "testFile": "tests/test_jd_parser.py",
+          "testCase": "test_extract_keywords"
+        },
+        {
+          "name": "Retrieve RAG Context",
+          "beat": 5,
+          "event": "rag.context.retrieved",
+          "title": "Retrieve Relevant RAG Context",
+          "description": "Query vector store to retrieve relevant experience context for each keyword",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["jd.keywords.extracted"],
+          "handler": {
+            "name": "tailor#retrieve_rag_context",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/tailor.py",
+            "handlerCapabilities": ["validate"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "retrieve relevant experience context from the vector store",
+            "benefit": "the system can intelligently select and rewrite my experience bullets"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Vector store exists at specified path", "Keywords have been extracted"],
+              "when": ["The system queries the vector store"],
+              "then": [
+                "Relevant documents are retrieved for each keyword",
+                "Context includes document content and metadata",
+                "Success status is returned"
+              ]
+            },
+            {
+              "given": ["Vector store does not exist"],
+              "when": ["The system attempts to retrieve context"],
+              "then": [
+                "Warning is displayed",
+                "Processing continues without RAG context",
+                "Original experience bullets are preserved"
+              ]
+            }
+          ],
+          "testFile": "tests/test_rag_integration.py",
+          "testCase": "RAG context retrieval"
+        },
+        {
+          "name": "Tailor Experience Bullets",
+          "beat": 6,
+          "event": "rag.tailoring.applied",
+          "title": "Apply RAG-Based Tailoring",
+          "description": "Select and optionally rewrite experience bullets using RAG context",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["rag.context.retrieved"],
+          "handler": {
+            "name": "tailor#select_and_rewrite",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/tailor.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my experience bullets tailored to the job description",
+            "benefit": "my resume emphasizes the most relevant accomplishments"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["RAG context has been retrieved", "Experience entries exist in resume"],
+              "when": ["The system applies tailoring"],
+              "then": [
+                "Experience bullets are scored based on keyword relevance",
+                "Top-scoring bullets are selected",
+                "Bullets are optionally rewritten using LLM (if --use-llm-rewriting)",
+                "Tailored experience is returned"
+              ]
+            },
+            {
+              "given": ["RAG tailoring fails"],
+              "when": ["An error occurs during tailoring"],
+              "then": [
+                "Warning is displayed",
+                "Original resume data is preserved",
+                "Processing continues"
+              ]
+            }
+          ],
+          "testFile": "tests/test_tailor_bullets.py",
+          "testCase": "test_select_and_rewrite"
+        }
+      ]
+    },
+    {
+      "id": "mov-3-html-generation",
+      "name": "HTML Generation",
+      "description": "Generate HTML structure, apply CSS theme, and assemble complete document",
+      "number": 3,
+      "tempo": 140,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my resume rendered as a professional HTML document",
+        "benefit": "I can view and share my resume in a web browser or convert it to PDF"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Generate HTML Structure",
+          "beat": 7,
+          "event": "html.structure.generated",
+          "title": "Process Resume Data to HTML",
+          "description": "Convert resume JSON to structured HTML using HybridResumeProcessor",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["rag.tailoring.applied"],
+          "handler": {
+            "name": "HybridResumeProcessor#generate_html",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/hybrid_resume_processor.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my resume data converted to HTML structure",
+            "benefit": "my resume is properly formatted with semantic HTML"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Resume data is available", "Theme is specified"],
+              "when": ["HybridResumeProcessor generates HTML"],
+              "then": [
+                "HTML structure is created with proper sections (header, summary, experience, education, etc.)",
+                "All resume data is included in HTML",
+                "HTML is semantically structured"
+              ]
+            }
+          ],
+          "testFile": "tests/test_integration.py",
+          "testCase": "HTML structure validation"
+        },
+        {
+          "name": "Generate Theme CSS",
+          "beat": 8,
+          "event": "css.theme.applied",
+          "title": "Generate CSS Theme",
+          "description": "Generate CSS styles based on selected theme (professional, modern, executive, creative)",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["html.structure.generated"],
+          "handler": {
+            "name": "HybridCSSGenerator#generate_css",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/hybrid_css_generator.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my resume styled with a professional theme",
+            "benefit": "my resume has a polished, visually appealing appearance"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Theme name is valid (professional, modern, executive, creative)"],
+              "when": ["CSS generator processes the theme"],
+              "then": [
+                "CSS is generated with theme-specific colors",
+                "Typography is applied consistently",
+                "Layout is responsive and print-friendly",
+                "Theme-specific visual elements are included"
+              ]
+            }
+          ],
+          "testFile": "tests/test_visual_appearance_validation.py",
+          "testCase": "Theme CSS validation"
+        },
+        {
+          "name": "Assemble Complete HTML",
+          "beat": 9,
+          "event": "html.document.assembled",
+          "title": "Assemble Final HTML Document",
+          "description": "Combine HTML structure and CSS into complete HTML document with metadata",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["css.theme.applied"],
+          "handler": {
+            "name": "HybridHTMLAssembler#assemble_html",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/hybrid_html_assembler.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have a complete, valid HTML document ready to save",
+            "benefit": "my resume is ready to be viewed in any web browser"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["HTML structure is generated", "CSS theme is generated"],
+              "when": ["Assembler combines them into final document"],
+              "then": [
+                "Complete HTML document is created with DOCTYPE",
+                "HTML includes head with metadata and styles",
+                "HTML includes body with resume content",
+                "Document is valid HTML5",
+                "Document title includes resume name"
+              ]
+            }
+          ],
+          "testFile": "tests/test_integration.py",
+          "testCase": "Complete HTML document validation"
+        }
+      ]
+    },
+    {
+      "id": "mov-4-export",
+      "name": "File Export",
+      "description": "Save HTML file and optionally export to DOCX format",
+      "number": 4,
+      "tempo": 110,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my resume saved in HTML and optionally DOCX formats",
+        "benefit": "I can submit my resume in the format required by employers"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Save HTML File",
+          "beat": 10,
+          "event": "file.saved",
+          "title": "Write HTML to File",
+          "description": "Save the complete HTML document to the specified output path",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["html.document.assembled"],
+          "handler": {
+            "name": "HybridHTMLAssembler#save_html",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/hybrid_html_assembler.py",
+            "handlerCapabilities": ["deploy"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my HTML resume saved to disk",
+            "benefit": "I can open and view my resume in a web browser"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Complete HTML document is ready", "Output path is specified"],
+              "when": ["System saves HTML to file"],
+              "then": [
+                "HTML file is created at specified path",
+                "File is encoded as UTF-8",
+                "File can be opened in any web browser",
+                "Success status is returned"
+              ]
+            }
+          ],
+          "testFile": "tests/test_integration.py",
+          "testCase": "HTML file save validation"
+        },
+        {
+          "name": "Export to DOCX",
+          "beat": 11,
+          "event": "docx.exported",
+          "title": "Convert HTML to DOCX",
+          "description": "Convert the HTML resume to DOCX format using DOCXResumeExporter (if --docx flag is set)",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["file.saved"],
+          "handler": {
+            "name": "DOCXResumeExporter#export_to_docx",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/docx_resume_exporter.py",
+            "handlerCapabilities": ["deploy"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my resume exported to DOCX format",
+            "benefit": "I can submit my resume to employers who require Word documents"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["--docx flag is set", "HTML file has been saved"],
+              "when": ["System exports to DOCX"],
+              "then": [
+                "DOCX file is created with same base name as HTML",
+                "DOCX preserves resume content and formatting",
+                "DOCX can be opened in Microsoft Word",
+                "Success status is returned"
+              ]
+            },
+            {
+              "given": ["--docx flag is not set"],
+              "when": ["Export phase executes"],
+              "then": [
+                "DOCX export is skipped",
+                "Only HTML file is generated"
+              ]
+            }
+          ],
+          "testFile": "tests/test_docx_export.py",
+          "testCase": "test_export_to_docx"
+        },
+        {
+          "name": "Report Generation Complete",
+          "beat": 12,
+          "event": "generation.complete",
+          "title": "Display Completion Summary",
+          "description": "Display summary of generated files, theme, and options used",
+          "dynamics": "ff",
+          "timing": "sync",
+          "dependencies": ["docx.exported"],
+          "handler": {
+            "name": "generate_hybrid_resume#report_completion",
+            "scope": "orchestration",
+            "kind": "reporting",
+            "sourcePath": "src/generate_hybrid_resume.py",
+            "handlerCapabilities": ["report"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "see a summary of what was generated",
+            "benefit": "I know exactly where my resume files are located and what options were used"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Generation process has completed"],
+              "when": ["System reports completion"],
+              "then": [
+                "HTML file path is displayed",
+                "DOCX file path is displayed (if applicable)",
+                "Theme name is displayed",
+                "Resume name is displayed",
+                "RAG status is displayed (if applicable)",
+                "Success banner is shown"
+              ]
+            }
+          ],
+          "testFile": "tests/test_integration.py",
+          "testCase": "Generation completion reporting"
+        }
+      ]
+    }
+  ]
+}

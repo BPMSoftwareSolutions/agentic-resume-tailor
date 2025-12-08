@@ -1,0 +1,594 @@
+{
+  "domainId": "agentic-ops",
+  "id": "self-heal-invalid-sequence",
+  "name": "Self-Heal Invalid MusicalSequence",
+  "kind": "agent-orchestration",
+  "status": "active",
+  "description": "Self-healing sequence that automatically detects and fixes schema validation errors in MusicalSequences",
+  "purpose": "Enable autonomous error correction and continuous improvement of sequence quality",
+
+  "userStory": {
+    "persona": "Agentic AI System",
+    "goal": "Automatically fix schema validation errors in MusicalSequences",
+    "benefit": "Maintain sequence quality without human intervention"
+  },
+
+  "movements": [
+    {
+      "name": "Error Detection",
+      "number": 1,
+      "description": "Run validation to detect errors and classify them by type",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Identify all validation errors in a sequence",
+        "benefit": "Understand what needs to be fixed"
+      },
+      "beats": [
+        {
+          "name": "Run Validation",
+          "beat": 1,
+          "event": "validation.run",
+          "handler": "validationHandler.validateSequence",
+          "kind": "validation",
+          "description": "Execute schema validation to capture all errors",
+          "data": {
+            "collectAllErrors": true,
+            "includeWarnings": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Execute comprehensive validation",
+            "benefit": "Capture all errors that need fixing"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["A MusicalSequence JSON file"],
+              "when": ["Validation is executed"],
+              "then": ["All errors are captured"],
+              "and": [
+                "Error messages include JSON paths",
+                "Error types are identifiable",
+                "Failed values are recorded"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/runValidation.test.ts",
+          "testCase": "shouldCaptureAllValidationErrors"
+        },
+        {
+          "name": "Classify Errors",
+          "beat": 2,
+          "event": "errors.classify",
+          "handler": "healingHandler.classifyErrors",
+          "kind": "validation",
+          "description": "Categorize errors by type: missing fields, invalid enums, type mismatches, structure violations",
+          "dependencies": ["validation.run"],
+          "data": {
+            "errorTypes": [
+              "missing-required-field",
+              "invalid-enum-value",
+              "type-mismatch",
+              "additional-properties",
+              "invalid-structure"
+            ]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Classify errors by fixability",
+            "benefit": "Apply appropriate correction strategy for each error type"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["List of validation errors"],
+              "when": ["Errors are classified"],
+              "then": ["Each error has a type"],
+              "and": [
+                "Missing field errors are identified",
+                "Invalid enum errors are flagged",
+                "Type mismatch errors are categorized",
+                "Unfixable errors are marked"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/classifyErrors.test.ts",
+          "testCase": "shouldClassifyErrorsByType"
+        },
+        {
+          "name": "Assess Fixability",
+          "beat": 3,
+          "event": "errors.assess-fixability",
+          "handler": "healingHandler.assessFixability",
+          "kind": "validation",
+          "description": "Determine which errors can be automatically fixed vs. require human intervention",
+          "dependencies": ["errors.classify"],
+          "data": {
+            "autoFixable": [
+              "missing-required-field",
+              "invalid-enum-value",
+              "additional-properties-false-violation"
+            ],
+            "requiresHuman": [
+              "structural-logic-errors",
+              "business-rule-violations"
+            ]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Identify auto-fixable errors",
+            "benefit": "Focus healing efforts on errors that can be corrected autonomously"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Classified errors"],
+              "when": ["Fixability is assessed"],
+              "then": ["Errors are marked as auto-fixable or not"],
+              "and": [
+                "Auto-fixable errors have correction strategies",
+                "Non-fixable errors are documented",
+                "Confidence score is provided"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/assessFixability.test.ts",
+          "testCase": "shouldIdentifyAutoFixableErrors"
+        }
+      ]
+    },
+    {
+      "name": "Error Correction",
+      "number": 2,
+      "description": "Apply fixes to auto-correctable errors",
+      "errorHandling": "continue",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Fix validation errors automatically",
+        "benefit": "Restore sequence to valid state"
+      },
+      "beats": [
+        {
+          "name": "Fix Missing Required Fields",
+          "beat": 1,
+          "event": "fix.missing-fields",
+          "handler": "healingHandler.fixMissingFields",
+          "kind": "automation",
+          "description": "Add missing required fields with sensible defaults or inferred values",
+          "dependencies": ["errors.assess-fixability"],
+          "errorHandling": "continue",
+          "data": {
+            "defaultStrategies": {
+              "testFile": "generate-from-beat-name",
+              "testCase": "generate-from-beat-description",
+              "acceptanceCriteria": "generate-basic-gherkin",
+              "userStory": "inherit-from-parent-level"
+            }
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Add missing required fields",
+            "benefit": "Satisfy schema requirements with reasonable defaults"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Errors indicating missing required fields"],
+              "when": ["Fix is applied"],
+              "then": ["Required fields are added"],
+              "and": [
+                "TestFile is generated from beat name",
+                "TestCase is generated from description",
+                "UserStory is inherited or created",
+                "Acceptance criteria are generated if missing"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/fixMissingFields.test.ts",
+          "testCase": "shouldAddMissingRequiredFields"
+        },
+        {
+          "name": "Fix Invalid Enum Values",
+          "beat": 2,
+          "event": "fix.invalid-enums",
+          "handler": "healingHandler.fixInvalidEnums",
+          "kind": "automation",
+          "description": "Replace invalid enum values with valid alternatives based on context",
+          "dependencies": ["errors.assess-fixability"],
+          "errorHandling": "continue",
+          "data": {
+            "enumMappings": {
+              "errorHandling": {
+                "movement": ["continue", "abort-sequence"],
+                "beat": ["continue", "abort-sequence", "retry", "abort"],
+                "contextualDefault": "abort-sequence"
+              },
+              "scope": {
+                "valid": ["plugin", "orchestration", "system", "policy"],
+                "default": "orchestration"
+              },
+              "kind": {
+                "valid": ["validation", "orchestration", "reporting", "policy-enforcement", "metrics", "automation"],
+                "inferFromBeatName": true
+              }
+            }
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Correct invalid enum values",
+            "benefit": "Ensure only schema-valid enum values are used"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Invalid enum values"],
+              "when": ["Fix is applied"],
+              "then": ["Enum values are corrected"],
+              "and": [
+                "Invalid errorHandling values are replaced with valid ones",
+                "Replacement considers context (movement vs beat)",
+                "Invalid scope/kind values are fixed",
+                "Corrections are logged"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/fixInvalidEnums.test.ts",
+          "testCase": "shouldCorrectInvalidEnumValues"
+        },
+        {
+          "name": "Fix Type Mismatches",
+          "beat": 3,
+          "event": "fix.type-mismatches",
+          "handler": "healingHandler.fixTypeMismatches",
+          "kind": "automation",
+          "description": "Convert values to correct types (string to number, etc.) where safe",
+          "dependencies": ["errors.assess-fixability"],
+          "errorHandling": "continue",
+          "data": {
+            "safeConversions": {
+              "stringToNumber": "parseFloat",
+              "numberToString": "toString",
+              "stringToArray": "split",
+              "singleValueToArray": "wrap"
+            }
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Fix type mismatches",
+            "benefit": "Ensure field types match schema expectations"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Type mismatch errors"],
+              "when": ["Conversion is applied"],
+              "then": ["Values are converted to correct types"],
+              "and": [
+                "String numbers are parsed to numbers",
+                "Single values are wrapped in arrays where needed",
+                "Unsafe conversions are skipped",
+                "Successful conversions are logged"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/fixTypeMismatches.test.ts",
+          "testCase": "shouldConvertValuesToCorrectTypes"
+        },
+        {
+          "name": "Fix Structure Violations",
+          "beat": 4,
+          "event": "fix.structure-violations",
+          "handler": "healingHandler.fixStructureViolations",
+          "kind": "automation",
+          "description": "Fix additionalProperties violations and restructure malformed objects",
+          "dependencies": ["errors.assess-fixability"],
+          "errorHandling": "continue",
+          "data": {
+            "removeAdditionalProperties": true,
+            "preserveUnknownFields": false,
+            "logRemovedFields": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Fix structural schema violations",
+            "benefit": "Ensure objects conform to schema structure"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Structure violations like additional properties"],
+              "when": ["Fixes are applied"],
+              "then": ["Structure conforms to schema"],
+              "and": [
+                "Additional properties are removed from userStory objects",
+                "Removed fields are logged for review",
+                "Object structure matches schema exactly"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/fixStructureViolations.test.ts",
+          "testCase": "shouldRemoveAdditionalProperties"
+        }
+      ]
+    },
+    {
+      "name": "Verification",
+      "number": 3,
+      "description": "Re-validate fixed sequence and verify corrections",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Verify that fixes resolved all errors",
+        "benefit": "Ensure healing was successful"
+      },
+      "beats": [
+        {
+          "name": "Re-run Validation",
+          "beat": 1,
+          "event": "verification.revalidate",
+          "handler": "healingHandler.revalidate",
+          "kind": "validation",
+          "description": "Run validation again on the corrected sequence",
+          "dependencies": ["fix.structure-violations"],
+          "data": {
+            "compareToOriginal": true,
+            "trackRemainingErrors": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Validate the healed sequence",
+            "benefit": "Confirm errors were fixed"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Sequence with applied fixes"],
+              "when": ["Re-validation runs"],
+              "then": ["Validation result is captured"],
+              "and": [
+                "Fixed errors are no longer present",
+                "New errors (if any) are identified",
+                "Validation status is determined"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/revalidate.test.ts",
+          "testCase": "shouldRevalidateHealed Sequence"
+        },
+        {
+          "name": "Compare Before and After",
+          "beat": 2,
+          "event": "verification.compare",
+          "handler": "healingHandler.compareResults",
+          "kind": "validation",
+          "description": "Compare original errors vs. remaining errors to measure healing effectiveness",
+          "dependencies": ["verification.revalidate"],
+          "data": {
+            "calculateSuccessRate": true,
+            "identifyPersistentErrors": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Measure healing effectiveness",
+            "benefit": "Understand which errors were fixed vs. which remain"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Original and new validation results"],
+              "when": ["Comparison is performed"],
+              "then": ["Healing metrics are calculated"],
+              "and": [
+                "Number of fixed errors is counted",
+                "Remaining errors are listed",
+                "Success rate is computed",
+                "Persistent errors are flagged for review"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/compareResults.test.ts",
+          "testCase": "shouldComputeHealingEffectiveness"
+        },
+        {
+          "name": "Verify Semantic Integrity",
+          "beat": 3,
+          "event": "verification.semantic-check",
+          "handler": "healingHandler.checkSemanticIntegrity",
+          "kind": "validation",
+          "description": "Verify that fixes didn't break semantic meaning or logical flow",
+          "dependencies": ["verification.compare"],
+          "data": {
+            "checkDependencies": true,
+            "checkUserStoryHierarchy": true,
+            "checkHandlerConsistency": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Ensure fixes preserved semantic meaning",
+            "benefit": "Avoid creating technically valid but logically broken sequences"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Schema-valid healed sequence"],
+              "when": ["Semantic checks run"],
+              "then": ["Logical integrity is verified"],
+              "and": [
+                "Dependency chains are still valid",
+                "User story hierarchy is coherent",
+                "Handler types match beat kinds",
+                "No circular dependencies introduced"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/checkSemanticIntegrity.test.ts",
+          "testCase": "shouldPreserveSemanticIntegrity"
+        }
+      ]
+    },
+    {
+      "name": "Persistence and Reporting",
+      "number": 4,
+      "description": "Save healed sequence and generate healing report",
+      "errorHandling": "continue",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Persist corrections and document healing activity",
+        "benefit": "Enable learning and continuous improvement"
+      },
+      "beats": [
+        {
+          "name": "Backup Original",
+          "beat": 1,
+          "event": "persistence.backup",
+          "handler": "healingHandler.backupOriginal",
+          "kind": "automation",
+          "description": "Create backup of original file before overwriting",
+          "dependencies": ["verification.semantic-check"],
+          "data": {
+            "backupSuffix": ".pre-healing.json",
+            "includeTimestamp": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Preserve original file",
+            "benefit": "Enable rollback if healing introduced issues"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Original sequence file"],
+              "when": ["Backup is created"],
+              "then": ["Original file is copied"],
+              "and": [
+                "Backup has .pre-healing.json extension",
+                "Timestamp is included in filename",
+                "Original content is preserved"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/backupOriginal.test.ts",
+          "testCase": "shouldBackupOriginalBeforeHealing"
+        },
+        {
+          "name": "Write Healed Sequence",
+          "beat": 2,
+          "event": "persistence.write-healed",
+          "handler": "healingHandler.writeHealedSequence",
+          "kind": "automation",
+          "description": "Write the corrected sequence to file",
+          "dependencies": ["persistence.backup"],
+          "data": {
+            "overwriteOriginal": true,
+            "indent": 2,
+            "encoding": "utf-8"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Persist healed sequence",
+            "benefit": "Make corrected sequence available for use"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Healed sequence JSON"],
+              "when": ["File is written"],
+              "then": ["Original file is updated"],
+              "and": [
+                "File is well-formatted",
+                "Encoding is UTF-8",
+                "Write is atomic"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/writeHealedSequence.test.ts",
+          "testCase": "shouldWriteHealedSequenceToFile"
+        },
+        {
+          "name": "Generate Healing Report",
+          "beat": 3,
+          "event": "reporting.generate-report",
+          "handler": "healingHandler.generateHealingReport",
+          "kind": "reporting",
+          "description": "Create detailed report of what was fixed and how",
+          "dependencies": ["persistence.write-healed"],
+          "data": {
+            "includeMetrics": true,
+            "includeChangelog": true,
+            "format": "markdown"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Document healing activity",
+            "benefit": "Enable learning and improvement of healing algorithms"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Healing activity data"],
+              "when": ["Report is generated"],
+              "then": ["Comprehensive report is created"],
+              "and": [
+                "All fixed errors are listed",
+                "Success rate is reported",
+                "Changes are detailed",
+                "Remaining issues are noted"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/generateHealingReport.test.ts",
+          "testCase": "shouldGenerateComprehensiveHealingReport"
+        },
+        {
+          "name": "Update Metrics",
+          "beat": 4,
+          "event": "reporting.update-metrics",
+          "handler": "healingHandler.updateMetrics",
+          "kind": "metrics",
+          "description": "Update system metrics with healing success rate and error patterns",
+          "dependencies": ["reporting.generate-report"],
+          "errorHandling": "continue",
+          "data": {
+            "metricsStore": "governance-metrics.json",
+            "trackPatterns": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Learn from healing activity",
+            "benefit": "Improve future healing and error prevention"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Healing session results"],
+              "when": ["Metrics are updated"],
+              "then": ["System metrics are recorded"],
+              "and": [
+                "Success rate is tracked",
+                "Common error patterns are identified",
+                "Healing effectiveness trends are monitored",
+                "Metrics inform future improvements"
+              ]
+            }
+          ],
+          "testFile": "tests/self-healing/updateMetrics.test.ts",
+          "testCase": "shouldUpdateSystemMetrics"
+        }
+      ]
+    }
+  ],
+
+  "governance": {
+    "policies": [
+      "always-backup-before-healing",
+      "preserve-semantic-integrity",
+      "log-all-corrections",
+      "limit-healing-attempts",
+      "require-validation-after-healing"
+    ],
+    "metrics": [
+      "healing-success-rate",
+      "errors-fixed-per-session",
+      "healing-attempts-per-sequence",
+      "semantic-integrity-preservation-rate",
+      "common-error-patterns",
+      "average-healing-time"
+    ]
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Agentic AI System",
+    "created": "2025-12-06",
+    "tags": ["self-aware", "self-healing", "autonomous", "error-correction", "continuous-improvement"],
+    "selfReference": true,
+    "implementedBy": "agentic-self-healing-system"
+  }
+}

@@ -1,0 +1,417 @@
+{
+  "domainId": "agentic-ops",
+  "id": "validate-musical-sequence",
+  "name": "Validate MusicalSequence Against Schema",
+  "kind": "orchestration",
+  "status": "active",
+  "description": "Self-aware sequence documenting how the agentic system validates MusicalSequence JSON files against the schema",
+  "purpose": "Enable self-healing by documenting the validation workflow that the system uses to ensure schema compliance",
+
+  "userStory": {
+    "persona": "Agentic AI System",
+    "goal": "Validate MusicalSequence JSON files against the canonical schema",
+    "benefit": "Ensure all sequences are well-formed and prevent hallucination or schema drift"
+  },
+
+  "movements": [
+    {
+      "name": "Load and Parse",
+      "number": 1,
+      "description": "Load the schema and target sequence file from disk",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Load JSON files into memory",
+        "benefit": "Prepare data structures for validation"
+      },
+      "beats": [
+        {
+          "name": "Load Schema Definition",
+          "beat": 1,
+          "event": "schema.load",
+          "handler": "validationHandler.loadSchema",
+          "kind": "orchestration",
+          "description": "Load the MusicalSequence JSON schema from schemas/musical-sequence.schema.json",
+          "data": {
+            "schemaPath": "schemas/musical-sequence.schema.json",
+            "schemaVersion": "draft-07"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Load the canonical schema definition",
+            "benefit": "Establish the validation contract"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Schema file exists at expected path"],
+              "when": ["Schema is loaded"],
+              "then": ["Valid JSON schema object is in memory"],
+              "and": ["Schema conforms to JSON Schema Draft 7 specification"]
+            }
+          ],
+          "testFile": "tests/validation/loadSchema.test.ts",
+          "testCase": "shouldLoadValidJsonSchema"
+        },
+        {
+          "name": "Load Target Sequence",
+          "beat": 2,
+          "event": "sequence.load",
+          "handler": "validationHandler.loadSequence",
+          "kind": "orchestration",
+          "description": "Load the target MusicalSequence JSON file to be validated",
+          "dependencies": ["schema.load"],
+          "data": {
+            "encoding": "utf-8"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Load the sequence file for validation",
+            "benefit": "Prepare the target document for schema checking"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Sequence file path is provided"],
+              "when": ["File is loaded"],
+              "then": ["Valid JSON object is parsed into memory"],
+              "and": ["File encoding is handled correctly"]
+            }
+          ],
+          "testFile": "tests/validation/loadSequence.test.ts",
+          "testCase": "shouldLoadSequenceJson"
+        }
+      ]
+    },
+    {
+      "name": "Schema Validation",
+      "number": 2,
+      "description": "Validate the sequence against schema constraints using jsonschema validator",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Check sequence compliance with schema",
+        "benefit": "Identify schema violations before execution"
+      },
+      "beats": [
+        {
+          "name": "Initialize Validator",
+          "beat": 1,
+          "event": "validator.initialize",
+          "handler": "validationHandler.createValidator",
+          "kind": "validation",
+          "description": "Create a Draft7Validator instance with the loaded schema",
+          "dependencies": ["sequence.load"],
+          "data": {
+            "validatorClass": "Draft7Validator"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Instantiate the schema validator",
+            "benefit": "Prepare the validation engine"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Loaded schema object"],
+              "when": ["Validator is created"],
+              "then": ["Draft7Validator instance is ready"],
+              "and": ["Validator has schema loaded and compiled"]
+            }
+          ],
+          "testFile": "tests/validation/initializeValidator.test.ts",
+          "testCase": "shouldCreateDraft7Validator"
+        },
+        {
+          "name": "Validate Required Fields",
+          "beat": 2,
+          "event": "validation.required-fields",
+          "handler": "validationHandler.validateRequired",
+          "kind": "validation",
+          "description": "Check that all required fields are present at sequence, movement, and beat levels",
+          "dependencies": ["validator.initialize"],
+          "errorHandling": "abort-sequence",
+          "data": {
+            "requiredSequenceFields": ["domainId", "id", "name", "movements", "userStory"],
+            "requiredMovementFields": ["name", "beats", "userStory"],
+            "requiredBeatFields": ["event", "userStory", "acceptanceCriteria", "testFile"]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Verify all required fields are present",
+            "benefit": "Ensure minimum viable sequence structure"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["A MusicalSequence JSON object"],
+              "when": ["Required field validation runs"],
+              "then": ["All required fields are present at each level"],
+              "and": ["Missing fields trigger validation error with clear path"]
+            }
+          ],
+          "testFile": "tests/validation/validateRequired.test.ts",
+          "testCase": "shouldDetectMissingRequiredFields"
+        },
+        {
+          "name": "Validate Field Types",
+          "beat": 3,
+          "event": "validation.field-types",
+          "handler": "validationHandler.validateTypes",
+          "kind": "validation",
+          "description": "Verify that field values match their expected types (string, number, array, object)",
+          "dependencies": ["validation.required-fields"],
+          "errorHandling": "abort-sequence",
+          "data": {
+            "strictTypeChecking": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Ensure field types match schema definitions",
+            "benefit": "Prevent type-related runtime errors"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["All required fields present"],
+              "when": ["Type validation executes"],
+              "then": ["All fields have correct types"],
+              "and": [
+                "Strings are strings",
+                "Numbers are numbers",
+                "Arrays are arrays",
+                "Objects have correct structure"
+              ]
+            }
+          ],
+          "testFile": "tests/validation/validateTypes.test.ts",
+          "testCase": "shouldEnforceFieldTypes"
+        },
+        {
+          "name": "Validate Enum Constraints",
+          "beat": 4,
+          "event": "validation.enum-constraints",
+          "handler": "validationHandler.validateEnums",
+          "kind": "validation",
+          "description": "Check that enum fields (errorHandling, scope, kind, etc.) contain only valid values",
+          "dependencies": ["validation.field-types"],
+          "errorHandling": "abort-sequence",
+          "data": {
+            "movementErrorHandling": ["continue", "abort-sequence"],
+            "beatErrorHandling": ["continue", "abort-sequence", "retry", "abort"],
+            "handlerScope": ["plugin", "orchestration", "system", "policy"],
+            "handlerKind": ["validation", "orchestration", "reporting", "policy-enforcement", "metrics", "automation"]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Validate enum field values",
+            "benefit": "Ensure only valid options are used for constrained fields"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Enum fields in the sequence"],
+              "when": ["Enum validation runs"],
+              "then": ["All enum values are from allowed lists"],
+              "and": ["Invalid enum values trigger descriptive errors"]
+            }
+          ],
+          "testFile": "tests/validation/validateEnums.test.ts",
+          "testCase": "shouldRejectInvalidEnumValues"
+        },
+        {
+          "name": "Validate User Story Structure",
+          "beat": 5,
+          "event": "validation.user-story",
+          "handler": "validationHandler.validateUserStory",
+          "kind": "validation",
+          "description": "Ensure userStory objects have persona/goal/benefit structure and no additional properties",
+          "dependencies": ["validation.field-types"],
+          "errorHandling": "abort-sequence",
+          "data": {
+            "allowedFields": ["persona", "goal", "benefit"],
+            "additionalProperties": false
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Validate user story structure consistency",
+            "benefit": "Maintain coherent user story format across all levels"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["UserStory objects at sequence, movement, and beat levels"],
+              "when": ["User story validation executes"],
+              "then": ["All user stories have persona, goal, and benefit"],
+              "and": ["No additional properties exist in userStory objects"]
+            }
+          ],
+          "testFile": "tests/validation/validateUserStory.test.ts",
+          "testCase": "shouldEnforceUserStoryStructure"
+        },
+        {
+          "name": "Validate Acceptance Criteria",
+          "beat": 6,
+          "event": "validation.acceptance-criteria",
+          "handler": "validationHandler.validateAcceptanceCriteria",
+          "kind": "validation",
+          "description": "Check acceptance criteria arrays follow Given/When/Then/And structure",
+          "dependencies": ["validation.field-types"],
+          "errorHandling": "abort-sequence",
+          "data": {
+            "allowedFields": ["given", "when", "then", "and"],
+            "additionalProperties": false
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Ensure acceptance criteria are well-formed",
+            "benefit": "Maintain testable, structured acceptance criteria"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Beat-level acceptance criteria arrays"],
+              "when": ["Criteria validation runs"],
+              "then": ["Each criterion has valid structure"],
+              "and": [
+                "Arrays contain only strings",
+                "Only given/when/then/and fields are present",
+                "No additional properties in criteria objects"
+              ]
+            }
+          ],
+          "testFile": "tests/validation/validateAcceptanceCriteria.test.ts",
+          "testCase": "shouldValidateGivenWhenThenStructure"
+        }
+      ]
+    },
+    {
+      "name": "Report Results",
+      "number": 3,
+      "description": "Generate validation report with detailed results and error information",
+      "errorHandling": "continue",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Communicate validation results clearly",
+        "benefit": "Enable self-healing by providing actionable error information"
+      },
+      "beats": [
+        {
+          "name": "Generate Summary Report",
+          "beat": 1,
+          "event": "report.summary",
+          "handler": "reportHandler.generateSummary",
+          "kind": "reporting",
+          "description": "Create summary showing domain, id, name, movement count, beat count, and validation status",
+          "dependencies": ["validation.acceptance-criteria"],
+          "data": {
+            "includeStructure": true,
+            "verbosity": "detailed"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Provide high-level validation summary",
+            "benefit": "Quick overview of sequence structure and validation outcome"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Completed validation"],
+              "when": ["Summary is generated"],
+              "then": ["Report shows sequence metadata"],
+              "and": [
+                "Domain, ID, name are displayed",
+                "Movement and beat counts are shown",
+                "Validation pass/fail status is clear"
+              ]
+            }
+          ],
+          "testFile": "tests/reporting/generateSummary.test.ts",
+          "testCase": "shouldGenerateValidationSummary"
+        },
+        {
+          "name": "Generate Error Details",
+          "beat": 2,
+          "event": "report.errors",
+          "handler": "reportHandler.generateErrorDetails",
+          "kind": "reporting",
+          "description": "If validation failed, provide detailed error messages with JSON path and failed values",
+          "dependencies": ["report.summary"],
+          "errorHandling": "continue",
+          "data": {
+            "includePath": true,
+            "includeValue": true,
+            "maxErrors": 10
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Provide actionable error information",
+            "benefit": "Enable precise error correction and self-healing"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Validation errors occurred"],
+              "when": ["Error report is generated"],
+              "then": ["Each error shows clear message"],
+              "and": [
+                "JSON path to error location is provided",
+                "Failed value is displayed",
+                "Error message explains what's wrong"
+              ]
+            }
+          ],
+          "testFile": "tests/reporting/generateErrorDetails.test.ts",
+          "testCase": "shouldProvideActionableErrorInfo"
+        },
+        {
+          "name": "Display Movement Structure",
+          "beat": 3,
+          "event": "report.structure",
+          "handler": "reportHandler.displayStructure",
+          "kind": "reporting",
+          "description": "Show hierarchical movement and beat structure with key metadata",
+          "dependencies": ["report.summary"],
+          "data": {
+            "showHandlers": true,
+            "showErrorHandling": true,
+            "showTestFiles": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Visualize sequence structure",
+            "benefit": "Understand orchestration flow and dependencies"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Valid sequence structure"],
+              "when": ["Structure report is displayed"],
+              "then": ["Movements are listed hierarchically"],
+              "and": [
+                "Each movement shows error handling strategy",
+                "Beats within movements are indented",
+                "Beat handlers and test files are shown"
+              ]
+            }
+          ],
+          "testFile": "tests/reporting/displayStructure.test.ts",
+          "testCase": "shouldDisplayHierarchicalStructure"
+        }
+      ]
+    }
+  ],
+
+  "governance": {
+    "policies": [
+      "validation-must-be-deterministic",
+      "errors-must-include-json-path",
+      "schema-version-must-match",
+      "no-silent-failures"
+    ],
+    "metrics": [
+      "validation-execution-time",
+      "error-detection-rate",
+      "schema-compliance-score",
+      "false-positive-rate"
+    ]
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Agentic AI System",
+    "created": "2025-12-06",
+    "tags": ["self-aware", "validation", "schema", "orchestration", "self-documenting"],
+    "selfReference": true,
+    "implementedBy": "validate_sequence.py"
+  }
+}

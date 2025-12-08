@@ -1,0 +1,619 @@
+{
+  "domainId": "agentic-ops",
+  "id": "generate-test-sequence",
+  "name": "Generate Test MusicalSequence from Goal",
+  "kind": "agent-orchestration",
+  "status": "active",
+  "description": "Self-aware sequence documenting how the agentic AI generates new MusicalSequence test cases from high-level goals",
+  "purpose": "Enable self-improvement by documenting the test generation workflow that creates new validation scenarios",
+
+  "userStory": {
+    "persona": "Agentic AI System",
+    "goal": "Generate valid MusicalSequence JSON from natural language goals",
+    "benefit": "Expand test coverage and validate schema effectiveness autonomously"
+  },
+
+  "movements": [
+    {
+      "name": "Goal Analysis",
+      "number": 1,
+      "description": "Analyze the input goal to understand domain, complexity, and requirements",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Understand what needs to be accomplished",
+        "benefit": "Plan appropriate movement and beat structure"
+      },
+      "beats": [
+        {
+          "name": "Parse Goal Statement",
+          "beat": 1,
+          "event": "goal.parse",
+          "handler": "generationHandler.parseGoal",
+          "kind": "orchestration",
+          "description": "Extract key elements from the goal: domain, action verbs, entities, constraints",
+          "data": {
+            "extractDomain": true,
+            "extractActions": true,
+            "extractEntities": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Decompose the goal into actionable elements",
+            "benefit": "Understand the scope and nature of the work"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["A natural language goal statement"],
+              "when": ["Goal is parsed"],
+              "then": ["Key elements are extracted"],
+              "and": [
+                "Domain is identified (e.g., data-processing, renderx, devops)",
+                "Action verbs are listed (e.g., validate, transform, deploy)",
+                "Main entities are identified"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/parseGoal.test.ts",
+          "testCase": "shouldExtractGoalElements"
+        },
+        {
+          "name": "Determine Complexity",
+          "beat": 2,
+          "event": "goal.analyze-complexity",
+          "handler": "generationHandler.analyzeComplexity",
+          "kind": "validation",
+          "description": "Assess whether goal requires single or multiple movements, simple or complex error handling",
+          "dependencies": ["goal.parse"],
+          "data": {
+            "factors": ["actionCount", "domainComplexity", "errorScenarios", "dependencies"]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Determine sequence complexity level",
+            "benefit": "Plan appropriate movement count and beat distribution"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Parsed goal elements"],
+              "when": ["Complexity analysis runs"],
+              "then": ["Complexity score is calculated"],
+              "and": [
+                "Simple goals (1 movement) are identified",
+                "Complex goals (multiple movements) are flagged",
+                "Error handling strategy is suggested"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/analyzeComplexity.test.ts",
+          "testCase": "shouldDetermineSequenceComplexity"
+        },
+        {
+          "name": "Load Schema Constraints",
+          "beat": 3,
+          "event": "schema.load-constraints",
+          "handler": "generationHandler.loadSchemaConstraints",
+          "kind": "validation",
+          "description": "Load schema to understand required fields, enum values, and structural constraints",
+          "dependencies": ["goal.analyze-complexity"],
+          "data": {
+            "schemaPath": "schemas/musical-sequence.schema.json",
+            "extractRequired": true,
+            "extractEnums": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Understand schema constraints",
+            "benefit": "Generate only valid, schema-compliant sequences"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["MusicalSequence schema"],
+              "when": ["Constraints are loaded"],
+              "then": ["Required fields are known"],
+              "and": [
+                "Enum values for errorHandling are loaded",
+                "UserStory structure is understood",
+                "Acceptance criteria format is known"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/loadSchemaConstraints.test.ts",
+          "testCase": "shouldLoadAndParseSchemaConstraints"
+        }
+      ]
+    },
+    {
+      "name": "Sequence Planning",
+      "number": 2,
+      "description": "Plan the sequence structure: movements, beats, and their relationships",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Design the sequence structure",
+        "benefit": "Create logical, coherent orchestration plan"
+      },
+      "beats": [
+        {
+          "name": "Define Movements",
+          "beat": 1,
+          "event": "plan.define-movements",
+          "handler": "generationHandler.defineMovements",
+          "kind": "orchestration",
+          "description": "Break the goal into logical movements (phases of work)",
+          "dependencies": ["schema.load-constraints"],
+          "data": {
+            "maxMovements": 5,
+            "enforceLogicalBoundaries": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Organize work into movements",
+            "benefit": "Create clear phase boundaries in the orchestration"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Goal complexity analysis"],
+              "when": ["Movements are defined"],
+              "then": ["Logical movement boundaries exist"],
+              "and": [
+                "Each movement has clear purpose",
+                "Movements follow logical sequence",
+                "Movement count matches complexity"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/defineMovements.test.ts",
+          "testCase": "shouldCreateLogicalMovements"
+        },
+        {
+          "name": "Define Beats",
+          "beat": 2,
+          "event": "plan.define-beats",
+          "handler": "generationHandler.defineBeats",
+          "kind": "orchestration",
+          "description": "Break each movement into specific beats (atomic actions)",
+          "dependencies": ["plan.define-movements"],
+          "data": {
+            "minBeatsPerMovement": 1,
+            "maxBeatsPerMovement": 6,
+            "enforceAtomicity": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Define atomic action steps",
+            "benefit": "Create executable, testable units of work"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Defined movements"],
+              "when": ["Beats are created"],
+              "then": ["Each movement has beats"],
+              "and": [
+                "Beats are atomic and focused",
+                "Beat count is appropriate for movement",
+                "Each beat has clear purpose"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/defineBeats.test.ts",
+          "testCase": "shouldCreateAtomicBeats"
+        },
+        {
+          "name": "Model Dependencies",
+          "beat": 3,
+          "event": "plan.model-dependencies",
+          "handler": "generationHandler.modelDependencies",
+          "kind": "orchestration",
+          "description": "Identify which beats depend on others and model dependency chains",
+          "dependencies": ["plan.define-beats"],
+          "data": {
+            "preventCircular": true,
+            "identifyParallel": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Model beat dependencies",
+            "benefit": "Enable proper orchestration sequencing and parallelization"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Defined beats"],
+              "when": ["Dependencies are modeled"],
+              "then": ["Dependency graph is created"],
+              "and": [
+                "No circular dependencies exist",
+                "Parallel beats are identified",
+                "Sequential dependencies are explicit"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/modelDependencies.test.ts",
+          "testCase": "shouldCreateValidDependencyGraph"
+        },
+        {
+          "name": "Assign Error Handling",
+          "beat": 4,
+          "event": "plan.assign-error-handling",
+          "handler": "generationHandler.assignErrorHandling",
+          "kind": "validation",
+          "description": "Determine appropriate error handling strategy for each movement and beat based on criticality",
+          "dependencies": ["plan.model-dependencies"],
+          "data": {
+            "movementStrategies": ["continue", "abort-sequence"],
+            "beatStrategies": ["continue", "abort-sequence", "retry", "abort"]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Assign contextually appropriate error handling",
+            "benefit": "Create resilient sequences with appropriate fault tolerance"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Beats with varying criticality"],
+              "when": ["Error handling is assigned"],
+              "then": ["Each level has appropriate strategy"],
+              "and": [
+                "Critical validations use abort-sequence",
+                "Non-critical operations use continue",
+                "Transient failures use retry",
+                "Strategies match enum constraints"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/assignErrorHandling.test.ts",
+          "testCase": "shouldAssignContextualErrorHandling"
+        }
+      ]
+    },
+    {
+      "name": "Content Generation",
+      "number": 3,
+      "description": "Generate detailed content for each element: user stories, acceptance criteria, handlers, tests",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Populate sequence with rich metadata",
+        "benefit": "Create complete, self-documenting sequences"
+      },
+      "beats": [
+        {
+          "name": "Generate User Stories",
+          "beat": 1,
+          "event": "content.generate-user-stories",
+          "handler": "generationHandler.generateUserStories",
+          "kind": "automation",
+          "description": "Create persona/goal/benefit user stories at sequence, movement, and beat levels",
+          "dependencies": ["plan.assign-error-handling"],
+          "data": {
+            "enforceHierarchy": true,
+            "persona": "contextual",
+            "format": "persona-goal-benefit"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Generate coherent user stories",
+            "benefit": "Provide clear context and rationale for each element"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Sequence structure"],
+              "when": ["User stories are generated"],
+              "then": ["All levels have stories"],
+              "and": [
+                "Sequence story describes overall goal",
+                "Movement stories support sequence goal",
+                "Beat stories support movement goals",
+                "All follow persona/goal/benefit format"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/generateUserStories.test.ts",
+          "testCase": "shouldGenerateHierarchicalUserStories"
+        },
+        {
+          "name": "Generate Acceptance Criteria",
+          "beat": 2,
+          "event": "content.generate-acceptance-criteria",
+          "handler": "generationHandler.generateAcceptanceCriteria",
+          "kind": "automation",
+          "description": "Create testable Given/When/Then/And acceptance criteria for each beat",
+          "dependencies": ["content.generate-user-stories"],
+          "data": {
+            "format": "gherkin-style",
+            "enforceTestability": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Generate testable acceptance criteria",
+            "benefit": "Enable automated validation of sequence execution"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Beat definitions with user stories"],
+              "when": ["Acceptance criteria are generated"],
+              "then": ["Each beat has criteria"],
+              "and": [
+                "Criteria follow Given/When/Then/And structure",
+                "Criteria are specific and testable",
+                "Edge cases are covered where appropriate"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/generateAcceptanceCriteria.test.ts",
+          "testCase": "shouldGenerateTestableAcceptanceCriteria"
+        },
+        {
+          "name": "Generate Handlers",
+          "beat": 3,
+          "event": "content.generate-handlers",
+          "handler": "generationHandler.generateHandlers",
+          "kind": "automation",
+          "description": "Create handler references following naming conventions",
+          "dependencies": ["content.generate-user-stories"],
+          "data": {
+            "namingConvention": "module.function",
+            "includeKind": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Generate appropriate handler references",
+            "benefit": "Link beats to executable code"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Beat definitions with kinds"],
+              "when": ["Handlers are generated"],
+              "then": ["Each beat has handler"],
+              "and": [
+                "Handler names follow convention",
+                "Handler kind matches beat purpose",
+                "Handler names are descriptive"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/generateHandlers.test.ts",
+          "testCase": "shouldGenerateConventionalHandlers"
+        },
+        {
+          "name": "Generate Test References",
+          "beat": 4,
+          "event": "content.generate-test-references",
+          "handler": "generationHandler.generateTestReferences",
+          "kind": "automation",
+          "description": "Create test file paths and test case names for each beat",
+          "dependencies": ["content.generate-handlers"],
+          "data": {
+            "testDirectory": "tests",
+            "organizationStrategy": "by-domain",
+            "testCaseFormat": "shouldDescribeExpectedBehavior"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Link beats to test files",
+            "benefit": "Enable test-driven execution validation"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Beat definitions"],
+              "when": ["Test references are generated"],
+              "then": ["Each beat has testFile and testCase"],
+              "and": [
+                "Test files follow project structure",
+                "Test case names describe behavior",
+                "Test organization matches domain"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/generateTestReferences.test.ts",
+          "testCase": "shouldGenerateOrganizedTestReferences"
+        },
+        {
+          "name": "Generate Governance",
+          "beat": 5,
+          "event": "content.generate-governance",
+          "handler": "generationHandler.generateGovernance",
+          "kind": "automation",
+          "description": "Create relevant policies and metrics for the sequence",
+          "dependencies": ["content.generate-test-references"],
+          "data": {
+            "includePolicies": true,
+            "includeMetrics": true,
+            "contextual": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Define governance framework",
+            "benefit": "Ensure sequence execution is measured and compliant"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Complete sequence structure"],
+              "when": ["Governance is generated"],
+              "then": ["Policies and metrics are defined"],
+              "and": [
+                "Policies match domain requirements",
+                "Metrics are measurable",
+                "Governance is contextually appropriate"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/generateGovernance.test.ts",
+          "testCase": "shouldGenerateRelevantGovernance"
+        }
+      ]
+    },
+    {
+      "name": "Validation and Output",
+      "number": 4,
+      "description": "Validate generated sequence and output as JSON file",
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Agentic AI System",
+        "goal": "Ensure generated sequence is valid and usable",
+        "benefit": "Produce only schema-compliant sequences"
+      },
+      "beats": [
+        {
+          "name": "Self-Validate",
+          "beat": 1,
+          "event": "validation.self-validate",
+          "handler": "generationHandler.selfValidate",
+          "kind": "validation",
+          "description": "Validate the generated sequence against the schema before output",
+          "dependencies": ["content.generate-governance"],
+          "errorHandling": "retry",
+          "data": {
+            "useValidateSequence": true,
+            "maxRetries": 3
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Validate own output",
+            "benefit": "Ensure only valid sequences are produced (self-healing)"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Generated sequence JSON"],
+              "when": ["Self-validation runs"],
+              "then": ["Sequence is validated against schema"],
+              "and": [
+                "Schema violations are detected",
+                "Errors trigger retry with corrections",
+                "Valid sequences pass through"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/selfValidate.test.ts",
+          "testCase": "shouldSelfValidateGeneratedSequence"
+        },
+        {
+          "name": "Apply Corrections",
+          "beat": 2,
+          "event": "validation.apply-corrections",
+          "handler": "generationHandler.applyCorrections",
+          "kind": "automation",
+          "description": "If validation fails, apply corrections based on error messages",
+          "dependencies": ["validation.self-validate"],
+          "errorHandling": "retry",
+          "data": {
+            "maxCorrectionAttempts": 2,
+            "commonFixes": ["enumValues", "requiredFields", "userStoryStructure"]
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Automatically fix validation errors",
+            "benefit": "Achieve self-healing capability"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Validation errors with JSON paths"],
+              "when": ["Corrections are applied"],
+              "then": ["Errors are fixed"],
+              "and": [
+                "Invalid enum values are corrected",
+                "Missing required fields are added",
+                "User story structure is fixed",
+                "Re-validation succeeds"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/applyCorrections.test.ts",
+          "testCase": "shouldAutomaticallyFixValidationErrors"
+        },
+        {
+          "name": "Write Output File",
+          "beat": 3,
+          "event": "output.write-file",
+          "handler": "generationHandler.writeOutputFile",
+          "kind": "automation",
+          "description": "Write the validated sequence to a JSON file",
+          "dependencies": ["validation.apply-corrections"],
+          "data": {
+            "outputDirectory": "test-sequences",
+            "indent": 2,
+            "encoding": "utf-8"
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Persist generated sequence",
+            "benefit": "Make sequence available for execution and further validation"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Valid sequence JSON"],
+              "when": ["File is written"],
+              "then": ["JSON file is created"],
+              "and": [
+                "File is well-formatted with proper indentation",
+                "File is in correct output directory",
+                "File encoding is UTF-8"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/writeOutputFile.test.ts",
+          "testCase": "shouldWriteValidatedSequenceToFile"
+        },
+        {
+          "name": "Update Test Log",
+          "beat": 4,
+          "event": "output.update-test-log",
+          "handler": "generationHandler.updateTestLog",
+          "kind": "reporting",
+          "description": "Add entry to TEST-RESULTS.md documenting the generated sequence",
+          "dependencies": ["output.write-file"],
+          "errorHandling": "continue",
+          "data": {
+            "logFile": "TEST-RESULTS.md",
+            "includeMetadata": true
+          },
+          "userStory": {
+            "persona": "Agentic AI System",
+            "goal": "Track generated sequences",
+            "benefit": "Maintain history of test generation activity"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Newly created sequence file"],
+              "when": ["Test log is updated"],
+              "then": ["Entry is added to TEST-RESULTS.md"],
+              "and": [
+                "Entry includes sequence metadata",
+                "Generation timestamp is recorded",
+                "Test status is initialized"
+              ]
+            }
+          ],
+          "testFile": "tests/generation/updateTestLog.test.ts",
+          "testCase": "shouldLogGeneratedSequence"
+        }
+      ]
+    }
+  ],
+
+  "governance": {
+    "policies": [
+      "generated-sequences-must-validate",
+      "self-healing-must-be-attempted",
+      "all-required-fields-must-be-present",
+      "user-stories-must-be-hierarchical",
+      "acceptance-criteria-must-be-testable"
+    ],
+    "metrics": [
+      "generation-success-rate",
+      "self-healing-success-rate",
+      "validation-first-pass-rate",
+      "average-correction-attempts",
+      "sequence-complexity-distribution"
+    ]
+  },
+
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Agentic AI System",
+    "created": "2025-12-06",
+    "tags": ["self-aware", "generation", "self-healing", "testing", "autonomous"],
+    "selfReference": true,
+    "implementedBy": "agentic-ai-system"
+  }
+}
