@@ -1,0 +1,686 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "domainId": "agentic-resume-tailor",
+  "id": "surgical-resume-update",
+  "name": "Surgical Resume Update Pipeline",
+  "title": "Selective Experience Replacement via Markdown",
+  "description": "Surgically update specific resume sections and employers' experiences using Markdown input while preserving all other resume content",
+  "purpose": "Enable precise, targeted updates to resume sections without requiring full resume editing, maintaining data integrity for unchanged content",
+  "trigger": "User pastes Markdown content into Surgical Update UI or sends POST request to /api/resumes/<id>/surgical-update",
+  "packageName": "agentic-resume-tailor",
+  "kind": "orchestration",
+  "status": "active",
+  "key": "D major",
+  "tempo": 110,
+  "timeSignature": "4/4",
+  "category": "resume-editing",
+  "beats": 10,
+  "governance": {
+    "policies": [
+      "input-validation",
+      "data-integrity",
+      "selective-modification",
+      "tag-promotion"
+    ],
+    "metrics": [
+      "update-success-rate",
+      "employers-replaced-count",
+      "section-update-count",
+      "tag-promotion-accuracy"
+    ]
+  },
+  "events": [
+    "markdown.received",
+    "markdown.parsed",
+    "experiences.extracted",
+    "sections.extracted",
+    "resume.loaded",
+    "employers.identified",
+    "experiences.replaced",
+    "sections.updated",
+    "tags.promoted",
+    "resume.saved"
+  ],
+  "userStory": {
+    "persona": "Job Seeker",
+    "goal": "update specific parts of my resume (summary, competencies, or certain employers) without touching other sections",
+    "benefit": "I can make targeted updates efficiently without risking accidental changes to unrelated content"
+  },
+  "persona": "Job Seeker",
+  "businessValue": "Enables precise, safe resume updates that preserve data integrity while allowing rapid iteration on specific sections or employers",
+  "metadata": {
+    "version": "1.0.0",
+    "author": "Agentic Resume Tailor Team",
+    "created": "2025-12-07",
+    "tags": [
+      "surgical-update",
+      "markdown",
+      "selective-replacement",
+      "resume-editing",
+      "tag-promotion"
+    ]
+  },
+  "movements": [
+    {
+      "id": "mov-1-markdown-parsing",
+      "name": "Markdown Parsing and Extraction",
+      "description": "Parse Markdown input to extract experiences and section updates",
+      "number": 1,
+      "tempo": 120,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my Markdown input parsed into structured resume sections",
+        "benefit": "the system understands exactly what I want to update"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Receive Markdown Input",
+          "beat": 1,
+          "event": "markdown.received",
+          "title": "Receive Markdown or JSON Input",
+          "description": "Accept Markdown text, experiences JSON array, or both from the API request",
+          "dynamics": "f",
+          "timing": "sync",
+          "handler": {
+            "name": "surgical_update_resume#receive_input",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["validate", "build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "provide my updates via Markdown paste or JSON",
+            "benefit": "I can use the format that's most convenient for me"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Markdown text is provided in request body"],
+              "when": ["API receives the surgical update request"],
+              "then": [
+                "Markdown content is extracted from 'markdown' or 'markdown_input' field",
+                "Request is validated to ensure it's not empty",
+                "Input is ready for parsing"
+              ]
+            },
+            {
+              "given": ["Experiences JSON array is provided"],
+              "when": ["API receives experiences instead of or in addition to Markdown"],
+              "then": [
+                "JSON array is validated as well-formed",
+                "Experiences are available for processing",
+                "Markdown parsing can be skipped if preferred"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_receive_markdown_input"
+        },
+        {
+          "name": "Parse Markdown Content",
+          "beat": 2,
+          "event": "markdown.parsed",
+          "title": "Parse Markdown Sections",
+          "description": "Parse Markdown to extract PROFESSIONAL SUMMARY, CORE COMPETENCIES, and RELEVANT EXPERIENCE sections",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["markdown.received"],
+          "handler": {
+            "name": "markdown_resume_parser#parse_surgical_markdown",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/utils/markdown_resume_parser.py",
+            "handlerCapabilities": ["validate", "build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my Markdown parsed into structured sections",
+            "benefit": "my paste is converted into actionable resume updates"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Markdown contains ### **PROFESSIONAL SUMMARY** section"],
+              "when": ["Parser processes the Markdown"],
+              "then": [
+                "Summary text is extracted (content between header and next section)",
+                "Text is trimmed and cleaned",
+                "Summary is added to 'updates' dict with key 'summary'"
+              ]
+            },
+            {
+              "given": ["Markdown contains ### **CORE COMPETENCIES** section"],
+              "when": ["Parser processes the Markdown"],
+              "then": [
+                "Competencies are extracted as bullet list items",
+                "Each competency line is parsed (format: 'Category: item1, item2')",
+                "Competencies are added to 'updates' dict with key 'core_competencies'",
+                "Competencies can be returned as list or newline-delimited string"
+              ]
+            },
+            {
+              "given": ["Markdown contains ### **RELEVANT EXPERIENCE** section with experiences"],
+              "when": ["Parser processes the Markdown"],
+              "then": [
+                "Each experience is identified by #### **Employer** | *Role* pattern",
+                "Dates and location are extracted from italic line (*City, ST | Jan 2020 – Present*)",
+                "Bullets are extracted (lines starting with *)",
+                "Tech/skills tags are extracted from *Tech:* line",
+                "Experience objects are created with employer, role, dates, location, bullets array",
+                "Bullet-level tags are preserved in bullet objects",
+                "All experiences are added to 'experiences' array"
+              ]
+            },
+            {
+              "given": ["Markdown parsing fails"],
+              "when": ["Invalid Markdown format is detected"],
+              "then": [
+                "Error is raised with descriptive message",
+                "Request returns 400 status with error details",
+                "No resume changes are applied"
+              ]
+            }
+          ],
+          "testFile": "tests/test_markdown_parser.py",
+          "testCase": "test_parse_surgical_markdown"
+        },
+        {
+          "name": "Extract Experiences",
+          "beat": 3,
+          "event": "experiences.extracted",
+          "title": "Extract and Validate Experiences",
+          "description": "Extract experiences from Markdown parse results or JSON input, validate structure, and identify target employers",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["markdown.parsed"],
+          "handler": {
+            "name": "surgical_update_resume#parse_experiences",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["validate", "build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my experience entries validated and structured correctly",
+            "benefit": "I know the system will replace the right employers' experiences"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Experiences are provided as JSON array"],
+              "when": ["System parses experiences input"],
+              "then": [
+                "Array is validated as well-formed JSON",
+                "Each experience is converted to dict",
+                "Experience objects contain required fields (employer, role, dates, bullets)",
+                "Bullet-level tags are promoted to experience-level tags"
+              ]
+            },
+            {
+              "given": ["Experiences are provided as JSON object with 'experiences' key"],
+              "when": ["System parses experiences input"],
+              "then": [
+                "Object is unwrapped to get experiences array",
+                "Each experience is processed same as array format"
+              ]
+            },
+            {
+              "given": ["Experience has bullets with tags"],
+              "when": ["System ensures tag promotion"],
+              "then": [
+                "All bullet-level tags are collected",
+                "Tags are merged with existing experience-level tags",
+                "Duplicates are removed while preserving order",
+                "Experience 'tags' field contains promoted tags"
+              ]
+            },
+            {
+              "given": ["Experiences input is invalid"],
+              "when": ["System attempts to parse"],
+              "then": [
+                "ValueError is raised with descriptive message",
+                "Error indicates expected format (array or object with 'experiences')",
+                "Request fails with 400 status"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_extract_experiences"
+        },
+        {
+          "name": "Extract Section Updates",
+          "beat": 4,
+          "event": "sections.extracted",
+          "title": "Extract Section Updates",
+          "description": "Extract summary and core competencies updates from Markdown parse results or explicit updates object",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["markdown.parsed"],
+          "handler": {
+            "name": "surgical_update_resume#extract_section_updates",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my summary and competencies updates identified",
+            "benefit": "the system knows which non-experience sections to update"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Markdown parse results contain 'summary' in updates dict"],
+              "when": ["System extracts section updates"],
+              "then": [
+                "Summary text is added to section updates",
+                "Summary replaces existing resume summary when applied"
+              ]
+            },
+            {
+              "given": ["Markdown parse results contain 'core_competencies' in updates dict"],
+              "when": ["System extracts section updates"],
+              "then": [
+                "Core competencies are processed",
+                "If competencies are newline-delimited string, they are split into list",
+                "Competencies are added to section updates as list"
+              ]
+            },
+            {
+              "given": ["Explicit 'updates' object is provided in request body"],
+              "when": ["System merges updates"],
+              "then": [
+                "Markdown-derived updates are merged with explicit updates",
+                "Explicit updates take precedence over Markdown updates",
+                "Final updates dict contains all non-null updates"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_extract_section_updates"
+        }
+      ]
+    },
+    {
+      "id": "mov-2-resume-modification",
+      "name": "Resume Modification",
+      "description": "Load target resume, identify employers to replace, and apply surgical updates",
+      "number": 2,
+      "tempo": 110,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my resume updated with only the specified changes",
+        "benefit": "all other resume content remains untouched and safe"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Load Target Resume",
+          "beat": 5,
+          "event": "resume.loaded",
+          "title": "Load Resume by ID",
+          "description": "Load the target resume data from storage using the provided resume ID",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["experiences.extracted", "sections.extracted"],
+          "handler": {
+            "name": "resume_model#get",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/models/resume.py",
+            "handlerCapabilities": ["validate"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have the system load my target resume",
+            "benefit": "the system can apply updates to the correct resume"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Resume ID is provided in URL path"],
+              "when": ["System loads resume data"],
+              "then": [
+                "Resume JSON is loaded from data/resumes/<id>.json",
+                "Resume data is validated as well-formed",
+                "Experience count before update is recorded",
+                "Resume data is ready for modification"
+              ]
+            },
+            {
+              "given": ["Resume ID does not exist"],
+              "when": ["System attempts to load resume"],
+              "then": [
+                "404 error is returned",
+                "Error message indicates 'Resume not found'",
+                "No modifications are attempted"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_load_target_resume"
+        },
+        {
+          "name": "Identify Target Employers",
+          "beat": 6,
+          "event": "employers.identified",
+          "title": "Identify Employers to Replace",
+          "description": "Determine which employers to replace based on experiences array or explicit replace_employers list",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["resume.loaded"],
+          "handler": {
+            "name": "surgical_update_resume#identify_employers",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have the system identify which employers to replace",
+            "benefit": "only the specified employers are updated, others remain unchanged"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["replace_employers list is provided in request"],
+              "when": ["System identifies target employers"],
+              "then": [
+                "Employer names are extracted from replace_employers",
+                "Employer names are normalized (lowercase, dash variants)",
+                "Duplicates are removed while preserving order",
+                "Target employers list is created"
+              ]
+            },
+            {
+              "given": ["replace_employers list is NOT provided"],
+              "when": ["System derives employers from experiences"],
+              "then": [
+                "Employer field is extracted from each experience",
+                "Empty employers are filtered out",
+                "Employer names are normalized and deduplicated",
+                "Target employers list is derived from experiences"
+              ]
+            },
+            {
+              "given": ["Employer names contain different dash types (–, —, -)"],
+              "when": ["System normalizes employer names"],
+              "then": [
+                "All dash variants are normalized to single hyphen",
+                "Employer matching uses normalized names",
+                "Different dash types in resume vs input don't cause mismatches"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_identify_target_employers"
+        },
+        {
+          "name": "Replace Employers Surgically",
+          "beat": 7,
+          "event": "experiences.replaced",
+          "title": "Selective Experience Replacement",
+          "description": "Replace only the specified employers' experiences while preserving all other experience entries",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["employers.identified"],
+          "handler": {
+            "name": "surgical_update_resume#replace_surgically",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have only the specified employers replaced in my resume",
+            "benefit": "my other work experiences remain completely unchanged"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Target employers list is identified", "New experiences are validated"],
+              "when": ["System performs surgical replacement"],
+              "then": [
+                "Existing experiences are filtered - those matching target employers are removed",
+                "New experiences matching target employers are selected from input",
+                "Experience array is reconstructed: new experiences first, then kept experiences",
+                "Experience count after replacement is recorded",
+                "List of replaced employers is returned",
+                "List of missing employers (in targets but not in new experiences) is returned"
+              ]
+            },
+            {
+              "given": ["Target employer exists in resume but not in new experiences"],
+              "when": ["System attempts replacement"],
+              "then": [
+                "Employer is removed from resume (no replacement available)",
+                "Employer is added to 'missing_employers' list",
+                "Warning is included in response metadata"
+              ]
+            },
+            {
+              "given": ["Target employer exists in new experiences but not in resume"],
+              "when": ["System performs replacement"],
+              "then": [
+                "New experience is added to resume (addition, not replacement)",
+                "No existing experience is removed",
+                "Employer is included in 'replaced_employers' list"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_replace_employers_surgically"
+        },
+        {
+          "name": "Update Resume Sections",
+          "beat": 8,
+          "event": "sections.updated",
+          "title": "Update Summary and Competencies",
+          "description": "Apply section updates (summary, core_competencies) to resume data",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["experiences.replaced"],
+          "handler": {
+            "name": "surgical_update_resume#update_sections",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my summary and competencies updated if I provided them",
+            "benefit": "I can update multiple sections in one surgical update"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Section updates dict contains 'summary'"],
+              "when": ["System updates sections"],
+              "then": [
+                "Resume 'summary' field is replaced with new summary text",
+                "Previous summary is overwritten",
+                "Update is applied to resume data"
+              ]
+            },
+            {
+              "given": ["Section updates dict contains 'core_competencies' as string"],
+              "when": ["System processes competencies"],
+              "then": [
+                "String is split by newlines",
+                "Each line is trimmed",
+                "Empty lines are filtered out",
+                "Result is set as list in resume 'core_competencies' field"
+              ]
+            },
+            {
+              "given": ["Section updates dict contains 'core_competencies' as list"],
+              "when": ["System processes competencies"],
+              "then": [
+                "List is used directly",
+                "Resume 'core_competencies' field is replaced with list"
+              ]
+            },
+            {
+              "given": ["Section updates dict is empty"],
+              "when": ["System attempts section updates"],
+              "then": [
+                "No section changes are applied",
+                "Resume sections remain unchanged",
+                "Processing continues normally"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_update_resume_sections"
+        },
+        {
+          "name": "Promote Bullet Tags",
+          "beat": 9,
+          "event": "tags.promoted",
+          "title": "Promote Bullet-Level Tags to Experience-Level",
+          "description": "Ensure all bullet-level tags are promoted to experience-level tags for each updated experience",
+          "dynamics": "mf",
+          "timing": "sync",
+          "dependencies": ["sections.updated"],
+          "handler": {
+            "name": "surgical_update_resume#ensure_experience_level_tags",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/api/app.py",
+            "handlerCapabilities": ["build"]
+          },
+          "errorHandling": "continue",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have all my bullet tags automatically promoted to experience tags",
+            "benefit": "my skills and technologies are properly categorized at the experience level"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["Experience bullets contain 'tags' fields"],
+              "when": ["System promotes tags"],
+              "then": [
+                "All tags from all bullets are collected",
+                "Tags are merged with existing experience-level tags",
+                "Duplicates are removed while preserving order",
+                "Final tags list is set on experience 'tags' field"
+              ]
+            },
+            {
+              "given": ["Experience has no bullet tags"],
+              "when": ["System promotes tags"],
+              "then": [
+                "Existing experience-level tags are preserved",
+                "No new tags are added",
+                "Experience 'tags' field remains unchanged"
+              ]
+            },
+            {
+              "given": ["Experience has both bullet tags and experience tags"],
+              "when": ["System promotes tags"],
+              "then": [
+                "Existing experience tags come first in merged list",
+                "Promoted bullet tags are appended",
+                "Duplicates between the two sources are removed",
+                "Order is preserved (experience tags first, then new bullet tags)"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_promote_bullet_tags"
+        }
+      ]
+    },
+    {
+      "id": "mov-3-finalization",
+      "name": "Finalization and Response",
+      "description": "Save updated resume and return surgical update metadata",
+      "number": 3,
+      "tempo": 100,
+      "errorHandling": "abort-sequence",
+      "userStory": {
+        "persona": "Job Seeker",
+        "goal": "have my changes saved and receive confirmation of what was updated",
+        "benefit": "I know the update succeeded and can see exactly what changed"
+      },
+      "status": "active",
+      "beats": [
+        {
+          "name": "Save Updated Resume",
+          "beat": 10,
+          "event": "resume.saved",
+          "title": "Persist Resume Changes",
+          "description": "Save the surgically updated resume data to storage unless dry_run mode is enabled",
+          "dynamics": "f",
+          "timing": "sync",
+          "dependencies": ["tags.promoted"],
+          "handler": {
+            "name": "resume_model#update",
+            "scope": "orchestration",
+            "kind": "automation",
+            "sourcePath": "src/models/resume.py",
+            "handlerCapabilities": ["deploy"]
+          },
+          "errorHandling": "abort-sequence",
+          "userStory": {
+            "persona": "Job Seeker",
+            "goal": "have my surgical updates saved to my resume",
+            "benefit": "my changes are persisted and available for future use"
+          },
+          "acceptanceCriteria": [
+            {
+              "given": ["dry_run is false or not specified"],
+              "when": ["System saves resume"],
+              "then": [
+                "Updated resume data is written to data/resumes/<id>.json",
+                "File is saved with UTF-8 encoding",
+                "Metadata is updated with last modified timestamp",
+                "Success status is returned"
+              ]
+            },
+            {
+              "given": ["dry_run is true"],
+              "when": ["System processes save operation"],
+              "then": [
+                "Resume data is NOT written to disk",
+                "Updated preview is included in response",
+                "Response indicates dry_run mode was used",
+                "Original resume remains unchanged"
+              ]
+            },
+            {
+              "given": ["Save operation fails"],
+              "when": ["System attempts to persist changes"],
+              "then": [
+                "500 error is returned",
+                "Error message indicates 'Failed to save updated resume'",
+                "Resume remains in previous state"
+              ]
+            },
+            {
+              "given": ["Resume is successfully saved"],
+              "when": ["System returns response"],
+              "then": [
+                "Success: true is included",
+                "Message: 'Surgical update applied' is included",
+                "Metadata includes: replaced_employers, missing_employers, experience counts",
+                "Response shows total_experience_before and total_experience_after"
+              ]
+            }
+          ],
+          "testFile": "tests/test_surgical_update.py",
+          "testCase": "test_save_updated_resume"
+        }
+      ]
+    }
+  ]
+}
